@@ -35,6 +35,7 @@ Thumbs.db
 data/
 *.db
 *.sqlite3
+dataset/hdsd_raw/
 
 # Logs
 logs/
