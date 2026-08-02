@@ -15,6 +15,24 @@ Khi tham gia AI20K Build Phase, mỗi đội cần xây dựng một AI Agent ho
 - **Checklist 10 deliverables** — đảm bảo không bỏ sót yêu cầu BTC
 - **AI Usage Logging tự động** — Pre-configured hooks cho Claude Code, Cursor, Codex, Gemini CLI, Antigravity, và GitHub Copilot
 
+## 📊 AI Logging Setup
+
+> **Quan trọng:** Mỗi team member cần setup AI logging để tracking AI tool usage. Xem chi tiết tại [AI_LOGGING_SETUP.md](AI_LOGGING_SETUP.md)
+
+**Quick:**
+```bash
+git config user.email "your-email@gmail.com"
+uv venv && uv pip install -r requirements.txt
+cp .env.example .env
+# Cập nhật OPENAI_API_KEY và AI_LOG_API_KEY trong .env
+bash scripts/setup_hooks.sh
+bash scripts/_pyrun.sh scripts/submit_log.py  # Test
+```
+
+⚠️ **Lưu ý:** Email phải đúng email đã đăng ký với BTC, nếu sai logs sẽ tính sang người khác!
+
+---
+
 ## ⚡ Quick Start
 
 ### Bước 1: Fork hoặc Clone
