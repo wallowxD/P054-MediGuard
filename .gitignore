@@ -24,6 +24,9 @@ env/
 *.swo
 *~
 
+# AI tool — cấu hình cá nhân từng máy (settings.json dùng chung thì COMMIT)
+.claude/settings.local.json
+
 # OS
 .DS_Store
 Thumbs.db
