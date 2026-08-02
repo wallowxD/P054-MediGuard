@@ -7,26 +7,48 @@ on:
     branches: [main]
 
 jobs:
-  lint-and-test:
+  backend:
+    name: Backend — lint & test
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.11"
-          cache: pip
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.11
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: uv sync --locked
 
       - name: Lint with ruff
-        run: ruff check src/ tests/
+        run: uv run ruff check backend/
+
+      - name: Check formatting
+        run: uv run ruff format --check backend/
 
       - name: Run tests
-        run: pytest tests/ -v --tb=short
+        run: uv run pytest backend/tests -v --tb=short
         env:
           APP_ENV: test
           OPENAI_API_KEY: test-key
+
+  gate-integrity:
+    name: Gate đã nộp phải nguyên vẹn
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # gate/gate_1 đã submit — mọi thay đổi trong đó phải bị chặn ở CI,
+      # kể cả đổi tên hay xoá file.
+      - name: Kiểm tra gate/gate_1
+        run: |
+          count=$(git ls-files gate/gate_1 | wc -l | tr -d ' ')
+          echo "gate/gate_1 có $count file"
+          if [ "$count" -ne 4 ]; then
+            echo "::error::gate/gate_1 phải có đúng 4 file đã nộp, đang có $count"
+            exit 1
+          fi

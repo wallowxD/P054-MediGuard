@@ -1,0 +1,23 @@
+# Workspace root (virtual — không có [project], không tự build thành package).
+#
+# uv luôn tạo .venv Ở WORKSPACE ROOT. Đó là lý do chọn workspace:
+# scripts/_pyrun.sh chỉ tìm venv ở repo root, nên cách này giữ AI logging chạy
+# mà không phải sửa một dòng nào trong scripts/.
+#
+# Cài đặt:  uv sync
+# Chạy:     uv run uvicorn medsafe.main:app --reload
+
+[tool.uv.workspace]
+members = ["backend"]
+
+[tool.uv.sources]
+medsafe = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "medsafe",
+    "ruff>=0.8.0",
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "httpx>=0.28.0",
+]

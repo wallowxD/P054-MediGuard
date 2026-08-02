@@ -1,0 +1,65 @@
+"""Cấu hình — hai nguồn tách bạch.
+
+- `config.yaml` (backend/): tham số RAG, không phải secret, sửa được không cần deploy.
+- `.env` (REPO ROOT): secret. Phải ở root vì scripts/submit_log.py gọi load_dotenv()
+  theo CWD = repo root; đặt .env ở backend/ sẽ hỏng AI log mà không báo lỗi.
+"""
+
+from functools import lru_cache
+from pathlib import Path
+from typing import Any, Literal
+
+import yaml
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# backend/src/medsafe/config.py -> parents[3] = repo root
+REPO_ROOT: Path = Path(__file__).resolve().parents[3]
+BACKEND_ROOT: Path = Path(__file__).resolve().parents[2]
+CONFIG_YAML: Path = BACKEND_ROOT / "config.yaml"
+
+
+def load_yaml_config(path: Path = CONFIG_YAML) -> dict[str, Any]:
+    """Đọc tham số RAG từ config.yaml. Thiếu file thì trả dict rỗng."""
+    if not path.exists():
+        return {}
+    with path.open(encoding="utf-8") as f:
+        return yaml.safe_load(f) or {}
+
+
+class Settings(BaseSettings):
+    """Secret + tham số môi trường. Nạp từ <repo-root>/.env."""
+
+    model_config = SettingsConfigDict(
+        env_file=REPO_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    # App
+    app_name: str = "Medication Safety Copilot"
+    app_env: Literal["development", "production", "test"] = "development"
+    app_port: int = Field(default=8000, ge=1, le=65535)
+    app_host: str = "0.0.0.0"
+    log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
+    cors_origins: str = "http://localhost:3000"
+
+    # LLM
+    openai_api_key: str = ""
+    model_name: str = "gpt-4o-mini"
+    vision_model: str = "gpt-4o"
+    llm_temperature: float = Field(default=0.0, ge=0.0, le=2.0)
+
+    # Data
+    database_url: str = "sqlite:///./data/app.db"
+    chroma_persist_dir: str = "./data/chroma"
+
+    @property
+    def rag(self) -> dict[str, Any]:
+        """Tham số RAG từ config.yaml."""
+        return load_yaml_config()
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()

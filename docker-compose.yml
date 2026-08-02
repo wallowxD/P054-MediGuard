@@ -1,19 +1,54 @@
-version: "3.8"
-
 services:
   backend:
     build:
+      # context = repo root vì uv.lock nằm ở workspace root, không nằm trong backend/
       context: .
-      dockerfile: Dockerfile
+      dockerfile: backend/Dockerfile
     ports:
       - "8000:8000"
     env_file:
       - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://medsafe:medsafe@db:5432/medsafe
     volumes:
       - ./data:/app/data
+      - ./dataset:/app/dataset:ro
+    depends_on:
+      db:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
+
+  frontend:
+    build:
+      # lockfile npm nằm trong frontend/ nên context này là đúng
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: medsafe
+      POSTGRES_PASSWORD: medsafe
+      POSTGRES_DB: medsafe
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medsafe"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

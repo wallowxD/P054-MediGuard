@@ -1,3 +1,6 @@
+# Build context của backend là REPO ROOT (uv.lock ở workspace root),
+# nên file này áp dụng cho image backend.
+
 .git
 .gitignore
 .env
@@ -6,11 +9,30 @@ __pycache__
 *.pyc
 .pytest_cache
 .ruff_cache
+
+# Không cần cho image backend
+frontend/
+node_modules/
 docs/
 presentation/
 eval/
+gate/
+scripts/
+.ai-log/
+.claude/
+.cursor/
+.codex/
+.gemini/
+.agents/
+.github/
 *.md
-!requirements.txt
+
+# dataset/ được mount qua volume lúc chạy, không nướng vào image
+dataset/
+data/
+backend/logs/
+backend/tests/
+
 .dockerignore
-Dockerfile
 docker-compose.yml
+Makefile
