@@ -131,8 +131,6 @@ Với thuốc–thực phẩm thì ngược lại: retrieval **chính là** cơ 
 bảng nào để tra. Ràng buộc là đầu ra phải là đoạn trích nguyên văn, không phải kết luận
 model tự phát biểu.
 
-Lập luận đầy đủ + đề xuất sửa PRD: [docs/prd-amendment-retrieval.md](docs/prd-amendment-retrieval.md)
-
 Dưới `retrieval.score_threshold` → trả rỗng → tầng trên báo **"chưa có dữ liệu"**.
 Không hạ ngưỡng để "có gì đó mà trả về".
 

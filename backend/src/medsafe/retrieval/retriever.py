@@ -22,8 +22,6 @@ không phải kết luận do model tự phát biểu.
 
 **Chuẩn hoá tên thuốc:** khớp mờ, xem domain/normalization.py.
 
-Chi tiết lập luận và đề xuất sửa PRD: docs/prd-amendment-retrieval.md
-
 Dưới `score_threshold` thì trả rỗng và để tầng trên báo "chưa có dữ liệu".
 KHÔNG hạ ngưỡng để "có gì đó mà trả về".
 """
