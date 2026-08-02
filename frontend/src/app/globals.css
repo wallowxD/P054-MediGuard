@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind v4 → KHÔNG có tailwind.config.ts.
+ * §8 của STRUCTURE_TEMPLATE viết cho v3 (config JS + content globs); ở v4 mọi thứ
+ * khai báo bằng CSS: `@theme` sinh utility class từ biến.
+ *
+ * Đổi màu chỉ sửa ở khối :root / .dark bên dưới, không rải màu trong component.
+ */
+
+/* Dark mode theo class để còn làm nút toggle được; vẫn tôn trọng cài đặt hệ điều hành */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --background-elevated: #f7f8fa;
+  --surface: rgba(15, 23, 42, 0.04);
+  --card: #ffffff;
+
+  --foreground: #0f172a;
+  --foreground-secondary: #475569;
+  --foreground-muted: #94a3b8;
+
+  --primary: #0d9488;
+  --primary-hover: #0f766e;
+  --primary-foreground: #ffffff;
+
+  --success: #16a34a;
+  --error: #dc2626;
+  --warning: #d97706;
+  --info: #2563eb;
+
+  --border: rgba(15, 23, 42, 0.12);
+  --input: #ffffff;
+  --ring: #0d9488;
+
+  /* Severity — bậc thang cảnh báo, dùng chung cho badge/border/icon.
+     Mức do backend `domain/severity.py` quyết định, FE chỉ tô màu. */
+  --severity-contraindicated: #b91c1c;
+  --severity-major: #ea580c;
+  --severity-moderate: #d97706;
+  --severity-minor: #0891b2;
+  --severity-unknown: #64748b;
+}
+
+.dark {
+  --background: #0b0d10;
+  --background-elevated: #12151a;
+  --surface: rgba(255, 255, 255, 0.04);
+  --card: #161a20;
+
+  --foreground: #ffffff;
+  --foreground-secondary: #a3abb8;
+  --foreground-muted: #6b7280;
+
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --primary-foreground: #06231f;
+
+  --success: #22c55e;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  --info: #60a5fa;
+
+  --border: rgba(255, 255, 255, 0.12);
+  --input: #10141a;
+  --ring: #2dd4bf;
+
+  --severity-contraindicated: #f87171;
+  --severity-major: #fb923c;
+  --severity-moderate: #fbbf24;
+  --severity-minor: #38bdf8;
+  --severity-unknown: #94a3b8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: #0b0d10;
+    --background-elevated: #12151a;
+    --surface: rgba(255, 255, 255, 0.04);
+    --card: #161a20;
+
+    --foreground: #ffffff;
+    --foreground-secondary: #a3abb8;
+    --foreground-muted: #6b7280;
+
+    --primary: #2dd4bf;
+    --primary-hover: #5eead4;
+    --primary-foreground: #06231f;
+
+    --success: #22c55e;
+    --error: #ef4444;
+    --warning: #f59e0b;
+    --info: #60a5fa;
+
+    --border: rgba(255, 255, 255, 0.12);
+    --input: #10141a;
+    --ring: #2dd4bf;
+
+    --severity-contraindicated: #f87171;
+    --severity-major: #fb923c;
+    --severity-moderate: #fbbf24;
+    --severity-minor: #38bdf8;
+    --severity-unknown: #94a3b8;
+  }
+}
+
+/* Map biến → token Tailwind: bg-background, text-foreground-muted, border-border… */
+@theme inline {
+  --color-background: var(--background);
+  --color-background-elevated: var(--background-elevated);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-severity-contraindicated: var(--severity-contraindicated);
+  --color-severity-major: var(--severity-major);
+  --color-severity-moderate: var(--severity-moderate);
+  --color-severity-minor: var(--severity-minor);
+  --color-severity-unknown: var(--severity-unknown);
+
+  --font-sans: var(--font-app);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
