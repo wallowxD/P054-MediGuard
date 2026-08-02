@@ -1,0 +1,29 @@
+# Build context của frontend là ./frontend (không phải repo root).
+# Lưu ý: KHÔNG ignore yarn.lock và .yarnrc.yml — Dockerfile cần cả hai để
+# `yarn install --immutable` cài đúng bản đã pin.
+
+node_modules
+.next
+out
+build
+
+.yarn/cache
+.yarn/install-state.gz
+.pnp.*
+
+.git
+.gitignore
+.env
+.env.*
+
+*.md
+Dockerfile
+.dockerignore
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+*.pem
+.vercel
+*.tsbuildinfo
