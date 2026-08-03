@@ -12,15 +12,15 @@ không được sinh lại — và lỗi chỉ lộ ra lúc demo.
 
 ## Hai phía cần đối chiếu
 
-**Backend** (nguồn sự thật):
+**Backend** (nguồn contract runtime):
 - `backend/src/medsafe/api/v1/*.py` — path, method, status code, query/body params
 - `backend/src/medsafe/schemas/*.py` — Pydantic request/response, field bắt buộc vs
   optional, default, enum, ràng buộc
 
-**Frontend** (bên tiêu thụ):
+**Frontend** (consumer):
 - `frontend/src/lib/api/types.gen.ts` — **file SINH**, không sửa tay
-- `frontend/src/lib/api/client.ts` — nơi gọi thật
-- `frontend/src/features/**` — chỗ dùng field
+- `frontend/src/services/**` — nơi gọi HTTP
+- `frontend/src/queries/**` và `frontend/src/components/**` — nơi dùng field
 
 Nếu PR restructure chưa merge, backend nằm ở `src/` gốc; frontend có thể chưa tồn tại
 — khi đó báo lại là chưa có gì để đối chiếu, đừng bịa.
@@ -32,7 +32,7 @@ Nếu PR restructure chưa merge, backend nằm ở `src/` gốc; frontend có t
 2. **Field lệch** — FE đọc field không có trong response schema; FE gửi thiếu field
    `required`; tên field lệch (`snake_case` BE vs `camelCase` FE) mà không có lớp
    chuyển đổi.
-3. **`types.gen.ts` cũ** — so ngày sửa của `types.gen.ts` với các file schema backend:
+3. **`types.gen.ts` cũ** — so commit thay đổi của `types.gen.ts` với schema/OpenAPI backend:
    `git log -1 --format=%cI -- <file>`. Schema mới hơn file sinh → **client đã cũ**.
 4. **Sửa tay file sinh** — `types.gen.ts` có dấu vết chỉnh tay (comment người viết,
    type thêm thủ công). Đây là lỗi quy trình, báo rõ.
@@ -45,12 +45,12 @@ Nếu PR restructure chưa merge, backend nằm ở `src/` gốc; frontend có t
 
 - Bắt đầu bằng liệt kê endpoint ở BE, rồi liệt kê lời gọi ở FE, rồi ghép cặp.
 - Kiểm tra ngày sửa bằng git thay vì đoán.
-- Nếu backend đang chạy, có thể lấy `openapi.json` để đối chiếu chính xác hơn — nhưng
-  **không tự khởi động server**, hỏi user trước.
+- Ưu tiên OpenAPI artifact đã sinh. Chỉ khởi động server khi user yêu cầu hoặc task kiểm
+  chứng implementation đã bao gồm việc đó.
 
 ## Báo cáo
 
-Bảng: `Endpoint | Phía BE | Phía FE | Lệch chỗ nào | Ảnh hưởng`
+Bảng: `Endpoint | Backend | Frontend | Điểm lệch | Ảnh hưởng`
 
 Sau bảng, nêu rõ:
 - Cái nào làm **vỡ runtime** (ưu tiên cao nhất)

@@ -1,46 +1,43 @@
-# Evaluation Report
+# Báo cáo đánh giá
 
-> Báo cáo đánh giá chất lượng sản phẩm theo tiêu chí BTC.
+File này lưu evidence sản phẩm đã đo. Không ghi estimate thành kết quả thực tế và không tự
+đặt target trước khi pilot tạo baseline.
 
----
+## Môi trường đo
 
-## 1. Metrics
+| Trường | Giá trị |
+|---|---|
+| Ngày | 2026-08-03 |
+| Commit | Working tree `VMEC-37`, base `563852a` |
+| Dataset/sample | Chưa đo product metric |
+| Runtime | Môi trường phát triển macOS local |
 
-| Metric | Target | Actual | Status |
-|--------|--------|--------|--------|
-| Response accuracy | >80% | — | ⏳ |
-| Response latency | <3s | — | ⏳ |
-| User satisfaction | >4/5 | — | ⏳ |
-| Test coverage | >60% | — | ⏳ |
+## Chỉ số an toàn và chất lượng
 
-## 2. Test Results
+| Chỉ số | Quy tắc chấp nhận | Thực tế | Trạng thái |
+|---|---|---|---|
+| Warning hiển thị có quote nguyên văn, source URL, chunk ID và review status | 100% | Chưa đo | Chờ đo |
+| Regression Warfarin–Tamoxifen | Không thay bằng Acenocoumarol trong 100% run | Chưa đo | Chờ đo |
+| Sinh unique pair | Chính xác C(N,2) cho mọi offline case | Chưa đo | Chờ đo |
+| Pending warning hợp lệ hiển thị ngay | 100% | Chưa đo | Chờ đo |
+| Missing/uncited/source-unavailable/below-threshold dùng unavailable outcome | 100% | Chưa đo | Chờ đo |
+| Độ chính xác normalize tên thuốc | Đo ít nhất 30 case; duyệt target sau baseline | Chưa đo | Chờ đo |
+| Coverage trích xuất PDF pilot | Đo trên pilot cố định 50 thuốc trước khi scale | Chưa đo | Chờ đo |
+| Thời gian end-to-end | Ghi p50/p95 của ít nhất 30 run; duyệt target sau baseline | Chưa đo | Chờ đo |
 
-### Unit Tests
-```
-pytest tests/ -v
-# Paste output here
-```
+## Bằng chứng kiểm thử hiện có
 
-### Integration Tests
-```
-# Mô tả test scenarios và kết quả
-```
+| Kiểm tra | Lệnh/quy trình | Kết quả gần nhất | Evidence |
+|---|---|---|---|
+| Backend lint, format, test | `make check` | Pass; 4 test hiện có đang skip | 37 file format; pytest exit 0 |
+| Frontend lint | `make web-lint` | Pass | ESLint exit 0 |
+| Frontend build/type check | `make web-build` | Pass | Next.js 16.2.12 và TypeScript hoàn tất |
+| Pure-domain isolation | `uv run pytest backend/tests/unit/domain -q` | Exit 0; 4 test đang skip | Chưa đo behavior domain |
+| Feature quickstart | `specs/001-core-interaction-check/quickstart.md` | Chưa chạy | — |
+| Review artifact trước code | Đối chiếu spec/plan/tasks/contract/model | Pass tại thời điểm ghi; 0 CRITICAL/HIGH | 19 FR và 8 SC map vào 45 task |
+| Tính toàn vẹn GATE | `shasum -a 256 -c .github/gate-1.sha256` | Pass | 4 file submitted khớp checksum |
 
-## 3. User Feedback
+## Phát hiện và xử lý tiếp theo
 
-| User | Feedback | Rating |
-|------|----------|--------|
-| [User 1] | [feedback] | [1-5] |
-| [User 2] | [feedback] | [1-5] |
-
-## 4. Demo Results
-
-- Ngày demo: [YYYY-MM-DD]
-- Người tham gia: [số người]
-- Feedback chung: [tóm tắt]
-- Issues phát hiện: [danh sách]
-
-## 5. Action Items
-
-- [ ] [Cần cải thiện 1]
-- [ ] [Cần cải thiện 2]
+Mỗi case fail phải ghi Jira ticket sở hữu, root cause, accepted risk hoặc fix, ngày chạy lại
+và evidence mới. Cập nhật bảng trên ngay khi có measurement thật.

@@ -1,54 +1,34 @@
-# Weekly Journal — Team [Tên Team]
+# Nhật ký hằng tuần — Cuvée Tech
 
-> Ghi lại mỗi tuần: học được gì, khó khăn gì, quyết định gì, kế hoạch tiếp.
+Mỗi tuần ghi một reflection có evidence. Jira quản lý sprint và assignment; deliverable này
+ghi điều team học được và thay đổi tạo ra từ bài học đó.
 
----
+## Mẫu entry
 
-## Week 1: [Ngày bắt đầu] - [Ngày kết thúc]
+### Tuần N — YYYY-MM-DD đến YYYY-MM-DD
 
-### Mục tiêu tuần này
-- [ ] [Mục tiêu 1]
-- [ ] [Mục tiêu 2]
-- [ ] [Mục tiêu 3]
+#### Kết quả dự kiến
 
-### Đã hoàn thành
-- [thành quả 1]
-- [thành quả 2]
+- Mô tả outcome cho người dùng hoặc kỹ thuật, không sao chép danh sách Jira ticket.
 
-### Khó khăn & Giải pháp
-| Khó khăn | Giải pháp | Kết quả |
-|----------|-----------|---------|
-| [mô tả] | [cách xử lý] | [output] |
+#### Bằng chứng đã bàn giao
 
-### Bài học
-- [bài học 1]
-- [bài học 2]
+- Link pull request đã merge, artifact đã validate, measurement hoặc demo.
 
-### Kế hoạch tuần sau
-- [ ] [task 1]
-- [ ] [task 2]
+#### Khó khăn và cách xử lý
 
----
+| Khó khăn cụ thể | Cách team xử lý | Kết quả/rủi ro còn lại |
+|---|---|---|
+| Mô tả vấn đề | Nêu thử nghiệm hoặc quyết định | Link evidence |
 
-## Week 2: [Ngày bắt đầu] - [Ngày kết thúc]
+#### Bài học và quyết định
 
-### Mục tiêu tuần này
-- [ ] [Mục tiêu 1]
+- Ghi bài học có thể tái sử dụng; link ADR nếu team chấp nhận quyết định khó đảo ngược.
 
-### Đã hoàn thành
--
+#### Trọng tâm tuần tới
 
-### Khó khăn & Giải pháp
-| Khó khăn | Giải pháp | Kết quả |
-|----------|-----------|---------|
-| | | |
-
-### Bài học
--
-
-### Kế hoạch tuần sau
--
+- Tóm tắt outcome dự kiến và link Jira sprint/ticket liên quan.
 
 ---
 
-<!-- Tiếp tục copy block trên cho Week 3, 4, 5, 6 -->
+Chưa có entry hằng tuần. Thêm entry đầu tiên có ngày tháng phía trên dòng này.

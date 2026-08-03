@@ -28,19 +28,23 @@ declare global {
     quote: string;
     /** Nguồn: tên tài liệu / biệt dược */
     source: string;
-    sourceUrl?: string;
+    sourceUrl: string;
     page?: number;
+    section?: string;
+    chunkId: string;
   }
 
   interface IInteractionItem {
     id: string;
+    evidenceVersionId: string;
     kind: TInteractionKind;
     severity: TSeverity;
-    reviewStatus: TReviewStatus;
+    reviewStatus: Exclude<TReviewStatus, "rejected">;
     /** Vế thứ nhất — luôn là thuốc */
     subject: string;
     /** Vế thứ hai — thuốc hoặc thực phẩm */
     object: string;
+    pairKey?: string;
     mechanism?: string;
     consequence?: string;
     management?: string;
@@ -58,8 +62,22 @@ declare global {
 
   interface IInteractionCheckResponse {
     items: IInteractionItem[];
-    /** Cặp/khoá tra không tìm thấy dữ liệu — hiển thị "chưa có dữ liệu", KHÔNG suy đoán */
-    notFound: string[];
+    /** Lookup không đủ dữ liệu — hiển thị "chưa có dữ liệu", KHÔNG suy đoán */
+    unavailable: IUnavailableResult[];
+  }
+
+  type TUnavailableReason =
+    | "missing-record"
+    | "missing-citation"
+    | "source-unavailable"
+    | "below-threshold";
+
+  interface IUnavailableResult {
+    key: string;
+    kind: TInteractionKind;
+    subject: string;
+    object: string;
+    reason: TUnavailableReason;
   }
 
   interface IInteractionsGetAllRequest extends IPaginatedRequest {
@@ -74,11 +92,20 @@ declare global {
   }
 
   interface IDrugSearchRequest {
-    keyword: string;
+    q: string;
     limit?: number;
   }
 
   interface IDrugSearchResponse {
-    items: IDrugItem[];
+    query: string;
+    candidates: IDrugCandidate[];
+    requiresConfirmation: boolean;
+  }
+
+  interface IDrugCandidate {
+    drugId: string;
+    brandName: string;
+    ingredient: string;
+    confidence: number;
   }
 }

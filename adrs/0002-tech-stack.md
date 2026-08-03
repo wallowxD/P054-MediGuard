@@ -1,58 +1,33 @@
-# ADR 0002 — Technology stack
+# ADR 0002 — Technology stack ban đầu
 
-- **Status:** Accepted
-- **Date:** 2026-08-02
+- **Trạng thái:** Bị thay thế một phần bởi ADR 0013
+- **Ngày:** 2026-08-02
 
-## Decision
+## Quyết định ban đầu
 
-| Layer | Choice | Short reason |
-|---|---|---|
-| Agent | LangGraph + LangChain | Required by the programme; a state graph fits a multi-step branching flow |
-| RAG | ChromaDB + OpenAI embeddings + pypdf | Chroma runs locally with no infrastructure to stand up, and is fine for ~1073 medicines |
-| Backend | FastAPI + Uvicorn, Python 3.11 | Async, and it generates OpenAPI, which feeds `types.gen.ts` |
-| Name matching | **rapidfuzz + unidecode** | See below |
-| Frontend | Next.js 16 App Router + React 19 + strict TypeScript | |
-| Styling | Tailwind v4 + shadcn/ui | Dark mode and responsiveness are graded |
-| Database | PostgreSQL 16 (prod) / SQLite (dev), SQLAlchemy + Alembic | |
-| Python tooling | **uv** (workspace) + ruff + pytest | |
-| Node tooling | **Yarn 4** via corepack | |
-| DevOps | Docker Compose + GitHub Actions | |
+| Tầng | Lựa chọn |
+|---|---|
+| Agent | LangGraph + LangChain |
+| RAG | ChromaDB + OpenAI embeddings + pypdf |
+| Backend | FastAPI + Uvicorn, Python 3.11 |
+| Chuẩn hóa tên | rapidfuzz + unidecode |
+| Frontend | Next.js 16 + React 19 + strict TypeScript |
+| UI | Tailwind v4 + shadcn/ui |
+| Database | PostgreSQL production / SQLite development, SQLAlchemy + Alembic |
+| Tooling | uv workspace + ruff + pytest · Yarn 4 |
+| DevOps | Docker Compose + GitHub Actions |
 
-## Two choices that need explaining
+Fuzzy matching ký tự được chọn cho tên thuốc tiếng Việt vì mục tiêu là giống chính tả,
+không phải gần nghĩa. Root `pyproject.toml` là uv virtual workspace để `.venv` luôn được
+tạo tại root, phù hợp hook ghi log.
 
-### rapidfuzz + unidecode rather than embeddings for drug-name matching
+## Ghi chú thay thế
 
-The CSV column names are Vietnamese **without diacritics** (`Biet duoc`,
-`Hoat chat - Ham luong`); the JSON content is Vietnamese **with diacritics**. Users type
-whatever they type.
+ADR 0013 thay lựa chọn production database/vector store và chốt topology OCR/model. Các
+lựa chọn ngôn ngữ, framework, name matching và toolchain còn lại vẫn có hiệu lực.
 
-For proper nouns, fuzzy matching on diacritic-stripped strings beats embeddings.
-Embeddings pull together words with *similar meaning*; here we need words with *similar
-spelling*. "Paracetamol" and "Acetaminophen" are semantically close, but a user who types
-"paracetamol" must get brand names containing paracetamol, not something merely related.
+## Hệ quả
 
-### A uv workspace with a virtual root
-
-The root `pyproject.toml` has **no `[project]` table** — it is a virtual workspace root
-whose only member is `backend/`.
-
-The reason is specific: **uv always creates `.venv` at the workspace root**, and the
-programme's `scripts/_pyrun.sh` only looks for a virtualenv at the repository root. If
-`pyproject.toml` lived inside `backend/`, the virtualenv would be created at
-`backend/.venv`, the AI logging hooks would not run, and **the team would lose AI-log
-marks with no error message anywhere**.
-
-This arrangement keeps the hooks working without editing a single line under `scripts/`,
-which we are not allowed to modify.
-
-## Consequences
-
-- `.env` and `.venv/` **must** stay at the repository root
-- Every Python command runs from the root: `uv run …`, or through `make`
-- The frontend pins Yarn 4 via `packageManager` — see [ADR 0008](0008-toolchain-version-pins.md)
-
-## Still open
-
-- The **vision model** used to extract interactions from PDF leaflets has not been chosen
-- The embeddings provider may change if cost becomes a problem — it is isolated inside
-  `embeddings/`
+- ✅ Toolchain thống nhất và sinh OpenAPI cho frontend.
+- ✅ Domain test không phụ thuộc dịch vụ ngoài.
+- ❌ Cấu hình monorepo hai ngôn ngữ cần tài liệu rõ.

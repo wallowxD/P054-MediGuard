@@ -21,15 +21,14 @@ Commit 7 ngày qua:
 
 1. Đọc `JOURNAL.md` — nắm định dạng và xem tuần trước đặt mục tiêu gì.
 2. Đọc `WORKLOG.md` phần 7 ngày qua — đây là nguồn chi tiết hơn git log.
-3. Soạn block theo đúng cấu trúc sẵn có:
-   - **Mục tiêu tuần này** — lấy từ mục *Kế hoạch tuần sau* của block tuần trước.
-     Tick `[x]` cái đã xong, để trống cái chưa.
-   - **Đã hoàn thành** — thành quả thật, có bằng chứng trong git/WORKLOG.
-   - **Khó khăn & Giải pháp** — bảng. Chỉ điền khi **thật sự** truy được dấu vết
+3. Soạn block theo đúng cấu trúc hiện có:
+   - **Kết quả dự kiến** — lấy từ trọng tâm tuần trước hoặc Jira milestone liên quan.
+   - **Evidence đã bàn giao** — thành quả thật, truy được trong Git/WORKLOG/Jira.
+   - **Khó khăn và cách xử lý** — bảng. Chỉ điền khi **thật sự** truy được dấu vết
      (commit revert, fix lặp lại, refactor lớn, PR sửa nhiều lần). Không suy diễn.
-   - **Bài học** — rút ra từ quyết định kỹ thuật thật trong tuần. Tránh câu sáo rỗng
+   - **Bài học và quyết định** — rút ra từ quyết định kỹ thuật thật trong tuần. Tránh câu sáo rỗng
      kiểu "teamwork rất quan trọng".
-   - **Kế hoạch tuần sau** — đối chiếu với milestone trong PRD:
+   - **Trọng tâm tuần tới** — đối chiếu với milestone trong PRD:
      M1 Foundation (hết tuần 2) → M2 Core flow (hết tuần 3) → M3 MVP (hết tuần 4)
      → M4 Polish (hết tuần 6).
 4. Chèn vào `JOURNAL.md`, giữ thứ tự Week tăng dần.
@@ -38,5 +37,5 @@ Commit 7 ngày qua:
 
 - Không bịa khó khăn hay bài học cho đủ mục. Không có thì để trống và **nói cho user
   biết mục nào cần họ tự điền** — người chấm nhìn ra ngay văn AI viết cho đủ chỗ.
-- Placeholder `[Tên Team]` → **Cuvée Tech**.
+- Dùng tên team **Cuvée Tech**.
 - Chỉ sửa `JOURNAL.md`.

@@ -46,13 +46,20 @@ class Settings(BaseSettings):
 
     # LLM
     openai_api_key: str = ""
-    model_name: str = "gpt-4o-mini"
-    vision_model: str = "gpt-4o"
+    model_name: str = "gpt-4o"
     llm_temperature: float = Field(default=0.0, ge=0.0, le=2.0)
+
+    # OCR providers
+    google_api_key: str = ""
+    dashscope_api_key: str = ""
+    dashscope_base_url: str = ""
 
     # Data
     database_url: str = "sqlite:///./data/app.db"
-    chroma_persist_dir: str = "./data/chroma"
+    supabase_url: str = ""
+    supabase_service_role_key: str = ""
+    qdrant_url: str = ""
+    qdrant_api_key: str = ""
 
     @property
     def rag(self) -> dict[str, Any]:

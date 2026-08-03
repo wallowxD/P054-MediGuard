@@ -2,7 +2,6 @@
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getProfileRequest, registerRequest } from "@/services/auth";
-import { withApiTransform } from "./utils";
 
 export const authKeys = {
   all: ["auth"] as const,
@@ -12,7 +11,7 @@ export const authKeys = {
 export const useProfile = (enabled: boolean = true) =>
   useQuery({
     queryKey: authKeys.profile(),
-    queryFn: withApiTransform(() => getProfileRequest()),
+    queryFn: getProfileRequest,
     enabled,
     staleTime: 5 * 60 * 1000,
   });

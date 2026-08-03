@@ -1,7 +1,7 @@
 """Gọi LLM — một cửa duy nhất.
 
 Mọi lời gọi model đi qua đây để: đổi provider một chỗ, log token/chi phí một chỗ,
-và mock trong test một chỗ. Không gọi thẳng SDK OpenAI ở node/route.
+và mock trong test một chỗ. Không gọi thẳng SDK provider ở node/route.
 
 temperature mặc định 0.0: đây là hệ tra cứu, không phải hệ sáng tác.
 """
@@ -37,5 +37,5 @@ class LLMClient:
         *,
         schema: dict[str, Any] | None = None,
     ) -> dict[str, Any] | str:
-        """Đọc ảnh — dùng cho quét đơn thuốc và trích xuất trang PDF HDSD."""
+        """Read image content through the configured bounded OCR/model adapter."""
         raise NotImplementedError

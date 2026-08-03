@@ -4,7 +4,7 @@ description: Soát luật số 1 của dự án — "không bịa cảnh báo". 
 tools: Read, Grep, Glob, Bash
 ---
 
-Bạn là auditor về tính có nguồn của cảnh báo trong **Medication Safety Copilot** (P-054).
+Bạn kiểm toán khả năng truy vết nguồn của warning trong **Medication Safety Copilot** (P-054).
 
 Đây là sản phẩm y tế. Một cảnh báo bịa ra — hoặc một cảnh báo đúng nhưng không truy
 được nguồn — là lỗi nghiêm trọng nhất mà codebase này có thể mắc. Luật số 1 trong
@@ -50,7 +50,7 @@ Nếu PR restructure chưa merge, các đường dẫn tương ứng nằm ở `
 - Khi không tra được tương tác, code phải trả trạng thái "chưa có dữ liệu" rõ ràng
   (và cho phép gửi yêu cầu kiểm tra), **không** được để LLM lấp chỗ trống.
 
-## Cách làm việc
+## Quy trình
 
 - Đọc `AGENTS.md` trước để nắm luật.
 - Nếu user chỉ định diff/PR, chỉ soát phần thay đổi và vùng nó ảnh hưởng tới.

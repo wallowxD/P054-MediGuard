@@ -1,75 +1,30 @@
-# ADRs — Architecture Decision Records
+# Hồ sơ quyết định kiến trúc (ADR)
 
-A record of **decisions we made**, with the **reasoning** and the **trade-offs**.
+ADR lưu quyết định kỹ thuật khó đảo ngược, lý do và trade-off. Không dùng ADR để mô tả
+delivery status hoặc catalog quy ước code.
 
-The point is not to show off the architecture. It is so that six months later — or a fresh
-AI session — nobody reopens a carefully considered decision simply because no one
-remembers why it was made.
+## Chỉ mục
 
-## Index
-
-| # | Decision | Status |
+| # | Quyết định | Trạng thái |
 |---|---|---|
-| [0001](0001-architecture-style.md) | Three-tier architecture with a RAG-pipeline layout | Accepted |
-| [0002](0002-tech-stack.md) | Technology stack | Accepted |
-| [0003](0003-folder-structure.md) | Workspace directory structure | Accepted |
-| [0004](0004-drug-drug-lookup-not-similarity.md) | ★ Drug–drug uses the table, never similarity search | Accepted |
-| [0005](0005-human-in-the-loop-non-blocking.md) | Human-in-the-loop must not block the flow | Accepted |
-| [0006](0006-citation-required-for-every-warning.md) | No citation, no warning | Accepted |
-| [0007](0007-frontend-structure-and-auth.md) | Frontend structure and authorisation | Accepted |
-| [0008](0008-toolchain-version-pins.md) | Pinning frontend toolchain versions | Accepted |
-| [0009](0009-coding-conventions.md) | Coding conventions and library choices | Accepted |
+| [0001](0001-architecture-style.md) | Kiến trúc ba tầng + backend pipeline | Bị thay thế một phần bởi 0013 |
+| [0002](0002-tech-stack.md) | Technology stack ban đầu | Bị thay thế một phần bởi 0013 |
+| [0003](0003-folder-structure.md) | Workspace hai ngôn ngữ | Bị thay thế một phần bởi 0010/0014 |
+| [0004](0004-drug-drug-lookup-not-similarity.md) | Drug-drug exact lookup | Nguồn dữ liệu bị thay bởi 0012 |
+| [0005](0005-human-in-the-loop-non-blocking.md) | Review không chặn hiển thị | Được chấp nhận |
+| [0006](0006-citation-required-for-every-warning.md) | Mọi cảnh báo có citation | Được chấp nhận |
+| [0007](0007-frontend-structure-and-auth.md) | Frontend structure và authorization | Được chấp nhận |
+| [0008](0008-toolchain-version-pins.md) | Ghim frontend toolchain | Được chấp nhận |
+| [0009](0009-coding-conventions.md) | Tách ADR khỏi code guide | Được chấp nhận |
+| [0010](0010-adopt-spec-kit.md) | Áp dụng GitHub Spec Kit | Bị thay thế bởi 0014 |
+| [0011](0011-direct-api-responses.md) | API trả payload trực tiếp | Được chấp nhận |
+| [0012](0012-reviewed-leaflet-interaction-records.md) | Exact pair có evidence từ leaflet | Được chấp nhận |
+| [0013](0013-cloud-data-and-model-topology.md) | Topology cloud/OCR/model | Được chấp nhận |
+| [0014](0014-defer-spec-kit.md) | Tạm dừng Spec Kit | Được chấp nhận |
 
-★ **[0004](0004-drug-drug-lookup-not-similarity.md) matters most.** Breaking it produces
-warnings that carry a genuine source but name the wrong pair of drugs — a failure that
-passes every other check we have.
+## Quy tắc
 
-## ADR or guide? — where a rule belongs
-
-Conventions have two halves, and they go in different places:
-
-| You are writing | Goes in | Because |
-|---|---|---|
-| *Why* we chose a tool, and what we rejected | an **ADR** here | Decided once; a historical record |
-| The catalogue — naming tables, which library for which job | [`docs/code-style.md`](../docs/code-style.md) | Grows every time a library is added |
-
-**A fact must not appear in both.** If it does, one copy is already wrong — delete it
-rather than trying to keep them in step. See [ADR 0009](0009-coding-conventions.md), which
-records this split itself.
-
-Rule of thumb: if adding a library would make you edit the file, it is a guide, not an ADR.
-
-## When to write a new ADR
-
-Write one when a decision is **hard to reverse** or when **someone will later ask why**:
-
-- Adopting or rejecting a library or a service
-- Moving a boundary between layers
-- Accepting a trade-off that looks wrong from the outside
-- **Not** doing the conventional thing (say explicitly why not)
-
-Do not write an ADR for things the code already answers (function names, where a single
-file lives).
-
-## Rules
-
-- **Numbers only go up**, and are never reused
-- **Never delete or rewrite an old decision.** If we change our mind, write a new ADR and
-  mark the old one `Superseded by NNNN`. The history of changing our mind is information too
-- The **negative consequences** section is mandatory. An ADR with only upsides has not been
-  thought through
-
-## Template
-
-```markdown
-# ADR NNNN — <Title>
-
-- Status: Proposed | Accepted | Superseded by NNNN
-- Date:
-
-## Context
-## Decision
-## Why
-## Consequences   (both ✅ and ❌)
-## Alternatives considered
-```
+- Số chỉ tăng, không tái sử dụng.
+- Không xóa hoặc viết lại lịch sử quyết định; tạo ADR mới và đánh dấu bị thay thế.
+- Bắt buộc nêu cả hệ quả tích cực và tiêu cực.
+- “Tại sao chọn/reject” đặt trong ADR; “viết code thế nào” đặt trong `docs/`.

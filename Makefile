@@ -9,7 +9,7 @@ help:
 	@echo "test         — pytest backend/tests"
 	@echo "lint         — ruff check"
 	@echo "format       — ruff format"
-	@echo "check        — lint + format --check + test (giống CI)"
+	@echo "check        — lint + format --check + test (giống backend CI)"
 	@echo "ingest-pilot — trích xuất thử 50 thuốc theo PRD"
 	@echo "up / down    — docker compose"
 	@echo ""

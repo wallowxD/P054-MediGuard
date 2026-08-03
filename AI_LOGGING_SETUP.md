@@ -1,221 +1,80 @@
-# 📊 AI Logging Setup - Hướng dẫn cho Team Members
+# Thiết lập ghi log sử dụng AI
 
-Hướng dẫn chi tiết để cấu hình AI logging tracking cho dự án AI20K.
+Repository tự động ghi nhận việc sử dụng AI bằng tool hook và pre-push hook. Mỗi thành viên
+chỉ thiết lập từ repository root để log được gắn đúng danh tính.
 
-> ⚠️ **QUAN TRỌNG:** Các logs được ghi danh theo `git config user.email`. Nếu email sai, logs sẽ tính sang người khác!
+## Thiết lập một lần
 
----
+### 1. Mở đúng workspace
 
-## 🚀 Quick Setup (6 bước)
+Mở thư mục `P-054/`. Không mở riêng `backend/` hoặc `frontend/` vì hook dùng đường dẫn tương
+đối từ root và có thể không chạy mà không báo lỗi.
 
-### 1️⃣ Pull code mới nhất
-
-```bash
-git checkout dev
-git pull origin dev
-```
-
----
-
-### 2️⃣ ⚠️ Cấu hình Git Email (QUAN TRỌNG NHẤT)
-
-**Logs được ghi danh theo email này. Sai email → log bị tính sang người khác!**
+### 2. Cấu hình email đã đăng ký
 
 ```bash
-git config user.email "email-cua-ban@gmail.com"
 git config user.name "Tên của bạn"
+git config user.email "email-da-dang-ky@example.com"
+git config user.email
 ```
 
-**Kiểm tra lại:**
+Lệnh cuối phải in đúng email đã đăng ký với chương trình; hệ thống dùng giá trị này để quy
+thuộc đóng góp.
+
+### 3. Cài thư viện phụ thuộc
+
 ```bash
-git config user.email   # Phải đúng email bạn đăng ký với BTC
+make install
 ```
 
----
+uv workspace tạo `.venv/` tại repository root. Không tạo `backend/.venv/` riêng.
 
-### 3️⃣ Tạo Virtual Environment với uv
-
-**(Bắt buộc — nếu thiếu venv thì hook không đọc được .env)**
+### 4. Cấu hình biến môi trường cá nhân
 
 ```bash
-# Tạo venv
-uv venv
-
-# Kích hoạt venv
-source .venv/bin/activate
-
-# Cài dependencies
-uv pip install -r requirements.txt
-```
-
----
-
-### 4️⃣ Tạo .env file với key riêng của bạn
-
-```bash
-# Copy template
 cp .env.example .env
 ```
 
-**Mở `.env` và cập nhật:**
+Điền `OPENAI_API_KEY` khi cần và `AI_LOG_API_KEY` từ invitation cá nhân. Không dùng key của
+người khác, không chia sẻ `.env` và không commit file này.
 
-```env
-# ---- LLM Configuration ----
-OPENAI_API_KEY=sk-proj-YOUR_KEY_HERE
-
-# ---- AI Hook Logging ----
-AI_LOG_API_KEY=ai20k_YOUR_PERSONAL_KEY_HERE
-# ⚠️ Lấy từ link mời của BTC — KHÔNG dùng key của người khác!
-
-# Những config khác giữ nguyên
-AI_LOG_SERVER=https://ai-logs.note.transformerlabs.ai/api/ingest
-```
-
-**⚠️ CẢNH BÁO:**
-- ❌ Đừng commit `.env` vào git (chứa API keys)
-- ❌ Đừng share `.env` với người khác
-- ❌ Đừng dùng key của bạn bạn
-
----
-
-### 5️⃣ Cài Git Pre-Push Hook
-
-**(Hook không được clone theo repo — phải chạy thủ công)**
+### 5. Cài Git hook
 
 ```bash
 bash scripts/setup_hooks.sh
 ```
 
-**Khi chạy thành công:**
-```
-✓ Pre-push hook installed
-✓ Logs sẽ tự động submit khi git push
-```
+Chạy một lần sau khi clone vì `.git/hooks/` không được version control.
 
----
+## Vận hành bình thường
 
-### 6️⃣ Test ngay (không cần push)
+Hook của các AI tool được hỗ trợ tự ghi log. Khi `git push`, pre-push hook gửi log còn chờ
+trước khi cho phép push tiếp tục.
 
-```bash
-bash scripts/_pyrun.sh scripts/submit_log.py
-```
+Không chạy thủ công `scripts/log_hook.py`, `scripts/log_antigravity.py` hoặc
+`scripts/submit_log.py`; không sửa/xóa `.ai-log/`, không đổi file trong `scripts/` và không
+dùng `git push --no-verify`.
 
-**Nếu thấy output:**
-```
-[ai-log] Submitted 25 entries → 202
-```
+Với web AI không có hook, làm theo [quy trình ghi log thủ công](.agents/workflows/log.md).
 
-✅ **OK!** Logs được submit thành công.
+## Kiểm tra thiết lập
 
-Từ giờ:
-- ✓ Mỗi lần dùng Claude Code → logs được ghi
-- ✓ Mỗi lần `git push` → logs tự động gửi lên server
-- ✓ Dashboard sẽ update
+- Workspace root là `P-054/`.
+- `git config user.email` là email đã đăng ký.
+- `.venv/` và `.env` nằm tại root.
+- `.env` chứa `AI_LOG_API_KEY` cá nhân.
+- `.git/hooks/pre-push` tồn tại.
 
----
+Bằng chứng bình thường là một lần `git push` không bypass hook. Nếu pre-push lỗi, lưu đầy
+đủ output và báo leader; tuyệt đối không bỏ qua hook.
 
-## 📝 Cách hoạt động
+## Sự cố thường gặp
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Bạn dùng Claude Code (prompt, tool)                       │
-│                    ↓                                         │
-│  Hook: log_hook.py                                         │
-│  → Ghi vào .ai-log/session.jsonl                           │
-│                    ↓                                         │
-│  Khi bạn: git push                                         │
-│  Hook: submit_log.py                                       │
-│  → Gửi logs lên ai-logs.note.transformerlabs.ai/api/ingest │
-│  → Xác thực với AI_LOG_API_KEY                            │
-│                    ↓                                         │
-│  Dashboard của BTC cập nhật logs của bạn                    │
-└─────────────────────────────────────────────────────────────┘
-```
+| Hiện tượng | Nguyên nhân thường gặp | Cách xử lý |
+|---|---|---|
+| Log không gắn cho thành viên | Sai Git email | Sửa `git config user.email` trước khi làm tiếp |
+| Không thấy hook local chạy | Mở workspace dưới repository root | Mở lại `P-054/` và cài lại hook |
+| Hook không nạp được môi trường | Thiếu `.venv/` hoặc `.env` ở root | Chạy `make install` và cấu hình `.env` |
+| Pre-push không gửi được log | Sai key, lỗi mạng hoặc lỗi hook | Giữ nguyên lỗi và báo leader; không bypass |
 
----
-
-## 🔍 Kiểm tra & Troubleshooting
-
-### Logs đang được ghi không?
-
-```bash
-# Xem số entries
-wc -l .ai-log/session.jsonl
-
-# Xem entry mới nhất
-tail -1 .ai-log/session.jsonl | python3 -m json.tool
-```
-
-### Hook có được cài không?
-
-```bash
-cat .git/hooks/pre-push
-```
-
-Nếu file không tồn tại → chạy lại: `bash scripts/setup_hooks.sh`
-
-### Test submit logs:
-
-```bash
-source .venv/bin/activate
-bash scripts/_pyrun.sh scripts/submit_log.py
-```
-
-**Status codes:**
-- `202` → ✅ Success
-- `401` → ❌ API key sai
-- `422` → ❌ Format logs sai
-- `Timeout` → ⚠️ Server chậm (logs sẽ gửi lại khi push)
-
-### Kiểm tra git config:
-
-```bash
-git config user.email
-git config user.name
-```
-
----
-
-## ⚡ Tips & Best Practices
-
-| Tip | Mô tả |
-|-----|-------|
-| **Mỗi member cần key riêng** | Không share AI_LOG_API_KEY |
-| **Email phải đúng** | Sai email → logs bị tính sai người |
-| **Commit .env.example** | Có, nhưng không commit `.env` |
-| **Hook tự động chạy** | Mỗi `git push` tự động submit logs |
-| **Logs lưu local + remote** | `.ai-log/` lưu local, submit lên server |
-
----
-
-## 📞 Vấn đề thường gặp
-
-**Q: "No AI logs yet" vẫn hiện dù đã set up**
-- A: Logs được ghi local ✓, nhưng chưa submit lên server. Chạy `git push` hoặc test bằng `bash scripts/_pyrun.sh scripts/submit_log.py`
-
-**Q: Sao logs không ghi được?**
-- A: Kiểm tra `.venv/` có tồn tại không. Nếu không → chạy `uv venv && uv pip install -r requirements.txt`
-
-**Q: Đổi email sau này có được không?**
-- A: Được, nhưng logs cũ vẫn ghi danh với email cũ. Nên set đúng email từ lần đầu.
-
-**Q: Xóa .ai-log/ được không?**
-- A: Không nên. Chứa lịch sử logs. Nếu xóa → logs bị mất.
-
----
-
-## 📋 Checklist trước khi bắt đầu dev
-
-- [ ] `git config user.email` = email đúng
-- [ ] `.venv/` tồn tại (`uv venv` đã chạy)
-- [ ] `requirements.txt` đã cài (`uv pip install -r requirements.txt`)
-- [ ] `.env` file tồn tại
-- [ ] `AI_LOG_API_KEY` trong `.env` là key riêng của bạn
-- [ ] Git hook cài sẵn (`bash scripts/setup_hooks.sh`)
-- [ ] Test submit OK (`bash scripts/_pyrun.sh scripts/submit_log.py` → 202)
-
----
-
-**🎯 Khi tất cả xong → bạn sẵn sàng dev! Logs sẽ tự động tracking.**
-
-Câu hỏi? Liên hệ BTC hoặc team lead.
+Logging là hạ tầng của chương trình. Thành viên chỉ cấu hình và sử dụng, không chỉnh sửa.

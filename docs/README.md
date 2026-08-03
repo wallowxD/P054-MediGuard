@@ -1,35 +1,26 @@
-# Docs — guides and reference
+# Tài liệu kỹ thuật
 
-How to work on the codebase. **What** and **why** live in [`specs/`](../specs/); design
-decisions live in [`adrs/`](../adrs/); schedule lives in [`planning/`](../planning/).
+`docs/` mô tả cách làm việc với codebase. **Xây gì và tại sao** nằm trong `specs/`; quyết
+định kiến trúc nằm trong `adrs/`; delivery status nằm trong Jira `VMEC`.
 
-`backend/` and `frontend/` contain source code only — their documentation lives here, so
-all project context sits in one place outside the codebase.
-
-| File | Contents |
+| File | Nội dung |
 |---|---|
-| [code-style.md](code-style.md) | **Which library for which job, and how to name things** — read this first |
-| [backend.md](backend.md) | Backend structure, conventions, where code goes, how to run it |
-| [frontend.md](frontend.md) | Frontend structure, Yarn 4 rules, Next 16 gotchas, non-obvious decisions |
-| [architecture_diagram.md](architecture_diagram.md) | System diagram and data flow (graded deliverable #3) |
-| [runbook.md](runbook.md) | How to run things, and what to do when they break |
-| [guide/](guide/) | The AI20K Technical Guidebook, supplied by the programme — reference material, not ours to edit |
+| [code-style.md](code-style.md) | Thư viện dùng cho từng trách nhiệm, cách đặt tên và quy ước code |
+| [workflow.md](workflow.md) | Workflow Jira + spec/plan/tasks được duyệt + PR gate |
+| [ai-development.md](ai-development.md) | Cách cung cấp context và kiểm soát AI agent khi implement |
+| [backend.md](backend.md) | Cấu trúc backend, quy ước, lệnh chạy |
+| [frontend.md](frontend.md) | Cấu trúc frontend, Yarn 4, Next.js 16 và layering |
+| [architecture_diagram.md](architecture_diagram.md) | Sơ đồ hệ thống và data flow |
+| [runbook.md](runbook.md) | Cách vận hành và xử lý sự cố |
+| [guide/](guide/) | Technical Guidebook của chương trình — chỉ tham khảo, không sửa |
 
-## Editing these files
+## Trước khi sửa code
 
-`docs/` is where **living** documentation goes — anything you would update when a library,
-a command or a procedure changes. Decisions and their rationale go in
-[`adrs/`](../adrs/) instead, and are never rewritten.
+- Mọi thay đổi → đọc [code-style.md](code-style.md).
+- Dùng AI agent → đọc [ai-development.md](ai-development.md).
+- Backend → đọc [backend.md](backend.md).
+- Frontend → đọc [frontend.md](frontend.md).
+- Warning path → đọc ADR 0012, 0005 và 0006.
 
-So: a new naming rule → [code-style.md](code-style.md). Changing *which* library we use for
-something → a new ADR, then update the guide to match.
-
-## Before you touch code
-
-- Any code at all → read [code-style.md](code-style.md)
-- Backend work → also read [backend.md](backend.md)
-- Frontend work → also read [frontend.md](frontend.md)
-- Anything on the warning path → also read
-  [ADR 0004](../adrs/0004-drug-drug-lookup-not-similarity.md),
-  [0005](../adrs/0005-human-in-the-loop-non-blocking.md) and
-  [0006](../adrs/0006-citation-required-for-every-warning.md)
+Tài liệu sống đặt trong `docs/`; quyết định và lý do đặt trong ADR. Khi tài liệu lệch code,
+sửa cùng pull request với implementation.

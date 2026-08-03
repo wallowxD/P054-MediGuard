@@ -10,7 +10,6 @@ import {
   getInteractionsRequest,
   searchDrugsRequest,
 } from "@/services/interactions";
-import { withApiTransform } from "./utils";
 
 // ── Query Keys ───────────────────────────────────────────────────────────────
 // Phân cấp để invalidate có chọn lọc:
@@ -30,7 +29,7 @@ export const interactionKeys = {
 export const useInteractions = (params: IInteractionsGetAllRequest, enabled: boolean = true) =>
   useQuery({
     queryKey: interactionKeys.list(params),
-    queryFn: withApiTransform(() => getInteractionsRequest(params)),
+    queryFn: () => getInteractionsRequest(params),
     enabled,
     staleTime: 1 * 60 * 1000,
     gcTime: 5 * 60 * 1000,
@@ -39,7 +38,7 @@ export const useInteractions = (params: IInteractionsGetAllRequest, enabled: boo
 export const useInteraction = (id: string, enabled: boolean = true) =>
   useQuery({
     queryKey: interactionKeys.detail(id),
-    queryFn: withApiTransform(() => getInteractionDetailsRequest(id)),
+    queryFn: () => getInteractionDetailsRequest(id),
     enabled: enabled && !!id,
   });
 
@@ -47,7 +46,7 @@ export const useInteraction = (id: string, enabled: boolean = true) =>
 export const useDrugSearch = (keyword: string, enabled: boolean = true) =>
   useQuery({
     queryKey: interactionKeys.drugSearch(keyword),
-    queryFn: withApiTransform(() => searchDrugsRequest({ keyword })),
+    queryFn: () => searchDrugsRequest({ q: keyword }),
     enabled: enabled && keyword.trim().length > 1,
     staleTime: 5 * 60 * 1000,
   });

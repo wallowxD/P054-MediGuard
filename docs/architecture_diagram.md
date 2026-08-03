@@ -1,135 +1,153 @@
-# Architecture
+# Kiến trúc hệ thống
 
-Deliverable #3. Update this whenever the architecture changes.
+Đây là deliverable #3 và phải được cập nhật khi kiến trúc thay đổi. Lý do ra quyết định
+nằm trong [`adrs/`](../adrs/); file này mô tả hệ thống hiện được thiết kế như thế nào.
 
-Design rationale lives in [`adrs/`](../adrs/); this file shows *what* the system looks
-like, not *why* it was chosen that way.
-
----
-
-## System overview
+## Tổng quan
 
 ```mermaid
-graph TB
-    Patient([Patient / carer]) --> UI
-    Pharmacist([Doctor / pharmacist]) --> UI
+flowchart TB
+    Patient([Bệnh nhân / người chăm sóc]) --> ReverseProxy
+    Pharmacist([Bác sĩ / dược sĩ]) --> ReverseProxy
 
-    subgraph Frontend["Frontend — Next.js 16"]
-        UI[App Router pages]
-        Proxy[proxy.ts<br/>edge access control]
-        UI --- Proxy
-    end
-
-    Proxy -->|REST /api/v1| API
+    subgraph VPS["Một VPS dự kiến — chưa provision"]
+        ReverseProxy[HTTPS reverse proxy]
+        Web[Next.js 16 App Router<br/>proxy.ts kiểm soát truy cập]
+        ReverseProxy -->|route web| Web
+        ReverseProxy -->|/api/v1| API
 
     subgraph Backend["Backend — FastAPI"]
-        API[Thin routes]
+        API[Thin route]
+        PrescriptionOCR[Adapter OCR đơn thuốc]
         Domain[domain/<br/>pure logic]
+        Workflow[agents/<br/>LangGraph xác định trước]
         Repo[db/repositories]
         Retr[retrieval/]
-        Agent[agents/<br/>LangGraph]
-        LLM[llm/llm_client<br/>single door]
+        LLM[llm/llm_client<br/>cửa duy nhất tới model]
 
+        API --> PrescriptionOCR
         API --> Domain
-        API --> Repo
-        API --> Retr
-        API --> Agent
-        Agent --> LLM
-        Agent --> Retr
+        API --> Workflow
+        Workflow --> Repo
+        Workflow --> Retr
+        Workflow --> LLM
+    end
     end
 
-    Repo --> PG[(PostgreSQL<br/>drugs · interactions<br/>citations · reviews)]
-    Retr --> Chroma[(ChromaDB<br/>leaflet chunks)]
-    LLM --> OpenAI[OpenAI API]
+    PrescriptionOCR -->|candidate thuốc chưa tin cậy| Gemini[Gemini API]
+    Repo --> PG[(Supabase PostgreSQL<br/>catalog · canonical pair<br/>citation · evidence version · review)]
+    Retr --> Qdrant[(Qdrant Cloud<br/>vector tờ hướng dẫn + evidence ID)]
+    Qdrant -->|resolve evidence có thẩm quyền| Repo
+    LLM --> GPT[GPT-4o API]
 
-    subgraph Offline["Ingestion — batch, off the request path"]
-        CSV[dataset/*.csv, *.json] --> Ing[ingestion/]
-        PDFs[PDF leaflets] --> Ing
-        Ing --> Chunk[chunking/<br/>verbatim + coordinates]
+    subgraph Offline["Ingestion batch — không chạy trên patient request path"]
+        Source[Nguồn catalog bệnh viện] --> Stage[CSV đã review và version]
+        Stage --> PDFs[Tờ hướng dẫn PDF]
+        PDFs --> Qwen[Qwen OCR adapter]
+        Qwen --> Raw[(Private Supabase Storage<br/>raw OCR có version)]
+        Qwen --> Chunk[chunking/<br/>nguyên văn + tọa độ nguồn]
         Chunk --> Emb[embeddings/]
-        Emb --> Chroma
-        Ing --> PG
+        Emb --> Qdrant
+        Chunk --> Validate[validate pair identity + evidence]
+        Validate --> PG
     end
 ```
 
-## The two lookup paths ★
+Supabase PostgreSQL là relational source of truth cho production. Qdrant chỉ là semantic
+index; nó không sở hữu pair, citation hoặc review state. Backend không gọi website người
+dùng Qwen; adapter dùng endpoint Alibaba Cloud Model Studio được cấu hình. OCR đơn thuốc
+dùng adapter Gemini riêng. URL/model ID ở config, secret nằm ngoài Git.
 
-The single most important thing to understand: **drug–drug and drug–food resolve
-differently**, and mixing them up produces warnings that cite a real source but name the
-wrong pair of drugs.
+LangGraph chạy workflow đã định nghĩa và gọi typed repository/retrieval adapter; model
+không tạo SQL hoặc tự chọn truth source. GPT-4o chỉ được dùng trong boundary trích xuất có
+schema hoặc trình bày bám nguồn, không quyết định interaction existence hay severity.
+
+## Hai đường lookup bắt buộc tách biệt
 
 ```mermaid
-graph TB
-    Q[Medicine list from the user] --> Norm[domain/normalization<br/>fuzzy match to ingredient]
-    Norm --> Pair[domain/pairing<br/>N drugs → C&#40;N,2&#41; pairs]
+flowchart TB
+    Q[Danh sách thuốc người dùng] --> Norm[domain/normalization<br/>match vào hoạt chất]
+    Norm --> Pair[domain/pairing<br/>N thuốc → C&#40;N,2&#41; cặp]
+    Pair --> Kind{Loại tương tác}
 
-    Pair --> Kind{Interaction type}
+    Kind -->|thuốc–thuốc| Table[db/repositories<br/>EXACT-KEY LOOKUP]
+    Kind -->|thuốc–thực phẩm| Vector[retrieval/<br/>semantic search có scope]
 
-    Kind -->|drug–drug| Table[db/repositories<br/>EXACT-KEY LOOKUP]
-    Kind -->|drug–food| Vector[retrieval/<br/>semantic search]
-
-    Table --> Found{Record found?}
-    Vector --> Score{Above score_threshold?}
-
-    Found -->|yes| Sev[domain/severity<br/>deterministic]
-    Found -->|no| NoData[notFound → 'no data available']
-    Score -->|yes| Sev
-    Score -->|no| NoData
-
-    Sev --> Cite{Has a verbatim citation?}
-    Cite -->|yes| Show[Show the warning<br/>+ quote + source + review status]
-    Cite -->|no| Drop[Do not render]
+    Table --> Found{Có record?}
+    Vector --> Score{Vượt score_threshold?}
+    Found -->|có| Sev[domain/severity<br/>deterministic]
+    Found -->|không| NoData[unavailable<br/>không có dữ liệu hiện tại]
+    Score -->|có| Evidence[Passage nguyên văn]
+    Score -->|không| NoData
+    Sev --> Cite{Citation hợp lệ?}
+    Evidence --> Cite
+    Cite -->|có| Show[Hiển thị warning<br/>quote + source + review status]
+    Cite -->|không| NoData
 ```
 
-Never use vector search to decide whether a **drug–drug** interaction exists — see
-[ADR 0004](../adrs/0004-drug-drug-lookup-not-similarity.md).
+Drug–drug request path tuyệt đối không dùng vector search để quyết định cặp tồn tại. Exact
+table được tạo trong ingestion từ evidence tờ hướng dẫn đã đạt điều kiện. Chi tiết tại
+[ADR 0012](../adrs/0012-reviewed-leaflet-interaction-records.md).
 
-## Review flow — non-blocking
+Drug–food không có relation table, nên retrieval trong tờ hướng dẫn của đúng thuốc là cơ
+chế phát hiện. Output vẫn phải là passage nguyên văn và vượt threshold.
+
+## Duyệt chuyên môn không chặn
 
 ```mermaid
 sequenceDiagram
-    participant P as Patient
-    participant S as System
-    participant Ph as Pharmacist
+    participant P as Bệnh nhân
+    participant S as Hệ thống
+    participant Ph as Dược sĩ
 
-    P->>S: Check these medicines
-    S-->>P: Warning + quote + "awaiting professional confirmation"
-    Note over P,S: Shown immediately — never withheld
-    par In parallel
-        Ph->>S: Open the review queue
-        Ph->>S: Approve / edit / reject
+    P->>S: Kiểm tra các thuốc này
+    S-->>P: Warning + quote + "đang chờ xác nhận chuyên môn"
+    Note over P,S: Hiển thị ngay, không giữ lại chờ duyệt
+    par Review song song
+        Ph->>S: Mở hàng đợi review
+        Ph->>S: Duyệt / chỉnh sửa / từ chối
     end
-    S-->>P: Label updates to "confirmed by a pharmacist"
+    S-->>P: Cập nhật nhãn thành "đã được dược sĩ xác nhận"
 ```
 
-A `pending` warning is displayed in full. There is deliberately no gate holding warnings
-back until approval — see [ADR 0005](../adrs/0005-human-in-the-loop-non-blocking.md).
+Warning `pending` được hiển thị đầy đủ. Không có full-gate giữ warning tới lúc phê duyệt;
+xem [ADR 0005](../adrs/0005-human-in-the-loop-non-blocking.md).
 
-## Components
+## Thành phần và trách nhiệm
 
-| Component | Technology | Purpose |
+| Thành phần | Công nghệ | Trách nhiệm |
 |---|---|---|
-| Frontend | Next.js 16, React 19, Tailwind v4 | UI, three access tiers |
-| Edge access control | `frontend/src/proxy.ts` | Blocks routes before render |
-| Backend API | FastAPI, Python 3.11 | Thin routes: validate → domain/repository → schema |
-| Pure logic | `backend/src/medsafe/domain/` | Normalisation, pairing, severity. No framework imports |
-| Agent | LangGraph | Orchestrates multi-step lookups |
-| LLM access | `llm/llm_client.py` | The single door to the model |
-| Relational store | PostgreSQL 16 (SQLite in dev) | Drugs, interactions, citations, reviews |
-| Vector store | ChromaDB | Leaflet chunks for retrieval |
-| Ingestion | `ingestion/` | Batch job; never on the request path |
+| Frontend | Next.js 16, React 19, Tailwind v4 | UI và ba access tier |
+| Edge access control | `frontend/src/proxy.ts` | Chặn route trước khi render |
+| Backend API | FastAPI, Python 3.11 | Validate, gọi application boundary, serialize schema |
+| Pure domain | `backend/src/medsafe/domain/` | Normalize, pairing, severity; không import framework |
+| Workflow | LangGraph | Điều phối lookup nhiều bước theo graph xác định trước |
+| Model access | `llm/llm_client.py` | Cửa duy nhất tới model/OCR provider |
+| Prescription OCR | Gemini adapter | Tạo candidate chưa tin cậy; user vẫn phải xác nhận |
+| Leaflet OCR | Qwen adapter | Batch extraction qua Alibaba Cloud Model Studio |
+| Relational store | Supabase PostgreSQL | Catalog, pair, citation, evidence version, review state |
+| Raw artifact | Private Supabase Storage | Raw OCR có version |
+| Vector store | Qdrant Cloud | Retrieval tờ hướng dẫn có scope và evidence pointer |
+| Ingestion | `ingestion/` | Batch job, không nằm trên request path |
 
-## Deployment
+## Triển khai
 
-`docker compose up` builds three services: `db` (Postgres 16), `backend` (uv, multi-stage,
-non-root) and `frontend` (Next standalone output, non-root). All three expose health
-checks.
+Target hiện tại là chạy container frontend, backend và HTTPS reverse proxy trên cùng một
+VPS. VPS chưa được mua/provision nên đây là hướng dự kiến, chưa phải môi trường production
+đang hoạt động. Supabase PostgreSQL/Storage, Qdrant Cloud và model provider vẫn là dịch vụ
+managed bên ngoài. Reverse proxy, domain/TLS, registry, secret, migration, backup,
+monitoring, rollback và CI/CD production chỉ được chốt sau khi leader duyệt deployment ADR.
 
-`NEXT_PUBLIC_*` variables are baked into the frontend bundle at **build** time, so they are
-passed as compose `build.args`, not runtime `environment`.
+Local dùng `docker compose up` với Postgres 16, backend uv multi-stage/non-root và Next.js
+standalone/non-root. Local PostgreSQL là môi trường phát triển, không phải production truth
+source thứ hai. Pure domain/adapter test không được cần cloud credential.
 
-## Known gaps
+Biến `NEXT_PUBLIC_*` được đóng vào frontend bundle tại build time, nên Docker Compose phải
+truyền qua `build.args`, không phải runtime `environment`.
 
-The backend currently exposes only `/health` and `/api/v1/status`. The business routers in
-`api/routes.py` are stubbed out, so the paths above describe the agreed design rather than
-running code. Progress: [`planning/backlog.md`](../planning/backlog.md).
+## Khoảng trống hiện tại
+
+Backend mới có `/health` và `/api/v1/status`; business router trong `api/routes.py` vẫn là
+scaffold. Prescription OCR và pharmacist mutation cần feature contract riêng. FastAPI
+production host, migration/rollback và production observability chưa được chốt; theo dõi
+trong Jira project `VMEC` và ghi ADR khi có quyết định khó đảo ngược.

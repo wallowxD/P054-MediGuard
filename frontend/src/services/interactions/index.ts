@@ -15,7 +15,7 @@ import { apiNotReady } from "@/queries/utils";
 
 export const checkInteractionsRequest = async (
   data: IInteractionCheckRequest
-): Promise<IApiResponse<IInteractionCheckResponse>> => {
+): Promise<IInteractionCheckResponse> => {
   // try {
   //   const apiUrl = API_BASE_URL + API_ENDPOINTS.INTERACTIONS.CHECK;
   //   const retrieved = await clientRequest.post(apiUrl, data);
@@ -29,7 +29,7 @@ export const checkInteractionsRequest = async (
 
 export const getInteractionsRequest = async (
   params: IInteractionsGetAllRequest
-): Promise<IApiResponse<IInteractionsGetAllResponse>> => {
+): Promise<IInteractionsGetAllResponse> => {
   // try {
   //   const apiUrl = API_BASE_URL + API_ENDPOINTS.INTERACTIONS.GET_ALL;
   //   const retrieved = await clientRequest.get(apiUrl, { params });
@@ -43,7 +43,7 @@ export const getInteractionsRequest = async (
 
 export const getInteractionDetailsRequest = async (
   id: string
-): Promise<IApiResponse<IInteractionItem>> => {
+): Promise<IInteractionItem> => {
   // try {
   //   const apiUrl = API_BASE_URL + API_ENDPOINTS.INTERACTIONS.GET_DETAILS(id);
   //   const retrieved = await clientRequest.get(apiUrl);
@@ -57,7 +57,7 @@ export const getInteractionDetailsRequest = async (
 
 export const searchDrugsRequest = async (
   params: IDrugSearchRequest
-): Promise<IApiResponse<IDrugSearchResponse>> => {
+): Promise<IDrugSearchResponse> => {
   // try {
   //   const apiUrl = API_BASE_URL + API_ENDPOINTS.DRUGS.SEARCH;
   //   const retrieved = await clientRequest.get(apiUrl, { params });

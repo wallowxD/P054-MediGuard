@@ -1,0 +1,55 @@
+name: Submitted GATE 1 Protection
+
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: gate-integrity-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate-integrity:
+    name: Submitted gate integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # pull_request_target intentionally loads this workflow and checksum manifest from
+      # the trusted base revision. Never execute code from the pull request in this job.
+      - name: Check out trusted base revision
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Reject every GATE 1 change in the pull request
+        if: github.event_name == 'pull_request_target'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              per_page: 100,
+            });
+            const blocked = files
+              .map((file) => file.filename)
+              .filter((path) => path === "gate/gate_1" || path.startsWith("gate/gate_1/"));
+            if (blocked.length > 0) {
+              core.setFailed(
+                `gate/gate_1 is submitted and immutable. Revert: ${blocked.join(", ")}`,
+              );
+            }
+
+      - name: Verify trusted GATE 1 checksums
+        run: sha256sum --check .github/gate-1.sha256
