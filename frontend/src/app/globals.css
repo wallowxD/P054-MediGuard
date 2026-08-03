@@ -2,8 +2,8 @@
 
 /*
  * Tailwind v4 → KHÔNG có tailwind.config.ts.
- * §8 của STRUCTURE_TEMPLATE viết cho v3 (config JS + content globs); ở v4 mọi thứ
- * khai báo bằng CSS: `@theme` sinh utility class từ biến.
+ * Tailwind v3 dùng config JS + content globs; ở v4 mọi thứ khai báo bằng CSS:
+ * `@theme` sinh utility class từ biến.
  *
  * Đổi màu chỉ sửa ở khối :root / .dark bên dưới, không rải màu trong component.
  */

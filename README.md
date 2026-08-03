@@ -1,57 +1,57 @@
 # 💊 Medication Safety Copilot — Cuvée Tech (P-054)
 
-> Người bệnh phải tự tra từng thuốc và tự đối chiếu từng cặp tương tác → **AI Agent
-> tra cứu tương tác thuốc–thuốc và thuốc–thực phẩm có trích dẫn nguồn**, đặt trong
-> bối cảnh web app *"Hệ thống y tế X"*.
+> Patients have to look up each medicine and cross-check every pair themselves → **an AI
+> agent that looks up drug–drug and drug–food interactions with cited sources**, set inside
+> the *"Health System X"* web app.
 
-Agent đóng vai trò **cảnh báo an toàn tham khảo**: hiển thị nguyên văn đoạn trích kèm
-nguồn và trạng thái review. **Không tự kết luận lâm sàng, không thay thế quyết định
-của bác sĩ.**
-
----
-
-## Vấn đề
-
-Danh mục thuốc của bệnh viện **không có sẵn dữ liệu tương tác**. Người dùng phải tự
-tra từng thuốc, tự đọc tờ HDSD dạng PDF và tự đối chiếu nhiều cặp — quy trình chậm,
-dễ bỏ sót, và khó tự đánh giá mức độ nghiêm trọng.
-
-Các công cụ tra cứu sẵn có thì hoặc bằng tiếng Anh, hoặc không khớp với biệt dược lưu
-hành tại Việt Nam, hoặc đưa ra kết luận mà không cho thấy nguồn.
-
-## Giải pháp
-
-- **Tra tương tác thuốc–thuốc** — nhập nhiều thuốc, hệ thống sinh mọi cặp cần tra và
-  đối chiếu theo bảng dữ liệu đã được người review.
-- **Tra tương tác thuốc–thực phẩm** — tìm kiếm ngữ nghĩa trên nội dung tờ HDSD, trả
-  về đoạn trích nguyên văn.
-- **Severity trực quan + trích dẫn nguồn** — mỗi cảnh báo gắn với đoạn trích gốc và
-  link tới tờ HDSD.
-- **Human-in-the-loop không chặn luồng** — cảnh báo hiển thị ngay kèm nhãn *"chờ xác
-  nhận chuyên môn"*; dược sĩ duyệt song song.
-
-### Ba luật bất di bất dịch
-
-1. **Không bịa cảnh báo** — không có trích dẫn thì không có cảnh báo, trả về "chưa có dữ liệu".
-2. **Không kết luận lâm sàng** — không chẩn đoán, không đổi thuốc, không đưa liều.
-3. **Human-in-the-loop không chặn luồng** — không implement mô hình full-gate.
-
-## Target User
-
-- **Primary** — bệnh nhân / người chăm sóc: tra nhanh từ danh sách thuốc, ảnh hoặc PDF.
-- **Secondary** — bác sĩ / dược sĩ: review đoạn trích, nguồn và xác nhận kết quả.
+The agent acts as a **reference safety warning**: it shows the verbatim quote, its source
+and the review status. It **does not draw clinical conclusions and does not replace a
+doctor's judgement.**
 
 ---
 
-## Tech Stack
+## Problem
+
+The hospital's medicine catalogue **has no interaction data attached**. Users have to look
+up each medicine, read the PDF leaflet themselves, and cross-check every pair by hand —
+slow, easy to get wrong by omission, and hard to judge severity without clinical training.
+
+Existing tools are either in English, or do not match the brand names sold in Vietnam, or
+state conclusions without showing a source.
+
+## Solution
+
+- **Drug–drug interaction lookup** — enter several medicines; the system generates every
+  pair to check and looks them up in human-reviewed data.
+- **Drug–food interaction lookup** — semantic search over leaflet text, returning the
+  verbatim passage.
+- **Visual severity with cited sources** — every warning carries the original quote and a
+  link to the leaflet.
+- **Non-blocking human-in-the-loop** — warnings appear immediately, labelled *"awaiting
+  professional confirmation"*, while pharmacists review in parallel.
+
+### The three rules that never bend
+
+1. **Never invent a warning** — no citation, no warning; return "no data available".
+2. **Never draw clinical conclusions** — no diagnosis, no medicine changes, no dosing.
+3. **Human-in-the-loop must not block the flow** — no full-gate model.
+
+## Target users
+
+- **Primary** — patients and carers: quick lookups from a medicine list, a photo or a PDF.
+- **Secondary** — doctors and pharmacists: review the quote and source, then confirm.
+
+---
+
+## Tech stack
 
 | Layer | Technology |
 |---|---|
-| AI Agent | LangGraph + LangChain |
+| AI agent | LangGraph + LangChain |
 | RAG | ChromaDB + OpenAI embeddings · pypdf |
 | Backend | FastAPI + Uvicorn · Python 3.11+ |
-| Chuẩn hoá tên thuốc | rapidfuzz + unidecode (khớp mờ tiếng Việt) |
-| Frontend | Next.js 16 (App Router) + React 19 + TypeScript strict |
+| Drug-name matching | rapidfuzz + unidecode (fuzzy matching for Vietnamese) |
+| Frontend | Next.js 16 (App Router) + React 19 + strict TypeScript |
 | Styling | Tailwind CSS v4 + shadcn/ui |
 | Database | PostgreSQL 16 (prod) / SQLite (dev) · SQLAlchemy + Alembic |
 | Tooling | uv (Python) · Yarn 4 (Node) · ruff · pytest |
@@ -59,196 +59,233 @@ hành tại Việt Nam, hoặc đưa ra kết luận mà không cho thấy ngu�
 
 ---
 
-## 🚀 Chạy dự án
+## 🚀 Running the project
 
-### ⚠️ Đọc trước
+### ⚠️ Read this first
 
-**LUÔN mở repo ở thư mục gốc `P-054/`.** Không mở thẳng `backend/` hay `frontend/`
-làm workspace trong IDE.
+**Always open the repository at its root, `P-054/`.** Never open `backend/` or `frontend/`
+as the IDE workspace.
 
-Hook AI logging dùng đường dẫn tương đối từ repo root. Mở ở thư mục con thì tool
-không tìm thấy `.claude/` / `.cursor/` → **không hook nào chạy, không log gì cả, và
-không báo lỗi**. Push cả tuần mà điểm AI log bằng 0.
+The AI logging hooks use paths relative to the repository root. Opened in a subdirectory,
+the tool cannot find `.claude/` or `.cursor/` → **no hook runs, nothing is logged, and no
+error is reported**. You can push for a week and score zero on AI logs.
 
-### Yêu cầu cài sẵn
+### Prerequisites
 
-| Cần | Bản | Kiểm tra |
+| Requirement | Version | Check |
 |---|---|---|
 | Python | 3.11+ | `python3 --version` |
-| [uv](https://docs.astral.sh/uv/) | mới nhất | `uv --version` |
-| Node.js | 20+ (đang dùng 24) | `node -v` |
-| Corepack (kèm sẵn Node) | bật lên | `corepack enable` |
-| Docker Desktop | tuỳ chọn | chỉ cần nếu chạy Postgres bằng container |
+| [uv](https://docs.astral.sh/uv/) | latest | `uv --version` |
+| Node.js | 20+ (we use 24) | `node -v` |
+| Corepack (ships with Node) | enable it | `corepack enable` |
+| Docker Desktop | optional | only needed to run Postgres in a container |
 
-Yarn **không cài bằng `npm i -g yarn`**. Repo pin sẵn `yarn@4.18.0` qua trường
-`packageManager` trong `frontend/package.json`; chạy `corepack enable` một lần là
-corepack tự lấy đúng bản.
+Do **not** install Yarn with `npm i -g yarn`. The repo pins `yarn@4.18.0` through the
+`packageManager` field in `frontend/package.json`; running `corepack enable` once is
+enough for corepack to fetch the right version.
 
-### Bước 1 — Clone và cấu hình git
+### Step 1 — Clone and configure git
 
 ```bash
 git clone https://github.com/AI20K-Build-Phase-Cohort-3/P-054.git
 cd P-054
-git config user.email "email-da-dang-ky-voi-BTC@gmail.com"
+git config user.email "the-email-registered-with-the-programme@gmail.com"
 ```
 
-Email phải **đúng email đã đăng ký với BTC**, sai là log tính sang người khác.
+The email must be **the one registered with the programme**, or your logs are credited to
+someone else.
 
-### Bước 2 — Tạo file `.env`
+### Step 2 — Create `.env`
 
 ```bash
 cp .env.example .env
 ```
 
-Mở `.env` và điền `OPENAI_API_KEY`. `AI_LOG_API_KEY` lấy từ **link mời riêng của
-BTC** — giá trị trong `.env.example` chỉ là placeholder.
+Open `.env` and fill in `OPENAI_API_KEY`. Take `AI_LOG_API_KEY` from **your own invitation
+link** — the value in `.env.example` is only a placeholder.
 
-> `.env` nằm ở **repo root**, không phải `backend/.env`. File `backend/.env.example`
-> chỉ để tra tên biến.
+> `.env` lives at the **repository root**, not in `backend/`. `backend/.env.example` exists
+> only to document variable names.
 
-### Bước 3 — Cài AI logging hooks (chạy một lần)
+### Step 3 — Install the AI logging hooks (once)
 
 ```bash
 bash scripts/setup_hooks.sh
 ```
 
-Bắt buộc — đây là deliverable được chấm. Hook tự log prompt của Claude Code, Cursor,
-Codex, Gemini CLI, Copilot, Antigravity và tự submit khi `git push`.
+Required — this is a graded deliverable. The hooks log prompts from Claude Code, Cursor,
+Codex, Gemini CLI, Copilot and Antigravity, and submit them automatically on `git push`.
 
-### Bước 4 — Cài dependencies
+### Step 4 — Install dependencies
 
 ```bash
-make install        # backend: uv sync, tạo .venv ở repo root
+make install        # backend: uv sync, creates .venv at the repo root
 make web-install    # frontend: yarn install
 ```
 
-### Bước 5 — Chạy
+### Step 5 — Run
 
 ```bash
-make dev            # ★ chạy SONG SONG backend :8000 + frontend :3000
+make dev            # ★ runs backend :8000 and frontend :3000 together
 ```
 
-Hoặc chạy riêng từng bên ở hai terminal:
+Or run them separately in two terminals:
 
 ```bash
-make run            # chỉ backend  -> http://localhost:8000
-make web            # chỉ frontend -> http://localhost:3000
+make run            # backend only  -> http://localhost:8000
+make web            # frontend only -> http://localhost:3000
 ```
 
-Mọi lệnh chạy **từ repo root**, không cần `cd` vào `backend/` hay `frontend/`.
+Every command runs **from the repository root**; there is no need to `cd` into `backend/`
+or `frontend/`.
 
-### Bước 6 — Kiểm tra
+### Step 6 — Verify
 
-| URL | Kỳ vọng |
+| URL | Expected |
 |---|---|
-| http://localhost:3000 | Trang Next.js |
+| http://localhost:3000 | The landing page |
 | http://localhost:8000/docs | Swagger UI |
 | http://localhost:8000/health | `{"status": "ok", "env": "development"}` |
 
-`Ctrl-C` một lần dừng cả hai tiến trình.
+A single `Ctrl-C` stops both processes.
 
 ---
 
-## 🛠 Bảng lệnh
+## 🛠 Command reference
 
-Chạy `make help` để xem đầy đủ.
+Run `make help` for the full list.
 
-| Lệnh | Việc |
+| Command | Purpose |
 |---|---|
-| `make install` | `uv sync` — tạo `.venv` ở repo root |
-| `make run` | API dev tại :8000 |
+| `make install` | `uv sync` — creates `.venv` at the repo root |
+| `make run` | Backend dev server on :8000 |
 | `make test` | `pytest backend/tests` |
 | `make lint` / `make format` | ruff check / ruff format |
-| `make check` | lint + format --check + test (giống CI) |
-| `make ingest-pilot` | trích xuất thử 50 thuốc theo PRD |
-| `make web-install` | `yarn install` cho frontend |
-| `make web` | Next.js dev tại :3000 |
+| `make check` | lint + format --check + tests (same as CI) |
+| `make ingest-pilot` | Extract a 50-medicine pilot set, per the PRD |
+| `make web-install` | `yarn install` for the frontend |
+| `make web` | Next.js dev server on :3000 |
 | `make web-build` / `make web-lint` | build / eslint |
-| `make dev` | **backend + frontend song song** |
+| `make dev` | **Backend and frontend together** |
 | `make up` / `make down` | docker compose |
 
 ---
 
-## 📁 Cấu trúc
+## 📁 Structure
+
+This repository is a **workspace**: the whole project context lives in git —
+specification, architecture decisions, planning. The team and AI tools read the same
+source.
+
+All documentation sits **outside** the source directories: `backend/` and `frontend/`
+contain code only.
 
 ```
 P-054/
-├── backend/            FastAPI + LangGraph + ChromaDB (package: medsafe)
-│   ├── config.yaml     tham số RAG — KHÔNG chứa secret
-│   ├── src/medsafe/    layout theo pipeline RAG, mỗi bước một thư mục
-│   └── tests/
-├── frontend/           Next.js App Router + TS + Tailwind
-├── dataset/            danh mục thuốc BV GTVT + cặp tương tác
-├── gate/gate_1/        ★ ĐÃ SUBMIT — không sửa/xoá/đổi tên
-├── docs/  eval/  presentation/  scripts/
-├── .env  .venv/        ★ bắt buộc ở repo root
+├── README.md           you are here — start of the trail
+├── AGENTS.md           the rules for AI tools and the team
+├── specs/              ★ what we are building, and why
+├── adrs/               ★ decisions we made, and why
+├── planning/           backlog, sprints, open questions
+├── docs/               how to work on the code
+│   ├── backend.md      backend guide
+│   ├── frontend.md     frontend guide
+│   ├── architecture_diagram.md
+│   └── guide/          the programme's guidebook (reference)
+├── backend/            source only — FastAPI + LangGraph + ChromaDB (package: medsafe)
+├── frontend/           source only — Next.js App Router + TS + Tailwind
+├── dataset/            hospital medicine catalogue + interaction pairs
+├── gate/gate_1/        ★ SUBMITTED — never edit, delete or rename
+├── eval/  presentation/  scripts/
+├── WORKLOG.md  JOURNAL.md
+├── .env  .venv/        ★ must live at the repo root
 └── Makefile
 ```
 
-Chi tiết backend: [backend/README.md](backend/README.md) ·
-Quy ước code và ranh giới kiến trúc: [AGENTS.md](AGENTS.md)
+### Where a newcomer should start
+
+Read these five, in order. It takes about twenty minutes.
+
+| # | File | Answers |
+|---|---|---|
+| 1 | [specs/product-vision.md](specs/product-vision.md) | What we are building, and **the three rules that never bend** |
+| 2 | [specs/domains.md](specs/domains.md) | The shared vocabulary, and the RAG boundary |
+| 3 | [adrs/README.md](adrs/README.md) | Why the code looks the way it does |
+| 4 | [planning/backlog.md](planning/backlog.md) | What is left, and what is blocked |
+| 5 | [AGENTS.md](AGENTS.md) | Coding conventions and no-go areas |
+
+Then, right before you write code:
+
+| Working on | Read |
+|---|---|
+| Anything | [docs/code-style.md](docs/code-style.md) — which library for which job, naming |
+| Backend | [docs/backend.md](docs/backend.md) |
+| Frontend | [docs/frontend.md](docs/frontend.md) |
+| Anything that produces a warning | [ADR 0004](adrs/0004-drug-drug-lookup-not-similarity.md), [0005](adrs/0005-human-in-the-loop-non-blocking.md), [0006](adrs/0006-citation-required-for-every-warning.md) — required |
 
 ---
 
-## 🩺 Lỗi thường gặp
+## 🩺 Common problems
 
-**`sh: next: command not found`** hoặc lỗi Turbopack *"couldn't find the Next.js
-package"* — `frontend/node_modules` bị thiếu. Chạy lại `make web-install`. Đừng dùng
-`npx next dev`: npx sẽ tải bản `next` khác vào cache tạm rồi báo lỗi trỏ sai hướng.
+**`sh: next: command not found`**, or a Turbopack error about *"couldn't find the Next.js
+package"* — `frontend/node_modules` is missing. Run `make web-install` again. Do not use
+`npx next dev`: npx downloads a different `next` into a temporary cache and the resulting
+error points in the wrong direction.
 
-**Đã bấm `Ctrl-C` mà cổng vẫn bận** — xảy ra khi tiến trình `make dev` bị giết thẳng
-PID (tắt terminal kiểu cứng, kill từ Activity Monitor) thay vì `Ctrl-C`:
+**A port is still busy after `Ctrl-C`** — this happens when the `make dev` process is
+killed by PID (closing the terminal abruptly, or killing it from Activity Monitor) rather
+than interrupted:
 
 ```bash
 pkill -f "uvicorn medsafe"; pkill -f "next dev|next-server"
 ```
 
-**Pre-push hook báo lỗi** — **báo lại cho team lead**, tuyệt đối không
-`git push --no-verify` (sẽ bỏ qua submit AI log).
+**The pre-push hook fails** — **tell the team lead**; never use `git push --no-verify`, as
+that skips the AI-log submission.
 
-**Điểm AI log bằng 0** — gần như chắc chắn do mở IDE ở `backend/` hoặc `frontend/`
-thay vì repo root. Xem [AI_LOGGING_SETUP.md](AI_LOGGING_SETUP.md).
+**Zero AI logs** — almost certainly because the IDE was opened at `backend/` or `frontend/`
+instead of the repository root. See [AI_LOGGING_SETUP.md](AI_LOGGING_SETUP.md).
 
-**Dùng ChatGPT / Claude.ai / Gemini Web** (không có hook) — log tay:
+**Using ChatGPT / Claude.ai / Gemini Web** (no hooks) — log manually:
 
 ```bash
-bash scripts/_pyrun.sh scripts/log_manual.py --tool chatgpt --prompt "Nội dung đã hỏi"
+bash scripts/_pyrun.sh scripts/log_manual.py --tool chatgpt --prompt "What you asked"
 ```
 
 ---
 
 ## 🐳 Docker
 
-Chạy cả stack (Postgres + backend + frontend) bằng container, không cần cài uv hay
-Node trên máy:
+Run the whole stack (Postgres + backend + frontend) in containers, with no need for uv or
+Node on the host:
 
 ```bash
 make up      # docker compose up -d --build
 make down
 ```
 
-Kiểm tra: `docker compose ps` — cả ba service phải `healthy`. URL giống hệt lúc chạy
-local (`:3000`, `:8000/docs`).
+Check with `docker compose ps` — all three services should report `healthy`. The URLs are
+the same as when running locally (`:3000`, `:8000/docs`).
 
-> **Đổi URL backend cho frontend:** sửa `build.args.NEXT_PUBLIC_API_URL` trong
-> `docker-compose.yml`, **không** phải `environment`. Biến `NEXT_PUBLIC_*` được nhúng
-> thẳng vào bundle lúc build nên đặt ở runtime không có tác dụng. Đổi xong phải
-> `make up` lại để build lại image.
+> **To change the backend URL used by the frontend:** edit
+> `build.args.NEXT_PUBLIC_API_BASE_URL` in `docker-compose.yml`, **not** `environment`.
+> `NEXT_PUBLIC_*` variables are baked into the bundle at build time, so setting them at
+> runtime has no effect. After changing it, run `make up` again to rebuild the image.
 
 ---
 
 ## 👥 Team — Cuvée Tech
 
-| Họ tên | Vai trò |
+| Name | Role |
 |---|---|
 | Lê Nguyễn Minh Quang | PM / PO / Tech Lead / Dev |
 | Nguyễn Thanh Hùng | Backend + Database |
 | Đỗ Quý Đức | Frontend + Backend |
 | Lê Nhật Minh | Frontend |
 
-## 🔗 Liên kết
+## 🔗 Links
 
-- **Gate 1** (Brief + PRD + UI Flow): [gate/gate_1/README.md](gate/gate_1/README.md)
-- **Nhật ký phát triển:** [JOURNAL.md](JOURNAL.md) · [WORKLOG.md](WORKLOG.md)
-- **Kiến trúc:** [docs/architecture_diagram.md](docs/architecture_diagram.md)
+- **GATE 1** (Brief + PRD + UI flow): [gate/gate_1/README.md](gate/gate_1/README.md)
+- **Development log:** [JOURNAL.md](JOURNAL.md) · [WORKLOG.md](WORKLOG.md)
+- **Architecture:** [docs/architecture_diagram.md](docs/architecture_diagram.md)
 - **Technical Guidebook:** [phoenix.note.transformerlabs.ai/technical-book](https://phoenix.note.transformerlabs.ai/technical-book)

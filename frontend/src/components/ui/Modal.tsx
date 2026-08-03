@@ -11,8 +11,7 @@ interface ModalProps {
 }
 
 /**
- * Primitive dùng chung cho 4 modal auth. STRUCTURE_TEMPLATE liệt kê từng modal
- * riêng nhưng không có primitive — viết lại markup overlay 4 lần là thừa.
+ * Primitive dùng chung cho 4 modal auth — viết lại markup overlay 4 lần là thừa.
  */
 export default function Modal({ open, title, onClose, children }: ModalProps) {
   useEffect(() => {

@@ -12,7 +12,7 @@ interface Props {
 /**
  * TODO(API): nối POST /api/v1/auth/profiles/2fa (ACTIVATE_2FA) rồi VERIFY_2FA.
  *
- * Chưa cài `qrcode.react` — STRUCTURE_TEMPLATE §6 xếp nó vào nhóm "thêm khi cần".
+ * Chưa cài `qrcode.react` — chỉ thêm khi thật sự cần.
  * Khi backend trả về otpauth:// URI thì cài rồi thay khối placeholder bên dưới.
  */
 export default function Enable2FAModal({ open, onClose }: Props) {
