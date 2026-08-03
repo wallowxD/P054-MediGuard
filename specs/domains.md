@@ -1,99 +1,73 @@
-# Domain Model
+# Mô hình miền
 
-> The shared vocabulary between backend, frontend and AI tools. Changing a concept here
-> means changing `backend/src/medsafe/domain/`, `backend/src/medsafe/schemas/` and
-> `frontend/src/types/` as well.
+Thuật ngữ dùng chung giữa backend, frontend và AI. Thay đổi ở đây phải đồng bộ domain,
+schema, contract và frontend type.
 
----
-
-## Entities
+## Entity
 
 ### Drug
 
-| Field | Meaning | Source |
-|---|---|---|
-| `brandName` | Brand name, e.g. "Panadol Extra" | column `Biet duoc` |
-| `ingredient` | Active ingredient + strength | column `Hoat chat - Ham luong` |
-| `leafletUrl` | Link to the original PDF leaflet | column `Link HDSD 1` |
+| Field | Ý nghĩa |
+|---|---|
+| `brandName` | Biệt dược gốc từ catalog |
+| `ingredient` | Hoạt chất + hàm lượng gốc |
+| `leafletUrl` | Link PDF hướng dẫn sử dụng |
 
-⚠️ The CSV column names are Vietnamese **without diacritics**, while the JSON content is
-Vietnamese **with diacritics**. Every comparison must go through
-`domain/normalization.py` — **never compare raw strings**.
+CSV dùng tên cột không dấu; catalog value và OCR có thể có dấu, casing hoặc notation khác.
+Mọi so sánh đi qua `domain/normalization.py`, không so raw string.
 
 ### Interaction
 
-| Field | Meaning |
+| Field | Ý nghĩa |
 |---|---|
-| `kind` | `drug-drug` \| `drug-food` — decides the lookup mechanism, see §Boundary |
-| `subject` / `object` | Side 1 is always a drug; side 2 is a drug or a food |
-| `severity` | `contraindicated` \| `major` \| `moderate` \| `minor` \| `unknown` |
-| `reviewStatus` | `pending` \| `approved` \| `rejected` |
-| `mechanism` / `consequence` / `management` | From `drugtodrug.json` |
-| `citations` | **Must not be empty.** See Citation |
+| `kind` | `drug-drug` hoặc `drug-food`, quyết định lookup mechanism |
+| `subject` / `object` | Thuốc thứ nhất và thuốc/thực phẩm thứ hai |
+| `severity` | `contraindicated`, `major`, `moderate`, `minor`, `unknown` |
+| `reviewStatus` | `pending`, `approved`, `rejected` |
+| `mechanism` / `consequence` / `management` | Thông tin có nguồn, không phải lời khuyên sinh tự do |
+| `citations` | Danh sách không rỗng |
 
-`severity` is assigned **deterministically** by `domain/severity.py`. The frontend only
-picks a colour; it never derives severity itself.
+Severity được tính deterministic ở backend; frontend chỉ render.
 
-### Citation ★
+### Citation
 
-The most important entity in the product. Without it there is no warning.
-
-| Field | Constraint |
+| Field | Ràng buộc |
 |---|---|
-| `quote` | **Verbatim** from the leaflet. No summarising, no paraphrasing, no CSS truncation |
-| `source` | Document or brand name |
-| `sourceUrl` | Link to the original PDF |
-| `page` | Page number, so a reviewer can check it |
+| `quote` | Nguyên văn, không paraphrase/dịch/truncate |
+| `source` | Tên tài liệu/thuốc |
+| `sourceUrl` | Link PDF gốc |
+| `page` | Trang khi extraction cung cấp |
+| `chunkId` | Stable identity để audit |
 
-### Review
+### EvidenceVersion
 
-A pharmacist's decision on one Interaction. `pending` **does not hide the warning** — see
-rule 3.
+Version immutable gắn citation, extractor, timestamp và review state. Edit content tạo
+version mới, không mutate version đã hiển thị hoặc review.
 
 ### Prescription
 
-A set of Drugs saved by the user. From N drugs, `domain/pairing.py` produces **C(N,2)**
-pairs to look up.
+Danh sách Drug đã được user xác nhận. Từ N ingredient duy nhất, `domain/pairing.py` sinh
+đúng C(N,2) canonical pair.
 
----
+## ★ Ranh giới RAG
 
-## ★ The RAG boundary — the easiest thing to get wrong
-
-The role of similarity search **differs by interaction type**. Do not apply one rule to
-both.
-
-| Question | Mechanism | Why |
-|---|---|---|
-| Drug–drug: is there an interaction, and how severe? | `db/repositories/` + `domain/` — **table lookup** | `drugtodrug.json` is a relation (A,B)→record. An exact-key lookup is correct by definition |
-| Drug–food: is there an interaction? | **`retrieval/`** — semantic search | No lookup table exists; the information sits in free text inside the leaflet |
-| The verbatim supporting quote | `retrieval/` | |
-| Drug information Q&A | `retrieval/` + `prompts/DRUG_INFO_QA` | |
-| User mistypes a drug name | `domain/normalization.py` (fuzzy match) | For proper nouns in Vietnamese, rapidfuzz + diacritic stripping beats embeddings |
-
-**Only for drug–drug** is similarity search forbidden as the basis for a conclusion.
-
-The concrete reason: a query for *"Warfarin + Tamoxifen"* can return the record for
-*"Acenocoumarol + Tamoxifen"* — same coumarin class, very close in embedding space. The
-result is a warning **that has a source and a real quote but names the wrong pair of
-drugs**. That failure passes every "does it have a source?" check.
-
-Drug–food is the opposite: retrieval **is** the detection mechanism, because there is no
-table to look anything up in. The constraint there is that the output must be a verbatim
-quote, not a sentence the model composed.
-
-Below `retrieval.score_threshold` → return empty → the layer above reports **"no data
-available"**. Never lower the threshold just to return something.
-
-→ Full decision: [`adrs/0004-drug-drug-lookup-not-similarity.md`](../adrs/0004-drug-drug-lookup-not-similarity.md)
-
----
-
-## Data
-
-| File | Contents |
+| Câu hỏi | Cơ chế |
 |---|---|
-| `dataset/drug_list_bv_gtvt.csv` | Hospital medicine catalogue, ~1073 rows, column names **without diacritics** |
-| `dataset/drugtodrug.json` | Interaction pairs: `Hoạt chất 1`, `Hoạt chất 2`, `Cơ chế`, `Hậu quả`, `Xử trí` — **with diacritics** |
+| Drug-drug tồn tại/severity? | Canonical exact-pair repository + deterministic domain logic |
+| Drug-food tồn tại? | Semantic retrieval trong leaflet của thuốc đã chọn |
+| Supporting quote | Retrieval + resolve authoritative evidence |
+| Drug info Q&A | Retrieval + grounded prompt |
+| Gõ sai tên | Character-level fuzzy normalization |
 
-⚠️ `.gitignore` ignores `data/`. **Do not rename `dataset/` to `data/`** — the data would
-silently drop out of git.
+Similarity không được quyết định drug-drug. Drug-food dùng similarity vì không có table,
+nhưng output vẫn là verbatim passage. Dưới score threshold thì trả unavailable, không hạ
+threshold để ép kết quả.
+
+## Dữ liệu
+
+| Nguồn | Nội dung |
+|---|---|
+| `dataset/drug_list_bv_gtvt.csv` | Catalog khoảng 1.073 thuốc |
+| Leaflet PDF gốc | Candidate drug-drug, drug-food passage và mọi citation |
+
+Không đổi tên `dataset/` thành `data/` vì `data/` bị gitignore.

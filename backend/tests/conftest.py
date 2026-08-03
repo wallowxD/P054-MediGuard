@@ -23,7 +23,7 @@ async def client():
 
 @pytest.fixture
 def mock_llm():
-    """LLM giả — không gọi OpenAI trong test."""
+    """Fake model client — never calls a live provider in tests."""
     mock = AsyncMock()
     mock.complete.return_value = "Mocked LLM response"
     return mock
@@ -40,7 +40,7 @@ def sample_catalog() -> list[tuple[str, str]]:
 
 @pytest.fixture
 def sample_interaction() -> dict[str, str]:
-    """Một bản ghi thật từ drugtodrug.json."""
+    """Một bản ghi evidence-backed điển hình dùng cho unit test offline."""
     return {
         "ingredient_a": "Aceclofenac",
         "ingredient_b": "Ketorolac",

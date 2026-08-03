@@ -4,7 +4,7 @@
 Cùng một bản ghi phải luôn ra cùng một mức — nếu để model chấm thì hai lần chạy có thể
 ra hai kết quả khác nhau, và cảnh báo an toàn thuốc không được phép như vậy.
 
-Tín hiệu lấy từ trường "Xử trí" / "Hậu quả" trong drugtodrug.json, ví dụ:
+Tín hiệu lấy từ các trường có cấu trúc trích từ đoạn PDF được dẫn nguồn, ví dụ:
 - "Chống chỉ định phối hợp"        → CONTRAINDICATED
 - "Tăng nguy cơ xuất huyết nghiêm trọng" → MAJOR
 """

@@ -3,7 +3,7 @@
 Luồng: load → PDF → text → chunk → embed → vector store + hàng đợi review.
 
 ★ Đầu ra của pipeline này KHÔNG được coi là dữ liệu đã thẩm định.
-Mọi cặp tương tác do vision model trích ra phải vào DB với trạng thái `pending_review`
+Mọi cặp tương tác do OCR/model adapter trích ra phải vào DB với trạng thái `pending_review`
 và bắt buộc có dược sĩ duyệt (PRD, mục Assumptions).
 
 Chiến lược theo PRD: chạy pilot 50 thuốc đo tỷ lệ dữ liệu hữu ích, rồi mới scale

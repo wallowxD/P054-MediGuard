@@ -1,32 +1,45 @@
-# Specs — product and domain specification
+# Đặc tả sản phẩm và tính năng
 
-**What** we are building and **why**. Not how (that is [`adrs/`](../adrs/)) and not when
-(that is [`planning/`](../planning/)).
+`specs/` có hai tầng:
 
-| File | Contents | Read it when |
-|---|---|---|
-| [product-vision.md](product-vision.md) | Problem, users, positioning, **the three rules that never bend** | Day one. Read this before anything else |
-| [domains.md](domains.md) | Entities, shared vocabulary, **the RAG boundary** | Before naming a variable or designing a table |
-| [user-roles.md](user-roles.md) | Two roles, three access tiers, permission matrix | When touching auth or adding a route |
-| [features.md](features.md) | Features by priority, with status | When picking up work |
-| [api-contracts.md](api-contracts.md) | The contract between backend and frontend | When writing an endpoint or calling an API |
+1. **Product baseline:** hành vi và thuật ngữ ổn định, dùng xuyên tính năng.
+2. **Feature workspace:** một delivery slice có spec, plan, tasks, data model, contract,
+   checklist và quickstart được team review thủ công.
 
-## Sources of truth
+## Baseline sản phẩm
 
-The Brief and PRD submitted for GATE 1 live in [`gate/gate_1/`](../gate/gate_1/) as
-`.docx` files and **must not be edited**. This directory is the readable version, plus
-anything decided after submission.
+| File | Sở hữu nội dung |
+|---|---|
+| [product-vision.md](product-vision.md) | Bài toán, người dùng, positioning và nguyên tắc an toàn |
+| [app-flow.md](app-flow.md) | Luồng patient, ingestion và professional review |
+| [domains.md](domains.md) | Entity, thuật ngữ và RAG boundary |
+| [user-roles.md](user-roles.md) | Role, access tier và permission matrix |
+| [api-contracts.md](api-contracts.md) | Quy ước API và chỉ mục contract |
 
-Where the two disagree, `gate/gate_1/` is the official submission — but record the
-contradiction in [`planning/backlog.md`](../planning/backlog.md) so it gets resolved
-rather than quietly ignored.
+Priority và delivery status chỉ nằm trong Jira `VMEC`.
 
-For **API contracts**, once an endpoint is implemented,
-`backend/src/medsafe/schemas/` becomes the source of truth (it generates `openapi.json`,
-which generates `frontend/src/lib/api/types.gen.ts`).
+## Không gian tài liệu tính năng
 
-## Update rule
+| Workspace | Phạm vi |
+|---|---|
+| [001-core-interaction-check/](001-core-interaction-check/spec.md) | Core flow tra tương tác có dẫn nguồn cho pilot 50 thuốc |
 
-If product behaviour changes, update `specs/` **in the same pull request** as the code.
-Documentation that has drifted from the code is worse than no documentation, because
-people still believe it.
+```text
+specs/NNN-feature-name/
+├── spec.md          hành vi, lý do, user story và acceptance criteria
+├── plan.md          phương án kỹ thuật đã duyệt
+├── research.md      quyết định và phương án bị loại
+├── data-model.md    entity, relationship và invariant
+├── contracts/       API/event/interface contract
+├── checklists/      checklist requirement/safety
+├── quickstart.md    quy trình acceptance end-to-end
+└── tasks.md         task kỹ thuật có traceability
+```
+
+Trong một tính năng, `spec.md` sở hữu intent; plan/tasks là artifact dẫn xuất. Pydantic
+schema đã implement sở hữu runtime API → sinh OpenAPI → sinh
+`frontend/src/lib/api/types.gen.ts`. Không sửa generated type bằng tay.
+
+Thay đổi hành vi phải cập nhật spec trong cùng PR với code. Quyết định khó đảo ngược cần
+ADR mới. Khi implementation discovery thay đổi intent, leader duyệt rồi đồng bộ lại spec,
+plan, contract, tasks, validation evidence và Jira.

@@ -1,6 +1,6 @@
-# Tham số RAG — KHÔNG chứa secret.
-# Secret (API key, DB URL) nằm ở .env tại repo ROOT, đọc qua medsafe/config.py.
-# Sửa file này không cần sửa code; mọi giá trị được nạp vào Settings lúc khởi động.
+# Non-secret application and RAG settings.
+# Secrets and deployment URLs live in the repository-root .env or platform secret store.
+# Provider/model identifiers are configuration, never hardcoded in routes or graph nodes.
 
 app:
   name: "Medication Safety Copilot"
@@ -8,16 +8,20 @@ app:
 
 ingestion:
   drug_list_csv: "dataset/drug_list_bv_gtvt.csv"
-  interactions_json: "dataset/drugtodrug.json"
   pdf_cache_dir: "data/hdsd_pdf"
-  # PRD: trích thử 50 thuốc đo tỷ lệ dữ liệu hữu ích trước khi chạy toàn bộ 1073
+  raw_ocr_bucket: "leaflet-ocr"
+  # Measure the fixed 50-medicine pilot before expanding to the full catalog.
   pilot_limit: 50
+
+storage:
+  relational_provider: "supabase_postgres"
+  object_provider: "supabase_storage"
 
 chunking:
   chunk_size: 800
   chunk_overlap: 120
-  # Cắt theo ranh giới mục của tờ HDSD trước, hết cách mới cắt theo độ dài.
-  # Cắt giữa câu làm mất tính "nguyên văn" của đoạn trích -> vi phạm luật số 1.
+  # Prefer leaflet section boundaries; length splitting is the last resort.
+  # Never alter source text while chunking.
   respect_section_boundaries: true
   section_headers:
     - "TƯƠNG TÁC THUỐC"
@@ -33,30 +37,46 @@ embeddings:
   batch_size: 64
 
 vectordb:
-  provider: "chroma"
-  persist_dir: "data/chroma"
+  provider: "qdrant"
+  url_env: "QDRANT_URL"
+  api_key_env: "QDRANT_API_KEY"
   collections:
-    hdsd_excerpts: "hdsd_excerpts"   # đoạn trích tờ HDSD
-    drug_names: "drug_names"          # tên biệt dược / hoạt chất, phục vụ chuẩn hoá
+    hdsd_excerpts: "hdsd_excerpts"
+  required_payload:
+    - "evidence_version_id"
+    - "drug_id"
+    - "source_url"
+    - "page"
+    - "section"
 
 retrieval:
   top_k: 5
-  # Dưới ngưỡng này coi như KHÔNG tìm thấy -> trả "chưa có dữ liệu",
-  # tuyệt đối không để LLM lấp chỗ trống.
+  # Below this threshold, return an unavailable outcome. Never lower it to force a hit.
   score_threshold: 0.35
   max_context_chars: 6000
 
 normalization:
-  # Tên tiếng Việt có/không dấu, biệt dược vs hoạt chất -> khớp mờ trước khi tra.
+  # Match Vietnamese names deterministically before any lookup.
   fuzzy_threshold: 88
   strip_diacritics: true
 
+ocr:
+  prescription:
+    provider: "google_genai"
+    model: "gemini-2.5-flash"
+  leaflet:
+    provider: "qwen_model_studio"
+    model: "qwen-vl-ocr-2025-11-20"
+    base_url_env: "DASHSCOPE_BASE_URL"
+
 llm:
   provider: "openai"
-  model: "gpt-4o-mini"
-  temperature: 0.0          # tra cứu, không sáng tác
+  model: "gpt-4o"
+  temperature: 0.0
   max_tokens: 1500
-  vision_model: "gpt-4o"    # dùng cho trích xuất PDF HDSD và đọc ảnh đơn thuốc
+  allowed_uses:
+    - "bounded_structured_extraction"
+    - "source_grounded_presentation"
 
 logging:
   level: "INFO"

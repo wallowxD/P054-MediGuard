@@ -1,83 +1,45 @@
-# User Roles & Permissions
+# Vai trò và quyền
 
-> Source: the UI flow in [gate/gate_1/](../gate/gate_1/README.md) — the diagram splits
-> into two roles after sign-in.
-> Implementation: `frontend/src/constants/routes.ts` and `frontend/src/proxy.ts`.
+## Hai role
 
----
-
-## Two roles
-
-| Role | Constant | Who |
+| Role | Constant | Người dùng |
 |---|---|---|
-| Patient / carer | `ROLES.PATIENT` | End user looking up their own medicines |
-| Doctor / pharmacist | `ROLES.PHARMACIST` | Clinical staff who review warnings |
+| Patient/carer | `ROLES.PATIENT` | Người tra thuốc cho bản thân/người chăm sóc |
+| Doctor/pharmacist | `ROLES.PHARMACIST` | Nhân sự chuyên môn review warning |
 
-Two roles only. If a third one appears (a system admin, say), **do not add another route
-group** — use `PermissionGuard` at component level. See
-[`adrs/0007-frontend-structure-and-auth.md`](../adrs/0007-frontend-structure-and-auth.md).
+Nếu thêm role mới, không tự tạo route tree thứ ba; dùng permission guard phù hợp và cập
+nhật ADR/contract authorization.
 
-## Three access tiers
+## Ba tầng truy cập
 
-| Tier | Route group | URL | Who gets in |
+| Tier | Route group | URL | Quyền |
 |---|---|---|---|
-| Guest | `(public)` | `/`, `/signin`, `/signup`, legal pages | Everyone |
-| Signed in | `(protected)` | `/dashboard`, `/interactions`, `/settings` | PATIENT + PHARMACIST |
-| Clinical | `(review)` | `/review/**` | PHARMACIST only |
+| Public | `(public)` | `/`, signin/signup, legal | Mọi người |
+| Protected | `(protected)` | dashboard, interactions, settings | Patient + Pharmacist |
+| Clinical review | `(review)` | `/review/**` | Chỉ Pharmacist |
 
-Split by **access tier**, not by individual role.
+## Luồng bệnh nhân
 
----
+1. Check interaction: nhập/search hoặc OCR candidate → xác nhận danh sách → check → warning
+   có nguồn hoặc unavailable.
+2. Tra thông tin thuốc: chọn thuốc → đọc thông tin có nguồn.
+3. Drug-condition từng xuất hiện trong GATE flow nhưng PRD xếp ngoài phạm vi; không
+   implement nếu chưa có quyết định mới.
 
-## Flows
+## Luồng dược sĩ
 
-### Patient
+Nhận queue → mở request/evidence version → kiểm quote/source → approve, reject hoặc tạo
+corrected version theo contract được duyệt.
 
-Home → pick one of three functions:
+## Ma trận quyền
 
-1. **Check drug interactions** — upload or photograph a prescription → the system
-   recognises the medicines → confirm the list → run the lookup → show results if data
-   exists, otherwise report *"no data available"* and file a check request
-2. **Look up drug information** — search for a medicine → read its information
-3. **Check a medicine against an existing condition** — pick a medicine and a condition →
-   see the result and any cautions
-
-> ⚠️ Function 3 appears in the UI flow submitted for GATE 1, but "drug–condition
-> interactions" is listed under **Out of scope** in the PRD. The scope needs to be settled
-> before anyone implements it — see [`planning/backlog.md`](../planning/backlog.md).
-
-### Doctor / pharmacist
-
-Receive the **queue of check requests** (from the "send for comparison" and "send for
-check" flows) → open a request → read the result and its sources → approve it if it looks
-right, or **edit the content and then approve**.
-
----
-
-## Permission matrix
-
-| Action | PATIENT | PHARMACIST |
+| Hành động | Patient | Pharmacist |
 |---|:---:|:---:|
-| Run an interaction check | ✅ | ✅ |
-| See `pending` warnings | ✅ | ✅ |
-| File a check request | ✅ | ✅ |
-| Add a personal note to a warning | ✅ | ✅ |
-| Enter `/review/**` | ❌ | ✅ |
-| Approve or reject a warning | ❌ | ✅ |
-| Edit warning text, quotes, severity | ❌ | ✅ |
+| Chạy interaction check | ✅ | ✅ |
+| Xem pending warning | ✅ | ✅ |
+| Gửi review request | ✅ | ✅ |
+| Vào `/review/**` | ❌ | ✅ |
+| Approve/reject evidence | ❌ | ✅ |
+| Tạo corrected evidence version | ❌ | ✅ |
 
-Patients **can see** unapproved warnings (rule 3) but **cannot edit** sourced content.
-
----
-
-## Three layers of defence
-
-| Layer | Where | Role |
-|---|---|---|
-| 1. Proxy (edge) | `frontend/src/proxy.ts` | **The real gate** — runs before render |
-| 2. Layout | `(review)/layout.tsx` | Backstop if the matcher changes or a new route is missed |
-| 3. Backend | every endpoint | **Mandatory.** The only layer that cannot be bypassed |
-
-⚠️ Blocking in the frontend is **UX only** — hiding buttons and avoiding wrong pages. A
-user can always call the API directly with their own token. **The backend must enforce
-permissions on every endpoint**, with no exceptions.
+Frontend guard chỉ phục vụ UX. Backend phải enforce permission trên mọi endpoint.

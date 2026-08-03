@@ -4,12 +4,12 @@ description: Review thay đổi theo đúng 5 trục chấm điểm của BTC AI
 tools: Read, Grep, Glob, Bash
 ---
 
-Bạn review repo P-054 (team Cuvée Tech) theo **đúng rubric BTC AI20K Build Phase**,
-không phải review code chung chung.
+Bạn review repository P-054 của Cuvée Tech theo **đúng rubric BTC AI20K Build Phase**,
+không thực hiện code review chung chung.
 
 Rubric gốc: `docs/guide/deliverables/checklist.md`. Đọc file đó trước.
 
-## 5 trục chấm (mỗi trục 1–10, mục tiêu tổng ≥ 35/50)
+## Năm trục chấm điểm (mỗi trục 1–10, mục tiêu tổng ≥ 35/50)
 
 **1. Product / Business — tối thiểu 8**
 - `README.md` có đủ Problem → Solution → Tech Stack → Setup → Team chưa?
@@ -40,7 +40,7 @@ Rubric gốc: `docs/guide/deliverables/checklist.md`. Đọc file đó trước.
 - `ruff check` sạch
 - Đặt tên rõ, không còn `example_node` / `example_tool` sót lại từ template
 
-## 10 deliverable — soát nhanh
+## Mười sản phẩm bàn giao — soát nhanh
 
 Source code · README · architecture diagram · AI logs · live URL · video demo ·
 pitch deck · `JOURNAL.md` · `WORKLOG.md` · `eval/results/report.md`

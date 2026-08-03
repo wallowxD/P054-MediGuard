@@ -1,0 +1,267 @@
+openapi: 3.1.0
+info:
+  title: P-054 Cited Interaction Check API
+  version: 1.0.0
+  description: >-
+    Accepted implementation contract for catalog confirmation and patient-facing cited
+    interaction checks. Successful operations return direct payloads under ADR 0011.
+x-status: accepted-for-implementation
+paths:
+  /api/v1/drugs/search:
+    get:
+      operationId: searchDrugs
+      summary: Return catalog candidates for explicit patient selection
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 200
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 20
+            default: 10
+      responses:
+        '200':
+          description: Direct catalog-search payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrugSearchResponse'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/v1/interactions/check:
+    post:
+      operationId: checkInteractions
+      summary: Check evidenced drug-drug and drug-food interactions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InteractionCheckRequest'
+      responses:
+        '200':
+          description: Direct payload containing evidenced items and unavailable outcomes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InteractionCheckResponse'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '503':
+          description: The catalog/evidence service could not process any lookup
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+components:
+  responses:
+    ValidationError:
+      description: Invalid query, unknown catalog ID, or invalid request size
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+  schemas:
+    DrugSearchResponse:
+      type: object
+      additionalProperties: false
+      required: [query, candidates, requiresConfirmation]
+      properties:
+        query:
+          type: string
+        candidates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DrugCandidate'
+        requiresConfirmation:
+          type: boolean
+          description: >-
+            True when no single candidate satisfies the unambiguous-match rule. The UI
+            always requires an explicit click before adding any candidate to the basket.
+    DrugCandidate:
+      type: object
+      additionalProperties: false
+      required: [drugId, brandName, ingredient, confidence]
+      properties:
+        drugId:
+          type: string
+          minLength: 1
+        brandName:
+          type: string
+          minLength: 1
+        ingredient:
+          type: string
+          minLength: 1
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 100
+    InteractionCheckRequest:
+      type: object
+      additionalProperties: false
+      description: >-
+        A request must contain at least two drug IDs for a drug-drug check, or at least one
+        food phrase for a drug-food check. A single drug ID with no food is invalid.
+      required: [drugIds]
+      anyOf:
+        - title: Drug-drug capable request
+          properties:
+            drugIds:
+              minItems: 2
+        - title: Drug-food request
+          required: [foods]
+          properties:
+            foods:
+              minItems: 1
+      properties:
+        drugIds:
+          type: array
+          minItems: 1
+          maxItems: 20
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        foods:
+          type: array
+          default: []
+          maxItems: 20
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+            maxLength: 200
+    InteractionCheckResponse:
+      type: object
+      additionalProperties: false
+      required: [items, unavailable]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InteractionItem'
+        unavailable:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnavailableResult'
+    InteractionItem:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - evidenceVersionId
+        - kind
+        - severity
+        - reviewStatus
+        - subject
+        - object
+        - pairKey
+        - citations
+      properties:
+        id:
+          type: string
+          minLength: 1
+        evidenceVersionId:
+          type: string
+          minLength: 1
+        kind:
+          type: string
+          enum: [drug-drug, drug-food]
+        severity:
+          type: string
+          enum: [contraindicated, major, moderate, minor, unknown]
+        reviewStatus:
+          type: string
+          enum: [pending, approved]
+          description: Rejected evidence versions are never returned to patient clients.
+        subject:
+          type: string
+          minLength: 1
+        object:
+          type: string
+          minLength: 1
+        pairKey:
+          type: [string, 'null']
+          description: Required by backend validation when kind is drug-drug.
+        mechanism:
+          type: [string, 'null']
+        consequence:
+          type: [string, 'null']
+        management:
+          type: [string, 'null']
+        citations:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Citation'
+    Citation:
+      type: object
+      additionalProperties: false
+      required: [quote, source, sourceUrl, chunkId]
+      properties:
+        quote:
+          type: string
+          minLength: 1
+          description: Verbatim leaflet text; clients must not paraphrase or truncate it.
+        source:
+          type: string
+          minLength: 1
+        sourceUrl:
+          type: string
+          format: uri
+        page:
+          type: [integer, 'null']
+          minimum: 1
+        section:
+          type: [string, 'null']
+        chunkId:
+          type: string
+          minLength: 1
+    UnavailableResult:
+      type: object
+      additionalProperties: false
+      required: [key, kind, subject, object, reason]
+      properties:
+        key:
+          type: string
+          minLength: 1
+        kind:
+          type: string
+          enum: [drug-drug, drug-food]
+        subject:
+          type: string
+          minLength: 1
+        object:
+          type: string
+          minLength: 1
+        reason:
+          type: string
+          enum: [missing-record, missing-citation, source-unavailable, below-threshold]
+    ProblemDetail:
+      type: object
+      additionalProperties: false
+      required: [status, code, message]
+      properties:
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+        code:
+          type: string
+          minLength: 1
+        message:
+          type: string
+          minLength: 1
+        details:
+          type: [array, 'null']
+          items:
+            type: object
+            additionalProperties: true

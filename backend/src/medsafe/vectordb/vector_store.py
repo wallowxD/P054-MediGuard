@@ -1,4 +1,4 @@
-"""Thao tác với vector database (ChromaDB).
+"""Vector-store boundary for Qdrant Cloud.
 
 Metadata của mỗi vector BẮT BUỘC đủ để dựng lại đường về nguồn: drug_id, source_url,
 page, section. Vector nào không truy được nguồn thì không được phép nằm trong
@@ -19,7 +19,7 @@ class SearchHit:
 
 
 class VectorStore(Protocol):
-    """Giao diện tối thiểu — để đổi Chroma sang FAISS/Qdrant không phải sửa retrieval."""
+    """Minimal interface that keeps retrieval independent from the Qdrant SDK."""
 
     def upsert(
         self,
@@ -41,11 +41,12 @@ class VectorStore(Protocol):
     def delete_by_drug(self, collection: str, drug_id: str) -> None: ...
 
 
-class ChromaVectorStore:
-    """Hiện thực VectorStore bằng ChromaDB (persist ra đĩa)."""
+class QdrantVectorStore:
+    """Qdrant Cloud adapter; implementation is delivered by the active feature tasks."""
 
-    def __init__(self, persist_dir: str) -> None:
-        self.persist_dir = persist_dir
+    def __init__(self, url: str, api_key: str) -> None:
+        self.url = url
+        self.api_key = api_key
 
     def upsert(
         self,

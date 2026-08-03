@@ -1,12 +1,8 @@
 """Chuyển text thành vector.
 
-Hai không gian embedding tách biệt, đừng trộn:
-- `hdsd_excerpts` — đoạn trích tờ HDSD, phục vụ tra thông tin thuốc và truy nguồn.
-- `drug_names`    — tên biệt dược / hoạt chất, phục vụ gợi ý khi người dùng gõ sai.
-
-Lưu ý: chuẩn hoá tên thuốc KHÔNG nên dựa chính vào embedding. Khớp mờ theo ký tự
-(rapidfuzz + bỏ dấu) chính xác và rẻ hơn nhiều cho tên riêng tiếng Việt.
-Embedding chỉ là lớp gợi ý bổ sung. Xem domain/normalization.py.
+The `hdsd_excerpts` vector space contains verbatim leaflet chunks for scoped retrieval.
+Drug-name normalization does not use embeddings; deterministic character matching is
+safer for Vietnamese proper nouns. See domain/normalization.py.
 """
 
 from collections.abc import Sequence

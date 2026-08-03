@@ -6,8 +6,8 @@ Vai trò của similarity search KHÁC NHAU tuỳ loại tương tác — đừn
 chung cho cả hai.
 
 **Thuốc–thuốc: KHÔNG dùng retrieval để quyết định.**
-Đây là bài toán tra bảng, không phải bài toán tìm kiếm: drugtodrug.json là quan hệ
-(hoạt chất A, hoạt chất B) -> bản ghi. Tra khoá cho độ chính xác 100% theo định nghĩa.
+Ingestion tạo quan hệ có cấu trúc (hoạt chất A, hoạt chất B) -> bản ghi có bằng chứng
+từ PDF. Request path tra khoá chính xác, không tìm kiếm xấp xỉ.
 Dùng phép xấp xỉ thay cho phép tra chính xác sẽ sinh lỗi kiểu: truy vấn
 "Warfarin + Tamoxifen" trả về bản ghi "Acenocoumarol + Tamoxifen" (cùng nhóm coumarin,
 rất gần nhau trong không gian embedding) — một cảnh báo CÓ nguồn, CÓ trích dẫn, nhưng
@@ -88,8 +88,9 @@ class Retriever:
     ) -> list[RetrievedExcerpt]:
         """Tìm đoạn trích minh chứng cho một cặp tương tác **đã được xác định từ DB**.
 
-        Tiền đề: cặp này đã có bản ghi tương tác. Hàm này chỉ đi tìm bằng chứng nguyên
-        văn để hiển thị kèm. Không dùng kết quả rỗng ở đây để kết luận "không tương tác".
+        Tiền đề: ingestion đã tạo bản ghi exact-pair gắn với chunk nguồn. Hàm này chỉ
+        phục hồi/kiểm tra bằng chứng nguyên văn để hiển thị. Không dùng kết quả gần đúng
+        để thay thế một pair key khác.
         """
         raise NotImplementedError
 

@@ -13,7 +13,7 @@ import { apiNotReady } from "@/queries/utils";
 
 export const loginRequest = async (
   data: ILoginRequest
-): Promise<IApiResponse<ILoginResponse>> => {
+): Promise<ILoginResponse> => {
   // try {
   //   const apiUrl = API_BASE_URL + API_ENDPOINTS.AUTH.LOGIN;
   //   const retrieved = await clientRequest.post(apiUrl, data);
@@ -27,7 +27,7 @@ export const loginRequest = async (
 
 export const registerRequest = async (
   data: IRegisterRequest
-): Promise<IApiResponse<IAuthUser>> => {
+): Promise<IAuthUser> => {
   // try {
   //   const apiUrl = API_BASE_URL + API_ENDPOINTS.AUTH.REGISTER;
   //   const retrieved = await clientRequest.post(apiUrl, data);
@@ -39,7 +39,7 @@ export const registerRequest = async (
   return apiNotReady(API_ENDPOINTS.AUTH.REGISTER, { email: data.email });
 };
 
-export const getProfileRequest = async (): Promise<IApiResponse<IAuthUser>> => {
+export const getProfileRequest = async (): Promise<IAuthUser> => {
   // try {
   //   const apiUrl = API_BASE_URL + API_ENDPOINTS.AUTH.GET_PROFILE;
   //   const retrieved = await clientRequest.get(apiUrl);

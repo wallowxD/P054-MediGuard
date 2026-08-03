@@ -1,148 +1,146 @@
-# Runbook
+# Sổ tay vận hành
 
-Operational procedures: how to run things, and what to do when they break.
+Tài liệu này quy định lệnh cần chạy, thứ tự chạy và cách xử lý sự cố. Lý do kiến trúc nằm
+trong [`adrs/`](../adrs/).
 
-For *why* the system is shaped this way, see [`adrs/`](../adrs/). This file is only
-"which command, in what order, and what the failure looks like".
+## Vận hành local hằng ngày
 
----
-
-## Daily operations
-
-### Start everything locally
+### Chạy frontend và backend
 
 ```bash
-make dev        # backend :8000 + frontend :3000, one Ctrl-C stops both
+make dev        # backend :8000 + frontend :3000; một Ctrl-C dừng cả hai
 ```
 
-Separately, in two terminals:
+Hoặc chạy ở hai terminal:
 
 ```bash
-make run        # backend only
-make web        # frontend only
+make run        # chỉ backend
+make web        # chỉ frontend
 ```
 
-### Run the whole stack in containers
+### Chạy toàn bộ hệ thống bằng container
 
 ```bash
-make up         # Postgres + backend + frontend
-docker compose ps        # all three must report (healthy)
+make up
+docker compose ps        # db, backend, frontend phải healthy
 make down
 ```
 
-Requires `NEXTAUTH_SECRET` in the root `.env`. Compose fails loudly if it is missing — see
-the incident below.
+Root `.env` phải có `NEXTAUTH_SECRET`; Compose chủ động fail nếu thiếu.
 
-### Health checks
+### Kiểm tra tình trạng dịch vụ
 
-| Check | Expected |
+| Lệnh | Kết quả mong đợi |
 |---|---|
 | `curl localhost:8000/health` | `{"status":"ok","env":"development"}` |
 | `curl localhost:8000/api/v1/status` | `{"status":"ready",...}` |
-| `curl -o /dev/null -w '%{http_code}' localhost:3000` | `200` (landing page, signed out) |
-| `curl -o /dev/null -w '%{http_code}' localhost:3000/dashboard` | `307` (redirect to sign-in) |
+| `curl -o /dev/null -w '%{http_code}' localhost:3000` | `200` khi chưa đăng nhập |
+| `curl -o /dev/null -w '%{http_code}' localhost:3000/dashboard` | `307` tới sign-in |
 
-If `/` returns 307 while signed out, authentication is misconfigured — see incident 1.
+Nếu `/` trả 307 khi chưa đăng nhập, xem sự cố 1.
 
-### Before pushing
-
-```bash
-make check      # backend: ruff + format + pytest
-make web-lint   # frontend: eslint
-make web-build  # frontend: type check + build
-```
-
-### Run the ingestion pilot
+### Trước khi push
 
 ```bash
-make ingest-pilot     # 50 medicines, per the PRD
+make check
+make web-lint
+make web-build
+docker compose config --quiet
+shasum -a 256 -c .github/gate-1.sha256
 ```
 
-Measure extraction coverage **before** processing all 1073. If coverage is under ~30%,
-change the extraction approach rather than scaling up a bad pipeline.
+Với feature có workspace riêng, chạy thêm `quickstart.md` và hoàn thành checklist tương ứng.
 
----
+### Chạy ingestion pilot
 
-## Incidents
+```bash
+make ingest-pilot
+```
 
-### 1. Every route redirects to `/signin?error=Configuration`
+Đo extraction coverage trên pilot 50 thuốc trước khi xử lý toàn bộ catalog. Không scale một
+pipeline có coverage thấp hoặc citation không truy vết được.
 
-**Symptom:** even the public landing page returns 307. Containers still report `healthy`,
-because the health check only asks whether the server answers.
+## Xử lý sự cố
 
-**Diagnose:**
+### 1. Mọi route redirect tới `/signin?error=Configuration`
+
+**Hiện tượng:** landing page public cũng trả 307 dù container vẫn healthy.
+
 ```bash
 docker compose logs frontend | grep NO_SECRET
 ```
 
-**Cause:** `NEXTAUTH_SECRET` is not reaching the frontend container, so next-auth refuses to
-run and `withAuth` rejects everything.
+**Nguyên nhân:** `NEXTAUTH_SECRET` không vào frontend container nên next-auth từ chối chạy.
 
-**Fix:** put `NEXTAUTH_SECRET` in the root `.env` (`openssl rand -base64 32`), then
-`make down && make up`. Compose is configured to fail with an explicit message if the
-variable is absent, so this should not recur silently.
+**Xử lý:** thêm `NEXTAUTH_SECRET` vào root `.env` bằng `openssl rand -base64 32`, rồi chạy
+`make down` và `make up`.
 
-### 2. `sh: next: command not found`, or Turbopack cannot find the workspace root
+### 2. `sh: next: command not found` hoặc Turbopack không thấy workspace root
 
-**Cause:** `frontend/node_modules` is missing. The Turbopack message is misleading — the
-real problem is simply that dependencies are not installed.
+**Nguyên nhân:** thiếu `frontend/node_modules`; thông báo Turbopack có thể gây hiểu nhầm.
 
-**Fix:** `make web-install`. Never use `npx next dev`: npx downloads a different `next` into
-a temporary cache and produces exactly that misleading error.
+**Xử lý:** chạy `make web-install`. Không dùng `npx next dev` vì npx có thể tải bản Next
+khác vào cache tạm.
 
-### 3. Backend container exits with `ModuleNotFoundError: No module named 'medsafe'`
+### 3. Backend container báo `ModuleNotFoundError: No module named 'medsafe'`
 
-**Cause:** uv installs workspace members in editable mode by default, which only writes a
-`.pth` file pointing at the source tree. The runtime stage of the image does not copy that
-source.
+uv mặc định cài workspace member ở editable mode, chỉ tạo `.pth` trỏ tới source tree. Image
+runtime không có source đó sẽ lỗi. Docker build hiện dùng `--no-editable`; nếu lỗi tái diễn,
+kiểm tra flag này trong `backend/Dockerfile`.
 
-**Fix:** the build already passes `--no-editable`. If this reappears, check that flag is
-still present in `backend/Dockerfile`.
+### 4. Port vẫn bận sau `Ctrl-C`
 
-### 4. A port is still busy after `Ctrl-C`
-
-Happens when the process was killed by PID (terminal closed abruptly, killed from Activity
-Monitor) rather than interrupted, so the trap never ran.
+Trước tiên xác định process còn giữ port:
 
 ```bash
-pkill -f "uvicorn medsafe"; pkill -f "next dev|next-server"
-lsof -ti:3000 -ti:8000        # confirm nothing is left
+lsof -nP -iTCP:3000 -sTCP:LISTEN
+lsof -nP -iTCP:8000 -sTCP:LISTEN
 ```
 
-### 5. `sitemap.xml`, `robots.txt` or another static file redirects to `/signin`
+Chỉ dừng đúng process development đã xác nhận. Không dùng pattern rộng trên máy dùng chung.
 
-**Cause:** the proxy matcher is catching it. The matcher excludes every path containing a
-dot, so this only happens if the matcher was edited.
+### 5. `sitemap.xml`, `robots.txt` hoặc static file redirect tới sign-in
 
-**Fix:** restore the exclusion in `frontend/src/proxy.ts`. Note the trade-off: application
-routes must never contain a dot.
+Proxy matcher đã bị thay đổi. Khôi phục rule loại mọi path có extension trong
+`frontend/src/proxy.ts`. Đổi lại, application route không được chứa dấu chấm.
 
-### 6. The pre-push hook fails
+### 6. Pre-push hook lỗi
 
-**Do not** run `git push --no-verify` — it skips the AI-log submission, which is graded.
-Report the error to the team lead. Details in [AI_LOGGING_SETUP.md](../AI_LOGGING_SETUP.md).
+Không dùng `git push --no-verify`. Lưu output và báo leader; xem
+[AI_LOGGING_SETUP.md](../AI_LOGGING_SETUP.md).
 
-### 7. AI logs show zero for someone
+### 7. AI log của thành viên bằng 0
 
-Almost always because they opened the IDE at `backend/` or `frontend/` instead of the
-repository root. The hooks resolve paths relative to the root, find nothing, and fail
-silently.
+Nguyên nhân thường gặp là mở IDE tại `backend/` hoặc `frontend/` thay vì repository root.
+Mở lại `P-054/`, xác minh email/key và cài lại hook nếu cần. Prompt chưa từng được hook ghi
+thì không thể khôi phục ngược thời gian.
 
-**Fix:** reopen at `P-054/`. There is no retroactive recovery — the prompts were never
-recorded.
+## CI và merge pull request
 
----
+PR phải pass các check về GATE checksum, repository integrity, backend, frontend và Docker
+Compose. Trên GitHub, cấu hình branch protection cho `main` yêu cầu các check này và ít
+nhất một reviewer; không cho merge khi branch chưa cập nhật hoặc conversation chưa resolve.
 
-## Not set up yet
+Không sửa workflow chỉ để làm check xanh. Nếu check phản ánh requirement sai, cập nhật
+spec/ADR và workflow trong cùng PR với review rõ ràng.
 
-Do not follow instructions for these from elsewhere; they genuinely do not exist here.
+## Triển khai production chưa được thiết lập
 
-| Procedure | State | Tracked as |
-|---|---|---|
-| Deployment / live URL | Nothing deployed; no hosting chosen | B-16 |
-| Database migrations | Alembic is a dependency, but there is no `alembic.ini` and no `versions/` | Undecided, see [code-style.md](code-style.md) |
-| Rollback procedure | Depends on deployment; cannot be written yet | after B-16 |
-| Backend logging | `backend/logs/` exists but no logger is configured | Undecided |
-| CI | No workflow runs `make check` or `make web-lint` | D-04 |
+Team dự kiến dùng một VPS nhưng chưa chọn/mua hạ tầng. Vì vậy hiện chưa có live URL,
+production secret store, migration, backup, rollback, TLS/reverse proxy, monitoring hoặc
+deployment pipeline được chấp nhận.
 
-When one of these lands, add the procedure here in the same pull request.
+Trước khi deploy lần đầu, Jira deployment ticket và feature/ADR tương ứng phải chốt tối
+thiểu:
+
+1. VPS/provider, region, resource sizing và quyền SSH.
+2. Domain, DNS, TLS termination và reverse proxy.
+3. Container registry, image tagging, deploy environment và approval rule.
+4. Secret management; không copy `.env` vào image hoặc repository.
+5. Database migration, backup/restore test và rollback procedure.
+6. Health/readiness check, log/metric/alert và retention không lộ dữ liệu nhạy cảm.
+7. CI/CD trigger, production approval, concurrency lock và post-deploy smoke test.
+8. Incident owner, recovery objective và cách tắt feature an toàn.
+
+Khi các quyết định được duyệt, cập nhật runbook này trong cùng PR. Không viết quy trình giả
+định cho hạ tầng chưa tồn tại.

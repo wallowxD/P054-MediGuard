@@ -1,149 +1,139 @@
-# Backend guide
+# Hướng dẫn phát triển backend
 
-A RAG agent that looks up **drug–drug** and **drug–food** interactions with cited sources.
-Python package: `medsafe` · FastAPI + LangGraph + ChromaDB.
+Backend là RAG agent tra cứu tương tác thuốc–thuốc và thuốc–thực phẩm có dẫn nguồn. Package
+Python là `medsafe`; runtime dùng FastAPI, domain logic deterministic, LangGraph và Qdrant.
 
-> **Read this before writing any backend code.** The `backend/` directory holds source
-> only — all documentation lives here, outside the codebase.
+> Luôn mở repository root `P-054/`, không mở riêng `backend/`. Thư mục `backend/` chỉ chứa
+> source; tài liệu đặt trong `docs/`. Xem context bắt buộc tại [AGENTS.md](../AGENTS.md).
 
-⚠️ Always open the repository at its root, `P-054/` — never `backend/`. The AI logging
-hooks use paths relative to the root, and opening the wrong directory silently loses every
-log. See [AGENTS.md](../AGENTS.md).
+## Chạy nhanh
 
----
-
-## Quick start
-
-Every command runs from the **repository root**, not from `backend/`:
+Mọi lệnh chạy từ repository root:
 
 ```bash
-uv sync                    # creates .venv at the repo root, installs medsafe editable
-make run                   # dev API  -> http://localhost:8000/docs
+uv sync                    # tạo .venv tại root và cài medsafe editable
+make run                   # API dev: http://localhost:8000/docs
 make test                  # pytest backend/tests
-make check                 # lint + format + tests (same as CI)
-make ingest-pilot          # extract a 50-medicine pilot set, per the PRD
+make check                 # ruff + format check + pytest, tương đương CI
+make ingest-pilot          # ingestion pilot 50 thuốc
 ```
 
-Secrets live in `.env` at the **repository root**, not `backend/.env`.
-`backend/.env.example` exists only to document variable names.
+Secret nằm trong `.env` tại root. `backend/.env.example` chỉ mô tả tên biến.
 
----
+## Cấu trúc
 
-## Structure
-
-```
+```text
 backend/
-├── pyproject.toml          dependencies + ruff/pytest config (package: medsafe)
-├── config.yaml             RAG parameters — NO secrets
-├── Dockerfile              build context = REPO ROOT (uv.lock lives at the workspace root)
-├── .env.example            variable names (real values live at the root)
-├── logs/                   log files, gitignored
-│
+├── pyproject.toml             # dependency và config ruff/pytest
+├── config.yaml                # tham số RAG, tuyệt đối không chứa secret
+├── Dockerfile                 # build context là repository root
 ├── src/medsafe/
-│   ├── main.py             create_app(), CORS, /health
-│   ├── config.py           Settings (reads the root .env) + loads config.yaml
-│   │
-│   │   ── RAG pipeline, one directory per stage ──
-│   ├── ingestion/          load raw data, runs as a BATCH job off the request path
-│   │   ├── loader.py       read the drug-list CSV, drugtodrug JSON, download PDF leaflets
-│   │   ├── pipeline.py     load → PDF → text → chunk → embed → store
-│   │   └── cli.py          python -m medsafe.ingestion.cli --limit 50
-│   ├── chunking/chunker.py     split leaflets, KEEP TEXT VERBATIM + source coordinates
-│   ├── embeddings/embedder.py  text → vector
-│   ├── vectordb/vector_store.py  ChromaDB (Protocol + implementation)
-│   ├── retrieval/retriever.py    fetch supporting passages  ★ see the boundary below
-│   ├── prompts/prompt_templates.py  EVERY prompt here, never inline
-│   ├── llm/llm_client.py       the ONE door to the model
-│   │
-│   │   ── business logic ──
-│   ├── domain/             PURE logic — no fastapi/sqlalchemy/openai imports
-│   │   ├── normalization.py    drug name → active ingredient (fuzzy match)
-│   │   ├── severity.py         deterministic severity ranking
-│   │   └── pairing.py          N medicines → C(N,2) pairs to check
-│   ├── db/
-│   │   ├── models/         SQLAlchemy: drug, ingredient, interaction, excerpt, review
-│   │   └── repositories/   queries — NEVER write a query inside a route
-│   ├── agents/             LangGraph: graph, state, nodes/, tools/
-│   ├── schemas/            Pydantic I/O → generates openapi.json
-│   ├── api/
-│   │   ├── routes.py       router aggregation
-│   │   └── v1/             interactions · drugs · prescriptions · reviews
-│   └── utils/helpers.py    shared helpers (diacritic stripping, Drive links, stable ids)
-│
+│   ├── main.py                # create_app, CORS, health
+│   ├── config.py              # Settings + config.yaml
+│   ├── ingestion/             # batch load/download/extract/store
+│   ├── chunking/chunker.py    # giữ nguyên văn và source coordinate
+│   ├── embeddings/embedder.py # text → vector
+│   ├── vectordb/              # Qdrant protocol và adapter
+│   ├── retrieval/             # passage retrieval có scope
+│   ├── prompts/               # toàn bộ prompt template
+│   ├── llm/llm_client.py      # cửa duy nhất tới model/OCR provider
+│   ├── domain/                # pure deterministic logic
+│   ├── db/models/             # SQLAlchemy model
+│   ├── db/repositories/       # mọi database query
+│   ├── agents/                # LangGraph state, node, tool
+│   ├── schemas/               # Pydantic I/O, nguồn sinh OpenAPI
+│   ├── api/v1/                # thin route
+│   └── utils/                 # helper dùng chung
 └── tests/
-    ├── conftest.py
-    ├── unit/domain/        runs with NO LLM, database or network
+    ├── unit/domain/           # không LLM, database, network
     ├── unit/agents/
     ├── unit/retrieval/
     └── integration/api/
 ```
 
----
+## Ranh giới RAG quan trọng nhất
 
-## ★ The boundary that matters most
-
-The role of similarity search **differs by interaction type**. Do not apply one rule to
-both.
-
-| Question | Mechanism | Why |
+| Câu hỏi | Cơ chế bắt buộc | Lý do |
 |---|---|---|
-| Drug–drug: is there an interaction, and how severe? | `db/repositories/` + `domain/` — **table lookup** | `drugtodrug.json` is a relation `(A,B) → record`. An exact-key lookup is correct by definition |
-| **Drug–food: is there an interaction?** | **`retrieval/`** — semantic search | No lookup table exists; the information is only in the leaflet's free text |
-| The verbatim supporting quote | `retrieval/` | |
-| Drug information Q&A | `retrieval/` + `prompts/DRUG_INFO_QA` | |
-| User mistypes a drug name | `domain/normalization.py` | For Vietnamese proper nouns, character matching beats embeddings |
+| Drug–drug có tương tác không, mức nào? | `db/repositories/` exact-key lookup + `domain/` deterministic severity | Ingestion đã persist canonical pair có evidence; request path không được đoán |
+| Drug–food có evidence không? | `retrieval/` semantic search trong đúng leaflet | Không có lookup table; dữ liệu nằm trong free text |
+| Quote hỗ trợ | `retrieval/`/evidence repository | Phải giữ nguyên văn và source coordinate |
+| Drug information Q&A | `retrieval/` + prompt chuyên biệt | Bị giới hạn bởi passage nguồn |
+| Người dùng gõ sai tên thuốc | `domain/normalization.py` | Character/fuzzy matching phù hợp tên riêng tiếng Việt hơn embedding |
 
-**Only for drug–drug** is similarity search forbidden as the basis for a conclusion. The
-concrete reason: a query for *"Warfarin + Tamoxifen"* can return the record for
-*"Acenocoumarol + Tamoxifen"* — both coumarins, and very close in embedding space. The
-result is a warning **with a source and a verbatim quote, but naming the wrong pair of
-drugs** — a failure that passes every "does it have a source?" check.
+Chỉ với drug–drug, similarity search bị cấm làm cơ sở kết luận. Ví dụ query
+Warfarin–Tamoxifen có thể trả record Acenocoumarol–Tamoxifen vì hai cặp gần nhau trong
+embedding space. Warning đó có thể có nguồn thật nhưng ghi sai cặp thuốc. Xem
+[ADR 0012](../adrs/0012-reviewed-leaflet-interaction-records.md).
 
-Full decision: [`adrs/0004-drug-drug-lookup-not-similarity.md`](../adrs/0004-drug-drug-lookup-not-similarity.md)
+## Đặt code đúng lớp
 
----
-
-## Where code goes
-
-| Concern | Location |
+| Hạng mục | Vị trí |
 |---|---|
-| A new endpoint | `api/v1/` — THIN routes: validate, then call domain/repository |
-| Pure logic (normalisation, severity, pairing) | `domain/` |
-| Database queries | `db/repositories/` |
-| Prompts | `prompts/prompt_templates.py` |
-| Calling the LLM | `llm/llm_client.py` |
-| Agent nodes and tools | `agents/` |
-| Batch or one-off jobs | `ingestion/` |
-| Tunable parameters (chunk size, top_k, model) | `config.yaml`, never hardcoded |
-| API request/response types | `schemas/` |
+| Endpoint mới | `api/v1/`; route chỉ validate và gọi boundary bên dưới |
+| Normalize, severity, pairing | `domain/` |
+| Database query | `db/repositories/`; không query trong route |
+| Prompt | `prompts/prompt_templates.py`; không viết inline |
+| Model/OCR call | `llm/llm_client.py`; không import provider SDK nơi khác |
+| Agent node/tool | `agents/` |
+| Batch hoặc one-off job | `ingestion/` |
+| Chunk/top_k/threshold/model | `config.yaml`; không hardcode |
+| Request/response type | `schemas/` dùng Pydantic v2 |
 
----
+## Quy ước Python
 
-## Conventions
+- Python 3.11, ruff line length 120, rule `E,F,I,N,W,UP`.
+- Public function bắt buộc có type hint.
+- Không dùng bare `except:`; bắt exception cụ thể hoặc để central handler xử lý.
+- Pydantic v2 dùng `model_config = SettingsConfigDict(...)`, không dùng `class Config`.
+- Dùng absolute import, ví dụ `from medsafe.domain.severity import Severity`.
+- Mọi I/O trên request path là async.
+- Success response trả typed payload trực tiếp theo ADR 0011; error trả typed problem
+  detail/status phù hợp.
 
-- Python 3.11 · ruff line-length 120 · **type hints required** · **no bare `except:`**
-- Pydantic v2 · absolute imports: `from medsafe.domain... import ...`
-- Async for all I/O on the request path
-- Commit messages in **English**, following Conventional Commits
+## Nhà cung cấp dịch vụ và dữ liệu
 
-### Tests
+- Prescription OCR đi qua Gemini adapter và chỉ tạo candidate chưa tin cậy. Sau OCR vẫn
+  phải catalog match và user xác nhận stable ID.
+- Leaflet OCR chạy offline qua Qwen adapter với endpoint/model đọc từ config.
+- Supabase PostgreSQL sở hữu catalog, exact pair, citation, immutable evidence version và
+  review state.
+- Private Supabase Storage sở hữu raw OCR artifact có version.
+- Qdrant giữ vector và evidence pointer. Mỗi hit phải resolve ngược về PostgreSQL trước khi
+  hiển thị.
+- Không đưa secret vào `config.yaml`, source, test fixture hoặc log.
 
-`tests/unit/domain/` must run with **no LLM, no database and no network**. This is where
-*drug-name normalisation accuracy* — a PRD success metric — is measured, and the numbers
-flow into [`eval/results/report.md`](../eval/results/report.md).
+## Quy tắc luồng cảnh báo
 
-Mock the LLM through the `mock_llm` fixture in `conftest.py`; never call OpenAI for real in
-a test.
+1. Exact drug–drug record hoặc qualifying drug–food passage phải tồn tại.
+2. Citation phải có quote nguyên văn, source URL và stable chunk ID.
+3. Pair identity, citation và review status phải cùng `evidenceVersionId`.
+4. Severity phải deterministic; `unknown` chỉ dùng cho evidenced record.
+5. Thiếu record/citation/source hoặc dưới threshold trả unavailable outcome.
+6. `pending` hiển thị ngay; `rejected` không trả patient.
+7. Không diagnosis, prescribe, dosing hoặc khuyên tự đổi/ngừng thuốc.
 
----
+## Kiểm thử
 
-## Data
+`backend/tests/unit/domain/` phải chạy hoàn toàn offline. Đây là nơi đo normalization,
+pairing, severity và wrong-pair regression cho `eval/results/report.md`.
 
-- `dataset/drug_list_bv_gtvt.csv` — hospital medicine catalogue, ~1073 rows. Column names
-  are Vietnamese **without diacritics**: `Biet duoc`, `Hoat chat - Ham luong`,
-  `Link HDSD 1`.
-- `dataset/drugtodrug.json` — known interaction pairs: `Hoạt chất 1`, `Hoạt chất 2`,
-  `Cơ chế`, `Hậu quả`, `Xử trí` — Vietnamese **with diacritics**.
+- Mock model/OCR qua fixture trong `conftest.py`; không gọi provider thật trong test.
+- Mỗi thay đổi warning path cần regression test.
+- Test bị skip phải ghi lý do cụ thể trong `reason=`.
+- Integration test xác minh status code, direct payload, validation error và partial result.
 
-Because the CSV has no diacritics and the JSON does, **every comparison must go through
-`domain/normalization.py`**. Never compare raw strings.
+## Thêm một endpoint
+
+1. Duyệt requirement và contract trong feature workspace.
+2. Viết Pydantic schema và failing test.
+3. Implement domain/repository/application behavior.
+4. Thêm thin route tại `api/v1/` và register trong `api/routes.py`.
+5. Sinh lại `openapi.json` và frontend type; không sửa generated file bằng tay.
+6. Chạy `make check`, contract check và quickstart của feature.
+
+## Trạng thái hiện tại
+
+Backend hiện chỉ expose `/health` và `/api/v1/status`; business router vẫn chưa được bật.
+Migration Alembic, production logging/observability và backend deployment provider chưa có
+quyết định cuối. Không tự đặt convention; tạo/link Jira ticket và ghi ADR khi team duyệt.

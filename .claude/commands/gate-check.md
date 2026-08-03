@@ -11,7 +11,7 @@ Soát mức sẵn sàng nộp **GATE $1** của repo P-054 (team Cuvée Tech).
 Đọc `docs/guide/deliverables/checklist.md` trước — đó là rubric gốc của BTC.
 Tham chiếu cách trình bày của gate trước: `gate/gate_1/README.md`.
 
-## Soát 10 deliverable
+## Soát mười sản phẩm bàn giao
 
 Với mỗi mục, kết luận **CÓ / THIẾU / CÒN PLACEHOLDER**:
 
