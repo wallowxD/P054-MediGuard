@@ -25,12 +25,24 @@ services:
 
   frontend:
     build:
-      # lockfile npm nằm trong frontend/ nên context này là đúng
+      # yarn.lock nằm trong frontend/ nên context này là đúng
       context: ./frontend
+      args:
+        # NEXT_PUBLIC_* nhúng vào bundle lúc BUILD, không đọc lúc chạy —
+        # nên phải là build arg. Giá trị là URL trình duyệt gọi tới, tức
+        # cổng đã publish ra host, không phải hostname nội bộ của compose.
+        NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+        NEXT_PUBLIC_APP_URL: http://localhost:3000
     ports:
       - "3000:3000"
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8000
+      # Ngược lại, biến KHÔNG có tiền tố NEXT_PUBLIC_ là secret phía server,
+      # đọc lúc chạy — đặt ở đây mới đúng, đừng đưa vào build arg.
+      NEXTAUTH_URL: http://localhost:3000
+      # Thiếu secret thì next-auth ném NO_SECRET và đá MỌI route về /signin,
+      # kể cả landing page công khai. Dùng `:?` để compose báo lỗi ngay thay vì
+      # dựng lên một stack hỏng âm thầm.
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:?chua set trong .env o repo root — xem .env.example}
     depends_on:
       - backend
     restart: unless-stopped

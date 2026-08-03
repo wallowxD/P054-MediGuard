@@ -1,10 +1,10 @@
 /**
  * ★ ĐÂY là thứ chặn thật, không phải tên thư mục.
  *
- * ⚠️ Next 16 đổi tên `middleware.ts` → `proxy.ts`. Chức năng y hệt, chỉ đổi tên file
- * (xem node_modules/next/dist/docs/01-app/01-getting-started/16-proxy.md).
- * §4.4 của STRUCTURE_TEMPLATE viết cho Next 15 nên vẫn gọi là middleware.ts —
- * đừng tạo lại file đó, Next 16 sẽ cảnh báo deprecated.
+ * ⚠️ Next 16 renamed `middleware.ts` to `proxy.ts`. Same behaviour, new filename
+ * (see node_modules/next/dist/docs/01-app/01-getting-started/16-proxy.md).
+ * Do not recreate `middleware.ts` — Next 16 emits a deprecation warning for it.
+ * Background: docs/frontend.md
  *
  * Route group `(review)` KHÔNG chặn ai cả — nó chỉ nhóm route để dùng chung layout
  * và không xuất hiện trong URL. Nếu chỉ dựa vào layout client-side để chặn:
@@ -73,7 +73,7 @@ export const config = {
   matcher: [
     // ★ Loại trừ MỌI đường dẫn có phần mở rộng (`.*\..*`), không liệt kê từng đuôi.
     //
-    //   Matcher gốc trong STRUCTURE_TEMPLATE §4.4 chỉ liệt kê vài đuôi ảnh, nên
+    //   Liệt kê từng đuôi ảnh là không đủ, nên
     //   bất kỳ file tĩnh nào khác trong public/ đều bị đá về /signin: sitemap.xml,
     //   robots.txt, .webmanifest, .pdf, .json… Googlebot nhận 307 thay vì sitemap
     //   — đúng lỗi mà §4.3 cảnh báo. Liệt kê thủ công thì thêm file mới là quên.

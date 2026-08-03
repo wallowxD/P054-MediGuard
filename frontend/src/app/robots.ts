@@ -3,7 +3,7 @@ import { SEO_CONFIG } from "@/config/seo-config";
 import { AUTH_ROUTES, ROUTES } from "@/constants/routes";
 
 /**
- * Sinh động thay cho `public/robots.txt` tĩnh mà STRUCTURE_TEMPLATE §2 liệt kê.
+ * Sinh động thay cho `public/robots.txt` tĩnh.
  *
  * Lý do đổi: bản tĩnh phải hardcode URL sitemap. Deploy lên domain thật là nó vẫn
  * trỏ về localhost:3000 — sai âm thầm, không ai phát hiện cho tới khi Google bỏ qua

@@ -38,7 +38,7 @@ thiếu gì để đạt ngưỡng tối thiểu (8/7/7/6/7).
 ## Soát vệ sinh repo
 
 - `.env` có bị commit nhầm không (`git log --all --full-history -- .env`)
-- Còn sót code template không (`example_node`, `example_tool`, `README_boilerplate.md`)
+- Còn sót code template không (`example_node`, `example_tool`)
 - `gate/gate_1/` còn nguyên 4 file không — **phải luôn nguyên vẹn**
 - CI lần chạy gần nhất xanh hay đỏ
 

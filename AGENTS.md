@@ -1,230 +1,278 @@
 # AGENTS.md — P-054 · Medication Safety Copilot
 
-> Ngữ cảnh dùng chung cho **mọi AI tool** làm việc trên repo này: Claude Code, Codex,
+> Shared context for **every AI tool** working in this repository: Claude Code, Codex,
 > Cursor, Gemini CLI, GitHub Copilot, Antigravity.
-> Đây là **nguồn sự thật duy nhất**. `CLAUDE.md`, `.cursor/rules/`,
-> `.github/copilot-instructions.md` đều chỉ trỏ về file này.
+> This is the **single source of truth**. `CLAUDE.md`, `.cursor/rules/` and
+> `.github/copilot-instructions.md` all point back here.
 
 ---
 
-## ⚠️ Đọc trước khi làm bất cứ việc gì
+## ⚠️ Read this before doing anything
 
-**LUÔN mở repo ở thư mục gốc `P-054/`.** Không mở thẳng `backend/` hay `frontend/`
-làm workspace.
+**Always open the repository at its root, `P-054/`.** Never open `backend/` or `frontend/`
+as the workspace.
 
-Toàn bộ hook logging dùng **đường dẫn tương đối từ repo root**
-(`bash scripts/_pyrun.sh scripts/log_hook.py ...`). Mở ở thư mục con thì tool
-không tìm thấy `.claude/` / `.cursor/` → **không hook nào chạy → không log gì cả,
-và không báo lỗi**. Người đó push cả tuần mà điểm AI log bằng 0.
+Every logging hook uses **paths relative to the repository root**
+(`bash scripts/_pyrun.sh scripts/log_hook.py ...`). Opened in a subdirectory, the tool
+cannot find `.claude/` or `.cursor/` → **no hook runs → nothing is logged, and no error is
+reported**. Someone can push for a week and score zero on AI logs.
 
 ---
 
-## Sản phẩm
+## Product
 
-**Medication Safety Copilot** — AI Agent tra cứu tương tác **thuốc–thuốc** và
-**thuốc–thực phẩm** *có nguồn*, đặt trong bối cảnh web app "Hệ thống y tế X".
+**Medication Safety Copilot** — an AI agent that looks up **drug–drug** and **drug–food**
+interactions *with cited sources*, set inside the "Health System X" web app.
 
-Agent đóng vai trò **cảnh báo an toàn tham khảo**: hiển thị nguyên văn trích dẫn
-kèm nguồn và trạng thái review. **Không tự kết luận lâm sàng, không thay thế
-quyết định của bác sĩ.**
+The agent acts as a **reference safety warning**: it shows the verbatim quote, its source
+and the review status. It **does not draw clinical conclusions and does not replace a
+doctor's judgement.**
 
-Chi tiết đầy đủ: [gate/gate_1/README.md](gate/gate_1/README.md) (Brief + PRD + UI Flow).
+Full detail: [gate/gate_1/README.md](gate/gate_1/README.md) (Brief + PRD + UI flow).
 
-### Ba luật bất di bất dịch
+### The three rules that never bend
 
-1. **Không bịa cảnh báo.** Mỗi cảnh báo **bắt buộc** gắn với đoạn trích nguyên văn
-   từ PDF HDSD gốc + link nguồn. Không có trích dẫn thì không có cảnh báo —
-   trả về "chưa có dữ liệu", không được để LLM tự suy luận ra tương tác.
-2. **Không kết luận lâm sàng.** Không sinh chẩn đoán, không đề xuất đổi thuốc,
-   không đưa liều. Mọi output là thông tin tham khảo.
-3. **Human-in-the-loop không chặn luồng.** Mọi cảnh báo (kể cả severe/major) hiển
-   thị **ngay** cho bệnh nhân, kèm nhãn *"chờ xác nhận chuyên môn"*. Dược sĩ duyệt
-   song song. **Không** implement mô hình full-gate chặn cảnh báo chờ duyệt.
+1. **Never invent a warning.** Every warning **must** be backed by a verbatim quote from
+   the original PDF leaflet plus a link to the source. No citation means no warning —
+   return "no data available". Never let the model infer an interaction on its own.
+2. **Never draw clinical conclusions.** No diagnosis, no suggestion to switch medicines, no
+   dosing. Everything the system produces is reference information.
+3. **Human-in-the-loop must not block the flow.** Every warning (including severe and
+   major) is shown to the patient **immediately**, labelled *"awaiting professional
+   confirmation"*. Pharmacists review in parallel. **Do not** implement a full-gate model
+   that withholds unapproved warnings.
 
-### Ngoài phạm vi (đừng tự ý thêm)
+### Out of scope — do not add these on your own initiative
 
-Chẩn đoán/kê đơn · AI tự đổi thuốc · tương tác thuốc–bệnh lý · memory dài hạn ·
-clone UI hoặc dữ liệu thật của bệnh viện tham khảo.
+Diagnosis or prescribing · the AI changing medicines by itself · drug–condition
+interactions · long-term memory · cloning the UI or real data of the reference hospital.
 
 ---
 
 ## Team
 
-| Họ tên | Vai trò |
+| Name | Role |
 |---|---|
 | Lê Nguyễn Minh Quang | PM / PO / Tech Lead / Dev |
 | Nguyễn Thanh Hùng | Backend + Database |
 | Đỗ Quý Đức | Frontend + Backend |
 | Lê Nhật Minh | Frontend |
 
-Team: **Cuvée Tech** · Mã dự án: **P-054**
+Team: **Cuvée Tech** · Project code: **P-054**
 
 ---
 
-## Cấu trúc repo
+## Repository structure
 
-### Trạng thái hiện tại — ĐANG DI TRÚ
+### ★ This repository is a WORKSPACE, not just a place to keep code
 
-Repo đang chuyển từ layout template (Python ở root) sang monorepo. Trong giai đoạn
-này **cả hai chỗ cùng tồn tại**:
+The whole project context lives in the repository: specification, architecture decisions,
+planning. The team and AI tools read **the same source**, and every change is versioned
+and reviewable.
 
-| Đường dẫn | Trạng thái |
-|---|---|
-| `src/`, `tests/`, `requirements.txt` ở root | **LEGACY** — code template, sẽ bị move |
-| `backend/`, `frontend/` | **ĐÍCH** — đang được init |
+| Directory | Contents | Answers |
+|---|---|---|
+| [`specs/`](specs/) | Product and domain specification | **What** to build, and **why** |
+| [`adrs/`](adrs/) | Architecture Decision Records | **How** to build it, and **why that way** |
+| [`planning/`](planning/) | Backlog, sprints, open questions | **When**, and **what is blocked** |
+| [`docs/`](docs/) | Backend and frontend guides, architecture | **How to work on the code** |
 
-**Code mới viết vào đâu:** hỏi user trước nếu chưa rõ PR restructure đã merge chưa.
-Sau khi merge, mọi thứ Python nằm dưới `backend/src/medsafe/`.
+`backend/` and `frontend/` hold **source only**. Their documentation lives in `docs/`, so
+all project context sits outside the codebase.
 
-Kế hoạch di trú chi tiết: [docs/restructure-plan.md](docs/restructure-plan.md).
+### Reading order before starting work
 
-### Layout đích
+1. [`specs/product-vision.md`](specs/product-vision.md) — **the three rules that never bend**
+2. [`specs/domains.md`](specs/domains.md) — shared vocabulary and **the RAG boundary**
+3. [`adrs/README.md`](adrs/README.md) — skim the index; read
+   [ADR 0004](adrs/0004-drug-drug-lookup-not-similarity.md) closely if you are touching the
+   warning path
+4. [`planning/backlog.md`](planning/backlog.md) — what is left, and what is blocked
+5. The rest of this file — coding conventions
+6. Right before writing code: [`docs/code-style.md`](docs/code-style.md), then
+   [`docs/backend.md`](docs/backend.md) or [`docs/frontend.md`](docs/frontend.md)
 
-Backend theo **layout RAG pipeline** — mỗi bước một thư mục:
+**If you are touching the warning path, ADRs 0004, 0005 and 0006 are required reading.**
+They are product constraints, not engineering suggestions.
+
+### Update rule
+
+Product behaviour changes → update `specs/` **in the same pull request** as the code.
+A hard-to-reverse decision → write a new ADR; **never rewrite an old one** (mark it
+`Superseded`). Documentation that has drifted from the code is worse than none, because
+people still believe it.
+
+### Layout
+
+The backend follows a **RAG-pipeline layout** — one directory per stage:
 
 ```
 P-054/
-├── gate/gate_1/        ★ ĐÃ SUBMIT — TUYỆT ĐỐI KHÔNG SỬA/XOÁ/ĐỔI TÊN
-├── backend/
-│   ├── config.yaml     tham số RAG (chunk size, top_k, model) — KHÔNG chứa secret
-│   ├── logs/           log file (đã gitignore)
+├── specs/              ★ product-vision · domains · user-roles · features · api-contracts
+├── adrs/               ★ architecture decisions, numbered upward, never rewritten
+├── planning/           backlog.md + sprints/
+├── docs/               backend.md · frontend.md · architecture_diagram.md · guide/
+├── gate/gate_1/        ★ SUBMITTED — NEVER EDIT, DELETE OR RENAME
+├── backend/            ★ source only — no .md files live here
+│   ├── config.yaml     RAG parameters (chunk size, top_k, model) — NO secrets
+│   ├── logs/           log files (gitignored)
 │   └── src/medsafe/
-│       ├── ingestion/    loader.py · pipeline.py · cli.py — nạp CSV/JSON/PDF, batch
-│       ├── chunking/     chunker.py — cắt tờ HDSD, GIỮ NGUYÊN VĂN
+│       ├── ingestion/    loader.py · pipeline.py · cli.py — read CSV/JSON/PDF, batch
+│       ├── chunking/     chunker.py — split leaflets, KEEP TEXT VERBATIM
 │       ├── embeddings/   embedder.py
 │       ├── vectordb/     vector_store.py — ChromaDB
 │       ├── retrieval/    retriever.py
-│       ├── prompts/      prompt_templates.py — mọi prompt ở đây, không rải trong code
-│       ├── llm/          llm_client.py — MỘT cửa duy nhất gọi model
-│       ├── api/          routes.py + v1/ — route MỎNG
+│       ├── prompts/      prompt_templates.py — every prompt here, none inline
+│       ├── llm/          llm_client.py — the ONE door to the model
+│       ├── api/          routes.py + v1/ — THIN routes
 │       ├── utils/        helpers.py
-│       ├── domain/       ★ logic THUẦN — không import fastapi/sqlalchemy/openai
+│       ├── domain/       ★ PURE logic — no fastapi/sqlalchemy/openai imports
 │       ├── db/           models/ + repositories/
 │       ├── agents/       LangGraph
-│       └── schemas/      Pydantic I/O → nguồn sinh openapi.json
+│       └── schemas/      Pydantic I/O → generates openapi.json
 ├── backend/tests/      unit/domain · unit/agents · unit/retrieval · integration/api
-├── frontend/src/       Next.js App Router + TS + Tailwind + shadcn
-├── dataset/            ★ GIỮ NGUYÊN TÊN (.gitignore đang ignore `data/`)
+├── frontend/           ★ source only — no .md files live here
+│   └── src/            Next.js App Router + TS + Tailwind + shadcn
+├── dataset/            ★ KEEP THIS NAME (.gitignore ignores `data/`)
 ├── eval/               deliverable #10
-├── docs/  presentation/  scripts/  .ai-log/
-└── .env  .venv/        ★ BẮT BUỘC ở root
+├── presentation/  scripts/  .ai-log/
+└── .env  .venv/        ★ MUST live at the root
 ```
 
-### ★ Ranh giới RAG quan trọng nhất
+> The reference workspace layout uses a single `/src` directory for code. This is a
+> two-language monorepo with two toolchains (uv and Yarn), so `backend/` and `frontend/`
+> stay separate — full reasoning in [ADR 0003](adrs/0003-folder-structure.md).
 
-Vai trò của similarity search **khác nhau tuỳ loại tương tác**. Đừng áp một luật chung.
+### ★ The RAG boundary — the thing most likely to go wrong
 
-| Câu hỏi | Cơ chế | Vì sao |
+The role of similarity search **differs by interaction type**. Do not apply one rule to
+both.
+
+| Question | Mechanism | Why |
 |---|---|---|
-| Thuốc–thuốc: có tương tác không? Mức nào? | `db/repositories/` + `domain/` — **tra bảng** | `drugtodrug.json` là quan hệ (A,B)→bản ghi. Tra khoá chính xác 100% theo định nghĩa |
-| **Thuốc–thực phẩm: có tương tác không?** | **`retrieval/`** — tìm kiếm ngữ nghĩa | Không tồn tại bảng tra; thông tin nằm trong văn bản tự do của HDSD |
-| Đoạn trích nguyên văn minh chứng | `retrieval/` | |
-| Tra thông tin thuốc (Q&A) | `retrieval/` + `prompts/DRUG_INFO_QA` | |
-| Người dùng gõ sai tên thuốc | `domain/normalization.py` (khớp mờ) | Tên riêng tiếng Việt: rapidfuzz + bỏ dấu chính xác hơn embedding |
+| Drug–drug: is there an interaction, and how severe? | `db/repositories/` + `domain/` — **table lookup** | `drugtodrug.json` is a relation (A,B)→record. An exact-key lookup is correct by definition |
+| **Drug–food: is there an interaction?** | **`retrieval/`** — semantic search | No lookup table exists; the information sits in free text inside the leaflet |
+| The verbatim supporting quote | `retrieval/` | |
+| Drug information Q&A | `retrieval/` + `prompts/DRUG_INFO_QA` | |
+| User mistypes a drug name | `domain/normalization.py` (fuzzy match) | For Vietnamese proper nouns, rapidfuzz + diacritic stripping beats embeddings |
 
-**Chỉ với thuốc–thuốc** mới cấm dùng similarity search để kết luận. Lý do cụ thể: truy
-vấn *"Warfarin + Tamoxifen"* có thể trả về bản ghi *"Acenocoumarol + Tamoxifen"* (cùng
-nhóm coumarin, rất gần nhau trong không gian embedding) → cảnh báo **có nguồn, có trích
-dẫn, nhưng sai cặp thuốc**. Lỗi này vượt qua được mọi lớp kiểm tra "có nguồn hay không".
+**Only for drug–drug** is similarity search forbidden as the basis for a conclusion. The
+concrete reason: a query for *"Warfarin + Tamoxifen"* can return the record for
+*"Acenocoumarol + Tamoxifen"* (same coumarin class, very close in embedding space) → a
+warning **with a source and a real quote, but naming the wrong pair of drugs**. That
+failure passes every "does it have a source?" check.
 
-Với thuốc–thực phẩm thì ngược lại: retrieval **chính là** cơ chế phát hiện, vì không có
-bảng nào để tra. Ràng buộc là đầu ra phải là đoạn trích nguyên văn, không phải kết luận
-model tự phát biểu.
+Drug–food is the opposite: retrieval **is** the detection mechanism, because there is no
+table to consult. The constraint there is that the output must be a verbatim quote, not a
+sentence the model composed.
 
-Dưới `retrieval.score_threshold` → trả rỗng → tầng trên báo **"chưa có dữ liệu"**.
-Không hạ ngưỡng để "có gì đó mà trả về".
+Below `retrieval.score_threshold` → return empty → the layer above reports **"no data
+available"**. Never lower the threshold just to return something.
 
-### Đặt code vào đâu
+### Where code goes
 
-| Việc | Chỗ |
+| Concern | Location |
 |---|---|
-| Endpoint mới | `api/v1/` |
-| Logic thuần (chuẩn hoá tên, xếp severity, ghép cặp) | `domain/` |
-| Truy vấn DB | `db/repositories/` — **không** viết query trong route |
-| Prompt | `prompts/prompt_templates.py` — không viết prompt inline trong node |
-| Gọi LLM | `llm/llm_client.py` — không gọi thẳng SDK OpenAI ở nơi khác |
-| Node/tool của agent | `agents/` |
-| Batch / chạy một lần | `ingestion/` |
-| Tham số chỉnh được (chunk size, top_k, model) | `backend/config.yaml`, không hard-code |
-| Kiểu dữ liệu vào/ra API | `schemas/` |
+| A new endpoint | `api/v1/` |
+| Pure logic (name normalisation, severity ranking, pairing) | `domain/` |
+| Database queries | `db/repositories/` — **never** write a query inside a route |
+| Prompts | `prompts/prompt_templates.py` — never inline inside a node |
+| Calling the LLM | `llm/llm_client.py` — never call the OpenAI SDK anywhere else |
+| Agent nodes and tools | `agents/` |
+| Batch or one-off jobs | `ingestion/` |
+| Tunable parameters (chunk size, top_k, model) | `backend/config.yaml`, never hardcoded |
+| API request/response types | `schemas/` |
 
 ---
 
-## Dữ liệu
+## Data
 
-- `dataset/drug_list_bv_gtvt.csv` — danh mục thuốc BV GTVT, ~1073 dòng, **tiếng Việt
-  không dấu ở tên cột**. Cột quan trọng: `Biet duoc`, `Hoat chat - Ham luong`,
+- `dataset/drug_list_bv_gtvt.csv` — hospital medicine catalogue, ~1073 rows, **column names
+  are Vietnamese without diacritics**. Key columns: `Biet duoc`, `Hoat chat - Ham luong`,
   `Link HDSD 1`.
-- `dataset/drugtodrug.json` — cặp tương tác đã có: `Hoạt chất 1`, `Hoạt chất 2`,
-  `Cơ chế`, `Hậu quả`, `Xử trí` (tiếng Việt **có dấu**).
+- `dataset/drugtodrug.json` — known interaction pairs: `Hoạt chất 1`, `Hoạt chất 2`,
+  `Cơ chế`, `Hậu quả`, `Xử trí` (Vietnamese **with diacritics**).
 
-Lưu ý: tên cột CSV **không dấu**, nội dung JSON **có dấu** — mọi so khớp phải đi qua
-`domain/normalization.py`, không so sánh chuỗi thô.
+Note: CSV column names have **no diacritics** while the JSON content **does** — every
+comparison must go through `domain/normalization.py`, never raw string equality.
 
-Không commit dữ liệu lớn. `data/` đã bị gitignore; `dataset/` thì không — đừng đổi
-tên `dataset/` thành `data/`, sẽ mất dữ liệu khỏi git.
+Do not commit large data files. `data/` is gitignored; `dataset/` is not — do not rename
+`dataset/` to `data/`, or the data drops out of git.
 
 ---
 
-## Quy ước code
+## Coding conventions
 
 ### Python
 - Python 3.11 · ruff line-length **120** · select `E,F,I,N,W,UP`
-- **Type hints bắt buộc** trên mọi hàm public (tiêu chí chấm Code Quality)
-- **Không bare `except:`** — bắt exception cụ thể, hoặc dùng handler tập trung ở
+- **Type hints are required** on every public function (a Code Quality grading criterion)
+- **No bare `except:`** — catch specific exceptions, or use the central handler in
   `api/errors.py`
-- Pydantic v2 (`model_config = SettingsConfigDict(...)`, không dùng `class Config`)
-- Import tuyệt đối: `from medsafe.domain.severity import ...`
-- Async cho mọi I/O trong đường request
+- Pydantic v2 (`model_config = SettingsConfigDict(...)`, not `class Config`)
+- Absolute imports: `from medsafe.domain.severity import ...`
+- Async for all I/O on the request path
+
+> Full per-library rules and naming conventions: [`docs/code-style.md`](docs/code-style.md).
+> One rule worth repeating here: **components never call `services/*` directly — always go
+> through a React Query hook in `queries/*`.**
 
 ### Frontend
-- TypeScript strict · App Router · Tailwind · shadcn/ui
-- **`src/lib/api/types.gen.ts` là file SINH** từ `openapi.json` — không sửa tay
-- Dark mode + responsive là **tiêu chí chấm điểm**, không phải nice-to-have
+- Strict TypeScript · App Router · Tailwind · shadcn/ui
+- **`src/lib/api/types.gen.ts` is GENERATED** from `openapi.json` — never edit it by hand
+- Dark mode and responsiveness are **grading criteria**, not nice-to-haves
+
+### Documentation
+- **Every `.md` file in this repository is written in English**, including specs, ADRs,
+  planning and READMEs — even though the team speaks Vietnamese day to day.
+- Exceptions: `gate/` (already submitted) and `docs/guide/` (the programme's own
+  material). Do not translate or edit either.
+- **No `.md` files inside `backend/` or `frontend/`.** Documentation for those goes in
+  `docs/backend.md` and `docs/frontend.md`, so context stays outside the source tree.
 
 ### Git
-- **Commit message viết bằng tiếng Anh**, theo Conventional Commits
-  (`feat:`, `fix:`, `docs:`, `refactor:`, `chore:`) — kể cả khi trao đổi tiếng Việt.
-- Không commit `.env`. Không `git push --no-verify` (sẽ bỏ qua submit AI log).
+- **Commit messages in English**, following Conventional Commits
+  (`feat:`, `fix:`, `docs:`, `refactor:`, `chore:`).
+- Never commit `.env`. Never `git push --no-verify` (it skips the AI-log submission).
 
-### Test
-- `backend/tests/unit/domain/` phải chạy được **không cần LLM, không cần DB, không
-  cần mạng**. Đây là chỗ đo "tỷ lệ chuẩn hoá tên thuốc đúng" cho `eval/`.
-- Mock LLM qua fixture `mock_llm` trong `conftest.py`, không gọi OpenAI thật trong test.
+### Tests
+- `backend/tests/unit/domain/` must run with **no LLM, no database and no network**. This
+  is where drug-name normalisation accuracy is measured for `eval/`.
+- Mock the LLM through the `mock_llm` fixture in `conftest.py`; never call OpenAI for real
+  in a test.
 
 ---
 
-## AI Usage Logging — TỰ ĐỘNG, đừng đụng vào
+## AI usage logging — AUTOMATIC, do not touch
 
-Logging đã tự động hoá hoàn toàn qua hook + pre-push.
+Logging is fully automated through hooks and a pre-push hook.
 
-**KHÔNG được:**
-- ❌ Gọi tay `scripts/log_hook.py`, `scripts/log_antigravity.py`, `scripts/submit_log.py`
-- ❌ Sửa/xoá file trong `.ai-log/`
-- ❌ Sửa bất cứ gì trong `scripts/`
-- ❌ Bypass hook bằng `git push --no-verify`
+**Do not:**
+- ❌ Manually run `scripts/log_hook.py`, `scripts/log_antigravity.py`, `scripts/submit_log.py`
+- ❌ Edit or delete anything in `.ai-log/`
+- ❌ Change anything under `scripts/`
+- ❌ Bypass the hook with `git push --no-verify`
 
-Nếu pre-push báo lỗi → **báo lại cho user**, không tự ý bypass.
-Chi tiết: [.agents/rules/ai-log-hook.md](.agents/rules/ai-log-hook.md) ·
+If the pre-push hook fails → **tell the user**, never bypass it.
+Details: [.agents/rules/ai-log-hook.md](.agents/rules/ai-log-hook.md) ·
 [AI_LOGGING_SETUP.md](AI_LOGGING_SETUP.md)
 
-Dùng tool web không có hook (ChatGPT, Claude.ai, Gemini Web) → log tay theo
+Using a web tool with no hook (ChatGPT, Claude.ai, Gemini Web) → log it manually following
 [.agents/workflows/log.md](.agents/workflows/log.md).
 
 ---
 
-## Deliverable đang được chấm
+## Graded deliverables
 
-Đừng để các file này mốc — chúng có điểm:
+Do not let these go stale — they carry marks:
 
-| File | Nhịp cập nhật |
+| File | Cadence |
 |---|---|
-| [WORKLOG.md](WORKLOG.md) | **hàng ngày** — dùng `/worklog` |
-| [JOURNAL.md](JOURNAL.md) | **hàng tuần** — dùng `/journal` |
-| [docs/architecture_diagram.md](docs/architecture_diagram.md) | khi kiến trúc đổi |
-| [eval/results/report.md](eval/results/report.md) | khi có số đo mới |
+| [WORKLOG.md](WORKLOG.md) | **daily** — use `/worklog` |
+| [JOURNAL.md](JOURNAL.md) | **weekly** — use `/journal` |
+| [docs/architecture_diagram.md](docs/architecture_diagram.md) | whenever the architecture changes |
+| [eval/results/report.md](eval/results/report.md) | whenever there are new measurements |
 | [README.md](README.md) | Problem → Solution → Tech Stack → Setup → Team |
 
-Checklist đầy đủ: [docs/guide/deliverables/checklist.md](docs/guide/deliverables/checklist.md)
+Full checklist: [docs/guide/deliverables/checklist.md](docs/guide/deliverables/checklist.md)
 
-**`gate/gate_1/` đã submit — không sửa, không xoá, không đổi tên, không di chuyển.**
+**`gate/gate_1/` has been submitted — never edit, delete, rename or move it.**

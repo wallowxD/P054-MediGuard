@@ -35,8 +35,15 @@ COPY . .
 
 # ★ Biến NEXT_PUBLIC_* được NHÚNG THẲNG vào bundle lúc build, không đọc lúc chạy.
 #   Nên phải truyền dạng build arg, đặt ở `environment:` của compose là vô tác dụng.
-ARG NEXT_PUBLIC_API_URL=http://localhost:8000
-ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+#   ⚠️ Tên phải khớp CHÍNH XÁC biến mà code đọc:
+#     - src/constants/api.ts   → NEXT_PUBLIC_API_BASE_URL
+#     - src/config/seo-config.ts → NEXT_PUBLIC_APP_URL
+#   Sai tên thì không có lỗi nào cả, chỉ là giá trị rỗng nằm im trong bundle.
+ARG NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
+
+ARG NEXT_PUBLIC_APP_URL=http://localhost:3000
+ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
