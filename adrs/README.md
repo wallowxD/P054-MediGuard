@@ -21,6 +21,7 @@ delivery status hoặc catalog quy ước code.
 | [0012](0012-reviewed-leaflet-interaction-records.md) | Exact pair có evidence từ leaflet | Được chấp nhận |
 | [0013](0013-cloud-data-and-model-topology.md) | Topology cloud/OCR/model | Được chấp nhận |
 | [0014](0014-defer-spec-kit.md) | Tạm dừng Spec Kit | Được chấp nhận |
+| [0015](0015-backend-owned-identity.md) | Backend tự sở hữu identity, không dùng Supabase Auth | Được chấp nhận |
 
 ## Quy tắc
 
