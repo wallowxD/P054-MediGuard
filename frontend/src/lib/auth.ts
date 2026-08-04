@@ -26,7 +26,8 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        // TODO(API): mở lại khi backend có POST /api/v1/auth/tokens
+        // TODO(API): backend ĐÃ CÓ POST /api/v1/auth/login — mở khối dưới là chạy được.
+        // Còn thiếu bước bật `loginRequest()` trong services/auth/index.ts.
         // const res = await loginRequest({
         //   email: credentials.email,
         //   password: credentials.password,
@@ -41,7 +42,7 @@ export const authOptions: NextAuthOptions = {
         //   refreshToken,
         // };
 
-        throw new Error("Backend chưa có module auth (POST /api/v1/auth/tokens)");
+        throw new Error("Chưa bật loginRequest() ở services/auth (backend POST /api/v1/auth/login đã sẵn sàng)");
       },
     }),
   ],

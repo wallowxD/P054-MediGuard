@@ -16,6 +16,8 @@ declare global {
   interface ILoginResponse {
     accessToken: string;
     refreshToken: string;
+    /** Số giây còn lại của accessToken — dùng để lên lịch refresh trước khi hết hạn. */
+    expiresIn: number;
     user: IAuthUser;
   }
 
@@ -29,8 +31,10 @@ declare global {
     refreshToken: string;
   }
 
+  /** `/auth/refresh` KHÔNG trả `user` — lúc refresh client đã có hồ sơ rồi. */
   interface IRefreshTokenResponse {
     accessToken: string;
     refreshToken: string;
+    expiresIn: number;
   }
 }
