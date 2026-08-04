@@ -1,8 +1,8 @@
 export const SEO_CONFIG = {
-  appName: "Medication Safety Copilot",
-  shortName: "MedSafe",
-  /** Tên hiển thị của hệ thống y tế bao quanh sản phẩm (theo Brief/PRD) */
-  brandName: "Hệ thống y tế X",
+  appName: "MediGuard",
+  shortName: "MediGuard",
+  /** Tên thương hiệu hiển thị xuyên suốt landing page và metadata. */
+  brandName: "MediGuard",
   description:
     "Tra cứu tương tác thuốc–thuốc và thuốc–thực phẩm có trích dẫn nguồn. " +
     "Thông tin tham khảo, không thay thế quyết định của bác sĩ.",

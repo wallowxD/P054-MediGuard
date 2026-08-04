@@ -38,7 +38,7 @@ export const REVIEW_PREFIX = "/review";
 export const LANDING_SECTIONS = {
   FEATURES: "#tinh-nang",
   HOW_IT_WORKS: "#cach-hoat-dong",
-  SAFETY: "#an-toan-su-dung",
+  CONTACT: "#lien-he",
 } as const;
 
 export const ROUTES = {

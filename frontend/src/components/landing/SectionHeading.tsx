@@ -15,7 +15,7 @@ export default function SectionHeading({
 
   return (
     <div className={centered ? "text-center" : "text-left"}>
-      <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+      <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
         {title}
       </h2>
       <span

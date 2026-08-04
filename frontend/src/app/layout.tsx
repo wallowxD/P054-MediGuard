@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
+import { Inter, Lora } from "next/font/google";
 import ToastProvider from "@/components/ToastProvider";
 import { SEO_CONFIG } from "@/config/seo-config";
 import StoreProvider from "@/store/StoreProvider";
@@ -7,10 +7,18 @@ import "./globals.css";
 import { NextAuthProvider } from "./lib/next.auth.provider";
 import { QueryProvider } from "./lib/query.provider";
 
-const font = Be_Vietnam_Pro({
+// Lora cho tiêu đề (`font-heading`) — serif editorial, vẫn phủ đủ dấu tiếng Việt.
+// Inter cho phần thân (`--font-sans` mặc định) — dễ đọc ở cỡ nhỏ, vẫn phủ đủ dấu.
+const headingFont = Lora({
   subsets: ["latin", "vietnamese"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["500", "600", "700"],
   variable: "--font-app",
+});
+
+const bodyFont = Inter({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600"],
+  variable: "--font-body",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +35,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="vi" className={`${font.variable} h-full antialiased`}>
+    <html
+      lang="vi"
+      className={`${headingFont.variable} ${bodyFont.variable} h-full antialiased`}
+    >
       <body className="min-h-full bg-background text-foreground">
         <StoreProvider>
           <QueryProvider>

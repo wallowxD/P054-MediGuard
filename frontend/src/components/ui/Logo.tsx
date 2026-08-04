@@ -8,7 +8,7 @@ export default function Logo({ className = "h-8 w-8" }: { className?: string }) 
     <svg
       viewBox="0 0 32 32"
       role="img"
-      aria-label="Hệ thống y tế X"
+      aria-label="MediGuard"
       className={className}
     >
       <rect x="1" y="1" width="30" height="30" rx="9" fill="currentColor" opacity="0.12" />
