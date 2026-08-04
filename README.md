@@ -87,6 +87,16 @@ openssl rand -base64 32
 Compose, điền thêm vào `.env` tại root. Chỉ cấu hình credential cần cho phần việc đang làm.
 Mỗi thành viên dùng `AI_LOG_API_KEY` cá nhân.
 
+Nếu làm việc với backend auth, cần thêm hai biến trong `.env`:
+
+```bash
+openssl rand -hex 32   # dán vào JWT_SECRET_KEY
+```
+
+`DATABASE_URL` lấy từ Supabase → Project Settings → Database → Connection string, chọn
+**Session pooler (cổng 5432)**, đổi tiền tố `postgresql://` thành `postgresql+psycopg://`
+và percent-encode ký tự đặc biệt trong mật khẩu (`@` → `%40`). Sau đó chạy `make migrate`.
+
 - Secret backend: `.env` tại root.
 - Biến local của Next.js: `frontend/.env.local`.
 - Không commit hai file này.
@@ -139,6 +149,8 @@ make web   # Next.js: http://localhost:3000
 | `make lint` / `make format` | Kiểm tra/sửa format Python |
 | `make check` | Ruff + format check + pytest, tương đương backend CI |
 | `make ingest-pilot` | Chạy ingestion cho pilot 50 thuốc |
+| `make migrate` | Áp schema lên `DATABASE_URL` (Alembic) |
+| `make migration m="..."` | Sinh revision Alembic mới |
 | `make web-install` | Cài dependency frontend bằng Yarn |
 | `make web` | Chạy frontend tại cổng 3000 |
 | `make web-lint` / `make web-build` | ESLint / production build |

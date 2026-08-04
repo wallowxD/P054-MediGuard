@@ -36,7 +36,8 @@ clientRequest.interceptors.request.use(async (config) => {
 /**
  * Gọi refresh token rồi cập nhật session.
  *
- * TODO(API): backend chưa có `POST /api/v1/auth/tokens`. Khi có thì mở khối dưới.
+ * TODO(API): backend ĐÃ CÓ `POST /api/v1/auth/refresh` — mở khối dưới là chạy được.
+ * Endpoint trả `{accessToken, refreshToken, expiresIn}`, không kèm `user`.
  * Hiện trả về false → interceptor sẽ signOut, đúng hành vi mong muốn khi hết hạn.
  */
 async function refreshTokenAndUpdateSession(): Promise<boolean> {

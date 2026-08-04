@@ -6,7 +6,11 @@ Không viết truy vấn DB và không viết logic nghiệp vụ ở đây.
 
 from fastapi import APIRouter
 
+from medsafe.api.v1 import auth
+
 router = APIRouter()
+
+router.include_router(auth.router, prefix="/auth", tags=["auth"])
 
 # Bật dần khi từng module sẵn sàng:
 # from medsafe.api.v1 import drugs, interactions, prescriptions, reviews

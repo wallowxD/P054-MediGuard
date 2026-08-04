@@ -17,6 +17,17 @@ storage:
   relational_provider: "supabase_postgres"
   object_provider: "supabase_storage"
 
+auth:
+  # Secret ký token nằm ở JWT_SECRET_KEY trong .env, không bao giờ đặt ở đây.
+  algorithm: "HS256"
+  # Access token ngắn hạn vì nó nằm trong JWT của NextAuth ở phía client.
+  access_token_ttl_minutes: 30
+  refresh_token_ttl_days: 14
+  password_min_length: 8
+  # Đăng ký công khai LUÔN tạo role này. Nâng lên PHARMACIST là thao tác thủ công
+  # của admin — tự chọn role lúc đăng ký là lỗ hổng leo thang đặc quyền.
+  self_signup_role: "PATIENT"
+
 chunking:
   chunk_size: 800
   chunk_overlap: 120

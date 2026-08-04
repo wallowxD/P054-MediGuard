@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 import yaml
-from pydantic import Field
+from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # backend/src/medsafe/config.py -> parents[3] = repo root
@@ -25,6 +25,25 @@ def load_yaml_config(path: Path = CONFIG_YAML) -> dict[str, Any]:
         return {}
     with path.open(encoding="utf-8") as f:
         return yaml.safe_load(f) or {}
+
+
+class AuthConfig(BaseModel):
+    """Tham số auth từ `config.yaml` (không phải secret).
+
+    Đọc một lần qua `get_auth_config()` — `Settings.rag` đọc lại file mỗi lần truy cập,
+    chấp nhận được cho ingestion nhưng không chấp nhận được trên request path.
+    """
+
+    algorithm: str = "HS256"
+    access_token_ttl_minutes: int = Field(default=30, gt=0)
+    refresh_token_ttl_days: int = Field(default=14, gt=0)
+    password_min_length: int = Field(default=8, ge=8)
+    self_signup_role: str = "PATIENT"
+
+
+@lru_cache
+def get_auth_config() -> AuthConfig:
+    return AuthConfig(**load_yaml_config().get("auth", {}))
 
 
 class Settings(BaseSettings):
@@ -53,6 +72,9 @@ class Settings(BaseSettings):
     google_api_key: str = ""
     dashscope_api_key: str = ""
     dashscope_base_url: str = ""
+
+    # Auth — secret ký JWT. Rỗng thì auth router từ chối phục vụ (xem domain/auth.py).
+    jwt_secret_key: str = ""
 
     # Data
     database_url: str = "sqlite:///./data/app.db"

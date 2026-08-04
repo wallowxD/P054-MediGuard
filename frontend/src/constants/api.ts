@@ -1,7 +1,7 @@
 /**
  * Một nguồn sự thật cho mọi endpoint. Không rải string URL trong code.
  *
- * ⚠️ Backend hiện MỚI CHỈ có /health và /api/v1/status. Các nhóm endpoint bên dưới
+ * ⚠️ Backend hiện có /health, /api/v1/status và nhóm /api/v1/auth/*. Các nhóm còn lại
  * khai báo trước theo đúng router mà backend đã dự trù trong
  * `backend/src/medsafe/api/routes.py` — bật dần khi từng module sẵn sàng.
  */
@@ -21,17 +21,21 @@ export const API_ENDPOINTS = {
     STATUS: `${API_V1}/status`,
   },
 
-  // ── Chưa có ở backend, khai báo trước ──────────────────────────────────────
-
+  /**
+   * REGISTER, LOGIN, REFRESH_TOKEN và GET_PROFILE đã CHẠY THẬT ở backend.
+   * Ba endpoint password bên dưới thì chưa — xem ADR 0015.
+   */
   AUTH: {
     REGISTER: `${API_V1}/auth/register`,
-    LOGIN: `${API_V1}/auth/tokens`,
-    REFRESH_TOKEN: `${API_V1}/auth/tokens`,
+    LOGIN: `${API_V1}/auth/login`,
+    REFRESH_TOKEN: `${API_V1}/auth/refresh`,
     GET_PROFILE: `${API_V1}/auth/profiles`,
     RECOVERY_PASSWORD: `${API_V1}/auth/password`,
     RESET_PASSWORD: `${API_V1}/auth/password`,
     UPDATE_PASSWORD: `${API_V1}/auth/password`,
   },
+
+  // ── Chưa có ở backend, khai báo trước ──────────────────────────────────────
 
   /** Tra tương tác thuốc–thuốc và thuốc–thực phẩm */
   INTERACTIONS: {

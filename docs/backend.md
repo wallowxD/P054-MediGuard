@@ -132,8 +132,98 @@ pairing, severity và wrong-pair regression cho `eval/results/report.md`.
 5. Sinh lại `openapi.json` và frontend type; không sửa generated file bằng tay.
 6. Chạy `make check`, contract check và quickstart của feature.
 
+## Auth và migration
+
+Auth do backend tự sở hữu, không dùng Supabase Auth — xem
+[ADR 0015](../adrs/0015-backend-owned-identity.md). Bốn endpoint đã chạy:
+`POST /api/v1/auth/register`, `POST /api/v1/auth/login`, `POST /api/v1/auth/refresh`,
+`GET /api/v1/auth/profiles`. Hình dạng request/response ở
+[specs/api-contracts.md](../specs/api-contracts.md).
+
+| Trách nhiệm | Vị trí |
+|---|---|
+| Hash mật khẩu, chính sách mật khẩu, ký/giải mã JWT | `domain/auth.py` — thuần, test offline |
+| Truy vấn bảng `users` | `db/repositories/user_repository.py` |
+| Engine + session async | `db/session.py` |
+| Dependency `get_current_user`, `get_user_repository` | `api/dependencies.py` |
+| Map exception domain → HTTP status | `api/errors.py` |
+| TTL token, độ dài mật khẩu tối thiểu, role mặc định | `backend/config.yaml`, section `auth` |
+| `JWT_SECRET_KEY` | `.env` tại repo root, sinh bằng `openssl rand -hex 32` |
+
+Endpoint cần đăng nhập thì thêm `current_user: CurrentUserDep` vào signature. Frontend
+guard chỉ phục vụ UX; backend mới là security boundary (ADR 0007).
+
+## Bảng dữ liệu và ORM model
+
+| Bảng | Model | Vai trò |
+|---|---|---|
+| `users` | `db/models/user.py` | Tài khoản đăng nhập, do Alembic tạo (revision 0001) |
+| `drugs` | `db/models/drug.py` | Danh mục thuốc đã ingest |
+| `drug_drug_interactions` | `db/models/interaction.py` | ★ Nguồn sự thật exact-pair cho thuốc–thuốc |
+| `drug_food_interactions` | `db/models/interaction.py` | Tương tác thuốc–thực phẩm đã xác nhận |
+| `evidence_chunks` | `db/models/evidence.py` | Đoạn nguyên văn từ tờ HDSD, đích resolve của Qdrant |
+
+Bốn bảng cuối được tạo tay bằng Supabase SQL Editor trước khi project dùng Alembic.
+Revision 0002 ghi lại đúng schema đó và được `stamp` lên database đang chạy nên dữ liệu
+không bị đụng tới; môi trường dựng mới thì `make migrate` sẽ tạo đủ.
+
+**Model phải luôn khớp schema thật.** Cách kiểm tra: chạy `make migration m="check"`, nếu
+file sinh ra có `upgrade()` rỗng thì khớp; xoá file đó đi. Có op nào xuất hiện nghĩa là
+model và database đã lệch.
+
+### Lệch đã biết giữa schema và spec — chưa có quyết định
+
+Ba điểm dưới đây là lệch thật giữa database hiện tại và
+`specs/001-core-interaction-check/data-model.md`. Không tự ý sửa; cần Jira decision ticket.
+
+1. **`review_status` dùng `pending_review`, spec dùng `pending`.** Endpoint nào trả review
+   status ra ngoài phải map ở tầng schema. Đừng UPDATE dữ liệu trong bảng cho khớp spec.
+2. **`drug_food_interactions` thiếu `reviewer_id`/`reviewed_at`** trong khi
+   `drug_drug_interactions` có đủ. Dược sĩ duyệt cảnh báo thuốc–thực phẩm hiện không ghi
+   lại được ai duyệt và duyệt lúc nào.
+3. **`evidence_chunks` thiếu `page`**, trong khi `Citation` quy định `page` là số dương
+   hoặc null. Hiện chỉ có `start_char`/`end_char`.
+
+### Migration
+
+```bash
+make migrate                       # alembic upgrade head
+make migration m="add drug table"  # sinh revision mới (autogenerate)
+make migrate-down                  # lùi một revision
+```
+
+⚠️ `make migrate-down` lùi quá revision 0002 sẽ **xoá toàn bộ danh mục thuốc, dữ liệu
+tương tác và evidence chunk** trên Supabase. Chỉ downgrade tới 0002 hoặc thấp hơn trên
+database dựng mới.
+
+Hai điểm bắt buộc nhớ:
+
+1. **Model mới phải được import trong `db/models/__init__.py`.** Alembic autogenerate chỉ
+   thấy những gì đã nằm trong `Base.metadata`.
+2. **`migrations/env.py` có `include_object` chặn autogenerate xoá bảng chưa model hoá.**
+   Bảng ở project này hay được tạo tay bằng Supabase SQL Editor trước khi có ORM model;
+   không có guard đó, một revision autogenerate sẽ sinh `op.drop_table(...)` cho chúng.
+   Hệ quả: muốn xoá bảng thật thì phải viết `op.drop_table(...)` bằng tay.
+
+### Ràng buộc Row Level Security
+
+PostgREST của Supabase expose mọi bảng schema `public` qua anon key, mà anon key nằm công
+khai trong bundle frontend. Mọi bảng chứa dữ liệu không công khai — `users` là ví dụ rõ
+nhất vì có `password_hash` — phải `ENABLE ROW LEVEL SECURITY` trong migration và không tạo
+policy. Backend kết nối bằng role sở hữu bảng nên bỏ qua RLS và vẫn hoạt động.
+
+### Kết nối Supabase
+
+`DATABASE_URL` dùng **session pooler (cổng 5432)**, không dùng transaction pooler (6543):
+transaction pooler ghép nhiều client vào chung connection nên prepared statement của
+psycopg biến mất giữa chừng, lỗi chỉ hiện ra khi có tải. Ký tự đặc biệt trong mật khẩu
+phải percent-encode (`@` → `%40`).
+
 ## Trạng thái hiện tại
 
-Backend hiện chỉ expose `/health` và `/api/v1/status`; business router vẫn chưa được bật.
-Migration Alembic, production logging/observability và backend deployment provider chưa có
-quyết định cuối. Không tự đặt convention; tạo/link Jira ticket và ghi ADR khi team duyệt.
+Backend expose `/health`, `/api/v1/status` và nhóm `/api/v1/auth/*`. Business router
+(interactions, drugs, prescriptions, reviews) vẫn chưa được bật.
+
+Chưa có quyết định cuối cho: xác thực email, quên mật khẩu, thu hồi refresh token,
+production logging/observability và backend deployment provider. Không tự đặt convention;
+tạo/link Jira ticket và ghi ADR khi team duyệt.

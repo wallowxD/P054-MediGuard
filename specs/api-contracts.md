@@ -25,6 +25,41 @@ Không sửa `types.gen.ts` bằng tay và không tạo handwritten type trùng 
 | Tính năng | Contract |
 |---|---|
 | Core interaction check | `specs/001-core-interaction-check/contracts/interaction-check.openapi.yaml` |
+| Auth (đăng ký, token, hồ sơ) | `backend/src/medsafe/schemas/auth.py` → OpenAPI tại `/docs` |
+
+## Auth
+
+| Endpoint | Body | Trả về |
+|---|---|---|
+| `POST /api/v1/auth/register` | `{email, password, name}` | `201` + `AuthUserResponse` |
+| `POST /api/v1/auth/login` | `{email, password}` | `200` + `LoginResponse` |
+| `POST /api/v1/auth/refresh` | `{refreshToken}` | `200` + `TokenPairResponse` |
+| `GET /api/v1/auth/profiles` | — (header `Authorization: Bearer`) | `200` + `AuthUserResponse` |
+
+`LoginResponse` = `{accessToken, refreshToken, expiresIn, user}`.
+`TokenPairResponse` = `{accessToken, refreshToken, expiresIn}` — **không có `user`**, vì
+lúc refresh client đã có hồ sơ rồi. Hai response model tách bạch để OpenAPI mô tả đúng
+từng luồng; khớp `ILoginResponse` và `IRefreshTokenResponse` ở `types/auth.d.ts`.
+
+`/auth/refresh` chỉ nhận token loại `refresh`. Gửi access token vào đây trả `401` —
+refresh token sống 14 ngày còn access token sống 30 phút, nhận nhầm loại là kéo dài vòng
+đời token bị lộ lên gấp hàng trăm lần.
+
+`register` không nhận field `role`; đăng ký công khai luôn tạo `PATIENT`. Xem
+[ADR 0015](../adrs/0015-backend-owned-identity.md).
+
+### Error code của auth
+
+| Code | Status | Khi nào |
+|---|---|---|
+| `password_policy_violation` | 400 | Mật khẩu ngắn hơn `auth.password_min_length`, thiếu chữ hoặc thiếu số |
+| `invalid_credentials` | 401 | Sai mật khẩu **hoặc** email không tồn tại — cố ý không phân biệt |
+| `invalid_token` | 401 | Thiếu token, token hỏng, hết hạn, hoặc sai loại (dùng refresh thay access) |
+| `account_inactive` | 403 | `is_active = false` |
+| `email_already_registered` | 409 | Email đã có tài khoản |
+
+Lỗi validate của Pydantic vẫn trả `422` với hình dạng mặc định của FastAPI
+(`{detail: [...]}`), không phải `ErrorResponse`.
 
 Khi đổi endpoint/schema: cập nhật spec/contract → Pydantic/router → sinh OpenAPI và
 frontend types → cập nhật service/query → chạy integration tests và frontend build.
