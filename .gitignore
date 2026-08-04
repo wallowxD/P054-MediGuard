@@ -36,6 +36,10 @@ data/
 *.db
 *.sqlite3
 dataset/hdsd_raw/
+dataset/*.pdf
+output/
+output_clean/
+tmp/
 
 # Logs
 logs/
