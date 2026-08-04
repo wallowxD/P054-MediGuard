@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 
 .PHONY: help install run test lint format check ingest-pilot up down clean \
+        migrate migration migrate-down \
         web-install web web-build web-lint dev
 
 help:
@@ -11,6 +12,9 @@ help:
 	@echo "format       — ruff format"
 	@echo "check        — lint + format --check + test (giống backend CI)"
 	@echo "ingest-pilot — trích xuất thử 50 thuốc theo PRD"
+	@echo "migrate      — alembic upgrade head (áp schema lên DATABASE_URL)"
+	@echo "migration    — sinh revision mới: make migration m=\"mô tả\""
+	@echo "migrate-down — lùi lại một revision"
 	@echo "up / down    — docker compose"
 	@echo ""
 	@echo "web-install  — yarn install cho frontend"
@@ -41,6 +45,18 @@ check:
 
 ingest-pilot:
 	uv run python -m medsafe.ingestion.cli --limit 50
+
+# Migration chạy trên DATABASE_URL trong .env ở repo root — kiểm tra đang trỏ đúng
+# project Supabase trước khi chạy.
+migrate:
+	uv run alembic -c backend/alembic.ini upgrade head
+
+migration:
+	@test -n "$(m)" || (echo "Thiếu mô tả: make migration m=\"add drug table\"" && exit 1)
+	uv run alembic -c backend/alembic.ini revision --autogenerate -m "$(m)"
+
+migrate-down:
+	uv run alembic -c backend/alembic.ini downgrade -1
 
 web-install:
 	cd frontend && yarn install
