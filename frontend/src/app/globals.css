@@ -21,18 +21,22 @@
   --foreground-secondary: #475569;
   --foreground-muted: #94a3b8;
 
-  --primary: #0d9488;
-  --primary-hover: #0f766e;
+  --primary: #1b2a4a;
+  --primary-hover: #263b5e;
   --primary-foreground: #ffffff;
+
+  /* Nền gradient nhạt cho hero/banner — đậm ở đầu, nhạt dần về trắng */
+  --hero-tint: #eaf1fb;
+  --hero-tint-soft: #f5f9ff;
 
   --success: #16a34a;
   --error: #dc2626;
   --warning: #d97706;
   --info: #2563eb;
 
-  --border: rgba(15, 23, 42, 0.12);
+  --border: #e2e8f0;
   --input: #ffffff;
-  --ring: #0d9488;
+  --ring: #1b2a4a;
 
   /* Severity — bậc thang cảnh báo, dùng chung cho badge/border/icon.
      Mức do backend `domain/severity.py` quyết định, FE chỉ tô màu. */
@@ -53,9 +57,12 @@
   --foreground-secondary: #a3abb8;
   --foreground-muted: #6b7280;
 
-  --primary: #2dd4bf;
-  --primary-hover: #5eead4;
-  --primary-foreground: #06231f;
+  --primary: #7ca6e6;
+  --primary-hover: #9cbef0;
+  --primary-foreground: #0b1220;
+
+  --hero-tint: var(--background-elevated);
+  --hero-tint-soft: var(--background);
 
   --success: #22c55e;
   --error: #ef4444;
@@ -64,7 +71,7 @@
 
   --border: rgba(255, 255, 255, 0.12);
   --input: #10141a;
-  --ring: #2dd4bf;
+  --ring: #7ca6e6;
 
   --severity-contraindicated: #f87171;
   --severity-major: #fb923c;
@@ -84,9 +91,12 @@
     --foreground-secondary: #a3abb8;
     --foreground-muted: #6b7280;
 
-    --primary: #2dd4bf;
-    --primary-hover: #5eead4;
-    --primary-foreground: #06231f;
+    --primary: #7ca6e6;
+    --primary-hover: #9cbef0;
+    --primary-foreground: #0b1220;
+
+    --hero-tint: var(--background-elevated);
+    --hero-tint-soft: var(--background);
 
     --success: #22c55e;
     --error: #ef4444;
@@ -95,7 +105,7 @@
 
     --border: rgba(255, 255, 255, 0.12);
     --input: #10141a;
-    --ring: #2dd4bf;
+    --ring: #7ca6e6;
 
     --severity-contraindicated: #f87171;
     --severity-major: #fb923c;
@@ -120,6 +130,9 @@
   --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
 
+  --color-hero-tint: var(--hero-tint);
+  --color-hero-tint-soft: var(--hero-tint-soft);
+
   --color-success: var(--success);
   --color-error: var(--error);
   --color-warning: var(--warning);
@@ -135,10 +148,137 @@
   --color-severity-minor: var(--severity-minor);
   --color-severity-unknown: var(--severity-unknown);
 
-  --font-sans: var(--font-app);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-app);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+/* Marketing pages stay calm and light even when the authenticated app follows dark mode. */
+.landing-theme {
+  --background: #ffffff;
+  --background-elevated: #f5f8fc;
+  --surface: #f1f5fb;
+  --card: #ffffff;
+  --foreground: #1b3155;
+  --foreground-secondary: #44546f;
+  --foreground-muted: #64748b;
+  --primary: #1b3155;
+  --primary-hover: color-mix(in srgb, var(--primary) 82%, black);
+  --primary-foreground: #ffffff;
+  --hero-tint: #eaf1fb;
+  --hero-tint-mid: #f0f5ff;
+  --hero-tint-soft: #f5f9ff;
+  /* The landing page's one interactive blue — hero CTA, final CTA band, active nav link.
+     Supersedes the old "ocean-blue" name now that it carries a primary CTA role, not just
+     a supporting illustration tint. */
+  --primary-blue: #4b7fc3;
+  --coral: #f28c78;
+  --border: #e6eaf0;
+  --input: #ffffff;
+  --ring: var(--primary);
+
+  --cta-accent: var(--primary-blue);
+  --cta-accent-hover: color-mix(in srgb, var(--primary-blue) 78%, black);
+  scroll-behavior: smooth;
+}
+
+.landing-theme p {
+  text-wrap: pretty;
+}
+
+.landing-hero-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--hero-tint) 0%,
+    var(--hero-tint-mid) 40%,
+    var(--background) 100%
+  );
+}
+
+.landing-cta-gradient {
+  background: linear-gradient(90deg, var(--hero-tint) 0%, var(--hero-tint-soft) 100%);
+}
+
+.landing-footer-wash {
+  background: linear-gradient(180deg, var(--hero-tint-soft) 0%, var(--background) 9rem);
+}
+
+.landing-primary-shadow {
+  box-shadow: 0 12px 30px -14px color-mix(in srgb, var(--primary) 38%, transparent);
+}
+
+.landing-primary-shadow:hover {
+  box-shadow: 0 16px 34px -14px color-mix(in srgb, var(--primary) 48%, transparent);
+}
+
+/* Soft ground shadow under the hero pill render, tinted navy like the rest of the hero. */
+.landing-pill-shadow {
+  filter: drop-shadow(0 32px 40px color-mix(in srgb, var(--primary) 28%, transparent))
+    drop-shadow(0 8px 16px color-mix(in srgb, var(--primary) 18%, transparent));
+}
+
+/* Deliberately light — a thin border (border-border) carries the card edge,
+   this shadow just lifts it off the page a few pixels. */
+.landing-feature-card {
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+.landing-feature-card:hover {
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.landing-icon-shadow {
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+/* Hero CTA accent shadow — tinted to --cta-accent, not the navy brand primary. */
+.landing-cta-shadow {
+  box-shadow: 0 14px 32px -16px color-mix(in srgb, var(--cta-accent) 55%, transparent);
+}
+
+.landing-cta-shadow:hover {
+  box-shadow: 0 18px 38px -16px color-mix(in srgb, var(--cta-accent) 65%, transparent);
+}
+
+/* Faint dot texture for the hero's far corners — pure CSS, no image request. */
+.landing-hero-texture {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--primary) 25%, transparent) 1px,
+    transparent 1.5px
+  );
+  background-size: 15px 15px;
+}
+
+@media (scripting: none) {
+  .landing-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Shared by LandingHeader and HeroSection so they align edge-to-edge at every
+   width. Below `lg` this is just max-w-6xl (the same cap the rest of the
+   landing page uses). From `lg` up it widens to fill large desktop screens
+   instead of staying pinned at 1152px, while keeping a fixed ~48px margin. */
+.landing-wide-container {
+  margin-inline: auto;
+  max-width: 72rem;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .landing-wide-container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-wide-container {
+    max-width: min(1600px, calc(100vw - 96px));
+    padding-inline: 0;
+  }
 }

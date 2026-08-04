@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import {
+  CtaBand,
   FeaturesSection,
   HeroSection,
   HowItWorksSection,
   LandingFooter,
   LandingHeader,
-  SafetyNotice,
 } from "@/components/landing";
 import { SEO_CONFIG } from "@/config/seo-config";
 import { buildPublicMetadata } from "@/utils/metadata-utils";
@@ -31,7 +31,7 @@ export default function LandingPage() {
         <HeroSection />
         <FeaturesSection />
         <HowItWorksSection />
-        <SafetyNotice />
+        <CtaBand />
       </main>
       <LandingFooter />
     </div>

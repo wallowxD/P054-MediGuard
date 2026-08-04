@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   // Xem frontend/Dockerfile (stage runner copy đúng thư mục này).
   output: "standalone",
 
+  // Cho phép truy cập dev server qua IP LAN (vd. mở trên điện thoại/máy khác
+  // trong cùng mạng để test). Không ảnh hưởng production build.
+  allowedDevOrigins: ["172.16.19.74"],
+
   images: {
     // Thêm host vào đây khi thực sự cần load ảnh ngoài (ví dụ avatar OAuth).
     // Cố tình để rỗng: mỗi entry là một lỗ trong allowlist của image optimizer.
