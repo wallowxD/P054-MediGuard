@@ -53,6 +53,7 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 | `src/services/` | HTTP function thuần, không React/hook |
 | `src/queries/` | Query key, React Query hook và invalidation |
 | `src/store/` | Chỉ client state như filter và drug basket |
+| `src/components/landing/` | Section của landing page công khai (`/`) — hero, nav, feature card, CTA, footer |
 | `src/components/interactions/` | Warning card, severity badge, citation block |
 | `src/lib/api/types.gen.ts` | Generated type từ OpenAPI; không sửa tay |
 
@@ -68,156 +69,166 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 
 ## Thứ tự thêm feature
 
-## MediGuard visual system
+```
+1. constants/api.ts                 → khai báo endpoint
+2. types/<domain>.d.ts              → interface request/response
+3. services/<domain>/index.ts       → hàm *Request
+4. queries/<domain>.ts              → key factory + hook
+5. components/<domain>/             → UI tái sử dụng + index.ts
+6. app/(protected)/<route>/page.tsx → ráp trang
+7. constants/routes.ts              → đăng ký route nếu public hoặc review
+```
 
-This section is the team-facing source of truth for colour decisions. The implementation lives
-in `frontend/src/app/globals.css`; if a palette value changes, update this table and the CSS
-tokens in the same pull request.
+## Hệ thống thị giác MediGuard (landing page)
 
-### Brand palette — light landing page
+Đây là nguồn sự thật cho toàn team về màu sắc và kiểu chữ của landing page công khai (`/`).
+Phần implementation nằm ở `frontend/src/app/globals.css`; nếu đổi giá trị palette, cập nhật
+bảng này và token CSS trong cùng một pull request.
 
-| Token / role | Hex | Use |
+### Bảng màu thương hiệu — landing page nền sáng
+
+| Token | Hex | Dùng cho |
 |---|---|---|
-| `background`, card | `#FFFFFF` | Main canvas and card surfaces |
-| `background-elevated` | `#F5F8FC` | Alternating light sections and footer support |
-| `surface` | `#F1F5FB` | Quiet chips and secondary UI surfaces |
-| `foreground`, `primary` | `#1B3155` | Brand text, headings, primary buttons and focus rings |
-| `primary-hover` | `color-mix(primary 82%, black)` | Hover state for navy actions — derived, not a hand-picked hex |
-| `foreground-secondary` | `#44546F` | Body copy |
-| `foreground-muted` | `#64748B` | Metadata and low-emphasis labels |
-| `border` | `#E6EAF0` | Hairlines and restrained dividers |
-| `hero-tint` | `#EAF1FB` | Hero gradient start and icon circles |
-| `hero-tint-mid` | `#F0F5FF` | Hero gradient midpoint |
-| `hero-tint-soft` | `#F5F9FF` | CTA gradient end and quiet backgrounds |
-| `primary-blue` | `#4B7FC3` | The landing page's one interactive blue — hero CTA, final `CtaBand` CTA, active nav link |
-| `coral` | `#F28C78` | Small warm illustration accents only (currently unused, kept reserved) |
-| `cta-accent` | `#4B7FC3` (= `primary-blue`) | The hero CTA, the `CtaBand` CTA and the active nav link. Nothing else. |
-| `cta-accent-hover` | `color-mix(primary-blue 78%, black)` | Hover state for `cta-accent` |
+| `background`, card | `#FFFFFF` | Nền chính và bề mặt card |
+| `background-elevated` | `#F5F8FC` | Section nền sáng xen kẽ và nền footer |
+| `surface` | `#F1F5FB` | Chip và bề mặt UI phụ, tông nhẹ |
+| `foreground`, `primary` | `#1B3155` | Text thương hiệu, heading, nút chính và focus ring |
+| `primary-hover` | `color-mix(primary 82%, black)` | Trạng thái hover cho action màu navy — tính toán qua `color-mix`, không chọn tay một hex riêng |
+| `foreground-secondary` | `#44546F` | Nội dung thân bài |
+| `foreground-muted` | `#64748B` | Metadata và nhãn ít quan trọng |
+| `border` | `#E6EAF0` | Đường viền mảnh và divider tiết chế |
+| `hero-tint` | `#EAF1FB` | Điểm bắt đầu gradient hero và vòng tròn icon |
+| `hero-tint-mid` | `#F0F5FF` | Điểm giữa gradient hero |
+| `hero-tint-soft` | `#F5F9FF` | Điểm kết gradient CTA và nền tông nhẹ |
+| `primary-blue` | `#4B7FC3` | Màu xanh tương tác duy nhất của landing page — CTA hero, CTA `CtaBand`, nav link đang active |
+| `coral` | `#F28C78` | Điểm nhấn minh hoạ ấm, chỉ dùng nhỏ (hiện chưa dùng, giữ chỗ dự phòng) |
+| `cta-accent` | `#4B7FC3` (= `primary-blue`) | CTA hero, CTA `CtaBand` và nav link active. Không dùng cho gì khác. |
+| `cta-accent-hover` | `color-mix(primary-blue 78%, black)` | Trạng thái hover cho `cta-accent` |
 
-### Typography
+### Typography (kiểu chữ)
 
-| Use | Font | Applied via |
+| Dùng cho | Font | Áp dụng qua |
 |---|---|---|
-| Body text everywhere | Inter | `font-sans` (the default; you rarely need to write it) |
-| Headings everywhere **except** the landing hero | Lora | `font-heading`, loaded once in `app/layout.tsx` |
-| The landing hero's `<h1>` only | Roboto | see below — **not** `font-heading` |
+| Body text toàn site | Inter | `font-sans` (mặc định, hiếm khi phải khai báo tay) |
+| Heading toàn site **trừ** hero landing | Lora | `font-heading`, load một lần ở `app/layout.tsx` |
+| Riêng `<h1>` của hero landing | Roboto | xem bên dưới — **không** dùng `font-heading` |
 
-The hero headline is the one deliberate exception to "one heading font sitewide." It is loaded
-as a component-local `next/font/google` instance inside `HeroSection.tsx` (`variable:
-"--font-hero-display"`), applied via `style={{ fontFamily: "var(--font-hero-display)" }}` on
-the `<h1>` only. It is **not** registered in `app/layout.tsx` and does not touch `font-heading`,
-so every other heading on the site keeps Lora. If you need another one-off display font for a
-single section, copy this pattern (component-scoped `variable`, inline `fontFamily`) rather than
-changing the global `font-heading` — that would silently restyle every other page.
+Headline của hero là ngoại lệ duy nhất cho quy tắc "một font heading cho toàn site". Font này
+được load qua một instance `next/font/google` cục bộ trong `HeroSection.tsx` (`variable:
+"--font-hero-display"`), áp dụng bằng `style={{ fontFamily: "var(--font-hero-display)" }}`
+chỉ trên thẻ `<h1>`. Font này **không** đăng ký ở `app/layout.tsx` và không đụng tới
+`font-heading`, nên mọi heading khác trên site vẫn dùng Lora. Nếu cần thêm một display font
+riêng cho một section khác, hãy copy đúng pattern này (`variable` khai báo cục bộ trong
+component, `fontFamily` inline) thay vì đổi `font-heading` toàn cục — đổi biến toàn cục sẽ
+âm thầm restyle mọi trang khác.
 
-### Semantic colours
+### Màu ngữ nghĩa (semantic colours)
 
-Semantic colours communicate state; they are not alternative brand colours.
+Màu ngữ nghĩa biểu thị trạng thái; đây không phải màu thương hiệu thay thế.
 
-| Token | Light value | Meaning |
+| Token | Giá trị (light) | Ý nghĩa |
 |---|---|---|
-| `success` | `#16A34A` | Successful operation or confirmed positive status |
-| `error` | `#DC2626` | Failed operation or invalid input |
-| `warning` | `#D97706` | Cautionary UI and the reference-safety notice |
-| `info` | `#2563EB` | Informational state |
-| `severity-contraindicated` | `#B91C1C` | Contraindicated interaction severity |
-| `severity-major` | `#EA580C` | Major interaction severity |
-| `severity-moderate` | `#D97706` | Moderate interaction severity |
-| `severity-minor` | `#0891B2` | Minor interaction severity |
-| `severity-unknown` | `#64748B` | Unknown interaction severity |
+| `success` | `#16A34A` | Thao tác thành công hoặc trạng thái tích cực đã xác nhận |
+| `error` | `#DC2626` | Thao tác thất bại hoặc input không hợp lệ |
+| `warning` | `#D97706` | UI cảnh báo và banner an toàn tham khảo |
+| `info` | `#2563EB` | Trạng thái thông tin |
+| `severity-contraindicated` | `#B91C1C` | Mức độ tương tác chống chỉ định |
+| `severity-major` | `#EA580C` | Mức độ tương tác nghiêm trọng |
+| `severity-moderate` | `#D97706` | Mức độ tương tác trung bình |
+| `severity-minor` | `#0891B2` | Mức độ tương tác nhẹ |
+| `severity-unknown` | `#64748B` | Chưa xác định mức độ |
 
-### Buttons — `components/ui/Button.tsx`
+### Button dùng chung — `components/ui/Button.tsx`
 
-One shared `Button` for the whole site. Never write a one-off styled `<button>` or `<Link>`
-that duplicates it — add a variant instead if none fits.
+Toàn site chỉ dùng một component `Button`. Không tự viết `<button>`/`<Link>` style riêng lẻ
+trùng chức năng — nếu chưa có variant phù hợp thì thêm variant mới, không viết tay.
 
-| Variant | Look | Use for |
+| Variant | Hình thức | Dùng cho |
 |---|---|---|
-| `solid` | Navy fill, white text | The default primary action anywhere outside the landing hero (e.g. feature-card CTAs) |
-| `outline` | Border only, navy on hover | Secondary actions next to a `solid` or `accent` button |
-| `ghost` | Text only | Low-emphasis inline actions |
-| `accent` | Blue fill (`cta-accent`), white text | The hero CTA and the final `CtaBand` CTA. Do not use it for anything else — see the colour rule below |
+| `solid` | Nền navy, chữ trắng | Action chính mặc định ở mọi nơi ngoài hero landing (ví dụ CTA của feature card) |
+| `outline` | Chỉ viền, hover ra navy | Action phụ đi kèm một nút `solid` hoặc `accent` |
+| `ghost` | Chỉ có chữ | Action phụ, mức nhấn thấp |
+| `accent` | Nền xanh (`cta-accent`), chữ trắng | CTA của hero và CTA cuối `CtaBand`. Không dùng cho chỗ khác — xem quy tắc màu bên dưới |
 
-| Size | Look | Use for |
+| Size | Hình thức | Dùng cho |
 |---|---|---|
-| `sm` | Compact padding, `text-sm` | Header buttons, mobile drawer buttons |
-| `md` (default) | Standard padding, `text-sm` | Most buttons |
-| `lg` | Generous padding, `text-base` | A single standout CTA — currently only `CtaBand`. Don't reach for it just to make a button "feel more important"; add real hierarchy (heading size, spacing) first |
+| `sm` | Padding gọn, `text-sm` | Nút trong header, nút trong drawer mobile |
+| `md` (mặc định) | Padding chuẩn, `text-sm` | Đa số nút |
+| `lg` | Padding rộng, `text-base` | Một CTA nổi bật duy nhất — hiện chỉ dùng ở `CtaBand`. Đừng dùng size này chỉ để nút "trông quan trọng hơn"; ưu tiên tạo hierarchy thật (cỡ heading, spacing) trước |
 
-### Landing-only utility classes (`globals.css`)
+### Class CSS chỉ dùng cho landing (`globals.css`)
 
-These exist only inside `.landing-theme` (the public marketing page) and read from its
-CSS variables, not the site-wide `:root` tokens. Don't reuse them outside `(public)/`.
+Các class này chỉ tồn tại trong `.landing-theme` (trang marketing công khai) và đọc biến CSS
+riêng của theme đó, không phải token `:root` toàn site. Không tái sử dụng ngoài `(public)/`.
 
-| Class | Purpose |
+| Class | Vai trò |
 |---|---|
-| `landing-hero-gradient` | The hero's vertical background wash (`hero-tint` → `hero-tint-mid` → white) |
-| `landing-hero-texture` | The faint dot-grid in the hero's far corners — pure CSS `radial-gradient`, no image |
-| `landing-cta-gradient` | Background for the bottom-of-page `CtaBand` |
-| `landing-footer-wash` | Background for `LandingFooter` |
-| `landing-primary-shadow` | Tinted shadow for `solid`-variant buttons |
-| `landing-cta-shadow` | Tinted shadow for `accent`-variant buttons — follows `cta-accent`, so it re-colours automatically if that token ever changes |
-| `landing-pill-shadow` | Soft navy-tinted ground shadow under the hero's pill render |
-| `landing-feature-card` / `landing-icon-shadow` | Deliberately light navy-tinted shadows for `FeaturesSection` cards and their icon badges — the border (`border-border`) carries the card edge, the shadow just lifts it a few px |
-| `landing-wide-container` | Shared by `LandingHeader` and `HeroSection` so both align edge-to-edge. Below `lg` it's `max-w-6xl` + the usual `px-4`/`sm:px-6`. From `lg` up it becomes `max-width: min(1600px, calc(100vw - 96px))` with no inline padding, so large desktops get a genuinely wide hero instead of staying pinned at 1152px. If you add a new full-bleed landing section that should align with the hero/nav, reuse this class rather than `max-w-6xl` |
-| `landing-reveal` (via the `Reveal` component) | Scroll-in fade/slide; degrades to static under `prefers-reduced-motion` and `@media (scripting: none)` |
+| `landing-hero-gradient` | Nền gradient dọc của hero (`hero-tint` → `hero-tint-mid` → trắng) |
+| `landing-hero-texture` | Lưới chấm mờ ở góc xa của hero — thuần CSS `radial-gradient`, không dùng ảnh |
+| `landing-cta-gradient` | Nền cho `CtaBand` ở cuối trang |
+| `landing-footer-wash` | Nền cho `LandingFooter` |
+| `landing-primary-shadow` | Shadow phối màu cho nút variant `solid` |
+| `landing-cta-shadow` | Shadow phối màu cho nút variant `accent` — bám theo `cta-accent`, tự đổi màu nếu token đó thay đổi |
+| `landing-pill-shadow` | Bóng đổ tông navy nhẹ dưới ảnh viên nang của hero |
+| `landing-feature-card` / `landing-icon-shadow` | Shadow tông navy rất nhẹ cho card trong `FeaturesSection` và badge icon — viền (`border-border`) tạo cạnh card, shadow chỉ nâng card lên vài px |
+| `landing-wide-container` | Dùng chung cho `LandingHeader` và `HeroSection` để hai phần thẳng hàng mép-đến-mép. Dưới `lg` là `max-w-6xl` + `px-4`/`sm:px-6` như bình thường. Từ `lg` trở lên đổi thành `max-width: min(1600px, calc(100vw - 96px))`, không padding inline, để màn hình lớn có hero thật sự rộng thay vì bị ghim ở 1152px. Nếu thêm section landing full-bleed mới cần thẳng hàng với hero/nav, tái dùng class này thay vì `max-w-6xl` |
+| `landing-reveal` (qua component `Reveal`) | Hiệu ứng fade/slide khi cuộn tới; tắt về static khi `prefers-reduced-motion` và `@media (scripting: none)` |
 
-### Landing header pattern
+### Pattern của `LandingHeader`
 
-`LandingHeader` is a floating rounded card, not a full-width bar — this is a deliberate
-departure from the plain sticky bar most of the rest of the app would use. If you touch it:
+`LandingHeader` là một card bo tròn nổi (floating), không phải thanh full-width — đây là lựa
+chọn cố ý, khác với thanh sticky phẳng phần còn lại của app hay dùng. Nếu chỉnh sửa:
 
-- The outer `<header>` is a transparent sticky wrapper; the visible card is the inner `<div>`
-  (`rounded-full`, border, `shadow-sm`/`shadow-md` depending on `scrolled` state).
-- It morphs to `rounded-[28px]` only while the mobile drawer (`open`) is expanded — don't apply
-  that radius change to the desktop nav.
-- The active nav link is indicated with `border-b-2 border-[var(--cta-accent)]`, matching the
-  hero CTA's colour — that's the only other place `cta-accent` is allowed to appear.
-- **The full nav (centered links + right-hand actions) only shows at `lg:` (1024px), not `md:`
-  (768px).** This was deliberate, not an oversight: at 768px there isn't enough room for the
-  logo, five nav links and the right-hand actions on one line, and they wrap to a second line.
-  If you add another nav item, re-check this at 768px and 1024px before shipping — don't just
-  eyeball 1440px.
+- `<header>` ngoài cùng là wrapper sticky trong suốt; card hiển thị là `<div>` bên trong
+  (`rounded-full`, border, `shadow-sm`/`shadow-md` tuỳ trạng thái `scrolled`).
+- Chỉ chuyển thành `rounded-[28px]` khi drawer mobile (`open`) đang mở — không áp radius này
+  cho nav desktop.
+- Nav link active được đánh dấu bằng `border-b-2 border-[var(--cta-accent)]`, cùng màu với
+  CTA hero — đây là nơi duy nhất khác được phép dùng `cta-accent`.
+- **Nav đầy đủ (link giữa + action bên phải) chỉ hiện từ `lg:` (1024px), không phải `md:`
+  (768px).** Đây là chủ đích, không phải thiếu sót: ở 768px không đủ chỗ cho logo, 5 link nav
+  và action bên phải trên một dòng, chúng sẽ bị xuống dòng. Nếu thêm nav item mới, kiểm tra lại
+  ở cả 768px và 1024px trước khi ship — đừng chỉ nhìn ở 1440px.
 
-### Hero vertical centering — a gotcha if you touch it
+### Căn giữa theo chiều dọc ở Hero — lưu ý khi chỉnh sửa
 
-The hero's `lg:min-h-[clamp(620px,70vh,820px)]` and `lg:items-center` both live on the
-**same** element (the `.landing-wide-container` grid inside `HeroSection`), not split
-between the `<section>` and a child. Putting `min-height` on the `<section>` and
-`height: 100%` + `items-center` on the grid child looks equivalent but isn't reliable —
-percentage-height resolution against a `min-height`d parent is fragile, and content ends up
-top-aligned with a lopsided gap below it instead of centered. If you need to adjust the
-hero's height or centering, keep both on the same element.
+`lg:min-h-[clamp(620px,70vh,820px)]` và `lg:items-center` của hero nằm trên **cùng một**
+element (grid `.landing-wide-container` bên trong `HeroSection`), không tách ra giữa
+`<section>` và phần tử con. Đặt `min-height` ở `<section>` rồi `height: 100%` + `items-center`
+ở grid con nhìn tương đương nhưng không đáng tin cậy — việc resolve percentage-height dựa trên
+parent có `min-height` khá mong manh, kết quả là nội dung bị dồn lên trên với khoảng trống lệch
+phía dưới thay vì được căn giữa. Muốn chỉnh chiều cao hoặc cách căn giữa của hero, giữ cả hai
+thuộc tính trên cùng một element.
 
-### Hero art
+### Ảnh minh hoạ Hero
 
-The hero's pill render lives at `frontend/public/pill-render.png` and is a plain `<img>` (not
-`next/image`) because it's a decorative, transparent-background bleed-over-background asset,
-not a content photo needing crop/optimisation. `yarn lint` will warn about this — that warning
-is expected and can stay.
+Ảnh viên nang của hero nằm ở `frontend/public/pill-render.png`, dùng thẻ `<img>` thường (không
+phải `next/image`) vì đây là asset trang trí, nền trong suốt, tràn ra ngoài nền chứ không phải
+ảnh nội dung cần crop/tối ưu. `yarn lint` sẽ cảnh báo việc này — cảnh báo đó là dự tính, không
+cần sửa.
 
-### Rules for implementation and AI-assisted coding
+### Quy tắc màu sắc và thị giác
 
-- Use theme utilities such as `bg-primary`, `text-foreground-secondary`, `bg-hero-tint` and
-  `border-border`; never paste the hex values above into JSX or TSX.
-- Navy is the primary MediGuard brand colour. Do not revive the old teal/green palette.
-- Green is only for semantic success. Coral is only a restrained illustration accent; it is
-  not a CTA colour and must not encode severity.
-- `cta-accent` is reserved for the hero's primary CTA, the final `CtaBand` CTA, and the active
-  landing-nav link. Do not reuse it for anything else. It is an alias for `primary-blue`, not a
-  second hue — keep it that way rather than introducing a third shade of blue into the palette.
-- Section vertical rhythm on the landing page is `py-20 sm:py-24` (roughly 80–96px) for full
-  sections (`FeaturesSection`, `HowItWorksSection`); `CtaBand` and `LandingFooter` are tighter
-  since they're bands, not content sections. Favor padding *inside* a card/band over adding
-  more space *between* sections — the page reads as padded, not tall, when in doubt.
-- The public landing page is intentionally light even when the operating system prefers dark
-  mode. Authenticated screens still support the dark token set because dark mode is graded.
-- Keep gradients low-chroma: hero `#EAF1FB` → `#F0F5FF` → white; CTA `#EAF1FB` → `#F5F9FF`.
-  Do not introduce neon, rainbow, purple–blue AI gradients or dark marketing sections.
-- Severity colour is presentation only. The frontend never infers severity from colour; it
-  renders the value supplied by the backend domain layer.
-
-### Adding a feature — in this order
+- Dùng theme utility như `bg-primary`, `text-foreground-secondary`, `bg-hero-tint`,
+  `border-border`; không paste hex ở các bảng trên thẳng vào JSX/TSX.
+- Navy là màu thương hiệu chính của MediGuard. Không hồi sinh palette teal/green cũ.
+- Green chỉ dùng cho trạng thái success. Coral chỉ là điểm nhấn minh hoạ tiết chế; không phải
+  màu CTA và không được dùng để biểu thị severity.
+- `cta-accent` chỉ dành cho CTA chính của hero, CTA của `CtaBand`, và nav link đang active.
+  Không tái sử dụng cho chỗ khác. Đây là alias của `primary-blue`, không phải một tông màu
+  thứ hai — giữ nguyên như vậy thay vì thêm một sắc xanh thứ ba vào palette.
+- Nhịp spacing dọc của landing page là `py-20 sm:py-24` (khoảng 80–96px) cho các section nội
+  dung đầy đủ (`FeaturesSection`, `HowItWorksSection`); `CtaBand` và `LandingFooter` chặt hơn vì
+  là band, không phải content section. Ưu tiên tăng padding *bên trong* card/band thay vì tăng
+  khoảng trống *giữa* các section — khi phân vân, trang nên đọc như "có padding", không phải
+  "quá dài".
+- Landing page công khai luôn ở chế độ sáng kể cả khi hệ điều hành ưu tiên dark mode. Màn hình
+  đã đăng nhập vẫn hỗ trợ đầy đủ token dark vì dark mode là tiêu chí chấm điểm.
+- Giữ gradient tông thấp (low-chroma): hero `#EAF1FB` → `#F0F5FF` → trắng; CTA `#EAF1FB` →
+  `#F5F9FF`. Không đưa gradient neon, rainbow, hoặc kiểu "AI purple–blue" vào, và không dùng
+  section marketing nền tối.
+- Màu severity chỉ mang tính trình bày. Frontend không tự suy ra severity từ màu; nó render
+  đúng giá trị mà backend domain layer trả về.
 
 ## Ràng buộc khi viết code
 
@@ -225,8 +236,13 @@ is expected and can stay.
 - Business endpoint trả direct typed payload theo ADR 0011; không thêm envelope hoặc
   transform unwrap riêng.
 - Service scaffold đang dùng `apiNotReady()` cho router backend chưa có. Chỉ bật request
-  thật khi backend contract tương ứng đã implement.
-- Dark mode, responsive và keyboard accessibility là acceptance requirement.
+  thật khi backend contract tương ứng đã implement, đi theo từng TODO trong file service.
+- `src/lib/api/types.gen.ts` là type **GENERATED** từ `openapi.json` — không sửa tay. Khi
+  file này đã tồn tại, đối chiếu với `src/types/*.d.ts` (hiện đang viết tay) và xoá phần
+  trùng lặp.
+- Dark mode, responsive và keyboard accessibility là acceptance requirement, đồng thời là
+  **tiêu chí chấm điểm**. Ngoại lệ duy nhất là landing page công khai — giao diện thương hiệu
+  MediGuard của trang này chủ đích chỉ có chế độ sáng.
 - Severity phải có text/icon; không truyền đạt chỉ bằng màu.
 - Warning phải hiển thị quote, source và review status đầy đủ.
 - `pending` vẫn hiển thị ngay với nhãn chờ xác nhận chuyên môn; `rejected` không hiển thị.
@@ -234,36 +250,16 @@ is expected and can stay.
 - `NEXT_PUBLIC_*` được đóng vào bundle lúc build; Docker truyền qua `build.args`.
 - Application route không được chứa dấu chấm vì proxy matcher loại path có extension.
 
-## Các quy ước dễ nhầm
-
-- `src/lib/api/types.gen.ts` is **GENERATED** from `openapi.json` — never edit it by hand.
-  Once it exists, reconcile `src/types/*.d.ts` (currently hand-written) and delete the
-  duplicates.
-- The backend API **does not exist yet**: function bodies in `services/*` are commented out
-  and call `apiNotReady()`. Restore them, following each TODO, as the backend enables the
-  matching router.
-- The `{ error, message, data }` envelope in `types/backend.d.ts` is **unconfirmed** —
-  FastAPI returns payloads directly by default. See open question Q1 in
-  [`planning/backlog.md`](../planning/backlog.md).
-- Dark mode and responsiveness are **grading criteria**, not nice-to-haves. The exception is
-  the public landing page, whose MediGuard brand treatment is intentionally light-only.
-- Strict TypeScript. Alias `@/*` → `./src/*`.
-- Keep `output: "standalone"` in `next.config.ts` — the Docker build depends on it.
-- `NEXT_PUBLIC_*` variables are baked into the bundle at build time, not read at runtime. To
-  change one in Docker, edit `build.args` in `docker-compose.yml`, not `environment`.
-- **Application routes must not contain a dot.** The proxy matcher excludes every path with
-  a file extension, so a dotted route would fall outside the protected set.
-
 ---
 
-## Non-obvious decisions
+## Quyết định không hiển nhiên
 
-This project was scaffolded from a frontend boilerplate written for **Next 15 +
-Tailwind v3**. That template is no longer in the repository, but it shaped the structure,
-and several places deliberately diverge from it. If something looks unconventional, this is
-usually why:
+Project này được scaffold từ một frontend boilerplate viết cho **Next 15 + Tailwind v3**.
+Boilerplate đó không còn nằm trong repository, nhưng đã định hình cấu trúc hiện tại, và một
+số chỗ cố ý khác đi so với nó. Nếu thấy gì đó không theo convention quen thuộc, thường là vì
+lý do dưới đây:
 
-| Convention elsewhere | Here | Why |
+| Convention chỗ khác | Ở đây | Vì sao |
 |---|---|---|
 | `middleware.ts` | `src/proxy.ts` | Next.js 16 đổi tên convention |
 | `tailwind.config.ts` | token qua `@theme` trong `globals.css` | Tailwind v4 không cần JS config cũ |
