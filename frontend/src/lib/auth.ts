@@ -9,9 +9,7 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { ROUTES } from "@/constants/routes";
-
-// import { loginRequest } from "@/services/auth";
-// import { transformApiResponse } from "@/queries/utils";
+import { loginRequest } from "@/services/auth";
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
@@ -26,23 +24,19 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        // TODO(API): backend ĐÃ CÓ POST /api/v1/auth/login — mở khối dưới là chạy được.
-        // Còn thiếu bước bật `loginRequest()` trong services/auth/index.ts.
-        // const res = await loginRequest({
-        //   email: credentials.email,
-        //   password: credentials.password,
-        // });
-        // const { accessToken, refreshToken, user } = transformApiResponse(res);
-        // return {
-        //   id: user.id,
-        //   email: user.email,
-        //   name: user.name,
-        //   roles: user.roles,
-        //   accessToken,
-        //   refreshToken,
-        // };
+        const { accessToken, refreshToken, user } = await loginRequest({
+          email: credentials.email,
+          password: credentials.password,
+        });
 
-        throw new Error("Chưa bật loginRequest() ở services/auth (backend POST /api/v1/auth/login đã sẵn sàng)");
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          roles: user.roles,
+          accessToken,
+          refreshToken,
+        };
       },
     }),
   ],

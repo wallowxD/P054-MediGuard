@@ -26,6 +26,10 @@ const clientRequest = axios.create({
 
 // Request: gắn access token từ session NextAuth
 clientRequest.interceptors.request.use(async (config) => {
+  // `loginRequest()` chạy phía server trong NextAuth CredentialsProvider. Ở đó không có
+  // browser session để đọc, và gọi getSession() có thể tự quay lại /api/auth/session.
+  if (typeof window === "undefined") return config;
+
   const session = await getSession();
   if (session?.accessToken) {
     config.headers.Authorization = `Bearer ${session.accessToken}`;
