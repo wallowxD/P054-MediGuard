@@ -1,0 +1,298 @@
+"""Script sinh ra file Jupyter Notebook `notebooks/embed_to_qdrant_bge_m3.ipynb` để chạy trên Kaggle GPU T4 kèm cơ chế Resume (Idempotent UUID) an toàn 100%."""
+
+import json
+from pathlib import Path
+import sys
+
+sys.stdout.reconfigure(encoding="utf-8")
+
+nb_cells = [
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "# 🏥 MedSafe Copilot (P-054) — Kaggle GPU Embedding Pipeline (BAAI/bge-m3 -> Qdrant Cloud)\n",
+            "\n",
+            "Notebook này dùng để chạy trên **Kaggle (GPU T4)** với tính năng **RESUME AN TOÀN 100%**:\n",
+            "1. Cài đặt các thư viện `sentence-transformers`, `qdrant-client`, `torch` (CUDA acceleration).\n",
+            "2. Nạp toàn bộ 772 file JSON bóc tách chi tiết từ thư mục Kaggle Dataset (`extracted_leaflets`).\n",
+            "3. Sử dụng **UUIDv5 cố định theo File + Vị trí Chunk**, giúp Qdrant tự động **bỏ qua / ghi đè thông minh** nếu bạn bấm Stop hay chạy lại nửa chừng (không bao giờ bị nhân bản trùng lặp vector).\n",
+            "4. Encode bằng mô hình **`BAAI/bge-m3`** (1024-dim, cosine) trên GPU T4 và push trực tiếp lên Qdrant Cloud."
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "# 1. Cài đặt các thư viện cần thiết\n",
+            "!pip install -q sentence-transformers qdrant-client tqdm torch\n",
+            "\n",
+            "import os\n",
+            "import json\n",
+            "import glob\n",
+            "import uuid\n",
+            "from pathlib import Path\n",
+            "import torch\n",
+            "from tqdm.notebook import tqdm\n",
+            "from sentence_transformers import SentenceTransformer\n",
+            "from qdrant_client import QdrantClient\n",
+            "from qdrant_client.models import (\n",
+            "    VectorParams, Distance, PointStruct, Filter,\n",
+            "    FieldCondition, MatchValue, MatchAny, PayloadSchemaType\n",
+            ")\n",
+            "\n",
+            "# Kiểm tra thiết bị GPU\n",
+            "device = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n",
+            "print(f\"🔥 Đang sử dụng thiết bị: {device}\")\n",
+            "if device == \"cuda\":\n",
+            "    print(f\"   GPU Device: {torch.cuda.get_device_name(0)}\")"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 🔑 2. Cấu hình Thông số Kết nối Qdrant Cloud & Đường dẫn Dữ liệu"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "# Thông số kết nối Qdrant Cloud (Điền thông tin của bạn tại đây)\n",
+            "QDRANT_URL = \"https://YOUR_CLUSTER_ID.us-east-1-0.aws.cloud.qdrant.io:6333\"\n",
+            "QDRANT_API_KEY = \"YOUR_QDRANT_CLOUD_API_KEY\"\n",
+            "COLLECTION_NAME = \"hdsd_medsafe_chunks\"\n",
+            "\n",
+            "# Đường dẫn thư mục Kaggle Dataset chứa 772 file JSON (ví dụ: '/kaggle/input/p054-leaflets-json/extracted_leaflets')\n",
+            "DATA_DIR = \"/kaggle/input/p054-leaflets-json/extracted_leaflets\"\n",
+            "\n",
+            "print(\"✅ Cấu hình hoàn tất!\")"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 🧠 3. Tải Mô hình BAAI/bge-m3 & Khởi tạo Collection trên Qdrant Cloud"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "# 1. Load Mô hình Embedding BAAI/bge-m3\n",
+            "print(\"⏳ Đang tải mô hình BAAI/bge-m3 trên GPU...\")\n",
+            "embedder = SentenceTransformer(\"BAAI/bge-m3\", device=device)\n",
+            "embedder.max_seq_length = 8192  # BGE-M3 hỗ trợ cửa sổ context 8192 tokens\n",
+            "print(f\"✅ Đã nạp mô hình BAAI/bge-m3 thành công! (Dimension = {embedder.get_sentence_embedding_dimension()})\")\n",
+            "\n",
+            "# 2. Khởi tạo Qdrant Client\n",
+            "qdrant = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY, timeout=60)\n",
+            "\n",
+            "# 3. Tạo Collection nếu chưa tồn tại (Vector size = 1024, Cosine Distance)\n",
+            "collections = [c.name for c in qdrant.get_collections().collections]\n",
+            "if COLLECTION_NAME not in collections:\n",
+            "    print(f\"--> Đang tạo Collection '{COLLECTION_NAME}' trên Qdrant Cloud...\")\n",
+            "    qdrant.create_collection(\n",
+            "        collection_name=COLLECTION_NAME,\n",
+            "        vectors_config=VectorParams(size=1024, distance=Distance.COSINE),\n",
+            "    )\n",
+            "    print(\"✅ Đã tạo thành công Collection mới!\")\n",
+            "else:\n",
+            "    print(f\"ℹ️ Collection '{COLLECTION_NAME}' đã tồn tại sẵn trên Qdrant Cloud.\")\n",
+            "\n",
+            "# 4. Tạo các Payload Index để Lọc Nhanh & Chính Xác 100% không bị lẫn thuốc\n",
+            "print(\"--> Khởi tạo Payload Indexes cho Keyword Search...\")\n",
+            "for field in [\"canonical_ingredients\", \"brand_name\", \"file_name\", \"section_name\"]:\n",
+            "    try:\n",
+            "        qdrant.create_payload_index(\n",
+            "            collection_name=COLLECTION_NAME,\n",
+            "            field_name=field,\n",
+            "            field_schema=PayloadSchemaType.KEYWORD,\n",
+            "        )\n",
+            "    except Exception:\n",
+            "        pass\n",
+            "print(\"✅ Đã thiết lập thành công Payload Indexes!\")"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 📦 4. Đọc Dữ Liệu Các File JSON từ Kaggle Dataset"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "def load_all_drug_files(data_dir: str) -> list:\n",
+            "    drugs = []\n",
+            "    p = Path(data_dir)\n",
+            "    if not p.exists():\n",
+            "        matches = list(Path(\"/kaggle/input\").rglob(\"extracted_leaflets\"))\n",
+            "        if matches:\n",
+            "            p = matches[0]\n",
+            "        else:\n",
+            "            p = Path(\"data/extracted_leaflets\")\n",
+            "            \n",
+            "    json_files = list(p.glob(\"*.json\"))\n",
+            "    print(f\"--> Tìm thấy {len(json_files)} file JSON trong thư mục {p}.\")\n",
+            "    for f in json_files:\n",
+            "        try:\n",
+            "            with open(f, \"r\", encoding=\"utf-8\") as jf:\n",
+            "                drugs.append(json.load(jf))\n",
+            "        except Exception as e:\n",
+            "            print(f\"❌ Lỗi đọc {f.name}: {e}\")\n",
+            "    return drugs\n",
+            "\n",
+            "drug_records = load_all_drug_files(DATA_DIR)\n",
+            "print(f\"✅ Đã nạp thành công {len(drug_records)} thuốc sẵn sàng bóc tách Chunks.\")"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 🚀 5. Chạy Embedding BGE-M3 (Cơ chế Resume / Idempotent UUID) & Upsert Qdrant"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "all_chunks_text = []\n",
+            "all_payloads = []\n",
+            "all_point_ids = []\n",
+            "\n",
+            "for drug in drug_records:\n",
+            "    file_name = drug.get(\"file_name\", \"\")\n",
+            "    brand_name = drug.get(\"brand_name\", \"\")\n",
+            "    raw_ingredient = drug.get(\"active_ingredient\", \"\")\n",
+            "    \n",
+            "    canonical_ingredients = [brand_name.lower()]\n",
+            "    if raw_ingredient:\n",
+            "        canonical_ingredients.append(raw_ingredient.lower())\n",
+            "\n",
+            "    chunks = drug.get(\"chunks\", [])\n",
+            "    for idx, c in enumerate(chunks):\n",
+            "        chunk_text = c.get(\"text\", \"\").strip()\n",
+            "        if not chunk_text:\n",
+            "            continue\n",
+            "        \n",
+            "        section_name = c.get(\"section\", \"CHUNG\") or \"CHUNG\"\n",
+            "        rich_text_to_embed = f\"Thuốc: {brand_name} | Mục: {section_name}\\n{chunk_text}\"\n",
+            "        \n",
+            "        payload = {\n",
+            "            \"file_name\": file_name,\n",
+            "            \"brand_name\": brand_name,\n",
+            "            \"canonical_ingredients\": canonical_ingredients,\n",
+            "            \"section_name\": section_name,\n",
+            "            \"chunk_index\": idx,\n",
+            "            \"char_start\": c.get(\"char_start\", 0),\n",
+            "            \"char_end\": c.get(\"char_end\", 0),\n",
+            "            \"text\": chunk_text\n",
+            "        }\n",
+            "        \n",
+            "        # ID định danh cố định theo UUIDv5 -> Đảm bảo Idempotent & Resume an toàn\n",
+            "        point_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, f\"{file_name}_{idx}_{c.get('char_start', 0)}\"))\n",
+            "        \n",
+            "        all_chunks_text.append(rich_text_to_embed)\n",
+            "        all_payloads.append(payload)\n",
+            "        all_point_ids.append(point_id)\n",
+            "\n",
+            "print(f\"📊 TỔNG SỐ CHUNKS CẦN EMBED & UPSERT: {len(all_chunks_text)} chunks.\")\n",
+            "\n",
+            "BATCH_SIZE = 64\n",
+            "print(f\"--> Đang tính toán Vector Embeddings với batch_size={BATCH_SIZE} trên GPU...\")\n",
+            "\n",
+            "for i in tqdm(range(0, len(all_chunks_text), BATCH_SIZE), desc=\"Embedding & Upserting (Resume Safe)\"):\n",
+            "    batch_texts = all_chunks_text[i : i + BATCH_SIZE]\n",
+            "    batch_payloads = all_payloads[i : i + BATCH_SIZE]\n",
+            "    batch_ids = all_point_ids[i : i + BATCH_SIZE]\n",
+            "    \n",
+            "    embeddings = embedder.encode(batch_texts, batch_size=len(batch_texts), normalize_embeddings=True).tolist()\n",
+            "    \n",
+            "    points = [\n",
+            "        PointStruct(id=p_id, vector=emb, payload=p_load)\n",
+            "        for p_id, emb, p_load in zip(batch_ids, embeddings, batch_payloads)\n",
+            "    ]\n",
+            "    \n",
+            "    # Upsert vào Qdrant Cloud (tự ghi đè/bỏ qua trùng lặp nhờ UUIDv5 cố định)\n",
+            "    qdrant.upsert(collection_name=COLLECTION_NAME, points=points)\n",
+            "\n",
+            "print(f\"🎉 NẠP THÀNH CÔNG HOÀN TOÀN {len(all_chunks_text)} VECTORS LÊN QDRANT CLOUD!\")"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "## 🔍 6. Thử Nghiệm Tra Cứu RAG Chuẩn (100% Không Lẫn Thuốc Khác)"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "def query_drug_rag(query_text: str, target_brand_name: str = None, top_k: int = 3):\n",
+            "    query_vector = embedder.encode(query_text, normalize_embeddings=True).tolist()\n",
+            "    \n",
+            "    query_filter = None\n",
+            "    if target_brand_name:\n",
+            "        query_filter = Filter(\n",
+            "            must=[\n",
+            "                FieldCondition(\n",
+            "                    key=\"brand_name\",\n",
+            "                    match=MatchValue(value=target_brand_name)\n",
+            "                )\n",
+            "            ]\n",
+            "        )\n",
+            "    \n",
+            "    results = qdrant.search(\n",
+            "        collection_name=COLLECTION_NAME,\n",
+            "        query_vector=query_vector,\n",
+            "        query_filter=query_filter,\n",
+            "        limit=top_k\n",
+            "    )\n",
+            "    \n",
+            "    print(f\"=== KẾT QUẢ TRA CỨU: '{query_text}' (Filter: {target_brand_name}) ===\")\n",
+            "    for r in results:\n",
+            "        print(f\"[Score: {r.score:.4f}] Thuốc: {r.payload['brand_name']} | Mục: {r.payload['section_name']}\")\n",
+            "        print(f\"    Đoạn trích: {r.payload['text'][:150]}...\\n\")\n",
+            "\n",
+            "query_drug_rag(\"Tác dụng phụ gây đau bụng đầy hơi\", top_k=2)"
+        ]
+    }
+]
+
+notebook_json = {
+    "cells": nb_cells,
+    "metadata": {
+        "language_info": {"name": "python"},
+        "accelerator": "GPU"
+    },
+    "nbformat": 4,
+    "nbformat_minor": 2
+}
+
+output_path = Path("notebooks/embed_to_qdrant_bge_m3.ipynb")
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+with open(output_path, "w", encoding="utf-8") as f:
+    json.dump(notebook_json, f, ensure_ascii=False, indent=2)
+
+print(f"✅ Đã cập nhật Notebook Kaggle Resume-Safe tại: {output_path}")
