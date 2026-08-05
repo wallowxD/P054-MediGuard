@@ -75,6 +75,10 @@ class Settings(BaseSettings):
 
     # Auth — secret ký JWT. Rỗng thì auth router từ chối phục vụ (xem domain/auth.py).
     jwt_secret_key: str = ""
+    # OAuth client ID của Google Cloud, dùng làm `audience` khi verify ID token — xem
+    # ADR 0016. Không phải secret (client ID công khai trong OAuth consent screen), nhưng
+    # vẫn đặt trong .env vì khác giá trị giữa dev/staging/production.
+    google_oauth_client_id: str = ""
 
     # Data
     database_url: str = "sqlite:///./data/app.db"

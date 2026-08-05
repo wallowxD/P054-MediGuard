@@ -22,12 +22,13 @@ export const API_ENDPOINTS = {
   },
 
   /**
-   * REGISTER, LOGIN, REFRESH_TOKEN và GET_PROFILE đã CHẠY THẬT ở backend.
-   * Ba endpoint password bên dưới thì chưa — xem ADR 0015.
+   * REGISTER, LOGIN, GOOGLE, REFRESH_TOKEN và GET_PROFILE đã CHẠY THẬT ở backend.
+   * Ba endpoint password bên dưới thì chưa — xem ADR 0015/0016.
    */
   AUTH: {
     REGISTER: `${API_V1}/auth/register`,
     LOGIN: `${API_V1}/auth/login`,
+    GOOGLE: `${API_V1}/auth/google`,
     REFRESH_TOKEN: `${API_V1}/auth/refresh`,
     GET_PROFILE: `${API_V1}/auth/profiles`,
     RECOVERY_PASSWORD: `${API_V1}/auth/password`,
