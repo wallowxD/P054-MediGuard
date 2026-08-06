@@ -23,7 +23,7 @@ class UserRepository(Protocol):
 
     async def get_by_id(self, user_id: UUID) -> User | None: ...
 
-    async def create(self, *, email: str, name: str, password_hash: str, role: str) -> User: ...
+    async def create(self, *, email: str, name: str, password_hash: str | None, role: str) -> User: ...
 
     async def update_password_hash(self, user: User, password_hash: str) -> None: ...
 
@@ -42,12 +42,12 @@ class SqlUserRepository:
     async def get_by_id(self, user_id: UUID) -> User | None:
         return await self._session.get(User, user_id)
 
-    async def create(self, *, email: str, name: str, password_hash: str, role: str) -> User:
-        """Tạo user mới.
+    async def create(self, *, email: str, name: str, password_hash: str | None, role: str) -> User:
+        """Tạo user mới. `password_hash=None` cho tài khoản chỉ đăng nhập Google (ADR 0016).
 
         Kiểm tra trùng email ở route chỉ để có thông báo thân thiện; bảo đảm THẬT nằm ở
-        unique index dưới database. Hai request đăng ký cùng email gửi song song sẽ cùng
-        qua được bước kiểm tra, và bản ghi thứ hai chết ở đây.
+        unique index dưới database. Hai request tạo tài khoản cùng email gửi song song sẽ
+        cùng qua được bước kiểm tra, và bản ghi thứ hai chết ở đây.
         """
         user = User(email=email, name=name, password_hash=password_hash, role=role)
         self._session.add(user)

@@ -79,6 +79,72 @@ class InactiveAccountError(AuthError):
     message = "Tài khoản đã bị vô hiệu hoá."
 
 
+class InvalidGoogleTokenError(AuthError):
+    """Chữ ký, audience, issuer hoặc claim `sub` không hợp lệ — xem ADR 0016."""
+
+    code = "invalid_google_token"
+    message = "Google ID token không hợp lệ hoặc đã hết hạn."
+
+
+class GoogleEmailNotVerifiedError(AuthError):
+    """Google báo `email_verified = false` hoặc thiếu claim `email`.
+
+    Dự án không được nhận email chưa verified làm định danh liên hệ — xem yêu cầu bảo mật
+    trong ADR 0016.
+    """
+
+    code = "google_email_not_verified"
+    message = "Email Google chưa được xác thực."
+
+
+class GoogleAccountConflictError(AuthError):
+    """Email Google trùng một local account nhưng chưa có `oauth_identities` liên kết.
+
+    Cố tình KHÔNG tự động liên kết — xem "Không tự động liên kết khi email trùng" ở
+    ADR 0016 để biết vì sao đây là rủi ro chiếm quyền tài khoản.
+    """
+
+    code = "google_account_conflict"
+    message = "Email này đã có tài khoản. Cần liên kết thủ công trước khi đăng nhập bằng Google."
+
+
+GOOGLE_ISSUERS = frozenset({"accounts.google.com", "https://accounts.google.com"})
+
+
+@dataclass(frozen=True)
+class GoogleIdentity:
+    """Danh tính Google đã qua xác minh — chỉ chứa dữ liệu an toàn để lưu/hiển thị."""
+
+    subject: str
+    email: str
+    name: str | None
+    picture: str | None
+
+
+def extract_google_identity(claims: dict[str, object]) -> GoogleIdentity:
+    """Kiểm và trích identity từ claims ĐÃ được `google-auth` verify chữ ký/aud/exp.
+
+    `verify_oauth2_token()` tự kiểm issuer, nhưng dự án kiểm lại tường minh ở đây làm
+    defense-in-depth và để hàm này test được bằng dict giả, không cần gọi Google thật.
+    """
+    if claims.get("iss") not in GOOGLE_ISSUERS:
+        raise InvalidGoogleTokenError("Issuer không hợp lệ.")
+
+    subject = claims.get("sub")
+    if not subject:
+        raise InvalidGoogleTokenError("Token thiếu claim 'sub'.")
+
+    if claims.get("email_verified") is not True or not claims.get("email"):
+        raise GoogleEmailNotVerifiedError
+
+    return GoogleIdentity(
+        subject=str(subject),
+        email=str(claims["email"]),
+        name=str(claims["name"]) if claims.get("name") else None,
+        picture=str(claims["picture"]) if claims.get("picture") else None,
+    )
+
+
 @dataclass(frozen=True)
 class TokenClaims:
     """Nội dung đã xác minh của một JWT."""

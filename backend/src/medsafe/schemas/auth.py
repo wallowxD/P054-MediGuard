@@ -47,6 +47,12 @@ class LoginRequest(CamelModel):
     password: str = Field(max_length=MAX_PASSWORD_LENGTH)
 
 
+class GoogleLoginRequest(CamelModel):
+    """Body của `POST /api/v1/auth/google` — xem ADR 0016."""
+
+    id_token: str = Field(min_length=1)
+
+
 class RefreshRequest(CamelModel):
     """Khớp `IRefreshTokenRequest` — body của `POST /api/v1/auth/refresh`."""
 

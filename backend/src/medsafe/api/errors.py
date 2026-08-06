@@ -12,8 +12,11 @@ from medsafe.domain.auth import (
     AuthError,
     AuthNotConfiguredError,
     EmailAlreadyRegisteredError,
+    GoogleAccountConflictError,
+    GoogleEmailNotVerifiedError,
     InactiveAccountError,
     InvalidCredentialsError,
+    InvalidGoogleTokenError,
     InvalidTokenError,
     PasswordPolicyError,
 )
@@ -24,8 +27,11 @@ from medsafe.schemas.errors import ErrorResponse
 _STATUS_BY_ERROR: dict[type[AuthError], int] = {
     PasswordPolicyError: status.HTTP_400_BAD_REQUEST,
     EmailAlreadyRegisteredError: status.HTTP_409_CONFLICT,
+    GoogleAccountConflictError: status.HTTP_409_CONFLICT,
     InvalidCredentialsError: status.HTTP_401_UNAUTHORIZED,
     InvalidTokenError: status.HTTP_401_UNAUTHORIZED,
+    InvalidGoogleTokenError: status.HTTP_401_UNAUTHORIZED,
+    GoogleEmailNotVerifiedError: status.HTTP_401_UNAUTHORIZED,
     InactiveAccountError: status.HTTP_403_FORBIDDEN,
     AuthNotConfiguredError: status.HTTP_500_INTERNAL_SERVER_ERROR,
 }

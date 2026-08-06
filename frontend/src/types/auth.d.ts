@@ -13,6 +13,11 @@ declare global {
     password: string;
   }
 
+  /** Body của `POST /api/v1/auth/google` — xem ADR 0016. */
+  interface IGoogleLoginRequest {
+    idToken: string;
+  }
+
   interface ILoginResponse {
     accessToken: string;
     refreshToken: string;

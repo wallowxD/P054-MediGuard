@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Button from "@/components/ui/Button";
 import { ROUTES } from "@/constants/routes";
-import GoogleMark from "./GoogleMark";
+import GoogleSignInButton from "./GoogleSignInButton";
 
 type SignUpFormValues = {
   fullName: string;
@@ -27,10 +27,6 @@ export default function SignUpForm() {
 
   const onSubmit = () => {
     toast.info("Đăng ký sẽ hoạt động khi API xác thực được kết nối.");
-  };
-
-  const handleGoogleSignUp = () => {
-    toast.info("Đăng ký bằng Google sẽ hoạt động khi API xác thực được kết nối.");
   };
 
   return (
@@ -145,10 +141,7 @@ export default function SignUpForm() {
         <span className="h-px flex-1 bg-border" />
       </div>
 
-      <Button type="button" variant="outline" className="w-full" onClick={handleGoogleSignUp}>
-        <GoogleMark />
-        Đăng ký bằng Google
-      </Button>
+      <GoogleSignInButton label="Đăng ký bằng Google" />
 
       <Button href={ROUTES.SIGNIN} variant="ghost" className="w-full text-center">
         Đã có tài khoản? Đăng nhập

@@ -37,6 +37,7 @@ backend/
 │   ├── retrieval/             # passage retrieval có scope
 │   ├── prompts/               # toàn bộ prompt template
 │   ├── llm/llm_client.py      # cửa duy nhất tới model/OCR provider
+│   ├── oauth/google_client.py # cửa duy nhất verify Google ID Token (ADR 0016)
 │   ├── domain/                # pure deterministic logic
 │   ├── db/models/             # SQLAlchemy model
 │   ├── db/repositories/       # mọi database query
@@ -75,6 +76,7 @@ embedding space. Warning đó có thể có nguồn thật nhưng ghi sai cặp 
 | Database query | `db/repositories/`; không query trong route |
 | Prompt | `prompts/prompt_templates.py`; không viết inline |
 | Model/OCR call | `llm/llm_client.py`; không import provider SDK nơi khác |
+| Gọi identity provider (Google OIDC) | `oauth/google_client.py`; không import `google-auth` nơi khác |
 | Agent node/tool | `agents/` |
 | Batch hoặc one-off job | `ingestion/` |
 | Chunk/top_k/threshold/model | `config.yaml`; không hardcode |
@@ -135,29 +137,36 @@ pairing, severity và wrong-pair regression cho `eval/results/report.md`.
 ## Auth và migration
 
 Auth do backend tự sở hữu, không dùng Supabase Auth — xem
-[ADR 0015](../adrs/0015-backend-owned-identity.md). Bốn endpoint đã chạy:
-`POST /api/v1/auth/register`, `POST /api/v1/auth/login`, `POST /api/v1/auth/refresh`,
-`GET /api/v1/auth/profiles`. Hình dạng request/response ở
+[ADR 0015](../adrs/0015-backend-owned-identity.md). Năm endpoint đã chạy:
+`POST /api/v1/auth/register`, `POST /api/v1/auth/login`, `POST /api/v1/auth/google`
+(đăng nhập Google OpenID Connect, xem [ADR 0016](../adrs/0016-google-oidc-login.md)),
+`POST /api/v1/auth/refresh`, `GET /api/v1/auth/profiles`. Hình dạng request/response ở
 [specs/api-contracts.md](../specs/api-contracts.md).
 
 | Trách nhiệm | Vị trí |
 |---|---|
-| Hash mật khẩu, chính sách mật khẩu, ký/giải mã JWT | `domain/auth.py` — thuần, test offline |
+| Hash mật khẩu, chính sách mật khẩu, ký/giải mã JWT, claim Google | `domain/auth.py` — thuần, test offline |
+| Verify Google ID Token (gọi mạng) | `oauth/google_client.py` |
 | Truy vấn bảng `users` | `db/repositories/user_repository.py` |
+| Truy vấn bảng `oauth_identities` | `db/repositories/oauth_identity_repository.py` |
 | Engine + session async | `db/session.py` |
-| Dependency `get_current_user`, `get_user_repository` | `api/dependencies.py` |
+| Dependency `get_current_user`, `get_user_repository`, `get_oauth_identity_repository` | `api/dependencies.py` |
 | Map exception domain → HTTP status | `api/errors.py` |
 | TTL token, độ dài mật khẩu tối thiểu, role mặc định | `backend/config.yaml`, section `auth` |
-| `JWT_SECRET_KEY` | `.env` tại repo root, sinh bằng `openssl rand -hex 32` |
+| `JWT_SECRET_KEY`, `GOOGLE_OAUTH_CLIENT_ID` | `.env` tại repo root |
 
 Endpoint cần đăng nhập thì thêm `current_user: CurrentUserDep` vào signature. Frontend
 guard chỉ phục vụ UX; backend mới là security boundary (ADR 0007).
+
+User chỉ đăng nhập Google có `password_hash IS NULL` (migration 0003) — `/auth/login` coi
+đây là "email không tồn tại" thay vì lộ chi tiết tài khoản gắn provider nào.
 
 ## Bảng dữ liệu và ORM model
 
 | Bảng | Model | Vai trò |
 |---|---|---|
-| `users` | `db/models/user.py` | Tài khoản đăng nhập, do Alembic tạo (revision 0001) |
+| `users` | `db/models/user.py` | Tài khoản đăng nhập, do Alembic tạo (revision 0001); `password_hash` nullable từ 0003 |
+| `oauth_identities` | `db/models/oauth_identity.py` | Liên kết `users` ↔ danh tính OAuth provider, do Alembic tạo (revision 0003) |
 | `drugs` | `db/models/drug.py` | Danh mục thuốc đã ingest |
 | `drug_drug_interactions` | `db/models/interaction.py` | ★ Nguồn sự thật exact-pair cho thuốc–thuốc |
 | `drug_food_interactions` | `db/models/interaction.py` | Tương tác thuốc–thực phẩm đã xác nhận |

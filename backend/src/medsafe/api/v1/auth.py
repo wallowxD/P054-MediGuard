@@ -1,13 +1,14 @@
 """Route auth — MỎNG: validate → domain/repository → schema. Không có SQL ở file này.
 
-Bốn endpoint, khớp `frontend/src/constants/api.ts`:
+Năm endpoint, khớp `frontend/src/constants/api.ts`:
 
-| Endpoint                   | Việc                                            |
-|----------------------------|-------------------------------------------------|
-| `POST /auth/register`      | Tạo tài khoản PATIENT                            |
-| `POST /auth/login`         | Đổi email + mật khẩu lấy cặp token               |
-| `POST /auth/refresh`       | Đổi refresh token lấy cặp token mới              |
-| `GET  /auth/profiles`      | Thông tin user của access token đang dùng        |
+| Endpoint                   | Việc                                              |
+|----------------------------|----------------------------------------------------|
+| `POST /auth/register`      | Tạo tài khoản PATIENT                              |
+| `POST /auth/login`         | Đổi email + mật khẩu lấy cặp token                 |
+| `POST /auth/google`        | Đổi Google ID Token lấy cặp token — xem ADR 0016   |
+| `POST /auth/refresh`       | Đổi refresh token lấy cặp token mới                |
+| `GET  /auth/profiles`      | Thông tin user của access token đang dùng          |
 
 ★ Argon2 tốn 50–100ms CPU. Gọi thẳng trên coroutine sẽ chặn event loop và làm treo mọi
   request khác trong lúc băm, nên mọi lời gọi hash/verify đều đi qua
@@ -19,13 +20,18 @@ from uuid import UUID
 import anyio
 from fastapi import APIRouter, status
 
-from medsafe.api.dependencies import CurrentUserDep, SettingsDep, UserRepositoryDep
+from medsafe.api.dependencies import CurrentUserDep, OAuthIdentityRepositoryDep, SettingsDep, UserRepositoryDep
 from medsafe.config import get_auth_config
-from medsafe.db.models.user import User
+from medsafe.db.models.oauth_identity import PROVIDER_GOOGLE
+from medsafe.db.models.user import ROLE_PATIENT, User
+from medsafe.db.repositories.oauth_identity_repository import OAuthIdentityRepository
 from medsafe.db.repositories.user_repository import UserRepository
 from medsafe.domain.auth import (
     REFRESH_TOKEN_TYPE,
+    AuthNotConfiguredError,
     EmailAlreadyRegisteredError,
+    GoogleAccountConflictError,
+    GoogleIdentity,
     InactiveAccountError,
     InvalidCredentialsError,
     InvalidTokenError,
@@ -39,8 +45,10 @@ from medsafe.domain.auth import (
     verify_password,
     verify_password_against_dummy,
 )
+from medsafe.oauth.google_client import verify_google_id_token
 from medsafe.schemas.auth import (
     AuthUserResponse,
+    GoogleLoginRequest,
     LoginRequest,
     LoginResponse,
     RefreshRequest,
@@ -129,6 +137,50 @@ async def login(
 
 
 @router.post(
+    "/google",
+    response_model=LoginResponse,
+    summary="Đăng nhập bằng Google OpenID Connect",
+    responses={
+        status.HTTP_401_UNAUTHORIZED: {
+            "model": ErrorResponse,
+            "description": "Google ID token không hợp lệ, hết hạn, hoặc email chưa xác thực",
+        },
+        status.HTTP_409_CONFLICT: {
+            "model": ErrorResponse,
+            "description": "Email đã có tài khoản nhưng chưa liên kết Google",
+        },
+    },
+)
+async def login_google(
+    payload: GoogleLoginRequest,
+    repository: UserRepositoryDep,
+    identity_repository: OAuthIdentityRepositoryDep,
+    settings: SettingsDep,
+) -> LoginResponse:
+    """Verify Google ID Token, tìm hoặc tạo user tương ứng, rồi trả cặp token hệ thống.
+
+    Cùng response contract với `/auth/login` — client không cần phân biệt hai luồng sau khi
+    đăng nhập xong. Không tự động liên kết khi email trùng local account chưa link, xem
+    `GoogleAccountConflictError` và ADR 0016.
+    """
+    if not settings.google_oauth_client_id:
+        raise AuthNotConfiguredError("Server chưa cấu hình GOOGLE_OAUTH_CLIENT_ID.")
+
+    identity = await verify_google_id_token(payload.id_token, settings.google_oauth_client_id)
+    user = await _user_from_google_identity(identity, repository, identity_repository)
+    if not user.is_active:
+        raise InactiveAccountError
+
+    tokens = _issue_for(user, settings.jwt_secret_key)
+    return LoginResponse(
+        access_token=tokens.access_token,
+        refresh_token=tokens.refresh_token,
+        expires_in=tokens.expires_in,
+        user=_to_auth_user(user),
+    )
+
+
+@router.post(
     "/refresh",
     response_model=TokenPairResponse,
     summary="Làm mới cặp token bằng refresh token",
@@ -191,9 +243,11 @@ def _issue_for(user: User, secret_key: str) -> TokenPair:
 async def _user_from_password(*, email: str, password: str, repository: UserRepository) -> User:
     user = await repository.get_by_email(email)
 
-    if user is None:
-        # Vẫn phải băm một lần: trả lời ngay lập tức khi email không tồn tại sẽ để lộ
-        # email nào đã có tài khoản qua thời gian phản hồi.
+    if user is None or user.password_hash is None:
+        # `password_hash is None` = tài khoản chỉ đăng nhập Google (ADR 0016). Trả lỗi
+        # giống hệt "email không tồn tại" — không để lộ việc email này gắn với Google.
+        # Vẫn phải băm một lần: trả lời ngay lập tức sẽ để lộ email nào đã có tài khoản
+        # qua thời gian phản hồi.
         await anyio.to_thread.run_sync(verify_password_against_dummy, password)
         raise InvalidCredentialsError
 
@@ -207,6 +261,45 @@ async def _user_from_password(*, email: str, password: str, repository: UserRepo
         new_hash = await anyio.to_thread.run_sync(hash_password, password)
         await repository.update_password_hash(user, new_hash)
 
+    return user
+
+
+async def _user_from_google_identity(
+    identity: GoogleIdentity,
+    repository: UserRepository,
+    identity_repository: OAuthIdentityRepository,
+) -> User:
+    """Tìm user theo `(provider, sub)` đã link; nếu chưa, tạo mới hoặc từ chối trùng email.
+
+    `sub` là khoá liên kết chính — KHÔNG dùng `email` để tra trước, vì email có thể đổi chủ
+    phía Google. Chỉ khi chưa có liên kết nào mới xét tới email, và khi đó CHỈ để phát hiện
+    xung đột chứ không bao giờ tự động liên kết — xem ADR 0016.
+    """
+    existing_identity = await identity_repository.get_by_provider_subject(PROVIDER_GOOGLE, identity.subject)
+    if existing_identity is not None:
+        user = await repository.get_by_id(existing_identity.user_id)
+        if user is None:
+            # Liên kết trỏ tới user đã bị xoá — coi như token không dùng được, không lộ
+            # chi tiết nội bộ (tương tự _user_from_refresh_token).
+            raise InvalidTokenError
+        return user
+
+    existing_by_email = await repository.get_by_email(identity.email)
+    if existing_by_email is not None:
+        raise GoogleAccountConflictError
+
+    user = await repository.create(
+        email=identity.email,
+        name=identity.name or identity.email,
+        password_hash=None,
+        role=ROLE_PATIENT,
+    )
+    await identity_repository.create(
+        user_id=user.id,
+        provider=PROVIDER_GOOGLE,
+        provider_subject=identity.subject,
+        provider_email=identity.email,
+    )
     return user
 
 

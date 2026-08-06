@@ -123,4 +123,3 @@ nhất rồi ghi ADR mới nếu quyết định khó đảo ngược.
 |---|---|
 | Frontend testing framework | Chưa cài framework, chưa có frontend test |
 | Backend logging | Có `backend/logs/` nhưng chưa chốt logger hoặc format |
-| Alembic migration | Có dependency nhưng chưa có `alembic.ini` và `versions/` |
