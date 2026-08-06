@@ -8,7 +8,7 @@ import LoadingOverlay from "@/components/LoadingOverlay";
 import { ROLES, ROUTES } from "@/constants/routes";
 
 /**
- * LỚP PHÒNG THỦ THỨ HAI. Middleware đã chặn ở edge rồi (xem src/middleware.ts).
+ * LỚP PHÒNG THỦ THỨ HAI. Proxy đã chặn ở edge rồi (xem src/proxy.ts).
  * Layout này chỉ để dự phòng khi matcher đổi hoặc route mới quên khai báo.
  * Đừng coi đây là cơ chế chặn chính — lúc nó chạy thì bundle đã về tới client.
  */
