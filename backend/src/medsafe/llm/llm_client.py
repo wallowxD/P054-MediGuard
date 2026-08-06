@@ -9,15 +9,13 @@ Tự động Retry với Exponential Backoff khi dính Rate Limit (429).
 
 import json
 import os
-from pathlib import Path
-import re
-import sys
 import time
-from typing import Any, Dict, Optional
+from typing import Any
 
 # Load .env từ root dự án
 try:
     from dotenv import find_dotenv, load_dotenv
+
     load_dotenv(find_dotenv(usecwd=True))
 except ImportError:
     pass
@@ -30,10 +28,11 @@ except ImportError:
 
 class GeminiRateLimitError(Exception):
     """Lỗi khi Gemini API dính Rate Limit (429) và đã thử lại vượt quá số lần cho phép."""
+
     pass
 
 
-def repair_truncated_json(raw_json: str) -> Dict[str, Any]:
+def repair_truncated_json(raw_json: str) -> dict[str, Any]:
     """Tự động vá lỗi JSON bị cắt ngang do max_tokens."""
     cleaned = raw_json.strip()
     if "```" in cleaned:
@@ -67,16 +66,18 @@ def repair_truncated_json(raw_json: str) -> Dict[str, Any]:
 class LLMClient:
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        model: Optional[str] = None,
-        base_url: Optional[str] = None,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
         *,
         temperature: float = 0.0,
         max_tokens: int = 4096,
     ) -> None:
         self.gemini_key = api_key or os.getenv("GEMINI_API_KEY")
         self.gemini_model = model or os.getenv("GEMINI_MODEL") or "gemini-3.5-flash-lite"
-        self.gemini_base_url = base_url or os.getenv("GEMINI_BASE_URL") or "https://generativelanguage.googleapis.com/v1beta/openai"
+        self.gemini_base_url = (
+            base_url or os.getenv("GEMINI_BASE_URL") or "https://generativelanguage.googleapis.com/v1beta/openai"
+        )
 
         self.temperature = temperature
         self.max_tokens = max_tokens
@@ -86,7 +87,7 @@ class LLMClient:
         else:
             self.client = None
 
-    def complete(self, prompt: str, *, system: Optional[str] = None, max_retries: int = 5) -> str:
+    def complete(self, prompt: str, *, system: str | None = None, max_retries: int = 5) -> str:
         """Sinh text thuần CHỈ dùng Gemini API.
 
         Nếu bị Rate Limit 429: Retry với Exponential Backoff (2s, 4s, 8s, 16s, 32s).
@@ -120,15 +121,20 @@ class LLMClient:
                         delay *= 2.0
                         continue
                     else:
-                        raise GeminiRateLimitError(f"❌ Đã thử {max_retries} lần nhưng Gemini vẫn bị Rate Limit (429): {e}")
+                        raise GeminiRateLimitError(
+                            f"❌ Đã thử {max_retries} lần nhưng Gemini vẫn bị Rate Limit (429): {e}"
+                        )
                 else:
                     raise e
 
         raise GeminiRateLimitError(f"❌ Gemini dính Rate Limit vượt quá {max_retries} lần thử lại.")
 
-    def complete_json(self, prompt: str, schema_description: str = "", *, system: Optional[str] = None) -> Dict[str, Any]:
+    def complete_json(self, prompt: str, schema_description: str = "", *, system: str | None = None) -> dict[str, Any]:
         """Sinh output có cấu trúc theo dạng JSON kèm tự động vá lỗi cắt dở."""
-        json_system = (system or "") + "\nBạn BẮT BUỘC chỉ trả về kết quả dưới dạng định dạng JSON hợp lệ. Không viết thêm lời mở đầu hay giải thích."
+        json_system = (
+            (system or "")
+            + "\nBạn BẮT BUỘC chỉ trả về kết quả dưới dạng định dạng JSON hợp lệ. Không viết thêm lời mở đầu hay giải thích."
+        )
         if schema_description:
             prompt += f"\n\nYêu cầu trả về đúng Cấu trúc JSON sau:\n{schema_description}"
 

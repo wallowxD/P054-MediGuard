@@ -23,7 +23,10 @@ def classify_severity(mechanism: str, consequence: str, management: str) -> Seve
     if any(k in text for k in ["chống chỉ định", "chong chi dinh", "không được phối hợp", "chong chi dinh phoi hop"]):
         return Severity.CONTRAINDICATED
 
-    if any(k in text for k in ["nghiêm trọng", "xuất huyết", "tử vong", "nguy hiểm tính mạng", "hôn mê", "co giật", "suy hô hấp"]):
+    if any(
+        k in text
+        for k in ["nghiêm trọng", "xuất huyết", "tử vong", "nguy hiểm tính mạng", "hôn mê", "co giật", "suy hô hấp"]
+    ):
         return Severity.MAJOR
 
     if any(k in text for k in ["thận trọng", "theo dõi", "giảm liều", "điều chỉnh liều", "tăng nồng độ"]):

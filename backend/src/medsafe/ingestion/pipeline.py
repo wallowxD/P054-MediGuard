@@ -23,17 +23,17 @@ CHIẾN LƯỢC BÓC TÁCH 2 BƯỚC (2-PASS EXTRACTION STRATEGY):
    - `data/ingestion_checkpoint.json`: Tiến độ để RESUME chạy lại không mất dữ liệu.
 """
 
-from dataclasses import dataclass
 import json
 import os
-from pathlib import Path
 import re
 import sys
 import time
-from typing import List, Optional, Set
 import urllib.parse
+from dataclasses import dataclass
+from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
+
 
 def get_repo_root() -> Path:
     current = Path(__file__).resolve()
@@ -41,6 +41,7 @@ def get_repo_root() -> Path:
         if (parent / "output_clean").exists() or (parent / "AGENTS.md").exists():
             return parent
     return Path.cwd()
+
 
 REPO_ROOT = get_repo_root()
 CHECKPOINT_FILE = REPO_ROOT / "data" / "ingestion_checkpoint.json"
@@ -52,10 +53,12 @@ if str(REPO_ROOT) not in sys.path:
 if str(REPO_ROOT / "backend" / "src") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "backend" / "src"))
 
-from medsafe.chunking.chunker import chunk_document, split_by_sections
-from medsafe.domain.normalization import normalize_for_matching
-from medsafe.domain.severity import classify_severity
-from medsafe.llm.llm_client import GeminiRateLimitError, LLMClient
+# Bốn import dưới đây phải nằm sau khối sys.path.insert ở trên, nếu không sẽ không
+# resolve được `medsafe` khi chạy script trực tiếp — E402 được tắt có chủ ý.
+from medsafe.chunking.chunker import chunk_document, split_by_sections  # noqa: E402
+from medsafe.domain.normalization import normalize_for_matching  # noqa: E402
+from medsafe.domain.severity import classify_severity  # noqa: E402
+from medsafe.llm.llm_client import GeminiRateLimitError, LLMClient  # noqa: E402
 
 
 @dataclass
@@ -71,11 +74,11 @@ class IngestionReport:
     zero_yield_drugs: int
 
 
-def load_checkpoint() -> Set[str]:
+def load_checkpoint() -> set[str]:
     """Nạp danh sách các file HDSD đã bóc tách thành công trước đó để resume."""
     if CHECKPOINT_FILE.exists():
         try:
-            with open(CHECKPOINT_FILE, "r", encoding="utf-8") as f:
+            with open(CHECKPOINT_FILE, encoding="utf-8") as f:
                 data = json.load(f)
                 return set(data.get("processed_files", []))
         except Exception as e:
@@ -83,7 +86,7 @@ def load_checkpoint() -> Set[str]:
     return set()
 
 
-def save_checkpoint(processed_files: Set[str]) -> None:
+def save_checkpoint(processed_files: set[str]) -> None:
     """Ghi tiến độ các file HDSD đã bóc tách xong vào checkpoint file."""
     CHECKPOINT_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(CHECKPOINT_FILE, "w", encoding="utf-8") as f:
@@ -100,7 +103,7 @@ def save_drug_offline_json(file_name: str, drug_data: dict) -> None:
     master_records = {}
     if MASTER_JSON_FILE.exists():
         try:
-            with open(MASTER_JSON_FILE, "r", encoding="utf-8") as f:
+            with open(MASTER_JSON_FILE, encoding="utf-8") as f:
                 master_records = json.load(f)
         except Exception:
             pass
@@ -120,7 +123,7 @@ def fix_db_url_password_encoding(db_url: str) -> str:
     return db_url
 
 
-def validate_verbatim_quote(quote: str, full_text: str) -> Optional[str]:
+def validate_verbatim_quote(quote: str, full_text: str) -> str | None:
     """Kiểm tra trích dẫn nguyên văn 100% (Exact Substring Matching)."""
     if not quote or not full_text:
         return None
@@ -153,7 +156,7 @@ def extract_full_clinical_info(
     for sec_name, sec_content in sections:
         section_dict[sec_name.upper()] = sec_content
 
-    def get_section_text(keywords: List[str]) -> str:
+    def get_section_text(keywords: list[str]) -> str:
         for k in keywords:
             for sec_name, content in section_dict.items():
                 if k in sec_name:
@@ -244,7 +247,7 @@ def extract_full_clinical_info(
     return full_result
 
 
-def run_pipeline(*, limit: Optional[int] = None, dry_run: bool = False, reset_checkpoint: bool = False) -> IngestionReport:
+def run_pipeline(*, limit: int | None = None, dry_run: bool = False, reset_checkpoint: bool = False) -> IngestionReport:
     """Chạy toàn bộ pipeline trích xuất bằng Gemini API kèm khả năng RESUME và lưu đầy đủ thông tin."""
     output_clean_dir = REPO_ROOT / "output_clean"
     if not output_clean_dir.exists():
@@ -267,7 +270,9 @@ def run_pipeline(*, limit: Optional[int] = None, dry_run: bool = False, reset_ch
     if limit:
         unprocessed_files = unprocessed_files[:limit]
 
-    print(f"🚀 Bắt đầu Bóc Tách Đầy Đủ (Full Clinical Extraction - 2 Pass) trên {len(unprocessed_files)} file HDSD (dry_run={dry_run})...\n")
+    print(
+        f"🚀 Bắt đầu Bóc Tách Đầy Đủ (Full Clinical Extraction - 2 Pass) trên {len(unprocessed_files)} file HDSD (dry_run={dry_run})...\n"
+    )
 
     llm_client = LLMClient()
 
@@ -322,7 +327,7 @@ def run_pipeline(*, limit: Optional[int] = None, dry_run: bool = False, reset_ch
                     "verbatim_quote": valid_quote,
                     "source_file": file_path.name,
                     "source_type": "leaflet_ocr",
-                    "review_status": "pending_review"
+                    "review_status": "pending_review",
                 }
                 file_d2d_records.append(rec)
                 all_d2d_records.append(rec)
@@ -343,7 +348,7 @@ def run_pipeline(*, limit: Optional[int] = None, dry_run: bool = False, reset_ch
                     "effect_description": (item.get("effect_description") or "").strip(),
                     "verbatim_quote": quote,
                     "source_file": file_path.name,
-                    "review_status": "pending_review"
+                    "review_status": "pending_review",
                 }
                 file_d2f_records.append(rec)
                 all_d2f_records.append(rec)
@@ -363,24 +368,30 @@ def run_pipeline(*, limit: Optional[int] = None, dry_run: bool = False, reset_ch
             save_checkpoint(processed_checkpoint)
 
             processed += 1
-            print(f"   ✅ Đã bóc tách 100% đầy đủ & lưu Supabase: {len(file_d2d_records)} D2D, {len(file_d2f_records)} D2F, {len(res.get('chunks', []))} Chunks.")
+            print(
+                f"   ✅ Đã bóc tách 100% đầy đủ & lưu Supabase: {len(file_d2d_records)} D2D, {len(file_d2f_records)} D2F, {len(res.get('chunks', []))} Chunks."
+            )
             time.sleep(0.5)
 
         except GeminiRateLimitError as e:
             print(f"\n⛔ DỪNG PIPELINE DO GEMINI DÍNH RATE LIMIT (429): {e}")
-            print(f"📌 Đã lưu checkpoint ({len(processed_checkpoint)} file thành công). Bạn có thể chạy lại để RESUME tiếp bất kỳ lúc nào!")
+            print(
+                f"📌 Đã lưu checkpoint ({len(processed_checkpoint)} file thành công). Bạn có thể chạy lại để RESUME tiếp bất kỳ lúc nào!"
+            )
             break
         except Exception as e:
             print(f"❌ Lỗi khi bóc tách {file_path.name}: {e}")
             failed += 1
 
-    print(f"\n✅ HOÀN THÀNH INGESTION BATCH!")
+    print("\n✅ HOÀN THÀNH INGESTION BATCH!")
     print(f"   - File xử lý thành công trong đợt này: {processed}/{len(unprocessed_files)}")
     print(f"   - Tổng tiến độ toàn bộ dự án: {len(processed_checkpoint)}/{len(files)} file HDSD.")
     print(f"   - Tổng số Chunks đã lưu: {total_chunks}")
-    print(f"   - Tương tác trích xuất được: {extracted_count} bản ghi (d2d={len(all_d2d_records)}, d2f={len(all_d2f_records)})")
-    print(f"📁 Thư mục lưu file offline chi tiết từng thuốc: data/extracted_leaflets/")
-    print(f"📁 Master file JSON lưu tại: data/extracted_full_drugs.json")
+    print(
+        f"   - Tương tác trích xuất được: {extracted_count} bản ghi (d2d={len(all_d2d_records)}, d2f={len(all_d2f_records)})"
+    )
+    print("📁 Thư mục lưu file offline chi tiết từng thuốc: data/extracted_leaflets/")
+    print("📁 Master file JSON lưu tại: data/extracted_full_drugs.json")
 
     return IngestionReport(
         drugs_attempted=len(unprocessed_files),
@@ -389,7 +400,7 @@ def run_pipeline(*, limit: Optional[int] = None, dry_run: bool = False, reset_ch
         chunks_created=total_chunks,
         interactions_extracted=extracted_count,
         pending_review=len(all_d2d_records) + len(all_d2f_records),
-        zero_yield_drugs=zero_yield
+        zero_yield_drugs=zero_yield,
     )
 
 
@@ -431,10 +442,18 @@ def push_full_drug_to_supabase(file_name: str, drug_data: dict, d2d_records: lis
             WHERE brand_name_unaccent LIKE %s OR brand_name ILIKE %s;
         """
         search_pattern = f"%{normalize_for_matching(brand_name)}%"
-        cur.execute(sql_update_drug, (
-            indications, contraindications, dosage_and_admin, warnings_and_precautions, side_effects,
-            search_pattern, f"%{brand_name}%"
-        ))
+        cur.execute(
+            sql_update_drug,
+            (
+                indications,
+                contraindications,
+                dosage_and_admin,
+                warnings_and_precautions,
+                side_effects,
+                search_pattern,
+                f"%{brand_name}%",
+            ),
+        )
         conn.commit()
 
     # 2. Chèn Tương tác Thuốc - Thuốc
@@ -454,8 +473,9 @@ def push_full_drug_to_supabase(file_name: str, drug_data: dict, d2d_records: lis
                 r["management"],
                 r["verbatim_quote"],
                 r["source_type"],
-                r["review_status"]
-            ) for r in unique_d2d.values()
+                r["review_status"],
+            )
+            for r in unique_d2d.values()
         ]
 
         sql_d2d = """
@@ -480,8 +500,9 @@ def push_full_drug_to_supabase(file_name: str, drug_data: dict, d2d_records: lis
                 r["food_item"],
                 r["effect_description"],
                 r["verbatim_quote"],
-                r["review_status"]
-            ) for r in d2f_records
+                r["review_status"],
+            )
+            for r in d2f_records
         ]
         sql_d2f = """
             INSERT INTO drug_food_interactions (
@@ -501,8 +522,9 @@ def push_full_drug_to_supabase(file_name: str, drug_data: dict, d2d_records: lis
                 idx,
                 c.get("char_start", 0),
                 c.get("char_end", 0),
-                file_name
-            ) for idx, c in enumerate(chunks, start=1)
+                file_name,
+            )
+            for idx, c in enumerate(chunks, start=1)
         ]
         sql_chunks = """
             INSERT INTO evidence_chunks (
