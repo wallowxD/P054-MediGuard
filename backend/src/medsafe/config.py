@@ -70,8 +70,23 @@ class Settings(BaseSettings):
 
     # OCR providers
     google_api_key: str = ""
+    gemini_api_key: str = ""
+    vertex_api_key: str = ""
+    use_vertex_ai: bool = False
+    gcp_project: str = ""
+    gcp_location: str = "us-central1"
+    gemini_model: str = "gemini-3.6-flash"
+    gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai"
+
+    qwen_api_key: str = ""
     dashscope_api_key: str = ""
     dashscope_base_url: str = ""
+    qwen_model: str = "qwen3-vl-flash"
+    qwen_base_url: str = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
+
+    ocr_provider: str = "gemini"
+    ocr_dpi: int = 300
+    output_dir: str = "output"
 
     # Auth — secret ký JWT. Rỗng thì auth router từ chối phục vụ (xem domain/auth.py).
     jwt_secret_key: str = ""
@@ -79,6 +94,7 @@ class Settings(BaseSettings):
     # ADR 0016. Không phải secret (client ID công khai trong OAuth consent screen), nhưng
     # vẫn đặt trong .env vì khác giá trị giữa dev/staging/production.
     google_oauth_client_id: str = ""
+
 
     # Data
     database_url: str = "sqlite:///./data/app.db"

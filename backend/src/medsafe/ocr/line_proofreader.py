@@ -1,22 +1,23 @@
-"""Line-Diff Proofreader Service using Gemini.
+"""Line-Diff Proofreader Service dùng Gemini.
 
-Sends numbered text lines to Gemini API and receives ONLY JSON corrections for lines with typos,
-then applies line-level replacements in Python. Saves 95%+ of output tokens.
+Gửi các dòng văn bản có đánh số tới Gemini API và chỉ nhận về JSON các dòng có lỗi chính tả/OCR,
+sau đó thay thế theo dòng bằng Python. Tiết kiệm 95%+ output tokens.
 """
 
 import json
 import logging
+import time
 from typing import List, Optional
 
 import requests
 
-from src.config import get_settings
+from medsafe.config import get_settings
 
 logger = logging.getLogger(__name__)
 
 
 class LineDiffProofreader:
-    """Proofreads Markdown text line-by-line using Gemini JSON diff output."""
+    """Hiệu đính Markdown theo dòng dùng Gemini JSON diff output."""
 
     def __init__(
         self,
@@ -24,30 +25,15 @@ class LineDiffProofreader:
         model: Optional[str] = None,
         base_url: Optional[str] = None,
     ):
-        """Initialize LineDiffProofreader.
-
-        Args:
-            api_key: Gemini or Google API key. Defaults to settings.
-            model: Model name. Defaults to settings.gemini_model.
-            base_url: OpenAI-compatible or Native base URL.
-        """
         settings = get_settings()
         self.api_key = (
             api_key
             if api_key is not None
-            else (settings.gemini_api_key or settings.google_api_key)
+            else (getattr(settings, "gemini_api_key", "") or settings.google_api_key)
         )
-        self.model = model or "gemini-3.6-flash"
+        self.model = model or getattr(settings, "gemini_model", "gemini-3.6-flash")
 
     def proofread_markdown(self, markdown_text: str) -> str:
-        """Proofread Markdown text and replace only lines containing typos.
-
-        Args:
-            markdown_text: Raw Markdown text to proofread.
-
-        Returns:
-            Perfected Markdown text with corrected lines replaced.
-        """
         if not self.api_key:
             logger.warning("No Gemini API key provided for proofreading. Skipping proofread step.")
             return markdown_text
@@ -97,8 +83,6 @@ DANH SÁCH CÁC DÒNG VĂN BẢN (dạng `số_dòng: nội_dung`):
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {"responseMimeType": "application/json"},
         }
-
-        import time
 
         max_retries = 5
         retry_delay = 10

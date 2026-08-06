@@ -3,11 +3,12 @@ import logging
 import sys
 from pathlib import Path
 
-# Add project root to sys.path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+# Add backend/src to sys.path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
 import requests
-from src.config import get_settings
+from medsafe.config import get_settings
+
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s]: %(message)s")
 logger = logging.getLogger(__name__)

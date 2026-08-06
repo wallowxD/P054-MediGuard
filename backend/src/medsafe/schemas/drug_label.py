@@ -1,4 +1,4 @@
-"""Pydantic schema cho du lieu trich xuat tu HDSD thuoc (VLM structured output)."""
+"""Pydantic schema cho dữ liệu trích xuất từ HDSD thuốc (VLM structured output)."""
 
 from typing import Literal
 
@@ -9,7 +9,7 @@ ConfidenceLevel = Literal["high", "medium", "low"]
 
 
 class DrugInteraction(BaseModel):
-    thuoc_hoac_nhom: str = Field(description="Ten thuoc hoac nhom thuoc gay tuong tac")
+    thuoc_hoac_nhom: str = Field(description="Tên thuốc hoặc nhóm thuốc gây tương tác")
     muc_do_nghiem_trong: SeverityLevel | None = None
     khuyen_nghi_xu_tri: str | None = None
 
@@ -22,11 +22,11 @@ class DrugLabelExtraction(BaseModel):
     tuong_tac_thuoc: list[DrugInteraction] = Field(default_factory=list)
     raw_quote: str | None = Field(
         default=None,
-        description="Trich nguyen van 1-2 doan quan trong nhat tu tai lieu de doi chieu",
+        description="Trích nguyên văn 1-2 đoạn quan trọng nhất từ tài liệu để đối chiếu",
     )
     extraction_confidence: ConfidenceLevel
     ghi_chu: str | None = Field(
-        default=None, description="Ghi chu neu tai lieu mo, thieu trang, hoac khong ro"
+        default=None, description="Ghi chú nếu tài liệu mờ, thiếu trang, hoặc không rõ"
     )
 
 

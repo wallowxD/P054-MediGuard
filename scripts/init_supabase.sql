@@ -99,3 +99,32 @@ CREATE TABLE IF NOT EXISTS evidence_chunks (
 ALTER TABLE evidence_chunks ALTER COLUMN section_name TYPE TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_evidence_drug_id ON evidence_chunks(drug_id);
+
+-- 5. Bảng Tương Tác Thuốc - Bệnh Nền (drug_disease_interactions)
+CREATE TABLE IF NOT EXISTS drug_disease_interactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    drug_id UUID REFERENCES drugs(id) ON DELETE SET NULL,
+    canonical_ingredient TEXT NOT NULL,           -- Hoạt chất đã chuẩn hóa (lowercase)
+    disease_name TEXT NOT NULL,                   -- Tên bệnh nền / chống chỉ định bệnh lý
+    disease_name_unaccent TEXT NOT NULL,          -- Tên bệnh bỏ dấu tiếng Việt để tìm kiếm mờ
+    severity VARCHAR(50) NOT NULL,                -- contraindicated, major, moderate, minor, unknown
+    effect_description TEXT,                     -- Mô tả tác động / Hậu quả tương tác
+    management TEXT,                             -- Hướng xử trí / Khuyên dùng / Thận trọng
+    verbatim_quote TEXT NOT NULL,                 -- Trích dẫn nguyên văn 100% (bắt buộc theo ADR 0006)
+    source_type VARCHAR(50) NOT NULL,             -- 'national_database' HOẶC 'leaflet_ocr'
+    source_leaflet_url TEXT,                     -- Link PDF/MD HDSD gốc
+    review_status VARCHAR(50) DEFAULT 'pending_review',
+    reviewer_id UUID,
+    reviewed_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    CONSTRAINT unique_disease_interaction_source UNIQUE(canonical_ingredient, disease_name_unaccent, source_type)
+);
+
+ALTER TABLE drug_disease_interactions ALTER COLUMN canonical_ingredient TYPE TEXT;
+ALTER TABLE drug_disease_interactions ALTER COLUMN disease_name TYPE TEXT;
+ALTER TABLE drug_disease_interactions ALTER COLUMN disease_name_unaccent TYPE TEXT;
+
+CREATE INDEX IF NOT EXISTS idx_d2dis_ingredient ON drug_disease_interactions(canonical_ingredient);
+CREATE INDEX IF NOT EXISTS idx_d2dis_disease_unaccent ON drug_disease_interactions(disease_name_unaccent);
+CREATE INDEX IF NOT EXISTS idx_d2dis_review_status ON drug_disease_interactions(review_status);
+

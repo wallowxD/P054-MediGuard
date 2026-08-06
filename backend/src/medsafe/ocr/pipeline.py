@@ -1,6 +1,6 @@
 """OCR Pipeline Orchestrator.
 
-Manages end-to-end processing of PDF files to clean Markdown files using Qwen3-VL Flash.
+Quản lý luồng xử lý toàn trình từ file PDF thành Markdown sạch.
 """
 
 import logging
@@ -9,17 +9,17 @@ from typing import Optional
 
 from tqdm import tqdm
 
-from src.config import get_settings
-from src.models.ocr import DocumentOCRResult, PageOCRResult
-from src.services.ocr.gemini_client import GeminiVLClient
-from src.services.ocr.pdf_renderer import PDFRenderer
-from src.services.ocr.qwen_client import QwenVLClient
+from medsafe.config import get_settings
+from medsafe.ocr.gemini_client import GeminiVLClient
+from medsafe.ocr.pdf_renderer import PDFRenderer
+from medsafe.ocr.qwen_client import QwenVLClient
+from medsafe.schemas.ocr import DocumentOCRResult, PageOCRResult
 
 logger = logging.getLogger(__name__)
 
 
 class OCRPipeline:
-    """Orchestrates PDF page rendering, vision model API processing (Qwen / Gemini), page merging, and output saving."""
+    """Điều phối render trang PDF, gọi Vision LLM, gộp trang và lưu file Markdown."""
 
     def __init__(
         self,
@@ -29,27 +29,17 @@ class OCRPipeline:
         dpi: Optional[int] = None,
         provider: Optional[str] = None,
     ):
-        """Initialize OCR Pipeline.
-
-        Args:
-            renderer: PDFRenderer instance. Created with settings default if None.
-            client: QwenVLClient or GeminiVLClient instance. Created automatically if None.
-            output_dir: Output directory for Markdown files. Defaults to settings.output_dir.
-            dpi: Rendering DPI. Defaults to settings.ocr_dpi.
-            provider: OCR provider ('qwen' or 'gemini'). Defaults to settings.ocr_provider.
-        """
         settings = get_settings()
-        self.dpi = dpi or settings.ocr_dpi
+        self.dpi = dpi or getattr(settings, "ocr_dpi", 300)
         self.renderer = renderer or PDFRenderer(dpi=self.dpi)
-        self.output_dir = Path(output_dir or settings.output_dir)
+        self.output_dir = Path(output_dir or getattr(settings, "output_dir", "output"))
 
         if client is not None:
             self.client = client
         else:
-            selected_provider = (provider or settings.ocr_provider or "qwen").lower()
-            if selected_provider == "gemini" or (
-                settings.gemini_api_key or settings.google_api_key
-            ) and selected_provider != "qwen":
+            selected_provider = (provider or getattr(settings, "ocr_provider", "qwen") or "qwen").lower()
+            gemini_key = getattr(settings, "gemini_api_key", "") or settings.google_api_key
+            if selected_provider == "gemini" or (gemini_key and selected_provider != "qwen"):
                 logger.info("Initializing OCR Pipeline with GeminiVLClient...")
                 self.client = GeminiVLClient()
             else:
@@ -63,17 +53,6 @@ class OCRPipeline:
         skip_existing: bool = True,
         proofread: bool = False,
     ) -> DocumentOCRResult:
-        """Run complete OCR pipeline on a PDF file.
-
-        Args:
-            pdf_path: Path to the input PDF file.
-            output_filename: Optional custom output filename (e.g., 'drug.md').
-            skip_existing: If True and target .md output exists and is non-empty, skip reprocessing.
-            proofread: If True, run Gemini Line-Diff Proofreader to fix typos in the output Markdown.
-
-        Returns:
-            DocumentOCRResult containing metadata, per-page results, and merged Markdown.
-        """
         pdf_path = Path(pdf_path)
         if not pdf_path.exists():
             raise FileNotFoundError(f"Source PDF does not exist: {pdf_path}")
@@ -83,7 +62,6 @@ class OCRPipeline:
         out_name = output_filename or f"{stem}.md"
         save_path = self.output_dir / out_name
 
-        # Resume support: skip if output already exists
         if skip_existing and save_path.exists() and save_path.stat().st_size > 0:
             logger.info(f"Output file already exists at '{save_path}'. Skipping OCR.")
             existing_content = save_path.read_text(encoding="utf-8")
@@ -100,7 +78,6 @@ class OCRPipeline:
 
         logger.info(f"Starting OCR processing for PDF: {pdf_path}")
 
-        # Render PDF pages to base64 images
         rendered_pages = self.renderer.render_all_pages_base64(pdf_path, dpi=self.dpi)
         total_pages = len(rendered_pages)
         logger.info(f"Rendered {total_pages} page(s) at {self.dpi} DPI.")
@@ -113,7 +90,6 @@ class OCRPipeline:
         ):
             try:
                 page_text = self.client.process_page_image(b64_uri)
-                # Check if page was package/ignored
                 is_package = not bool(page_text.strip())
 
                 result = PageOCRResult(
@@ -143,18 +119,15 @@ class OCRPipeline:
                 )
                 page_results.append(result)
 
-        # Merge page texts in order
         merged_markdown = "\n\n".join(valid_page_texts).strip()
 
-        # Optional Line-Diff Proofreading step
         if proofread and merged_markdown:
-            from src.services.ocr.line_proofreader import LineDiffProofreader
+            from medsafe.ocr.line_proofreader import LineDiffProofreader
 
             logger.info("Running Gemini Line-Diff Proofreader to fix typos...")
             proofreader = LineDiffProofreader()
             merged_markdown = proofreader.proofread_markdown(merged_markdown)
 
-        # Save to output file
         self.output_dir.mkdir(parents=True, exist_ok=True)
         save_path = self.output_dir / out_name
 

@@ -12,6 +12,7 @@ from medsafe.db.models.interaction import (
     REVIEW_STATUS_REJECTED,
     SEVERITY_VALUES,
     SOURCE_TYPE_VALUES,
+    DrugDiseaseInteraction,
     DrugDrugInteraction,
     DrugFoodInteraction,
 )
@@ -29,9 +30,11 @@ __all__ = [
     "SEVERITY_VALUES",
     "SOURCE_TYPE_VALUES",
     "Drug",
+    "DrugDiseaseInteraction",
     "DrugDrugInteraction",
     "DrugFoodInteraction",
     "EvidenceChunk",
     "OAuthIdentity",
     "User",
 ]
+

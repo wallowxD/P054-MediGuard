@@ -10,10 +10,10 @@ import logging
 import sys
 from pathlib import Path
 
-# Add project root to sys.path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+# Add backend/src to sys.path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
-from src.services.ocr.pipeline import OCRPipeline
+from medsafe.ocr.pipeline import OCRPipeline
 
 logging.basicConfig(
     level=logging.INFO,
@@ -23,59 +23,48 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Run Qwen3-VL Flash OCR Pipeline on PDF documents."
-    )
+    parser = argparse.ArgumentParser(description="MedSafe OCR Pipeline Tool")
+    parser.add_argument("--pdf", type=str, help="Path to single PDF file")
     parser.add_argument(
-        "--pdf",
-        type=str,
-        help="Path to a single input PDF file.",
-    )
-    parser.add_argument(
-        "--dir",
-        type=str,
-        help="Path to a directory containing PDF files.",
+        "--dir", type=str, help="Directory containing PDF files to process in batch"
     )
     parser.add_argument(
         "--output-dir",
         type=str,
-        default=None,
-        help="Custom output directory for Markdown files (default: output/).",
+        default="output",
+        help="Target output directory for .md files (default: output)",
     )
     parser.add_argument(
-        "--dpi",
-        type=int,
-        default=None,
-        help="Rendering DPI resolution (default: 300).",
+        "--dpi", type=int, default=300, help="Rendering DPI (default: 300)"
     )
     parser.add_argument(
         "--provider",
         type=str,
         choices=["qwen", "gemini"],
-        default=None,
-        help="OCR provider ('qwen' or 'gemini'). Defaults to settings.",
+        default="gemini",
+        help="OCR Provider model ('gemini' or 'qwen'). Default: gemini",
     )
     parser.add_argument(
         "--model",
         type=str,
         default=None,
-        help="Model override (e.g. 'gemini-2.5-flash' or 'qwen3-vl-flash').",
+        help="Override model name (e.g. 'gemini-3.6-flash', 'qwen3-vl-flash')",
+    )
+    parser.add_argument(
+        "--no-skip",
+        action="store_true",
+        help="Force re-processing even if target .md file already exists",
     )
     parser.add_argument(
         "--proofread",
         action="store_true",
-        help="Run Gemini Line-Diff proofreader to fix Vietnamese spelling errors in output Markdown.",
+        help="Run Gemini Line-Diff Proofreader to fix typos in output Markdown",
     )
     parser.add_argument(
         "--workers",
         type=int,
         default=5,
         help="Number of concurrent worker threads for directory processing (default: 5).",
-    )
-    parser.add_argument(
-        "--force",
-        action="store_true",
-        help="Force re-processing of PDFs even if output Markdown file already exists.",
     )
 
     args = parser.parse_args()
@@ -85,11 +74,11 @@ def main():
 
     client = None
     if args.provider == "gemini":
-        from src.services.ocr.gemini_client import GeminiVLClient
+        from medsafe.ocr.gemini_client import GeminiVLClient
 
         client = GeminiVLClient(model=args.model)
     elif args.provider == "qwen":
-        from src.services.ocr.qwen_client import QwenVLClient
+        from medsafe.ocr.qwen_client import QwenVLClient
 
         client = QwenVLClient(model=args.model)
 
