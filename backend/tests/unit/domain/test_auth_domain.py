@@ -200,8 +200,7 @@ def test_thieu_secret_thi_bao_loi_cau_hinh_chu_khong_ky_bang_chuoi_rong() -> Non
 # ── Claim Google OpenID Connect (ADR 0016) ──────────────────────────────────────
 #
 # Đây là claims ĐÃ được google-auth verify chữ ký/aud/exp — test ở đây không gọi Google,
-# chỉ kiểm logic thuần trên dict claim giả. Việc gọi `verify_oauth2_token` thật được mock
-# riêng ở `tests/unit/oauth/test_google_client.py`.
+# chỉ kiểm logic thuần trên dict claim giả.
 
 
 def _google_claims(**overrides: object) -> dict[str, object]:
