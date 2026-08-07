@@ -48,9 +48,7 @@ class PDFRenderer:
         doc = fitz.open(pdf_path)
         try:
             if page_index < 0 or page_index >= len(doc):
-                raise IndexError(
-                    f"Page index {page_index} out of range for doc with {len(doc)} pages."
-                )
+                raise IndexError(f"Page index {page_index} out of range for doc with {len(doc)} pages.")
 
             page = doc[page_index]
             pix = page.get_pixmap(dpi=render_dpi)
@@ -72,9 +70,7 @@ class PDFRenderer:
         mime_type = "jpeg" if fmt.lower() in ("jpg", "jpeg") else "png"
         return f"data:image/{mime_type};base64,{b64_str}"
 
-    def render_all_pages_base64(
-        self, pdf_path: str | Path, dpi: int | None = None
-    ) -> list[tuple[int, str]]:
+    def render_all_pages_base64(self, pdf_path: str | Path, dpi: int | None = None) -> list[tuple[int, str]]:
         total_pages = self.get_page_count(pdf_path)
         results = []
         for i in range(total_pages):

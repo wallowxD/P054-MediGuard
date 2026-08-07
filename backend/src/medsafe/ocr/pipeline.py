@@ -84,9 +84,7 @@ class OCRPipeline:
         page_results = []
         valid_page_texts = []
 
-        for page_num, b64_uri in tqdm(
-            rendered_pages, desc=f"OCR {file_name}", unit="page"
-        ):
+        for page_num, b64_uri in tqdm(rendered_pages, desc=f"OCR {file_name}", unit="page"):
             try:
                 page_text = self.client.process_page_image(b64_uri)
                 is_package = not bool(page_text.strip())
@@ -100,13 +98,9 @@ class OCRPipeline:
 
                 if not is_package:
                     valid_page_texts.append(page_text)
-                    logger.info(
-                        f"Page {page_num}/{total_pages}: Transcribed successfully ({len(page_text)} chars)."
-                    )
+                    logger.info(f"Page {page_num}/{total_pages}: Transcribed successfully ({len(page_text)} chars).")
                 else:
-                    logger.info(
-                        f"Page {page_num}/{total_pages}: Identified as package/non-content page (ignored)."
-                    )
+                    logger.info(f"Page {page_num}/{total_pages}: Identified as package/non-content page (ignored).")
 
             except Exception as e:
                 logger.error(f"Error processing page {page_num}: {e}")

@@ -21,7 +21,9 @@ def upgrade() -> None:
     op.create_table(
         "drug_disease_interactions",
         sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
-        sa.Column("drug_id", postgresql.UUID(as_uuid=True), sa.ForeignKey("drugs.id", ondelete="SET NULL"), nullable=True),
+        sa.Column(
+            "drug_id", postgresql.UUID(as_uuid=True), sa.ForeignKey("drugs.id", ondelete="SET NULL"), nullable=True
+        ),
         sa.Column("canonical_ingredient", sa.Text(), nullable=False),
         sa.Column("disease_name", sa.Text(), nullable=False),
         sa.Column("disease_name_unaccent", sa.Text(), nullable=False),

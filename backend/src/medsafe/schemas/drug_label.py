@@ -25,9 +25,7 @@ class DrugLabelExtraction(BaseModel):
         description="Trích nguyên văn 1-2 đoạn quan trọng nhất từ tài liệu để đối chiếu",
     )
     extraction_confidence: ConfidenceLevel
-    ghi_chu: str | None = Field(
-        default=None, description="Ghi chú nếu tài liệu mờ, thiếu trang, hoặc không rõ"
-    )
+    ghi_chu: str | None = Field(default=None, description="Ghi chú nếu tài liệu mờ, thiếu trang, hoặc không rõ")
 
 
 class DrugLabelRecord(BaseModel):

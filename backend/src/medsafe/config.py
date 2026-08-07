@@ -77,7 +77,6 @@ class Settings(BaseSettings):
     gcp_location: str = "us-central1"
     gemini_model: str = "gemini-3.6-flash"
 
-
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai"
 
     qwen_api_key: str = ""
@@ -96,7 +95,6 @@ class Settings(BaseSettings):
     # ADR 0016. Không phải secret (client ID công khai trong OAuth consent screen), nhưng
     # vẫn đặt trong .env vì khác giá trị giữa dev/staging/production.
     google_oauth_client_id: str = ""
-
 
     # Data
     database_url: str = "sqlite:///./data/app.db"

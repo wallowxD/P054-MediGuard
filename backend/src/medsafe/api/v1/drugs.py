@@ -28,9 +28,7 @@ async def search_drugs(
         )
 
     catalog = await drug_repository.list_catalog_pairs()
-    scored_candidates, requires_confirmation = search_catalog(
-        trimmed_query, catalog, limit=limit
-    )
+    scored_candidates, requires_confirmation = search_catalog(trimmed_query, catalog, limit=limit)
 
     candidates = [
         DrugCandidate(

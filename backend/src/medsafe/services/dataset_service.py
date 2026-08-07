@@ -78,10 +78,7 @@ def update_dataset_link_notes(
     notes_results = ["" for _ in range(len(rows))]
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_idx = {
-            executor.submit(_evaluate_row_links, row, timeout): idx
-            for idx, row in enumerate(rows)
-        }
+        future_to_idx = {executor.submit(_evaluate_row_links, row, timeout): idx for idx, row in enumerate(rows)}
 
         for future in tqdm(
             as_completed(future_to_idx),

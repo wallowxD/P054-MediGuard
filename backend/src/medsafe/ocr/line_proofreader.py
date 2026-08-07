@@ -26,9 +26,7 @@ class LineDiffProofreader:
     ):
         settings = get_settings()
         self.api_key = (
-            api_key
-            if api_key is not None
-            else (getattr(settings, "gemini_api_key", "") or settings.google_api_key)
+            api_key if api_key is not None else (getattr(settings, "gemini_api_key", "") or settings.google_api_key)
         )
         self.model = model or getattr(settings, "gemini_model", "gemini-3.6-flash")
 
@@ -41,11 +39,7 @@ class LineDiffProofreader:
         if not lines:
             return markdown_text
 
-        numbered_lines = [
-            f"{i+1}: {line}"
-            for i, line in enumerate(lines)
-            if line.strip()
-        ]
+        numbered_lines = [f"{i + 1}: {line}" for i, line in enumerate(lines) if line.strip()]
         if not numbered_lines:
             return markdown_text
 
@@ -88,7 +82,9 @@ DANH SÁCH CÁC DÒNG VĂN BẢN (dạng `số_dòng: nội_dung`):
 
         for attempt in range(1, max_retries + 1):
             try:
-                logger.info(f"Sending {len(numbered_lines)} lines to Gemini ({self.model}) for Line-Diff proofreading (attempt {attempt})...")
+                logger.info(
+                    f"Sending {len(numbered_lines)} lines to Gemini ({self.model}) for Line-Diff proofreading (attempt {attempt})..."
+                )
                 r = requests.post(url, json=payload, headers=headers, timeout=90)
 
                 if r.status_code == 200:
@@ -108,7 +104,9 @@ DANH SÁCH CÁC DÒNG VĂN BẢN (dạng `số_dòng: nội_dung`):
                     return "\n".join(updated_lines)
 
                 elif r.status_code == 429:
-                    logger.warning(f"Rate limit 429 hit. Retrying in {retry_delay}s... (attempt {attempt}/{max_retries})")
+                    logger.warning(
+                        f"Rate limit 429 hit. Retrying in {retry_delay}s... (attempt {attempt}/{max_retries})"
+                    )
                     time.sleep(retry_delay)
                     retry_delay *= 2
                 else:

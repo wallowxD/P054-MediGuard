@@ -36,13 +36,11 @@ def calculate_backoff_with_jitter(attempt: int) -> float:
     Attempt 4: 8–16s (2^3 to 2^4)
     """
     min_sec = float(2 ** (attempt - 1))
-    max_sec = float(2 ** attempt)
+    max_sec = float(2**attempt)
     return random.uniform(min_sec, max_sec)
 
 
 class GeminiVLClient:
-
-
     """Client gọi Google Gemini Vision API cho OCR."""
 
     def __init__(
@@ -68,12 +66,29 @@ class GeminiVLClient:
             )
         )
         self.base_url = (
-            base_url if base_url is not None else getattr(settings, "gemini_base_url", "https://generativelanguage.googleapis.com/v1beta/openai")
+            base_url
+            if base_url is not None
+            else getattr(settings, "gemini_base_url", "https://generativelanguage.googleapis.com/v1beta/openai")
         ).rstrip("/")
-        self.model = model if model is not None else (os.getenv("GEMINI_MODEL") or getattr(settings, "gemini_model", "gemini-3.6-flash"))
-        self.use_vertex = use_vertex or getattr(settings, "use_vertex_ai", False) or os.getenv("USE_VERTEX_AI", "").lower() in ("true", "1", "yes")
-        self.project = project or getattr(settings, "gcp_project", "") or os.getenv("GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT")
-        self.location = location or getattr(settings, "gcp_location", "us-central1") or os.getenv("GCP_LOCATION") or "us-central1"
+        self.model = (
+            model
+            if model is not None
+            else (os.getenv("GEMINI_MODEL") or getattr(settings, "gemini_model", "gemini-3.6-flash"))
+        )
+        self.use_vertex = (
+            use_vertex
+            or getattr(settings, "use_vertex_ai", False)
+            or os.getenv("USE_VERTEX_AI", "").lower() in ("true", "1", "yes")
+        )
+        self.project = (
+            project
+            or getattr(settings, "gcp_project", "")
+            or os.getenv("GCP_PROJECT")
+            or os.getenv("GOOGLE_CLOUD_PROJECT")
+        )
+        self.location = (
+            location or getattr(settings, "gcp_location", "us-central1") or os.getenv("GCP_LOCATION") or "us-central1"
+        )
         self.max_retries = max_retries
         self.timeout_seconds = timeout_seconds
 
@@ -83,6 +98,7 @@ class GeminiVLClient:
     def _init_genai_client(self):
         try:
             from google import genai
+
             if self.use_vertex:
                 kwargs = {"vertexai": True}
                 if self.api_key:
@@ -99,11 +115,9 @@ class GeminiVLClient:
                 self._genai_client = genai.Client(**kwargs)
                 logger.info(f"Initialized Gemini Client via Vertex AI (model={self.model})")
 
-
             elif self.api_key:
                 self._genai_client = genai.Client(api_key=self.api_key, http_options=types.HttpOptions(timeout=120000))
                 logger.info(f"Initialized Gemini Client via AI Studio (model={self.model})")
-
 
         except Exception as e:
             logger.warning(f"Could not initialize google.genai Client: {e}. Will fall back to HTTP endpoint.")
@@ -114,9 +128,7 @@ class GeminiVLClient:
             return ""
 
         cleaned = text.strip()
-        cleaned = re.sub(
-            r"^```(?:markdown|md)?\s*\n?", "", cleaned, flags=re.IGNORECASE
-        )
+        cleaned = re.sub(r"^```(?:markdown|md)?\s*\n?", "", cleaned, flags=re.IGNORECASE)
         cleaned = re.sub(r"\n?```\s*$", "", cleaned)
         return cleaned.strip()
 
@@ -169,14 +181,13 @@ class GeminiVLClient:
                     model=self.model,
                     contents=[
                         image_part,
-                        "Hãy chuyển đổi trang ảnh này thành định dạng Markdown (.md) sạch và chuẩn xác theo đúng quy tắc."
+                        "Hãy chuyển đổi trang ảnh này thành định dạng Markdown (.md) sạch và chuẩn xác theo đúng quy tắc.",
                     ],
                     config=types.GenerateContentConfig(
                         system_instruction=prompt_text,
                         temperature=0.0,
                         max_output_tokens=8192,
                     ),
-
                 )
 
                 content = response.text or ""
@@ -199,14 +210,11 @@ class GeminiVLClient:
                 time.sleep(wait_time)
                 continue
 
-
         raise RuntimeError(
             f"Failed Gemini SDK OCR request for {image_path.name} after {attempt} attempts. Error: {last_error}"
         )
 
-    def process_page_image(
-        self, image_b64_uri: str, system_prompt: str | None = None
-    ) -> str:
+    def process_page_image(self, image_b64_uri: str, system_prompt: str | None = None) -> str:
         prompt_text = system_prompt or GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
 
         # Nếu có _genai_client (SDK Vertex AI / AI Studio), ưu tiên sử dụng SDK
@@ -228,19 +236,20 @@ class GeminiVLClient:
             while attempt < self.max_retries:
                 attempt += 1
                 try:
-                    logger.info(f"Sending page OCR request to Gemini via SDK ({self.model}, attempt {attempt}/{self.max_retries})")
+                    logger.info(
+                        f"Sending page OCR request to Gemini via SDK ({self.model}, attempt {attempt}/{self.max_retries})"
+                    )
                     response = self._genai_client.models.generate_content(
                         model=self.model,
                         contents=[
                             image_part,
-                            "Hãy chuyển đổi trang ảnh này thành định dạng Markdown (.md) sạch và chuẩn xác theo đúng quy tắc."
+                            "Hãy chuyển đổi trang ảnh này thành định dạng Markdown (.md) sạch và chuẩn xác theo đúng quy tắc.",
                         ],
                         config=types.GenerateContentConfig(
                             system_instruction=prompt_text,
                             temperature=0.0,
                             max_output_tokens=8192,
                         ),
-
                     )
                     content = response.text or ""
                     return self._clean_markdown_fences(content)
@@ -257,7 +266,6 @@ class GeminiVLClient:
                     )
                     time.sleep(wait_time)
                     continue
-
 
             raise RuntimeError(f"Failed Gemini SDK page OCR request after {attempt} attempts: {last_error}")
 
@@ -301,9 +309,7 @@ class GeminiVLClient:
         while attempt < self.max_retries:
             attempt += 1
             try:
-                logger.info(
-                    f"Sending HTTP request to Gemini API ({self.model}, attempt {attempt}/{self.max_retries})"
-                )
+                logger.info(f"Sending HTTP request to Gemini API ({self.model}, attempt {attempt}/{self.max_retries})")
                 response = requests.post(
                     endpoint,
                     json=payload,
@@ -323,16 +329,12 @@ class GeminiVLClient:
                     content = choice.get("message", {}).get("content", "")
 
                     if finish_reason == "RECITATION" or not content:
-                        logger.warning(
-                            f"Gemini API filtered output (finish_reason='{finish_reason}')."
-                        )
+                        logger.warning(f"Gemini API filtered output (finish_reason='{finish_reason}').")
 
                     cleaned_content = self._clean_markdown_fences(content)
                     return cleaned_content
 
-                logger.warning(
-                    f"Gemini API returned status {response.status_code}: {response.text}"
-                )
+                logger.warning(f"Gemini API returned status {response.status_code}: {response.text}")
                 last_error = f"HTTP {response.status_code}: {response.text}"
 
                 if response.status_code in (429, 500, 502, 503, 504):
@@ -355,6 +357,4 @@ class GeminiVLClient:
                 last_error = str(e)
                 time.sleep(wait_time)
 
-        raise RuntimeError(
-            f"Failed to complete Gemini OCR request after {attempt} attempts. Last error: {last_error}"
-        )
+        raise RuntimeError(f"Failed to complete Gemini OCR request after {attempt} attempts. Last error: {last_error}")

@@ -50,7 +50,6 @@ def get_drug_repository(session: SessionDep) -> DrugRepository:
 DrugRepositoryDep = Annotated[DrugRepository, Depends(get_drug_repository)]
 
 
-
 async def get_current_user(
     credentials: BearerDep,
     repository: UserRepositoryDep,

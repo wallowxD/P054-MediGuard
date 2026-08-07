@@ -164,4 +164,3 @@ class DrugDiseaseInteraction(Base):
 
     def __repr__(self) -> str:
         return f"<DrugDiseaseInteraction {self.canonical_ingredient}+{self.disease_name!r} {self.severity}>"
-

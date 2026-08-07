@@ -34,9 +34,7 @@ class FakeDrugDrugInteractionRepository:
     def __init__(self, interactions: list[DrugDrugInteraction] | None = None) -> None:
         self._interactions = interactions or []
 
-    async def find_by_pair(
-        self, a_norm: str, b_norm: str, only_approved: bool = True
-    ) -> list[DrugDrugInteraction]:
+    async def find_by_pair(self, a_norm: str, b_norm: str, only_approved: bool = True) -> list[DrugDrugInteraction]:
         pair = DrugPair.create(a_norm, b_norm)
         results = []
         for item in self._interactions:
@@ -45,9 +43,7 @@ class FakeDrugDrugInteractionRepository:
                     results.append(item)
         return results
 
-    async def find_by_pairs(
-        self, pairs: list[DrugPair], only_approved: bool = True
-    ) -> list[DrugDrugInteraction]:
+    async def find_by_pairs(self, pairs: list[DrugPair], only_approved: bool = True) -> list[DrugDrugInteraction]:
         target_pairs = {(p.ingredient_a, p.ingredient_b) for p in pairs}
         results = []
         for item in self._interactions:
@@ -61,12 +57,11 @@ class FakeDrugFoodInteractionRepository:
     def __init__(self, interactions: list[DrugFoodInteraction] | None = None) -> None:
         self._interactions = interactions or []
 
-    async def find_by_drug_ids(
-        self, drug_ids: list[UUID], only_approved: bool = True
-    ) -> list[DrugFoodInteraction]:
+    async def find_by_drug_ids(self, drug_ids: list[UUID], only_approved: bool = True) -> list[DrugFoodInteraction]:
         id_set = set(drug_ids)
         return [
-            item for item in self._interactions
+            item
+            for item in self._interactions
             if item.drug_id in id_set and (not only_approved or item.review_status == REVIEW_STATUS_APPROVED)
         ]
 
@@ -76,7 +71,8 @@ class FakeDrugFoodInteractionRepository:
         ing_lower = canonical_ingredient.strip().lower()
         food_lower = food_item.strip().lower()
         return [
-            item for item in self._interactions
+            item
+            for item in self._interactions
             if item.canonical_ingredient.lower() == ing_lower
             and item.food_item.lower() == food_lower
             and (not only_approved or item.review_status == REVIEW_STATUS_APPROVED)
@@ -93,22 +89,32 @@ class FakeEvidenceChunkRepository:
 
     async def list_by_drug_and_section(self, drug_id: UUID, section_name: str) -> list[EvidenceChunk]:
         sec_lower = section_name.strip().lower()
-        matched = [
-            c for c in self._chunks
-            if c.drug_id == drug_id and c.section_name.lower() == sec_lower
-        ]
+        matched = [c for c in self._chunks if c.drug_id == drug_id and c.section_name.lower() == sec_lower]
         matched.sort(key=lambda x: x.chunk_index)
         return matched
 
 
 # --- TESTS ---
 
+
 @pytest.mark.asyncio
 async def test_drug_repository_list_and_get():
     drug1_id = uuid.uuid4()
     drug2_id = uuid.uuid4()
-    drug1 = Drug(id=drug1_id, brand_name="Panadol Extra", brand_name_unaccent="panadol extra", ingredient_raw="Paracetamol, Caffeine", canonical_ingredients=["paracetamol", "caffeine"])
-    drug2 = Drug(id=drug2_id, brand_name="Aspirin 500mg", brand_name_unaccent="aspirin 500mg", ingredient_raw="Aspirin", canonical_ingredients=["aspirin"])
+    drug1 = Drug(
+        id=drug1_id,
+        brand_name="Panadol Extra",
+        brand_name_unaccent="panadol extra",
+        ingredient_raw="Paracetamol, Caffeine",
+        canonical_ingredients=["paracetamol", "caffeine"],
+    )
+    drug2 = Drug(
+        id=drug2_id,
+        brand_name="Aspirin 500mg",
+        brand_name_unaccent="aspirin 500mg",
+        ingredient_raw="Aspirin",
+        canonical_ingredients=["aspirin"],
+    )
 
     repo = FakeDrugRepository([drug1, drug2])
 

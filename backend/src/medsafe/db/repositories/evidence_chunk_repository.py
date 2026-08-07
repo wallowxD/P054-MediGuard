@@ -44,10 +44,14 @@ class SqlEvidenceChunkRepository:
         Dữ liệu thực tế có cả "CHỐNG CHỈ ĐỊNH" lẫn "Chống chỉ định" nên cần dùng func.lower().
         """
         norm_section = section_name.strip().lower()
-        stmt = select(EvidenceChunk).where(
-            EvidenceChunk.drug_id == drug_id,
-            func.lower(EvidenceChunk.section_name) == norm_section,
-        ).order_by(EvidenceChunk.chunk_index.asc())
+        stmt = (
+            select(EvidenceChunk)
+            .where(
+                EvidenceChunk.drug_id == drug_id,
+                func.lower(EvidenceChunk.section_name) == norm_section,
+            )
+            .order_by(EvidenceChunk.chunk_index.asc())
+        )
 
         result = await self._session.execute(stmt)
         return list(result.scalars().all())

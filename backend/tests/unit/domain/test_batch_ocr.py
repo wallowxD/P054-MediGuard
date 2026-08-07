@@ -33,30 +33,20 @@ def test_format_page_to_jsonl_item(tmp_path: Path):
 
 def test_parse_batch_results_jsonl():
     jsonl_str = (
-        json.dumps({
-            "custom_id": "0001_SaVi__page_002",
-            "response": {
-                "candidates": [
-                    {
-                        "content": {
-                            "parts": [{"text": "Trang 2 nội dung"}]
-                        }
-                    }
-                ]
+        json.dumps(
+            {
+                "custom_id": "0001_SaVi__page_002",
+                "response": {"candidates": [{"content": {"parts": [{"text": "Trang 2 nội dung"}]}}]},
             }
-        }) + "\n" +
-        json.dumps({
-            "custom_id": "0001_SaVi__page_001",
-            "response": {
-                "candidates": [
-                    {
-                        "content": {
-                            "parts": [{"text": "Trang 1 nội dung"}]
-                        }
-                    }
-                ]
+        )
+        + "\n"
+        + json.dumps(
+            {
+                "custom_id": "0001_SaVi__page_001",
+                "response": {"candidates": [{"content": {"parts": [{"text": "Trang 1 nội dung"}]}}]},
             }
-        }) + "\n"
+        )
+        + "\n"
     )
 
     folder_pages = parse_batch_results_jsonl(jsonl_str)

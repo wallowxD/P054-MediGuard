@@ -18,13 +18,9 @@ from medsafe.domain.pairing import DrugPair
 class DrugDrugInteractionRepository(Protocol):
     """Cổng truy cập dữ liệu tương tác thuốc – thuốc."""
 
-    async def find_by_pair(
-        self, a_norm: str, b_norm: str, only_approved: bool = True
-    ) -> list[DrugDrugInteraction]: ...
+    async def find_by_pair(self, a_norm: str, b_norm: str, only_approved: bool = True) -> list[DrugDrugInteraction]: ...
 
-    async def find_by_pairs(
-        self, pairs: list[DrugPair], only_approved: bool = True
-    ) -> list[DrugDrugInteraction]: ...
+    async def find_by_pairs(self, pairs: list[DrugPair], only_approved: bool = True) -> list[DrugDrugInteraction]: ...
 
 
 class SqlDrugDrugInteractionRepository:
@@ -33,9 +29,7 @@ class SqlDrugDrugInteractionRepository:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
-    async def find_by_pair(
-        self, a_norm: str, b_norm: str, only_approved: bool = True
-    ) -> list[DrugDrugInteraction]:
+    async def find_by_pair(self, a_norm: str, b_norm: str, only_approved: bool = True) -> list[DrugDrugInteraction]:
         """Tra cứu exact cặp thuốc (a_norm, b_norm) đã sort/lowercase theo DrugPair.create().
 
         CẤM dùng ilike, fuzzy hay similarity search ở đây (ADR 0004, ADR 0012).
@@ -51,9 +45,7 @@ class SqlDrugDrugInteractionRepository:
         result = await self._session.execute(stmt)
         return list(result.scalars().all())
 
-    async def find_by_pairs(
-        self, pairs: list[DrugPair], only_approved: bool = True
-    ) -> list[DrugDrugInteraction]:
+    async def find_by_pairs(self, pairs: list[DrugPair], only_approved: bool = True) -> list[DrugDrugInteraction]:
         """Tra cứu một query cho cả basket (tránh N+1 queries).
 
         Dùng `or_(*pair_conditions)` kết hợp exact matching trên cặp (ingredient_a_norm, ingredient_b_norm).
@@ -80,9 +72,7 @@ class SqlDrugDrugInteractionRepository:
 class DrugFoodInteractionRepository(Protocol):
     """Cổng truy cập dữ liệu tương tác thuốc – thực phẩm."""
 
-    async def find_by_drug_ids(
-        self, drug_ids: list[UUID], only_approved: bool = True
-    ) -> list[DrugFoodInteraction]: ...
+    async def find_by_drug_ids(self, drug_ids: list[UUID], only_approved: bool = True) -> list[DrugFoodInteraction]: ...
 
     async def find_by_ingredient_and_food(
         self, canonical_ingredient: str, food_item: str, only_approved: bool = True
@@ -95,9 +85,7 @@ class SqlDrugFoodInteractionRepository:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
-    async def find_by_drug_ids(
-        self, drug_ids: list[UUID], only_approved: bool = True
-    ) -> list[DrugFoodInteraction]:
+    async def find_by_drug_ids(self, drug_ids: list[UUID], only_approved: bool = True) -> list[DrugFoodInteraction]:
         """Tìm tương tác thực phẩm theo danh sách drug_ids."""
         if not drug_ids:
             return []

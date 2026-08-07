@@ -208,4 +208,3 @@ def search_catalog(
     ]
 
     return candidates, requires_confirmation
-
