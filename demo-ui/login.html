@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng nhập — Demo giao diện</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="demo-banner">Bản demo giao diện — dữ liệu minh hoạ, chưa kết nối backend thật.</div>
+
+  <div class="auth-shell">
+    <div class="auth-card">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="9.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)"/>
+            <line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/>
+          </svg>
+        </span>
+        Trợ lý An toàn Thuốc
+      </a>
+      <h1>Đăng nhập</h1>
+      <p class="auth-sub">Đăng nhập để tra cứu tương tác thuốc và xem lịch sử.</p>
+
+      <form id="loginForm">
+        <div class="field-group">
+          <label for="email">Email</label>
+          <input class="text-input" type="email" id="email" placeholder="ban@benhvien.vn" required />
+        </div>
+        <div class="field-group">
+          <label for="password">Mật khẩu</label>
+          <input class="text-input" type="password" id="password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+          Đăng nhập
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><path d="m14 6 6 6-6 6"/></svg>
+        </button>
+      </form>
+
+      <div class="auth-divider">hoặc</div>
+      <a class="btn btn-secondary btn-block" href="home.html">Xem demo không cần đăng nhập</a>
+
+      <p class="auth-footnote">
+        <a href="index.html">← Về trang giới thiệu</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      window.location.href = "home.html";
+    });
+  </script>
+</body>
+</html>
