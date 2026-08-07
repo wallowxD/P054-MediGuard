@@ -11,10 +11,11 @@ import random
 import re
 import time
 from pathlib import Path
-from typing import Optional, Union
+
+import requests
 
 from medsafe.config import get_settings
-from medsafe.prompts.ocr_prompts import GEMINI_MEDICAL_OCR_SYSTEM_PROMPT, QWEN_OCR_SYSTEM_PROMPT
+from medsafe.prompts.ocr_prompts import GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
 
 try:
     from google import genai
@@ -46,12 +47,12 @@ class GeminiVLClient:
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        base_url: Optional[str] = None,
-        model: Optional[str] = None,
+        api_key: str | None = None,
+        base_url: str | None = None,
+        model: str | None = None,
         use_vertex: bool = False,
-        project: Optional[str] = None,
-        location: Optional[str] = None,
+        project: str | None = None,
+        location: str | None = None,
         max_retries: int = 4,
         timeout_seconds: int = 120,
     ):
@@ -121,8 +122,8 @@ class GeminiVLClient:
 
     def process_image_file(
         self,
-        image_path: Union[str, Path],
-        system_prompt: Optional[str] = None,
+        image_path: str | Path,
+        system_prompt: str | None = None,
     ) -> str:
         image_path = Path(image_path)
         if not image_path.exists():
@@ -204,7 +205,7 @@ class GeminiVLClient:
         )
 
     def process_page_image(
-        self, image_b64_uri: str, system_prompt: Optional[str] = None
+        self, image_b64_uri: str, system_prompt: str | None = None
     ) -> str:
         prompt_text = system_prompt or GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
 
