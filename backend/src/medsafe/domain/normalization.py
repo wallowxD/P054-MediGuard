@@ -147,3 +147,65 @@ def match_drug(
         confidence=best_score / 100.0,
         is_ambiguous=is_ambiguous,
     )
+
+
+@dataclass(frozen=True)
+class ScoredDrugCandidate:
+    drug_id: str
+    brand_name: str
+    ingredient: str
+    confidence: float
+
+
+def search_catalog(
+    user_input: str,
+    catalog: list[tuple[object, str, str]],  # [(drug_id, brand_name, active_ingredient)]
+    *,
+    threshold: float = 88.0,
+    limit: int = 10,
+) -> tuple[list[ScoredDrugCandidate], bool]:
+    """Khớp và xếp hạng danh sách ứng viên thuốc trong danh mục cho API search.
+
+    Trả về (danh_sách_candidate, requires_confirmation).
+    """
+    trimmed_input = user_input.strip() if user_input else ""
+    if not trimmed_input or not catalog:
+        return [], False
+
+    norm_input = normalize_for_matching(trimmed_input)
+    if not norm_input:
+        return [], False
+
+    scored: list[tuple[float, tuple[object, str, str]]] = []
+    for drug_id, brand, ingredient in catalog:
+        norm_brand = normalize_for_matching(brand)
+        norm_ing = normalize_for_matching(ingredient)
+
+        score_brand = fuzz.token_set_ratio(norm_input, norm_brand)
+        score_ing = fuzz.token_set_ratio(norm_input, norm_ing)
+        score = max(score_brand, score_ing)
+
+        if score >= threshold:
+            scored.append((score, (drug_id, brand, ingredient)))
+
+    if not scored:
+        return [], False
+
+    scored.sort(key=lambda x: x[0], reverse=True)
+    top_items = scored[:limit]
+
+    is_ambiguous = len(scored) > 1 and (scored[0][0] - scored[1][0]) <= 3.0
+    requires_confirmation = is_ambiguous or len(top_items) > 1
+
+    candidates = [
+        ScoredDrugCandidate(
+            drug_id=str(item[1][0]),
+            brand_name=item[1][1],
+            ingredient=item[1][2],
+            confidence=round(float(item[0]), 2),
+        )
+        for item in top_items
+    ]
+
+    return candidates, requires_confirmation
+
