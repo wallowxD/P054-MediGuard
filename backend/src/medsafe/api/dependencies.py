@@ -14,6 +14,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from medsafe.config import Settings, get_auth_config, get_settings
 from medsafe.db.models.user import User
+from medsafe.db.repositories.oauth_identity_repository import OAuthIdentityRepository, SqlOAuthIdentityRepository
 from medsafe.db.repositories.user_repository import SqlUserRepository, UserRepository
 from medsafe.db.session import get_session
 from medsafe.domain.auth import ACCESS_TOKEN_TYPE, InactiveAccountError, InvalidTokenError, decode_token
@@ -32,6 +33,13 @@ def get_user_repository(session: SessionDep) -> UserRepository:
 
 
 UserRepositoryDep = Annotated[UserRepository, Depends(get_user_repository)]
+
+
+def get_oauth_identity_repository(session: SessionDep) -> OAuthIdentityRepository:
+    return SqlOAuthIdentityRepository(session)
+
+
+OAuthIdentityRepositoryDep = Annotated[OAuthIdentityRepository, Depends(get_oauth_identity_repository)]
 
 
 async def get_current_user(

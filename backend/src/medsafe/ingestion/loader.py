@@ -1,10 +1,9 @@
 """Nạp dữ liệu thô: danh mục thuốc (CSV) và tờ HDSD (PDF/Manifest/output_clean)."""
 
 import csv
+import re
 from dataclasses import dataclass
 from pathlib import Path
-import re
-from typing import Dict, List, Set
 
 from medsafe.domain.normalization import extract_ingredient_from_brand, normalize_for_matching
 
@@ -28,13 +27,13 @@ class RawDrug:
     has_valid_hdsd: bool = True  # Trạng thái link HDSD hoạt động
 
 
-def load_manifest_ok_file_ids(manifest_path: Path) -> Set[str]:
+def load_manifest_ok_file_ids(manifest_path: Path) -> set[str]:
     """Đọc manifest.csv và trả về tập hợp các file_id có status='ok'."""
     ok_file_ids = set()
     if not manifest_path.exists():
         return ok_file_ids
 
-    with open(manifest_path, mode="r", encoding="utf-8-sig") as f:
+    with open(manifest_path, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             if row.get("status", "").strip() == "ok":
@@ -48,7 +47,7 @@ def load_drug_list(
     csv_path: Path,
     manifest_path: Path | None = None,
     only_with_hdsd: bool = True,
-) -> List[RawDrug]:
+) -> list[RawDrug]:
     """Đọc danh mục thuốc bệnh viện (~1074 dòng).
 
     Nếu `only_with_hdsd=True`, sẽ lọc giữ lại các thuốc có file HDSD đã OCR thành công (status='ok' trong manifest.csv).
@@ -60,9 +59,9 @@ def load_drug_list(
     if manifest_path and manifest_path.exists():
         ok_file_ids = load_manifest_ok_file_ids(manifest_path)
 
-    drugs: List[RawDrug] = []
+    drugs: list[RawDrug] = []
 
-    with open(csv_path, mode="r", encoding="utf-8-sig") as f:
+    with open(csv_path, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for idx, row in enumerate(reader, start=1):
             brand_name = row.get("Biet duoc", "").strip()
@@ -75,8 +74,12 @@ def load_drug_list(
             link2 = row.get("Link 2", "").strip()
 
             # Trích file_id từ Google Drive Links
-            drive_id_1 = re.search(r"/d/([a-zA-Z0-9_-]+)", link1).group(1) if re.search(r"/d/([a-zA-Z0-9_-]+)", link1) else ""
-            drive_id_2 = re.search(r"/d/([a-zA-Z0-9_-]+)", link2).group(1) if re.search(r"/d/([a-zA-Z0-9_-]+)", link2) else ""
+            drive_id_1 = (
+                re.search(r"/d/([a-zA-Z0-9_-]+)", link1).group(1) if re.search(r"/d/([a-zA-Z0-9_-]+)", link1) else ""
+            )
+            drive_id_2 = (
+                re.search(r"/d/([a-zA-Z0-9_-]+)", link2).group(1) if re.search(r"/d/([a-zA-Z0-9_-]+)", link2) else ""
+            )
 
             # Kiểm tra xem có file_id nào nằm trong tập status='ok' của manifest không
             has_ok_link = False

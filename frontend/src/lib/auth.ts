@@ -6,10 +6,15 @@
  *   admin/dược sĩ hỏng im lặng.
  */
 
+import axios from "axios";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { ROUTES } from "@/constants/routes";
 import { loginRequest } from "@/services/auth";
+import { loginWithGoogleRequest } from "@/services/auth";
+
+// import { loginRequest } from "@/services/auth";
+// import { transformApiResponse } from "@/queries/utils";
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
@@ -37,6 +42,41 @@ export const authOptions: NextAuthOptions = {
           accessToken,
           refreshToken,
         };
+      },
+    }),
+
+    // Đăng nhập Google OpenID Connect — xem ADR 0016.
+    // `GoogleSignInButton` lấy idToken từ Google Identity Services phía client, rồi gọi
+    // `signIn("google", { idToken })`; authorize() ở đây là nơi DUY NHẤT gọi backend,
+    // giữ đúng kiến trúc "UI → signIn → authorize → service" như luồng credentials ở trên.
+    CredentialsProvider({
+      id: "google",
+      name: "google",
+      credentials: {
+        idToken: { label: "Google ID Token", type: "text" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.idToken) return null;
+
+        try {
+          const res = await loginWithGoogleRequest({ idToken: credentials.idToken });
+          return {
+            id: res.user.id,
+            email: res.user.email,
+            name: res.user.name,
+            roles: res.user.roles,
+            accessToken: res.accessToken,
+            refreshToken: res.refreshToken,
+          };
+        } catch (error) {
+          // Ném lại message gốc (vd. "Google ID token không hợp lệ") để UI hiển thị đúng
+          // lý do thay vì thông báo NextAuth mặc định "CredentialsSignin".
+          const message =
+            axios.isAxiosError(error) && error.response?.data?.message
+              ? String(error.response.data.message)
+              : "Đăng nhập bằng Google thất bại.";
+          throw new Error(message);
+        }
       },
     }),
   ],

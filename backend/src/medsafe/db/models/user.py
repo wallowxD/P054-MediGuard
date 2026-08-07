@@ -42,7 +42,9 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(120), nullable=False)
 
     # Argon2id encoded hash. Không bao giờ log, không bao giờ đưa vào response schema.
-    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    # Nullable từ migration 0003: user chỉ đăng nhập Google (ADR 0016) không có mật khẩu
+    # nội bộ — identity của họ nằm trong bảng `oauth_identities`.
+    password_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
     role: Mapped[str] = mapped_column(String(32), nullable=False, default=ROLE_PATIENT)
 

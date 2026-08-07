@@ -9,6 +9,7 @@ import Button from "@/components/ui/Button";
 import { ROUTES } from "@/constants/routes";
 import { useRegister } from "@/queries/auth";
 import GoogleMark from "./GoogleMark";
+import GoogleSignInButton from "./GoogleSignInButton";
 
 type SignUpFormValues = {
   name: string;
@@ -41,10 +42,6 @@ export default function SignUpForm() {
     } catch (error: unknown) {
       toast.error(error instanceof Error ? error.message : "Không thể đăng ký. Vui lòng thử lại.");
     }
-  };
-
-  const handleGoogleSignUp = () => {
-    toast.info("Đăng ký bằng Google sẽ hoạt động khi API xác thực được kết nối.");
   };
 
   return (
@@ -169,10 +166,7 @@ export default function SignUpForm() {
         <span className="h-px flex-1 bg-border" />
       </div>
 
-      <Button type="button" variant="outline" className="w-full" onClick={handleGoogleSignUp}>
-        <GoogleMark />
-        Đăng ký bằng Google
-      </Button>
+      <GoogleSignInButton label="Đăng ký bằng Google" />
 
       <Button href={ROUTES.SIGNIN} variant="ghost" className="w-full text-center">
         Đã có tài khoản? Đăng nhập

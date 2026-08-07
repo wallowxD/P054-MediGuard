@@ -15,10 +15,12 @@ from medsafe.db.models.interaction import (
     DrugDrugInteraction,
     DrugFoodInteraction,
 )
+from medsafe.db.models.oauth_identity import PROVIDER_GOOGLE, OAuthIdentity
 from medsafe.db.models.user import ALLOWED_ROLES, ROLE_PATIENT, ROLE_PHARMACIST, User
 
 __all__ = [
     "ALLOWED_ROLES",
+    "PROVIDER_GOOGLE",
     "REVIEW_STATUS_APPROVED",
     "REVIEW_STATUS_PENDING",
     "REVIEW_STATUS_REJECTED",
@@ -30,5 +32,6 @@ __all__ = [
     "DrugDrugInteraction",
     "DrugFoodInteraction",
     "EvidenceChunk",
+    "OAuthIdentity",
     "User",
 ]

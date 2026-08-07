@@ -6,9 +6,8 @@ RÀNG BUỘC QUAN TRỌNG: chunk là thứ sẽ được hiển thị lại cho 
 - Mỗi chunk phải giữ được đường về nguồn: file PDF/URL nào, mục nào, vị trí char.
 """
 
-from dataclasses import dataclass
 import re
-from typing import List, Tuple
+from dataclasses import dataclass
 
 DEFAULT_SECTION_HEADERS = [
     "THÀNH PHẦN",
@@ -49,8 +48,8 @@ class Chunk:
 
 def split_by_sections(
     text: str,
-    section_headers: List[str] | None = None,
-) -> List[Tuple[str, str]]:
+    section_headers: list[str] | None = None,
+) -> list[tuple[str, str]]:
     """Tách văn bản theo các tiêu đề mục. Trả về [(tên_mục, nội_dung)]."""
     if not text:
         return []
@@ -71,7 +70,7 @@ def split_by_sections(
     if not matches:
         return [("THÔNG TIN CHUNG", text.strip())]
 
-    sections: List[Tuple[str, str]] = []
+    sections: list[tuple[str, str]] = []
 
     # Nội dung trước tiêu đề đầu tiên (nếu có)
     if matches[0].start() > 0:
@@ -102,14 +101,14 @@ def chunk_document(
     source_url: str = "",
     chunk_size: int = 800,
     chunk_overlap: int = 120,
-    section_headers: List[str] | None = None,
-) -> List[Chunk]:
+    section_headers: list[str] | None = None,
+) -> list[Chunk]:
     """Cắt một tờ HDSD thành các chunk có truy vết nguồn."""
     if not text:
         return []
 
     sections = split_by_sections(text, section_headers=section_headers)
-    chunks: List[Chunk] = []
+    chunks: list[Chunk] = []
 
     current_char_offset = 0
 
@@ -136,7 +135,7 @@ def chunk_document(
         else:
             # Cắt theo câu/đoạn văn để tránh cắt ngang giữa từ
             paragraphs = section_text.split("\n\n")
-            sub_chunk_lines: List[str] = []
+            sub_chunk_lines: list[str] = []
             sub_chunk_len = 0
             sub_start = sec_start
 

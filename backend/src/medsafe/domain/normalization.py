@@ -1,8 +1,8 @@
 """Chuẩn hoá tên thuốc → hoạt chất. Logic THUẦN, không import fastapi/sqlalchemy/openai."""
 
-from dataclasses import dataclass
 import re
 import unicodedata
+from dataclasses import dataclass
 
 try:
     from rapidfuzz import fuzz
@@ -10,7 +10,9 @@ except ImportError:
     # Fallback if rapidfuzz is not installed
     from difflib import SequenceMatcher
 
-    class fuzz:
+    # Tên viết thường là chủ ý: lớp này thay thế module `rapidfuzz.fuzz`, giữ nguyên
+    # call site `fuzz.ratio(...)` nên không đổi sang CapWords.
+    class fuzz:  # noqa: N801
         @staticmethod
         def ratio(s1: str, s2: str) -> float:
             return SequenceMatcher(None, s1, s2).ratio() * 100

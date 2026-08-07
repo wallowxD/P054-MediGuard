@@ -12,9 +12,12 @@ from medsafe.domain.auth import (
     ACCESS_TOKEN_TYPE,
     REFRESH_TOKEN_TYPE,
     AuthNotConfiguredError,
+    GoogleEmailNotVerifiedError,
+    InvalidGoogleTokenError,
     InvalidTokenError,
     PasswordPolicyError,
     decode_token,
+    extract_google_identity,
     hash_password,
     issue_token_pair,
     normalize_email,
@@ -192,3 +195,70 @@ def test_thieu_secret_thi_bao_loi_cau_hinh_chu_khong_ky_bang_chuoi_rong() -> Non
 
     with pytest.raises(AuthNotConfiguredError):
         decode_token("bat-ky", secret_key="", algorithm=ALGORITHM, expected_type=ACCESS_TOKEN_TYPE)
+
+
+# ── Claim Google OpenID Connect (ADR 0016) ──────────────────────────────────────
+#
+# Đây là claims ĐÃ được google-auth verify chữ ký/aud/exp — test ở đây không gọi Google,
+# chỉ kiểm logic thuần trên dict claim giả.
+
+
+def _google_claims(**overrides: object) -> dict[str, object]:
+    claims: dict[str, object] = {
+        "iss": "https://accounts.google.com",
+        "aud": "test-client-id.apps.googleusercontent.com",
+        "sub": "109876543210987654321",
+        "email": "quang@gmail.com",
+        "email_verified": True,
+        "name": "Lê Nguyễn Minh Quang",
+        "picture": "https://example.com/avatar.png",
+    }
+    claims.update(overrides)
+    return claims
+
+
+def test_claims_hop_le_tra_ve_identity() -> None:
+    identity = extract_google_identity(_google_claims())
+
+    assert identity.subject == "109876543210987654321"
+    assert identity.email == "quang@gmail.com"
+    assert identity.name == "Lê Nguyễn Minh Quang"
+
+
+def test_issuer_sai_bi_tu_choi() -> None:
+    with pytest.raises(InvalidGoogleTokenError):
+        extract_google_identity(_google_claims(iss="https://evil.example.com"))
+
+
+def test_thieu_sub_bi_tu_choi() -> None:
+    claims = _google_claims()
+    del claims["sub"]
+
+    with pytest.raises(InvalidGoogleTokenError):
+        extract_google_identity(claims)
+
+
+def test_email_chua_verified_bi_tu_choi() -> None:
+    """★ Không được dùng email chưa verified làm định danh liên hệ."""
+    with pytest.raises(GoogleEmailNotVerifiedError):
+        extract_google_identity(_google_claims(email_verified=False))
+
+
+def test_thieu_email_bi_tu_choi() -> None:
+    claims = _google_claims()
+    del claims["email"]
+
+    with pytest.raises(GoogleEmailNotVerifiedError):
+        extract_google_identity(claims)
+
+
+def test_thieu_name_va_picture_van_tra_ve_identity() -> None:
+    """Google không bắt buộc trả `name`/`picture` — không được coi đây là lỗi."""
+    claims = _google_claims()
+    del claims["name"]
+    del claims["picture"]
+
+    identity = extract_google_identity(claims)
+
+    assert identity.name is None
+    assert identity.picture is None
