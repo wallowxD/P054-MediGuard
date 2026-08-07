@@ -29,19 +29,41 @@ import {
   ROUTES,
 } from "@/constants/routes";
 
+const dashboardForRoles = (roles: string[] | undefined): string | null => {
+  if (roles?.includes(ROLES.PHARMACIST)) return ROUTES.REVIEW;
+  if (roles?.includes(ROLES.PATIENT)) return ROUTES.DASHBOARD;
+  return null;
+};
+
+const isPathWithin = (pathname: string, prefix: string): boolean =>
+  pathname === prefix || pathname.startsWith(`${prefix}/`);
+
 export default withAuth(
   function middleware(req) {
     const { pathname } = req.nextUrl;
     const token = req.nextauth.token;
+    const roles = token?.user?.roles;
+    const dashboardRoute = dashboardForRoles(roles);
+    const isPharmacist = roles?.includes(ROLES.PHARMACIST) ?? false;
 
-    // "/" là landing page cho khách. Đã đăng nhập thì không có lý do xem lại
-    // trang giới thiệu → đưa thẳng vào dashboard.
-    if (pathname === ROUTES.HOME && token) {
-      return NextResponse.redirect(new URL(ROUTES.DASHBOARD, req.url));
+    // User đã đăng nhập luôn vào dashboard đúng role.
+    if (pathname === ROUTES.HOME && dashboardRoute) {
+      return NextResponse.redirect(new URL(dashboardRoute, req.url));
     }
 
-    // Đã đăng nhập mà vào signin/signup → về dashboard
-    if (AUTH_ROUTES.includes(pathname) && token) {
+    // Đã đăng nhập thì không hiển thị lại signin/signup.
+    if (AUTH_ROUTES.includes(pathname) && dashboardRoute) {
+      return NextResponse.redirect(new URL(dashboardRoute, req.url));
+    }
+
+    // Pharmacist/bác sĩ dùng dashboard chuyên môn, không rơi vào dashboard bệnh nhân.
+    if (isPathWithin(pathname, ROUTES.DASHBOARD) && isPharmacist) {
+      return NextResponse.redirect(new URL(ROUTES.REVIEW, req.url));
+    }
+
+    // Patient truy cập URL /review trực tiếp sẽ được đưa về dashboard của mình
+    // trước khi trang chuyên môn được render.
+    if (isPathWithin(pathname, REVIEW_PREFIX) && dashboardRoute && !isPharmacist) {
       return NextResponse.redirect(new URL(ROUTES.DASHBOARD, req.url));
     }
 
@@ -57,12 +79,9 @@ export default withAuth(
         }
         if (!token) return false;
 
-        // Khu vực dược sĩ — chặn ngay ở edge
-        if (pathname.startsWith(REVIEW_PREFIX)) {
-          return Boolean(token.user?.roles?.includes(ROLES.PHARMACIST));
-        }
-
-        return true;
+        // Chỉ token mang role hợp lệ mới được vào khu protected. Việc đưa user
+        // về đúng dashboard và chặn /review theo role nằm ở middleware phía trên.
+        return dashboardForRoles(token.user?.roles) !== null;
       },
     },
     pages: { signIn: ROUTES.SIGNIN, error: ROUTES.SIGNIN },

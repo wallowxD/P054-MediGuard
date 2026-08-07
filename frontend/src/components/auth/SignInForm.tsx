@@ -1,6 +1,8 @@
 "use client";
 
-import { Eye, EyeOff, LockKeyhole, UserRound } from "lucide-react";
+import { Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -9,7 +11,7 @@ import { ROUTES } from "@/constants/routes";
 import GoogleSignInButton from "./GoogleSignInButton";
 
 type SignInFormValues = {
-  username: string;
+  email: string;
   password: string;
 };
 
@@ -18,44 +20,71 @@ const INPUT_CLASSES =
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SignInFormValues>({ mode: "onBlur" });
 
-  const onSubmit = () => {
-    toast.info("Đăng nhập sẽ hoạt động khi API xác thực được kết nối.");
+  const onSubmit = async (values: SignInFormValues) => {
+    try {
+      const result = await signIn("credentials", {
+        email: values.email.trim(),
+        password: values.password,
+        redirect: false,
+      });
+
+      if (!result?.ok) {
+        toast.error(
+          result?.error === "CredentialsSignin"
+            ? "Email hoặc mật khẩu không đúng."
+            : result?.error || "Không thể đăng nhập. Vui lòng thử lại."
+        );
+        return;
+      }
+
+      toast.success("Đăng nhập thành công.");
+      router.replace(ROUTES.DASHBOARD);
+      router.refresh();
+    } catch (error: unknown) {
+      toast.error(
+        error instanceof Error ? error.message : "Không thể đăng nhập. Vui lòng thử lại."
+      );
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
       <div>
-        <label htmlFor="username" className="text-sm font-medium text-foreground">
-          Tên đăng nhập
+        <label htmlFor="email" className="text-sm font-medium text-foreground">
+          Email
         </label>
         <div className="relative mt-2">
-          <UserRound
+          <Mail
             className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground-muted"
             aria-hidden
           />
           <input
-            id="username"
-            type="text"
-            autoComplete="username"
-            placeholder="Nhập tên đăng nhập"
-            aria-invalid={Boolean(errors.username)}
-            aria-describedby={errors.username ? "username-error" : undefined}
-            {...register("username", {
-              required: "Vui lòng nhập tên đăng nhập",
-              minLength: { value: 3, message: "Tên đăng nhập cần ít nhất 3 ký tự" },
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder="Nhập email"
+            aria-invalid={Boolean(errors.email)}
+            aria-describedby={errors.email ? "email-error" : undefined}
+            {...register("email", {
+              required: "Vui lòng nhập email",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Email không đúng định dạng",
+              },
             })}
             className={INPUT_CLASSES}
           />
         </div>
-        {errors.username ? (
-          <p id="username-error" className="mt-1.5 text-xs text-error">
-            {errors.username.message}
+        {errors.email ? (
+          <p id="email-error" className="mt-1.5 text-xs text-error">
+            {errors.email.message}
           </p>
         ) : null}
       </div>
@@ -103,8 +132,8 @@ export default function SignInForm() {
         ) : null}
       </div>
 
-      <Button type="submit" className="w-full">
-        Đăng nhập
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
       </Button>
 
       <div className="flex items-center gap-3" aria-hidden>

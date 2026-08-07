@@ -1,16 +1,19 @@
 "use client";
 
-import { Eye, EyeOff, LockKeyhole, UserRound, UserRoundPen } from "lucide-react";
+import { Eye, EyeOff, LockKeyhole, Mail, UserRoundPen } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Button from "@/components/ui/Button";
 import { ROUTES } from "@/constants/routes";
+import { useRegister } from "@/queries/auth";
+import GoogleMark from "./GoogleMark";
 import GoogleSignInButton from "./GoogleSignInButton";
 
 type SignUpFormValues = {
-  fullName: string;
-  username: string;
+  name: string;
+  email: string;
   password: string;
 };
 
@@ -19,20 +22,32 @@ const INPUT_CLASSES =
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const registerAccount = useRegister();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpFormValues>({ mode: "onBlur" });
 
-  const onSubmit = () => {
-    toast.info("Đăng ký sẽ hoạt động khi API xác thực được kết nối.");
+  const onSubmit = async (values: SignUpFormValues) => {
+    try {
+      await registerAccount.mutateAsync({
+        email: values.email.trim(),
+        password: values.password,
+        name: values.name.trim(),
+      });
+      toast.success("Đăng ký thành công. Vui lòng đăng nhập.");
+      router.push(ROUTES.SIGNIN);
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Không thể đăng ký. Vui lòng thử lại.");
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
       <div>
-        <label htmlFor="fullName" className="text-sm font-medium text-foreground">
+        <label htmlFor="name" className="text-sm font-medium text-foreground">
           Họ và tên
         </label>
         <div className="relative mt-2">
@@ -41,49 +56,55 @@ export default function SignUpForm() {
             aria-hidden
           />
           <input
-            id="fullName"
+            id="name"
             type="text"
             autoComplete="name"
             placeholder="Nhập họ và tên"
-            aria-invalid={Boolean(errors.fullName)}
-            aria-describedby={errors.fullName ? "full-name-error" : undefined}
-            {...register("fullName", { required: "Vui lòng nhập họ và tên" })}
+            aria-invalid={Boolean(errors.name)}
+            aria-describedby={errors.name ? "name-error" : undefined}
+            {...register("name", {
+              required: "Vui lòng nhập họ và tên",
+              maxLength: { value: 120, message: "Họ và tên không được quá 120 ký tự" },
+            })}
             className={INPUT_CLASSES}
           />
         </div>
-        {errors.fullName ? (
-          <p id="full-name-error" className="mt-1.5 text-xs text-error">
-            {errors.fullName.message}
+        {errors.name ? (
+          <p id="name-error" className="mt-1.5 text-xs text-error">
+            {errors.name.message}
           </p>
         ) : null}
       </div>
 
       <div>
-        <label htmlFor="username" className="text-sm font-medium text-foreground">
-          Tên đăng nhập
+        <label htmlFor="email" className="text-sm font-medium text-foreground">
+          Email
         </label>
         <div className="relative mt-2">
-          <UserRound
+          <Mail
             className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground-muted"
             aria-hidden
           />
           <input
-            id="username"
-            type="text"
-            autoComplete="username"
-            placeholder="Chọn tên đăng nhập"
-            aria-invalid={Boolean(errors.username)}
-            aria-describedby={errors.username ? "username-error" : undefined}
-            {...register("username", {
-              required: "Vui lòng nhập tên đăng nhập",
-              minLength: { value: 3, message: "Tên đăng nhập cần ít nhất 3 ký tự" },
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder="Nhập email"
+            aria-invalid={Boolean(errors.email)}
+            aria-describedby={errors.email ? "email-error" : undefined}
+            {...register("email", {
+              required: "Vui lòng nhập email",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Email không đúng định dạng",
+              },
             })}
             className={INPUT_CLASSES}
           />
         </div>
-        {errors.username ? (
-          <p id="username-error" className="mt-1.5 text-xs text-error">
-            {errors.username.message}
+        {errors.email ? (
+          <p id="email-error" className="mt-1.5 text-xs text-error">
+            {errors.email.message}
           </p>
         ) : null}
       </div>
@@ -107,6 +128,10 @@ export default function SignUpForm() {
             {...register("password", {
               required: "Vui lòng nhập mật khẩu",
               minLength: { value: 8, message: "Mật khẩu cần ít nhất 8 ký tự" },
+              validate: {
+                hasLetter: (value) => /[A-Za-z]/.test(value) || "Mật khẩu phải có ít nhất một chữ cái",
+                hasNumber: (value) => /\d/.test(value) || "Mật khẩu phải có ít nhất một chữ số",
+              },
             })}
             className={`${INPUT_CLASSES} pr-12`}
           />
@@ -131,8 +156,8 @@ export default function SignUpForm() {
         ) : null}
       </div>
 
-      <Button type="submit" className="w-full">
-        Đăng ký
+      <Button type="submit" className="w-full" disabled={registerAccount.isPending}>
+        {registerAccount.isPending ? "Đang đăng ký..." : "Đăng ký"}
       </Button>
 
       <div className="flex items-center gap-3" aria-hidden>
