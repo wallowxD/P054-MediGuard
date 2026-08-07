@@ -76,6 +76,8 @@ class Settings(BaseSettings):
     gcp_project: str = ""
     gcp_location: str = "us-central1"
     gemini_model: str = "gemini-3.6-flash"
+
+
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai"
 
     qwen_api_key: str = ""

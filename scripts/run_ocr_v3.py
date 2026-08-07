@@ -117,12 +117,14 @@ def process_single_drug_folder(
         logger.warning(f"All {total_images} pages in {folder_name} were filtered out (packaging/label images).")
         return (folder_name, True, f"All pages filtered (packaging/label)", 0, total_images)
 
-    # Combine valid page Markdowns with double newlines
-    combined_markdown = "\n\n".join(valid_page_markdowns) + "\n"
+    # Combine valid page Markdowns with double newlines & add model metadata comment at top
+    metadata_header = f"<!-- metadata: model={getattr(client, 'model', 'gemini-3.6-flash')}, provider=vertexai -->\n\n"
+    combined_markdown = metadata_header + "\n\n".join(valid_page_markdowns) + "\n"
 
     # Write output Markdown file
     output_file.write_text(combined_markdown, encoding="utf-8")
     return (folder_name, True, str(output_file), len(valid_page_markdowns), total_images)
+
 
 
 def main():
@@ -173,9 +175,10 @@ def main():
     parser.add_argument(
         "--workers",
         type=int,
-        default=5,
-        help="Number of concurrent worker threads for folder-level processing (default: 5).",
+        default=1,
+        help="Number of concurrent worker threads for folder-level processing (default: 1).",
     )
+
     parser.add_argument(
         "--limit",
         type=int,
@@ -233,8 +236,16 @@ def main():
 
     # Check Authentication (API Key or Vertex ADC)
     settings = get_settings()
-    api_key = args.api_key or os.getenv("VERTEX_API_KEY") or os.getenv("GEMINI_API_KEY") or settings.gemini_api_key or settings.google_api_key
-    use_vertex = args.use_vertex or os.getenv("USE_VERTEX_AI", "").lower() in ("true", "1", "yes")
+    api_key = (
+        args.api_key
+        or getattr(settings, "vertex_api_key", "")
+        or getattr(settings, "gemini_api_key", "")
+        or settings.google_api_key
+        or os.getenv("VERTEX_API_KEY")
+        or os.getenv("GEMINI_API_KEY")
+    )
+    use_vertex = args.use_vertex or getattr(settings, "use_vertex_ai", False) or os.getenv("USE_VERTEX_AI", "").lower() in ("true", "1", "yes")
+
 
     if not api_key and not use_vertex:
         logger.warning("No API key provided and Vertex AI mode is not active.")

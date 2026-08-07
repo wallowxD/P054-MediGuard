@@ -72,15 +72,14 @@ def main():
     if not args.pdf and not args.dir:
         parser.error("Please provide either --pdf or --dir argument.")
 
-    client = None
-    if args.provider == "gemini":
-        from medsafe.ocr.gemini_client import GeminiVLClient
+    # Luồng Qwen đã được tắt theo yêu cầu. Chỉ dùng Gemini / Vertex AI.
+    from medsafe.ocr.gemini_client import GeminiVLClient
+    client = GeminiVLClient(model=args.model)
 
-        client = GeminiVLClient(model=args.model)
-    elif args.provider == "qwen":
-        from medsafe.ocr.qwen_client import QwenVLClient
+    # elif args.provider == "qwen":
+    #     from medsafe.ocr.qwen_client import QwenVLClient
+    #     client = QwenVLClient(model=args.model)
 
-        client = QwenVLClient(model=args.model)
 
     pipeline = OCRPipeline(
         output_dir=args.output_dir,
@@ -88,7 +87,8 @@ def main():
         client=client,
         provider=args.provider,
     )
-    skip_existing = not args.force
+    skip_existing = not getattr(args, "no_skip", False) and not getattr(args, "force", False)
+
 
     if args.pdf:
         pdf_path = Path(args.pdf)

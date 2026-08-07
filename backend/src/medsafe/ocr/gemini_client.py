@@ -7,20 +7,41 @@ Hỗ trợ cả hai chế độ Vertex AI và Google AI Studio.
 import base64
 import logging
 import os
+import random
 import re
 import time
 from pathlib import Path
 from typing import Optional, Union
 
-import requests
-
 from medsafe.config import get_settings
 from medsafe.prompts.ocr_prompts import GEMINI_MEDICAL_OCR_SYSTEM_PROMPT, QWEN_OCR_SYSTEM_PROMPT
+
+try:
+    from google import genai
+    from google.genai import types
+except ImportError:
+    genai = None
+    types = None
 
 logger = logging.getLogger(__name__)
 
 
+def calculate_backoff_with_jitter(attempt: int) -> float:
+    """Calculate exponential backoff wait time with uniform random jitter.
+
+    Attempt 1: 1–2s  (2^0 to 2^1)
+    Attempt 2: 2–4s  (2^1 to 2^2)
+    Attempt 3: 4–8s  (2^2 to 2^3)
+    Attempt 4: 8–16s (2^3 to 2^4)
+    """
+    min_sec = float(2 ** (attempt - 1))
+    max_sec = float(2 ** attempt)
+    return random.uniform(min_sec, max_sec)
+
+
 class GeminiVLClient:
+
+
     """Client gọi Google Gemini Vision API cho OCR."""
 
     def __init__(
@@ -73,11 +94,16 @@ class GeminiVLClient:
                     if self.location:
                         kwargs["location"] = self.location
 
+                kwargs["http_options"] = types.HttpOptions(timeout=120000)
                 self._genai_client = genai.Client(**kwargs)
                 logger.info(f"Initialized Gemini Client via Vertex AI (model={self.model})")
+
+
             elif self.api_key:
-                self._genai_client = genai.Client(api_key=self.api_key)
+                self._genai_client = genai.Client(api_key=self.api_key, http_options=types.HttpOptions(timeout=120000))
                 logger.info(f"Initialized Gemini Client via AI Studio (model={self.model})")
+
+
         except Exception as e:
             logger.warning(f"Could not initialize google.genai Client: {e}. Will fall back to HTTP endpoint.")
             self._genai_client = None
@@ -147,7 +173,9 @@ class GeminiVLClient:
                     config=types.GenerateContentConfig(
                         system_instruction=prompt_text,
                         temperature=0.0,
+                        max_output_tokens=8192,
                     ),
+
                 )
 
                 content = response.text or ""
@@ -158,14 +186,18 @@ class GeminiVLClient:
                 err_str = str(e)
                 logger.warning(f"SDK request exception on attempt {attempt} for {image_path.name}: {err_str}")
                 last_error = err_str
-                if "api key not valid" in err_str.lower() or "invalid_argument" in err_str.lower() or "unauthorized" in err_str.lower() or "permission_denied" in err_str.lower():
+
+                if "invalid_argument" in err_str.lower() or "unauthorized" in err_str.lower():
                     raise ValueError(f"Gemini API Authentication Failed: {err_str}") from e
 
-                if "429" in err_str or "500" in err_str or "503" in err_str or "quota" in err_str.lower():
-                    time.sleep(2**attempt + 1)
-                    continue
-                else:
-                    break
+                wait_time = calculate_backoff_with_jitter(attempt)
+                logger.warning(
+                    f"SDK request exception on attempt {attempt}/{self.max_retries} for {image_path.name}: {err_str}. "
+                    f"Retrying in {wait_time:.2f}s (exponential backoff + jitter)..."
+                )
+                time.sleep(wait_time)
+                continue
+
 
         raise RuntimeError(
             f"Failed Gemini SDK OCR request for {image_path.name} after {attempt} attempts. Error: {last_error}"
@@ -174,12 +206,67 @@ class GeminiVLClient:
     def process_page_image(
         self, image_b64_uri: str, system_prompt: Optional[str] = None
     ) -> str:
+        prompt_text = system_prompt or GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
+
+        # Nếu có _genai_client (SDK Vertex AI / AI Studio), ưu tiên sử dụng SDK
+        if self._genai_client is not None:
+            from google.genai import types
+
+            if "," in image_b64_uri:
+                header, b64_data = image_b64_uri.split(",", 1)
+                mime_type = header.split(";")[0].replace("data:", "") if "data:" in header else "image/jpeg"
+            else:
+                b64_data = image_b64_uri
+                mime_type = "image/jpeg"
+
+            img_bytes = base64.b64decode(b64_data)
+            image_part = types.Part.from_bytes(data=img_bytes, mime_type=mime_type)
+
+            attempt = 0
+            last_error = None
+            while attempt < self.max_retries:
+                attempt += 1
+                try:
+                    logger.info(f"Sending page OCR request to Gemini via SDK ({self.model}, attempt {attempt}/{self.max_retries})")
+                    response = self._genai_client.models.generate_content(
+                        model=self.model,
+                        contents=[
+                            image_part,
+                            "Hãy chuyển đổi trang ảnh này thành định dạng Markdown (.md) sạch và chuẩn xác theo đúng quy tắc."
+                        ],
+                        config=types.GenerateContentConfig(
+                            system_instruction=prompt_text,
+                            temperature=0.0,
+                            max_output_tokens=8192,
+                        ),
+
+                    )
+                    content = response.text or ""
+                    return self._clean_markdown_fences(content)
+                except Exception as e:
+                    err_str = str(e)
+                    last_error = err_str
+                    if "invalid_argument" in err_str.lower() or "unauthorized" in err_str.lower():
+                        raise ValueError(f"Gemini API Authentication Failed: {err_str}") from e
+
+                    wait_time = calculate_backoff_with_jitter(attempt)
+                    logger.warning(
+                        f"SDK page OCR exception on attempt {attempt}/{self.max_retries}: {err_str}. "
+                        f"Retrying in {wait_time:.2f}s (exponential backoff + jitter)..."
+                    )
+                    time.sleep(wait_time)
+                    continue
+
+
+            raise RuntimeError(f"Failed Gemini SDK page OCR request after {attempt} attempts: {last_error}")
+
         if not self.api_key:
             raise ValueError(
                 "GEMINI_API_KEY, GOOGLE_API_KEY or VERTEX_API_KEY is not set. Please provide API Key or set environment variables."
             )
 
         endpoint = f"{self.base_url}/chat/completions"
+
         prompt_text = system_prompt or GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
 
         headers = {
@@ -248,15 +335,24 @@ class GeminiVLClient:
                 last_error = f"HTTP {response.status_code}: {response.text}"
 
                 if response.status_code in (429, 500, 502, 503, 504):
-                    time.sleep(2**attempt + 1)
+                    wait_time = calculate_backoff_with_jitter(attempt)
+                    logger.warning(
+                        f"Gemini API returned status {response.status_code} on attempt {attempt}/{self.max_retries}. "
+                        f"Retrying in {wait_time:.2f}s (exponential backoff + jitter)..."
+                    )
+                    time.sleep(wait_time)
                     continue
                 else:
                     break
 
             except requests.RequestException as e:
-                logger.warning(f"Gemini API request exception on attempt {attempt}: {e}")
+                wait_time = calculate_backoff_with_jitter(attempt)
+                logger.warning(
+                    f"Gemini API request exception on attempt {attempt}/{self.max_retries}: {e}. "
+                    f"Retrying in {wait_time:.2f}s (exponential backoff + jitter)..."
+                )
                 last_error = str(e)
-                time.sleep(2**attempt + 1)
+                time.sleep(wait_time)
 
         raise RuntimeError(
             f"Failed to complete Gemini OCR request after {attempt} attempts. Last error: {last_error}"
