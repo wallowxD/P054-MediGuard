@@ -2,10 +2,11 @@ import json
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
 import requests
-from src.config import get_settings
+from medsafe.config import get_settings
+
 
 def run_diff_proofread():
     settings = get_settings()

@@ -20,6 +20,8 @@ dependencies = [
     "google-genai>=1.0.0",
     "openai>=1.60.0",
     "pypdf>=5.1.0",
+    "pymupdf>=1.25.0",
+    "pillow>=10.0.0",
     "rapidfuzz>=3.10.0",      # khớp mờ tên thuốc tiếng Việt
     "unidecode>=1.3.8",       # bỏ dấu để đối chiếu CSV (không dấu) với JSON (có dấu)
     # Data

@@ -10,10 +10,11 @@ import logging
 import sys
 from pathlib import Path
 
-# Add project root to sys.path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+# Add backend/src to sys.path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
-from src.services.dataset_service import update_dataset_link_notes
+from medsafe.services.dataset_service import update_dataset_link_notes
+
 
 logging.basicConfig(
     level=logging.INFO,

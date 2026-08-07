@@ -14,6 +14,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from medsafe.config import Settings, get_auth_config, get_settings
 from medsafe.db.models.user import User
+from medsafe.db.repositories.drug_repository import DrugRepository, SqlDrugRepository
 from medsafe.db.repositories.oauth_identity_repository import OAuthIdentityRepository, SqlOAuthIdentityRepository
 from medsafe.db.repositories.user_repository import SqlUserRepository, UserRepository
 from medsafe.db.session import get_session
@@ -40,6 +41,13 @@ def get_oauth_identity_repository(session: SessionDep) -> OAuthIdentityRepositor
 
 
 OAuthIdentityRepositoryDep = Annotated[OAuthIdentityRepository, Depends(get_oauth_identity_repository)]
+
+
+def get_drug_repository(session: SessionDep) -> DrugRepository:
+    return SqlDrugRepository(session)
+
+
+DrugRepositoryDep = Annotated[DrugRepository, Depends(get_drug_repository)]
 
 
 async def get_current_user(

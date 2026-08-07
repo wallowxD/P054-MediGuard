@@ -1,53 +1,36 @@
-"""Line-Diff Proofreader Service using Gemini.
+"""Line-Diff Proofreader Service dùng Gemini.
 
-Sends numbered text lines to Gemini API and receives ONLY JSON corrections for lines with typos,
-then applies line-level replacements in Python. Saves 95%+ of output tokens.
+Gửi các dòng văn bản có đánh số tới Gemini API và chỉ nhận về JSON các dòng có lỗi chính tả/OCR,
+sau đó thay thế theo dòng bằng Python. Tiết kiệm 95%+ output tokens.
 """
 
 import json
 import logging
-from typing import List, Optional
+import time
 
 import requests
 
-from src.config import get_settings
+from medsafe.config import get_settings
 
 logger = logging.getLogger(__name__)
 
 
 class LineDiffProofreader:
-    """Proofreads Markdown text line-by-line using Gemini JSON diff output."""
+    """Hiệu đính Markdown theo dòng dùng Gemini JSON diff output."""
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        model: Optional[str] = None,
-        base_url: Optional[str] = None,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
     ):
-        """Initialize LineDiffProofreader.
-
-        Args:
-            api_key: Gemini or Google API key. Defaults to settings.
-            model: Model name. Defaults to settings.gemini_model.
-            base_url: OpenAI-compatible or Native base URL.
-        """
         settings = get_settings()
         self.api_key = (
-            api_key
-            if api_key is not None
-            else (settings.gemini_api_key or settings.google_api_key)
+            api_key if api_key is not None else (getattr(settings, "gemini_api_key", "") or settings.google_api_key)
         )
-        self.model = model or "gemini-3.6-flash"
+        self.model = model or getattr(settings, "gemini_model", "gemini-3.6-flash")
 
     def proofread_markdown(self, markdown_text: str) -> str:
-        """Proofread Markdown text and replace only lines containing typos.
-
-        Args:
-            markdown_text: Raw Markdown text to proofread.
-
-        Returns:
-            Perfected Markdown text with corrected lines replaced.
-        """
         if not self.api_key:
             logger.warning("No Gemini API key provided for proofreading. Skipping proofread step.")
             return markdown_text
@@ -56,11 +39,7 @@ class LineDiffProofreader:
         if not lines:
             return markdown_text
 
-        numbered_lines = [
-            f"{i+1}: {line}"
-            for i, line in enumerate(lines)
-            if line.strip()
-        ]
+        numbered_lines = [f"{i + 1}: {line}" for i, line in enumerate(lines) if line.strip()]
         if not numbered_lines:
             return markdown_text
 
@@ -98,20 +77,20 @@ DANH SÁCH CÁC DÒNG VĂN BẢN (dạng `số_dòng: nội_dung`):
             "generationConfig": {"responseMimeType": "application/json"},
         }
 
-        import time
-
         max_retries = 5
         retry_delay = 10
 
         for attempt in range(1, max_retries + 1):
             try:
-                logger.info(f"Sending {len(numbered_lines)} lines to Gemini ({self.model}) for Line-Diff proofreading (attempt {attempt})...")
+                logger.info(
+                    f"Sending {len(numbered_lines)} lines to Gemini ({self.model}) for Line-Diff proofreading (attempt {attempt})..."
+                )
                 r = requests.post(url, json=payload, headers=headers, timeout=90)
 
                 if r.status_code == 200:
                     res = r.json()
                     json_str = res["candidates"][0]["content"]["parts"][0]["text"]
-                    corrections: List[dict] = json.loads(json_str)
+                    corrections: list[dict] = json.loads(json_str)
 
                     logger.info(f"Gemini identified {len(corrections)} line(s) needing correction.")
 
@@ -125,7 +104,9 @@ DANH SÁCH CÁC DÒNG VĂN BẢN (dạng `số_dòng: nội_dung`):
                     return "\n".join(updated_lines)
 
                 elif r.status_code == 429:
-                    logger.warning(f"Rate limit 429 hit. Retrying in {retry_delay}s... (attempt {attempt}/{max_retries})")
+                    logger.warning(
+                        f"Rate limit 429 hit. Retrying in {retry_delay}s... (attempt {attempt}/{max_retries})"
+                    )
                     time.sleep(retry_delay)
                     retry_delay *= 2
                 else:

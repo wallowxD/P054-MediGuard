@@ -114,3 +114,53 @@ class DrugFoodInteraction(Base):
 
     def __repr__(self) -> str:
         return f"<DrugFoodInteraction {self.canonical_ingredient}+{self.food_item!r}>"
+
+
+class DrugDiseaseInteraction(Base):
+    """Tương tác thuốc–bệnh nền / chống chỉ định bệnh lý.
+
+    Lưu thông tin tương tác hoặc chống chỉ định của hoạt chất đối với một tình trạng
+    bệnh lý/bệnh nền kèm trích dẫn nguyên văn.
+    """
+
+    __tablename__ = "drug_disease_interactions"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        postgresql.UUID(as_uuid=True), primary_key=True, server_default=func.gen_random_uuid()
+    )
+
+    drug_id: Mapped[uuid.UUID | None] = mapped_column(
+        postgresql.UUID(as_uuid=True), ForeignKey("drugs.id", ondelete="SET NULL")
+    )
+
+    canonical_ingredient: Mapped[str] = mapped_column(Text, nullable=False)
+    disease_name: Mapped[str] = mapped_column(Text, nullable=False)
+    disease_name_unaccent: Mapped[str] = mapped_column(Text, nullable=False)
+
+    severity: Mapped[str] = mapped_column(String(50), nullable=False)
+    effect_description: Mapped[str | None] = mapped_column(Text)
+    management: Mapped[str | None] = mapped_column(Text)
+
+    # Bắt buộc theo ADR 0006: không có trích dẫn nguyên văn thì không tạo bản ghi.
+    verbatim_quote: Mapped[str] = mapped_column(Text, nullable=False)
+
+    source_type: Mapped[str] = mapped_column(String(50), nullable=False)
+    source_leaflet_url: Mapped[str | None] = mapped_column(Text)
+
+    review_status: Mapped[str | None] = mapped_column(String(50), server_default=REVIEW_STATUS_PENDING)
+    reviewer_id: Mapped[uuid.UUID | None] = mapped_column(postgresql.UUID(as_uuid=True))
+    reviewed_at: Mapped[datetime | None] = mapped_column(postgresql.TIMESTAMP(timezone=True))
+
+    created_at: Mapped[datetime | None] = mapped_column(postgresql.TIMESTAMP(timezone=True), server_default=func.now())
+
+    __table_args__ = (
+        UniqueConstraint(
+            "canonical_ingredient", "disease_name_unaccent", "source_type", name="unique_disease_interaction_source"
+        ),
+        Index("idx_d2dis_ingredient", "canonical_ingredient"),
+        Index("idx_d2dis_disease_unaccent", "disease_name_unaccent"),
+        Index("idx_d2dis_review_status", "review_status"),
+    )
+
+    def __repr__(self) -> str:
+        return f"<DrugDiseaseInteraction {self.canonical_ingredient}+{self.disease_name!r} {self.severity}>"

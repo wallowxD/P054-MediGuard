@@ -14,11 +14,12 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-# Add project root to sys.path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+# Add backend/src to sys.path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
 from tqdm import tqdm
-from src.services.ocr.line_proofreader import LineDiffProofreader
+from medsafe.ocr.line_proofreader import LineDiffProofreader
+
 
 logging.basicConfig(
     level=logging.INFO,
