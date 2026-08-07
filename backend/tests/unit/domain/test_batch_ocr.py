@@ -6,9 +6,10 @@
 import json
 from pathlib import Path
 
-from medsafe.prompts.ocr_prompts import GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
 from scripts.download_batch_ocr import clean_markdown_fences, parse_batch_results_jsonl
 from scripts.run_gemini_batch_ocr import format_page_to_jsonl_item
+
+from medsafe.prompts.ocr_prompts import GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
 
 
 def test_clean_markdown_fences():

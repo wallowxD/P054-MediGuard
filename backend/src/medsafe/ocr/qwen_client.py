@@ -6,7 +6,6 @@ Gửi ảnh HDSD tới Qwen3-VL Flash model và nhận về Markdown.
 import logging
 import re
 import time
-from typing import Optional
 
 import requests
 
@@ -21,9 +20,9 @@ class QwenVLClient:
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        base_url: Optional[str] = None,
-        model: Optional[str] = None,
+        api_key: str | None = None,
+        base_url: str | None = None,
+        model: str | None = None,
         max_retries: int = 3,
         timeout_seconds: int = 120,
     ):
@@ -46,7 +45,7 @@ class QwenVLClient:
         return cleaned.strip()
 
     def process_page_image(
-        self, image_b64_uri: str, system_prompt: Optional[str] = None
+        self, image_b64_uri: str, system_prompt: str | None = None
     ) -> str:
         if not self.api_key:
             raise ValueError(

@@ -7,7 +7,6 @@ sau đó thay thế theo dòng bằng Python. Tiết kiệm 95%+ output tokens.
 import json
 import logging
 import time
-from typing import List, Optional
 
 import requests
 
@@ -21,9 +20,9 @@ class LineDiffProofreader:
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        model: Optional[str] = None,
-        base_url: Optional[str] = None,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
     ):
         settings = get_settings()
         self.api_key = (
@@ -95,7 +94,7 @@ DANH SÁCH CÁC DÒNG VĂN BẢN (dạng `số_dòng: nội_dung`):
                 if r.status_code == 200:
                     res = r.json()
                     json_str = res["candidates"][0]["content"]["parts"][0]["text"]
-                    corrections: List[dict] = json.loads(json_str)
+                    corrections: list[dict] = json.loads(json_str)
 
                     logger.info(f"Gemini identified {len(corrections)} line(s) needing correction.")
 

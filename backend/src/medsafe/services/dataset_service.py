@@ -4,7 +4,6 @@ import csv
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Dict, Tuple
 
 import requests
 from tqdm import tqdm
@@ -33,7 +32,7 @@ def check_url_active(url: str, timeout: float = 5.0) -> bool:
         return False
 
 
-def _evaluate_row_links(row: Dict[str, str], timeout: float = 5.0) -> Tuple[int, str]:
+def _evaluate_row_links(row: dict[str, str], timeout: float = 5.0) -> tuple[int, str]:
     link1 = row.get("Link HDSD 1", "").strip()
     link2 = row.get("Link 2", "").strip()
 
@@ -66,7 +65,7 @@ def update_dataset_link_notes(
 
     target_path = Path(output_path) if output_path else csv_path
 
-    with open(csv_path, mode="r", encoding="utf-8-sig") as f:
+    with open(csv_path, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         fieldnames = list(reader.fieldnames) if reader.fieldnames else []
         rows = list(reader)

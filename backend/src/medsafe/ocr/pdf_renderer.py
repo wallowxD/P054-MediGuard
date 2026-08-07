@@ -6,7 +6,6 @@ Chuyển đổi các trang PDF thành ảnh độ phân giải cao để đưa v
 import base64
 import logging
 from pathlib import Path
-from typing import List, Tuple
 
 try:
     import fitz  # PyMuPDF
@@ -75,7 +74,7 @@ class PDFRenderer:
 
     def render_all_pages_base64(
         self, pdf_path: str | Path, dpi: int | None = None
-    ) -> List[Tuple[int, str]]:
+    ) -> list[tuple[int, str]]:
         total_pages = self.get_page_count(pdf_path)
         results = []
         for i in range(total_pages):
@@ -90,7 +89,7 @@ class PDFRenderer:
         dpi: int | None = None,
         fmt: str = "png",
         skip_existing: bool = True,
-    ) -> List[Path]:
+    ) -> list[Path]:
         pdf_path = Path(pdf_path)
         if not pdf_path.exists():
             raise FileNotFoundError(f"PDF file not found: {pdf_path}")
@@ -100,7 +99,7 @@ class PDFRenderer:
 
         render_dpi = dpi or self.dpi
         doc = fitz.open(pdf_path)
-        saved_paths: List[Path] = []
+        saved_paths: list[Path] = []
         try:
             total_pages = len(doc)
             for page_index in range(total_pages):

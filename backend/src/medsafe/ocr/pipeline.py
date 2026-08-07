@@ -5,7 +5,6 @@ Quản lý luồng xử lý toàn trình từ file PDF thành Markdown sạch.
 
 import logging
 from pathlib import Path
-from typing import Optional
 
 from tqdm import tqdm
 
@@ -23,11 +22,11 @@ class OCRPipeline:
 
     def __init__(
         self,
-        renderer: Optional[PDFRenderer] = None,
-        client: Optional[QwenVLClient | GeminiVLClient] = None,
-        output_dir: Optional[str | Path] = None,
-        dpi: Optional[int] = None,
-        provider: Optional[str] = None,
+        renderer: PDFRenderer | None = None,
+        client: QwenVLClient | GeminiVLClient | None = None,
+        output_dir: str | Path | None = None,
+        dpi: int | None = None,
+        provider: str | None = None,
     ):
         settings = get_settings()
         self.dpi = dpi or getattr(settings, "ocr_dpi", 300)
@@ -49,7 +48,7 @@ class OCRPipeline:
     def process_pdf(
         self,
         pdf_path: str | Path,
-        output_filename: Optional[str] = None,
+        output_filename: str | None = None,
         skip_existing: bool = True,
         proofread: bool = False,
     ) -> DocumentOCRResult:
