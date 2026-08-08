@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trợ lý An toàn Thuốc — Demo giao diện</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@500;600;700&family=Roboto:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+</head>
+<body>
+  <div class="demo-banner">Bản demo giao diện — dữ liệu minh hoạ, chưa kết nối backend thật. Landing page phỏng theo giao diện thật của dự án.</div>
+
+  <div class="landing-theme">
+    <header class="lp-header">
+      <div class="lp-container">
+        <div class="lp-header-shell" id="lpHeaderShell">
+          <div class="lp-header-row">
+            <a class="lp-brand" href="index.html">
+              <svg class="lp-logo" viewBox="0 0 32 32" role="img" aria-label="Trợ lý An toàn Thuốc">
+                <rect x="1" y="1" width="30" height="30" rx="9" fill="currentColor" opacity="0.12" />
+                <rect x="1" y="1" width="30" height="30" rx="9" fill="none" stroke="currentColor" stroke-opacity="0.28" />
+                <path d="M13.6 7.4h4.8a1 1 0 0 1 1 1v4.2h4.2a1 1 0 0 1 1 1v4.8a1 1 0 0 1-1 1h-4.2v4.2a1 1 0 0 1-1 1h-4.8a1 1 0 0 1-1-1v-4.2H8.4a1 1 0 0 1-1-1v-4.8a1 1 0 0 1 1-1h4.2V8.4a1 1 0 0 1 1-1Z" fill="currentColor" />
+              </svg>
+              <span class="lp-brand-name">Trợ lý An toàn Thuốc</span>
+            </a>
+
+            <nav class="lp-nav" aria-label="Điều hướng chính">
+              <a href="index.html" class="is-active" aria-current="page">Trang chủ</a>
+              <a href="#features">Tính năng</a>
+              <a href="#how-it-works">Cách hoạt động</a>
+              <a href="#lien-he">Liên hệ</a>
+            </nav>
+
+            <div class="lp-header-actions">
+              <a class="lp-link" href="login.html">Đăng nhập</a>
+              <a class="lp-btn lp-btn-accent lp-btn-sm" href="login.html">Đăng ký</a>
+              <button type="button" class="lp-icon-btn" aria-label="Tìm kiếm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
+              </button>
+            </div>
+
+            <button type="button" class="lp-menu-toggle" id="lpMenuToggle" aria-label="Mở menu" aria-expanded="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+            </button>
+          </div>
+
+          <div class="lp-mobile-nav" id="lpMobileNav">
+            <a href="index.html" class="is-active" aria-current="page">Trang chủ</a>
+            <a href="#features">Tính năng</a>
+            <a href="#how-it-works">Cách hoạt động</a>
+            <a href="#lien-he">Liên hệ</a>
+            <a href="login.html">Đăng nhập</a>
+            <div class="lp-mobile-cta">
+              <a class="lp-btn lp-btn-accent lp-btn-sm" href="login.html">Đăng ký</a>
+              <a class="lp-btn lp-btn-outline lp-btn-sm" href="login.html">Tra cứu thuốc ngay</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="lp-hero">
+        <div class="lp-hero-gradient" aria-hidden="true"></div>
+        <div class="lp-hero-texture lp-hero-texture--tr" aria-hidden="true"></div>
+        <div class="lp-hero-texture lp-hero-texture--bl" aria-hidden="true"></div>
+
+        <div class="lp-container lp-hero-grid">
+          <div class="lp-hero-visual">
+            <img src="img/pill-render.png" alt="" aria-hidden="true" draggable="false" class="lp-pill-render" />
+          </div>
+
+          <div class="lp-hero-copy">
+            <h1>Tra cứu tương tác thuốc,<br />có trích dẫn và nguồn rõ ràng</h1>
+            <p>Kiểm tra tương tác thuốc - thuốc và thuốc - thực phẩm từ đơn thuốc hoặc danh sách tự nhập, với cảnh báo tham khảo được dược sĩ duyệt song song.</p>
+            <div class="lp-hero-cta">
+              <a class="lp-btn lp-btn-accent" href="login.html">
+                Tra cứu thuốc ngay
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><path d="m14 6 6 6-6 6"/></svg>
+              </a>
+              <a class="lp-btn lp-btn-outline" href="login.html">Đăng ký</a>
+            </div>
+            <p class="lp-hero-disclaimer">Chỉ mang tính tham khảo, không thay thế tư vấn của bác sĩ hoặc dược sĩ.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section lp-section-elevated" id="features">
+        <div class="lp-section-inner">
+          <div class="lp-section-heading">
+            <h2>Ba chức năng chính</h2>
+            <span class="lp-bar" aria-hidden="true"></span>
+            <p>Thiết kế cho bệnh nhân, đồng thời hỗ trợ dược sĩ đối chiếu nguồn.</p>
+          </div>
+
+          <div class="lp-features">
+            <article class="lp-feature-primary">
+              <div class="lp-feature-image">
+                <img src="img/drug-interaction.jpg" alt="Minh họa kiểm tra tương tác giữa hai loại thuốc" loading="lazy" />
+              </div>
+              <div class="lp-feature-body">
+                <span class="lp-feature-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)"/><line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/></svg>
+                </span>
+                <h3>Tra tương tác thuốc</h3>
+                <p>Nhập tên thuốc hoặc tải ảnh đơn thuốc, nhận danh sách các cặp thuốc có tương tác, kèm nguồn trích dẫn để đối chiếu.</p>
+                <a class="lp-btn lp-btn-solid" href="login.html">Kiểm tra tương tác</a>
+              </div>
+            </article>
+
+            <div class="lp-feature-grid">
+              <article class="lp-feature-card">
+                <div class="lp-feature-image">
+                  <img src="img/medication-leaflet.jpg" alt="Minh họa đọc và đối chiếu tờ hướng dẫn sử dụng thuốc" loading="lazy" />
+                </div>
+                <div class="lp-feature-body">
+                  <span class="lp-feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.8-1.3-4-2-6.5-2v12c2.5 0 4.7.7 6.5 2 1.8-1.3 4-2 6.5-2v-12c-2.5 0-4.7.7-6.5 2Z"/><line x1="12" y1="6.5" x2="12" y2="18.5"/></svg>
+                  </span>
+                  <h3>Tra thông tin thuốc</h3>
+                  <p>Nhập tên thuốc, xem hướng dẫn sử dụng, liều dùng, chống chỉ định và tác dụng phụ theo tờ HDSD.</p>
+                  <a class="lp-btn lp-btn-solid" href="login.html">Tra thông tin thuốc</a>
+                </div>
+              </article>
+
+              <article class="lp-feature-card">
+                <div class="lp-feature-image">
+                  <img src="img/safety-warning.jpg" alt="Minh họa cảnh báo an toàn khi sử dụng thuốc" loading="lazy" />
+                </div>
+                <div class="lp-feature-body">
+                  <span class="lp-feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.3 4.5 6v6c0 4.6 3.2 7.9 7.5 9 4.3-1.1 7.5-4.4 7.5-9V6L12 3.3Z"/><line x1="12" y1="8" x2="12" y2="12.5"/><circle cx="12" cy="15.2" r="0.9" fill="currentColor" stroke="none"/></svg>
+                  </span>
+                  <h3>Cảnh báo an toàn</h3>
+                  <p>Xem kết quả tra cứu, nhận cảnh báo rõ ràng kèm nguồn trích dẫn và hướng dẫn nên làm gì tiếp theo.</p>
+                  <a class="lp-btn lp-btn-solid" href="login.html">Tìm hiểu cảnh báo</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section" id="how-it-works">
+        <div class="lp-section-inner">
+          <div class="lp-section-heading">
+            <h2>Cách hoạt động</h2>
+            <span class="lp-bar" aria-hidden="true"></span>
+            <p>Bốn bước đơn giản từ tên thuốc hoặc ảnh đơn thuốc đến hướng dẫn tiếp theo.</p>
+          </div>
+
+          <ol class="lp-steps">
+            <li class="lp-step">
+              <span class="lp-step-num">01</span>
+              <h3>Nhập tên thuốc hoặc chụp đơn</h3>
+              <p>Gõ tên thuốc, hoặc chọn một hoặc nhiều ảnh đơn thuốc. Hệ thống hỗ trợ gộp nhiều đơn trong cùng một lần kiểm tra.</p>
+            </li>
+            <li class="lp-step">
+              <span class="lp-step-num">02</span>
+              <h3>Kiểm tra và xác nhận thuốc nhận diện</h3>
+              <p>Kiểm tra các tên thuốc được nhận diện, sửa mục chưa khớp và thêm thuốc còn thiếu khi cần.</p>
+            </li>
+            <li class="lp-step">
+              <span class="lp-step-num">03</span>
+              <h3>Xem tương tác, mức độ nguy cơ và nguồn</h3>
+              <p>Xem từng cặp có tương tác hoặc không, mức độ rõ ràng và nguồn trích dẫn để đối chiếu.</p>
+            </li>
+            <li class="lp-step">
+              <span class="lp-step-num">04</span>
+              <h3>Nhận hướng dẫn tiếp theo</h3>
+              <p>Gửi kết quả cho bác sĩ hoặc dược sĩ để nhận khuyến nghị xử trí phù hợp.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="lp-cta-section">
+        <div class="lp-cta-band">
+          <h2>Sẵn sàng kiểm tra tương tác thuốc của bạn?</h2>
+          <p>Miễn phí, có nguồn, hiển thị ngay — dược sĩ đối chiếu song song.</p>
+          <a class="lp-btn lp-btn-accent lp-btn-lg" href="login.html">Bắt đầu kiểm tra an toàn</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="lp-footer" id="lien-he">
+      <div class="lp-footer-inner">
+        <div class="lp-footer-grid">
+          <div class="lp-footer-brand">
+            <div class="lp-brand">
+              <svg class="lp-logo" viewBox="0 0 32 32" role="img" aria-label="Trợ lý An toàn Thuốc" style="width:32px;height:32px;">
+                <rect x="1" y="1" width="30" height="30" rx="9" fill="currentColor" opacity="0.12" />
+                <rect x="1" y="1" width="30" height="30" rx="9" fill="none" stroke="currentColor" stroke-opacity="0.28" />
+                <path d="M13.6 7.4h4.8a1 1 0 0 1 1 1v4.2h4.2a1 1 0 0 1 1 1v4.8a1 1 0 0 1-1 1h-4.2v4.2a1 1 0 0 1-1 1h-4.8a1 1 0 0 1-1-1v-4.2H8.4a1 1 0 0 1-1-1v-4.8a1 1 0 0 1 1-1h4.2V8.4a1 1 0 0 1 1-1Z" fill="currentColor" />
+              </svg>
+              <span class="lp-brand-name">Trợ lý An toàn Thuốc</span>
+            </div>
+            <p>Sản phẩm mô phỏng phục vụ học tập và demo, không thay thế tư vấn hoặc chỉ định y khoa.</p>
+            <p>Bạn không chắc về kết quả? Hỏi dược sĩ hoặc bác sĩ điều trị.</p>
+          </div>
+
+          <div class="lp-footer-col">
+            <h3>Sản phẩm</h3>
+            <ul>
+              <li><a href="#features">Tra tương tác thuốc</a></li>
+              <li><a href="#features">Tra thông tin thuốc</a></li>
+              <li><a href="login.html">Lịch sử tra cứu</a></li>
+            </ul>
+          </div>
+
+          <div class="lp-footer-col">
+            <h3>Hỗ trợ</h3>
+            <ul>
+              <li><a href="#">Điều khoản sử dụng</a></li>
+              <li><a href="#">Chính sách bảo mật</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lp-footer-bottom">
+          <p>© 2026 Trợ lý An toàn Thuốc · Cuvée Tech — P-054</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const lpShell = document.getElementById("lpHeaderShell");
+    const lpToggle = document.getElementById("lpMenuToggle");
+    const lpMobileNav = document.getElementById("lpMobileNav");
+
+    lpToggle.addEventListener("click", () => {
+      const isOpen = lpMobileNav.classList.toggle("is-open");
+      lpShell.classList.toggle("is-open", isOpen);
+      lpToggle.setAttribute("aria-expanded", String(isOpen));
+      lpToggle.innerHTML = isOpen
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>';
+    });
+  </script>
+</body>
+</html>

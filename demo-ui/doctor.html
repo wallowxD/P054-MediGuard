@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giao diện bác sĩ - Demo giao diện</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/doctor.css" />
+</head>
+<body>
+  <div class="demo-banner">Bản demo giao diện bác sĩ - dữ liệu minh hoạ, chưa kết nối backend thật.</div>
+
+  <div class="app-shell doctor-shell">
+    <aside class="sidebar doctor-sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <a class="brand" href="doctor.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3.3 4.5 6v6c0 4.6 3.2 7.9 7.5 9 4.3-1.1 7.5-4.4 7.5-9V6L12 3.3Z"/>
+              <path d="M12 8v8M8 12h8"/>
+            </svg>
+          </span>
+          <span>Trợ lý An toàn Thuốc <span class="brand-sub">bác sĩ</span></span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Điều hướng bác sĩ">
+        <button type="button" class="sidebar-link is-active doctor-nav-link" data-nav-filter="all">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6.5 8 6 8-6"/></svg>
+          Yêu cầu đánh giá
+          <span class="doctor-nav-count" id="pendingNavCount">0</span>
+        </button>
+        <button type="button" class="sidebar-link doctor-nav-link" data-nav-filter="reviewed">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.3 4.5 6v6c0 4.6 3.2 7.9 7.5 9 4.3-1.1 7.5-4.4 7.5-9V6L12 3.3Z"/><path d="m8.8 12.2 2.2 2.2 4.2-4.4"/></svg>
+          Đã phản hồi
+        </button>
+      </nav>
+
+      <div class="doctor-safety-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.7" r="0.9" fill="currentColor" stroke="none"/></svg>
+        <p>Đối chiếu trích dẫn và hồ sơ người bệnh trước khi phản hồi. Hệ thống không tự đưa ra kết luận lâm sàng.</p>
+      </div>
+
+      <div class="sidebar-footer">
+        <span class="user-avatar">MC</span>
+        <div class="user-info">
+          <div class="user-name">BS. Lê Minh Châu</div>
+          <div class="user-role">Nội tổng quát</div>
+        </div>
+        <a class="sidebar-logout" href="login.html" aria-label="Đăng xuất">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H15"/><path d="M4 12h11.5"/><path d="m11.5 7.5 4.5 4.5-4.5 4.5"/></svg>
+        </a>
+      </div>
+    </aside>
+    <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+    <div class="app-main">
+      <header class="app-topbar doctor-topbar">
+        <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Mở menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        </button>
+        <span class="app-topbar-title">Không gian làm việc của bác sĩ</span>
+        <div class="doctor-topbar-actions">
+          <span class="doctor-today" id="doctorToday"></span>
+          <button type="button" class="theme-toggle" id="themeToggle" aria-label="Đổi giao diện sáng tối" title="Đổi giao diện sáng tối">
+            <svg class="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.41M17.66 6.34l1.41-1.41"/></svg>
+            <svg class="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 15.1A8.4 8.4 0 0 1 8.9 3.8 8.5 8.5 0 1 0 20.2 15.1Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="page doctor-page">
+        <div class="doctor-page-header">
+          <div>
+            <h1>Yêu cầu đánh giá tương tác</h1>
+            <p>Xem thông tin bệnh nhân gửi, đối chiếu nguồn và phản hồi đánh giá chuyên môn.</p>
+          </div>
+          <div class="doctor-summary" aria-label="Tổng quan yêu cầu">
+            <div><strong id="summaryPending">0</strong><span>Chờ đánh giá</span></div>
+            <div><strong id="summaryReviewed">0</strong><span>Đã phản hồi</span></div>
+          </div>
+        </div>
+
+        <div class="doctor-workspace">
+          <section class="doctor-queue" aria-labelledby="queueTitle">
+            <div class="doctor-queue-head">
+              <div>
+                <h2 id="queueTitle">Hộp thư yêu cầu</h2>
+                <p id="queueCountText"></p>
+              </div>
+            </div>
+
+            <div class="doctor-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
+              <label class="visually-hidden" for="requestSearch">Tìm bệnh nhân hoặc thuốc</label>
+              <input type="search" id="requestSearch" placeholder="Tìm bệnh nhân hoặc thuốc" autocomplete="off" />
+            </div>
+
+            <div class="doctor-filter-tabs" role="tablist" aria-label="Lọc yêu cầu">
+              <button type="button" class="is-active" data-filter="all" role="tab" aria-selected="true">Tất cả</button>
+              <button type="button" data-filter="pending" role="tab" aria-selected="false">Chờ đánh giá</button>
+              <button type="button" data-filter="reviewed" role="tab" aria-selected="false">Đã phản hồi</button>
+            </div>
+
+            <div class="request-list" id="requestList"></div>
+          </section>
+
+          <section class="doctor-detail" id="doctorDetail" aria-live="polite">
+            <div class="doctor-detail-empty">
+              <span class="doctor-empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6.5 8 6 8-6"/></svg>
+              </span>
+              <h2>Chọn một yêu cầu để đánh giá</h2>
+              <p>Thông tin bệnh nhân, tương tác và trích dẫn nguồn sẽ hiển thị tại đây.</p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="doctor-toast" id="doctorToast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.3 4.5 6v6c0 4.6 3.2 7.9 7.5 9 4.3-1.1 7.5-4.4 7.5-9V6L12 3.3Z"/><path d="m8.8 12.2 2.2 2.2 4.2-4.4"/></svg>
+    <span>Đã gửi phản hồi cho bệnh nhân.</span>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/doctor.js"></script>
+</body>
+</html>

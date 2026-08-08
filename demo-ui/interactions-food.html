@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tra cứu thuốc và thực phẩm — Demo giao diện</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="demo-banner">Bản demo giao diện — dữ liệu minh hoạ, chưa kết nối backend thật.</div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <a class="brand" href="home.html">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="9.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)"/>
+              <line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/>
+            </svg>
+          </span>
+          Trợ lý An toàn Thuốc <span class="brand-sub">demo</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-link" href="home.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 11 8-6.5 8 6.5"/><path d="M6 9.5V19a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9.5"/><path d="M10 20v-6h4v6"/></svg>
+          Trang chủ
+        </a>
+        <a class="sidebar-link" href="drug-info.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.8-1.3-4-2-6.5-2v12c2.5 0 4.7.7 6.5 2 1.8-1.3 4-2 6.5-2v-12c-2.5 0-4.7.7-6.5 2Z"/><line x1="12" y1="6.5" x2="12" y2="18.5"/></svg>
+          Thông tin thuốc
+        </a>
+        <a class="sidebar-link" href="interactions-drug.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)"/><line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/></svg>
+          Tương tác thuốc
+        </a>
+        <a class="sidebar-link is-active" href="interactions-food.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2s6.5 7 6.5 11.3a6.5 6.5 0 1 1-13 0C5.5 10.2 12 3.2 12 3.2Z"/></svg>
+          Thuốc - Thực phẩm
+        </a>
+        <a class="sidebar-link" href="interactions-disease.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3.5l1.8-5 3 10 2-8 1.5 3H21"/></svg>
+          Thuốc - Bệnh nền
+        </a>
+      </nav>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Lịch sử tra cứu</div>
+        <ul class="history-list" id="historyList"></ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <span class="user-avatar">NA</span>
+        <div class="user-info">
+          <div class="user-name">Nguyễn An</div>
+          <div class="user-role">Người dùng demo</div>
+        </div>
+        <a class="sidebar-logout" href="index.html" aria-label="Đăng xuất">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H15"/><path d="M4 12h11.5"/><path d="m11.5 7.5 4.5 4.5-4.5 4.5"/></svg>
+        </a>
+      </div>
+    </aside>
+    <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+    <div class="app-main">
+      <header class="app-topbar">
+        <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Mở menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        </button>
+        <span class="app-topbar-title">Tra cứu thuốc - thực phẩm</span>
+      </header>
+
+      <main class="page">
+        <div class="page-header">
+          <h1>Tra cứu thuốc và thực phẩm</h1>
+          <p>Thêm thuốc cần kiểm tra để xem thực phẩm nào có thể ảnh hưởng đến tác dụng của thuốc, có trích dẫn nguồn kèm theo.</p>
+        </div>
+
+        <div class="grid-2">
+          <section class="card">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+              Upload ảnh đơn thuốc
+            </h2>
+            <p class="card-desc">Tải ảnh chụp hoặc scan đơn thuốc, hệ thống sẽ nhận diện danh sách thuốc.</p>
+
+            <label class="dropzone" id="dropzone" for="fileInput">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="m7 8 5-5 5 5"/><path d="M4 15v3.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V15"/></svg>
+              <div class="dropzone-title">Kéo thả ảnh vào đây hoặc bấm để chọn</div>
+              <div class="dropzone-hint">Hỗ trợ JPG, PNG, PDF — tối đa 10MB</div>
+              <input type="file" id="fileInput" accept="image/*,.pdf" style="display:none" />
+            </label>
+
+            <div class="file-chip hidden" id="fileChip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+              <span class="file-name" id="fileName"></span>
+              <button type="button" id="removeFile" aria-label="Xoá ảnh đã chọn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+              </button>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="10"/><line x1="9.5" y1="10" x2="9.5" y2="10"/><line x1="13" y1="10" x2="13" y2="10"/><line x1="16.5" y1="10" x2="16.5" y2="10"/><line x1="7" y1="14.5" x2="17" y2="14.5"/></svg>
+              Nhập tay từng thuốc
+            </h2>
+            <p class="card-desc">Gõ tên thuốc, chọn gợi ý phù hợp rồi bấm Thêm. Chỉ cần 1 thuốc là có thể tra cứu.</p>
+
+            <div class="autocomplete">
+              <div class="input-row">
+                <input type="text" class="text-input" id="drugInput" placeholder="Ví dụ: Atorvastatin 20mg" autocomplete="off" />
+                <button type="button" class="btn btn-secondary" id="addDrugBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Thêm
+                </button>
+              </div>
+              <div class="suggestions hidden" id="drugSuggestions"></div>
+            </div>
+          </section>
+        </div>
+
+        <section class="card" style="margin-top:20px;">
+          <h2 class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)"/><line x1="9.5" y1="9.5" x2="14.5" y2="14.5"/></svg>
+            Danh sách thuốc sẽ kiểm tra
+          </h2>
+          <p class="card-desc">Gồm cả thuốc nhận diện từ ảnh và thuốc nhập tay. Bấm xoá nếu không cần kiểm tra.</p>
+
+          <ul class="pill-list" id="drugList"></ul>
+          <p class="empty-note" id="drugEmptyNote">Chưa có thuốc nào được thêm.</p>
+
+          <div class="actions-bar check-actions">
+            <span class="hint" id="checkHint">Thêm ít nhất 1 thuốc để kiểm tra.</span>
+            <button type="button" class="btn btn-primary" id="checkBtn" disabled>
+              Kiểm tra thuốc - thực phẩm
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <div id="resultsWrap" class="hidden">
+          <div class="overview-grid" id="overviewGrid" style="margin-top:28px;"></div>
+
+          <div class="send-doctor-banner hidden" id="sendDoctorBanner">
+            <div>
+              <div class="send-doctor-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 3.9 2.4 18a1.8 1.8 0 0 0 1.55 2.7h16.1A1.8 1.8 0 0 0 21.6 18L13.4 3.9a1.8 1.8 0 0 0-2.8 0Z"/><line x1="12" y1="9.5" x2="12" y2="13.8"/><circle cx="12" cy="16.8" r="0.9" fill="currentColor" stroke="none"/></svg>
+                Phát hiện tương tác cần lưu ý
+              </div>
+              <p>Gửi kết quả tra cứu này cho bác sĩ hoặc dược sĩ để nhận khuyến nghị xử trí phù hợp.</p>
+            </div>
+            <button type="button" class="btn btn-primary" id="openSendModalBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6.5 8 6 8-6"/></svg>
+              Gửi cho bác sĩ
+            </button>
+          </div>
+
+          <div class="send-doctor-banner is-sent hidden" id="sendDoctorSentBanner">
+            <div>
+              <div class="send-doctor-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.3 4.5 6v6c0 4.6 3.2 7.9 7.5 9 4.3-1.1 7.5-4.4 7.5-9V6L12 3.3Z"/><path d="m8.8 12.2 2.2 2.2 4.2-4.4"/></svg>
+                Đã gửi yêu cầu
+              </div>
+              <p id="sendDoctorSentText"></p>
+            </div>
+          </div>
+
+          <div id="resultsList" style="display:flex; flex-direction:column; gap:14px;"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="sendModalOverlay">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="sendModalTitle">
+      <div class="modal-header">
+        <h2 id="sendModalTitle">Gửi kết quả cho bác sĩ</h2>
+        <button type="button" class="modal-close" id="sendModalClose" aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+      <p class="modal-desc">Người nhận sẽ xem lại kết quả tra cứu và trích dẫn nguồn, sau đó phản hồi khuyến nghị xử trí. Đây vẫn là cảnh báo tham khảo, không phải kết luận lâm sàng.</p>
+
+      <div class="field-group">
+        <label for="doctorSelect">Chọn người nhận</label>
+        <select class="text-input" id="doctorSelect"></select>
+      </div>
+      <div class="field-group">
+        <label for="sendNote">Ghi chú cho người nhận (không bắt buộc)</label>
+        <textarea class="text-input" id="sendNote" rows="3" placeholder="Ví dụ: bệnh nhân ăn chay, dùng nhiều rau xanh..."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="sendModalCancel">Hủy</button>
+        <button type="button" class="btn btn-primary" id="sendModalConfirm">
+          Gửi yêu cầu
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><path d="m14 6 6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    initSidebarToggle();
+    renderHistoryList(document.getElementById("historyList"));
+
+    let drugs = [];
+    const drugListEl = document.getElementById("drugList");
+    const emptyNote = document.getElementById("drugEmptyNote");
+    const checkBtn = document.getElementById("checkBtn");
+    const checkHint = document.getElementById("checkHint");
+    const resultsWrap = document.getElementById("resultsWrap");
+    const overviewGrid = document.getElementById("overviewGrid");
+    const resultsList = document.getElementById("resultsList");
+
+    let currentInteractions = [];
+    const sendCtl = initSendToDoctor({ getInteractionCount: () => currentInteractions.length });
+
+    function syncUI() {
+      renderManualList(drugListEl, drugs, (index) => {
+        drugs.splice(index, 1);
+        syncUI();
+      });
+      emptyNote.classList.toggle("hidden", drugs.length > 0);
+      checkBtn.disabled = drugs.length < 1;
+      checkHint.textContent =
+        drugs.length < 1 ? "Thêm ít nhất 1 thuốc để kiểm tra." : `Sẵn sàng kiểm tra ${drugs.length} thuốc với thực phẩm.`;
+    }
+
+    initDrugAdder({
+      inputEl: document.getElementById("drugInput"),
+      addBtnEl: document.getElementById("addDrugBtn"),
+      suggestBoxEl: document.getElementById("drugSuggestions"),
+      getList: () => drugs,
+      onChange: (next) => {
+        drugs = next;
+        syncUI();
+      },
+    });
+
+    // Upload ảnh (mô phỏng, không xử lý OCR thật) — thuốc nhận diện được gộp vào
+    // cùng danh sách với thuốc nhập tay, có thể xoá từng thuốc như bình thường.
+    const dropzone = document.getElementById("dropzone");
+    const fileInput = document.getElementById("fileInput");
+    const fileChip = document.getElementById("fileChip");
+    const fileNameEl = document.getElementById("fileName");
+    const removeFileBtn = document.getElementById("removeFile");
+
+    function mergeRecognizedDrugs() {
+      RECOGNIZED_MOCK.forEach((name) => {
+        if (!drugs.some((d) => d.toLowerCase() === name.toLowerCase())) {
+          drugs.push(name);
+        }
+      });
+      syncUI();
+    }
+
+    function setFile(name) {
+      fileNameEl.textContent = name;
+      fileChip.classList.remove("hidden");
+      dropzone.classList.add("hidden");
+      mergeRecognizedDrugs();
+    }
+
+    function clearFile() {
+      fileInput.value = "";
+      fileChip.classList.add("hidden");
+      dropzone.classList.remove("hidden");
+    }
+
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files && fileInput.files[0]) setFile(fileInput.files[0].name);
+    });
+    removeFileBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      clearFile();
+    });
+    ["dragenter", "dragover"].forEach((evt) => {
+      dropzone.addEventListener(evt, (e) => {
+        e.preventDefault();
+        dropzone.classList.add("is-dragover");
+      });
+    });
+    ["dragleave", "drop"].forEach((evt) => {
+      dropzone.addEventListener(evt, (e) => {
+        e.preventDefault();
+        dropzone.classList.remove("is-dragover");
+      });
+    });
+    dropzone.addEventListener("drop", (e) => {
+      const file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) setFile(file.name);
+    });
+
+    checkBtn.addEventListener("click", () => {
+      const summary = computeInteractionSummary(drugs);
+      currentInteractions = summary.drugFood;
+      const pendingCount = currentInteractions.filter((it) => it.status === "pending").length;
+
+      overviewGrid.innerHTML = `
+        <div class="stat-card">
+          <div class="stat-label">${ICONS.pill}Số thuốc đã kiểm tra</div>
+          <div class="stat-value">${drugs.length}</div>
+        </div>
+        <div class="stat-card stat-danger">
+          <div class="stat-label">${ICONS.droplet}Số tương tác phát hiện</div>
+          <div class="stat-value">${currentInteractions.length}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">${ICONS.clock}Đang chờ xác nhận chuyên môn</div>
+          <div class="stat-value">${pendingCount}</div>
+          <div class="stat-note">Dược sĩ duyệt song song, không chặn hiển thị</div>
+        </div>
+      `;
+
+      if (currentInteractions.length === 0) {
+        resultsList.innerHTML = `
+          <div class="empty-state">
+            ${ICONS.shieldCheck}
+            <p>Không phát hiện tương tác thuốc - thực phẩm trong danh sách hiện tại.</p>
+          </div>`;
+      } else {
+        resultsList.innerHTML = currentInteractions.map((it) => renderSourcedInteractionCard(it.drug, it.food, it)).join("");
+      }
+
+      resultsWrap.classList.remove("hidden");
+      sendCtl.reset();
+      resultsWrap.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    syncUI();
+  </script>
+</body>
+</html>
