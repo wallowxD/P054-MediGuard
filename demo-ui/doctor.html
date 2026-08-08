@@ -35,7 +35,7 @@
         </button>
         <button type="button" class="sidebar-link doctor-nav-link" data-nav-filter="reviewed">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.3 4.5 6v6c0 4.6 3.2 7.9 7.5 9 4.3-1.1 7.5-4.4 7.5-9V6L12 3.3Z"/><path d="m8.8 12.2 2.2 2.2 4.2-4.4"/></svg>
-          Đã phản hồi
+          Đã duyệt
         </button>
       </nav>
 
@@ -76,11 +76,11 @@
         <div class="doctor-page-header">
           <div>
             <h1>Yêu cầu đánh giá tương tác</h1>
-            <p>Xem thông tin bệnh nhân gửi, đối chiếu nguồn và phản hồi đánh giá chuyên môn.</p>
+            <p>Xem yêu cầu bệnh nhân gửi đối chiếu hoặc gửi kiểm tra, đối chiếu nguồn, chỉnh sửa nội dung nếu cần rồi duyệt kết quả.</p>
           </div>
           <div class="doctor-summary" aria-label="Tổng quan yêu cầu">
             <div><strong id="summaryPending">0</strong><span>Chờ đánh giá</span></div>
-            <div><strong id="summaryReviewed">0</strong><span>Đã phản hồi</span></div>
+            <div><strong id="summaryReviewed">0</strong><span>Đã duyệt</span></div>
           </div>
         </div>
 
@@ -97,12 +97,16 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg>
               <label class="visually-hidden" for="requestSearch">Tìm bệnh nhân hoặc thuốc</label>
               <input type="search" id="requestSearch" placeholder="Tìm bệnh nhân hoặc thuốc" autocomplete="off" />
+              <button type="button" class="queue-reset" id="resetQueueBtn" title="Nạp lại dữ liệu demo, xoá các yêu cầu đã gửi và đã duyệt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 1 2.6 5.9"/><path d="M4 20v-5h5"/></svg>
+                <span class="visually-hidden">Nạp lại dữ liệu demo</span>
+              </button>
             </div>
 
             <div class="doctor-filter-tabs" role="tablist" aria-label="Lọc yêu cầu">
               <button type="button" class="is-active" data-filter="all" role="tab" aria-selected="true">Tất cả</button>
               <button type="button" data-filter="pending" role="tab" aria-selected="false">Chờ đánh giá</button>
-              <button type="button" data-filter="reviewed" role="tab" aria-selected="false">Đã phản hồi</button>
+              <button type="button" data-filter="reviewed" role="tab" aria-selected="false">Đã duyệt</button>
             </div>
 
             <div class="request-list" id="requestList"></div>
@@ -124,9 +128,10 @@
 
   <div class="doctor-toast" id="doctorToast" role="status" aria-live="polite">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.3 4.5 6v6c0 4.6 3.2 7.9 7.5 9 4.3-1.1 7.5-4.4 7.5-9V6L12 3.3Z"/><path d="m8.8 12.2 2.2 2.2 4.2-4.4"/></svg>
-    <span>Đã gửi phản hồi cho bệnh nhân.</span>
+    <span>Đã duyệt kết quả và gửi phản hồi cho bệnh nhân.</span>
   </div>
 
+  <script src="js/data.js"></script>
   <script src="js/app.js"></script>
   <script src="js/doctor.js"></script>
 </body>

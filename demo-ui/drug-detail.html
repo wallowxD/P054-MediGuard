@@ -90,6 +90,7 @@
   <script src="js/app.js"></script>
   <script>
     initSidebarToggle();
+    applySessionToSidebar();
     renderHistoryList(document.getElementById("historyList"));
 
     const params = new URLSearchParams(window.location.search);
@@ -134,9 +135,28 @@
           <h1>${escapeHtml(drugName)}</h1>
           <p>${escapeHtml(info.group)}</p>
         </div>
+        <div class="detail-actions">
+          <button type="button" class="btn btn-primary" data-go="interactions-drug.html">
+            ${ICONS.pill}Tra tương tác với thuốc khác
+          </button>
+          <button type="button" class="btn btn-secondary" data-go="interactions-food.html">
+            ${ICONS.droplet}Tra với thực phẩm
+          </button>
+          <button type="button" class="btn btn-secondary" data-go="interactions-disease.html">
+            ${ICONS.pulse}Tra với bệnh nền
+          </button>
+        </div>
         <div class="detail-tabs">${tabsHtml}</div>
         <div>${sectionsHtml}</div>
       `;
+
+      // Từ màn thông tin thuốc đi thẳng sang các màn tra cứu, mang theo thuốc đang xem.
+      detailContent.querySelectorAll("[data-go]").forEach((button) => {
+        button.addEventListener("click", () => {
+          writeState({ prefillDrugs: [drugName] });
+          window.location.href = button.dataset.go;
+        });
+      });
     }
   </script>
 </body>

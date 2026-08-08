@@ -905,3 +905,328 @@
     transition: none;
   }
 }
+
+/* ============================================================
+   Phân loại yêu cầu, nạp lại hàng đợi demo
+   ============================================================ */
+
+.request-item-bottom {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.request-item-bottom .request-status {
+  margin-left: auto;
+}
+
+.request-kind {
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.request-kind.is-compare {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.request-kind.is-check {
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+.queue-reset {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-faint);
+  cursor: pointer;
+}
+
+.queue-reset svg {
+  width: 15px;
+  height: 15px;
+  position: static;
+  transform: none;
+}
+
+.queue-reset:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.doctor-search input {
+  padding-right: 38px;
+}
+
+/* ============================================================
+   Trường hợp chưa có dữ liệu
+   ============================================================ */
+
+.doctor-nodata {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--warning);
+  border-radius: var(--radius-sm);
+  background: var(--warning-soft);
+}
+
+.doctor-nodata svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--warning);
+  margin-top: 1px;
+}
+
+.doctor-nodata p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.doctor-nodata ul {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.doctor-nodata li {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* ============================================================
+   Kết quả phù hợp? → chỉnh sửa nội dung → duyệt kết quả
+   ============================================================ */
+
+.verdict-gate {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+}
+
+.verdict-gate-question strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.verdict-gate-question p {
+  margin: 5px 0 14px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.verdict-gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.verdict-gate-actions .btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.doctor-interaction.is-editing {
+  border-color: var(--accent);
+}
+
+.doctor-citation-lock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.doctor-citation-lock svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.doctor-display-preview {
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.doctor-display-preview strong {
+  color: var(--text);
+}
+
+.doctor-edit-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+
+.doctor-edit-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.doctor-edit-field .text-input {
+  width: 100%;
+  font-size: 13px;
+}
+
+.doctor-edit-field textarea.text-input {
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.55;
+}
+
+.assessment-foot-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.reviewed-edit-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.reviewed-edit-note svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .assessment-form-foot {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .assessment-foot-actions {
+    justify-content: flex-end;
+  }
+}
+
+/* ============================================================
+   Hồ sơ bệnh nhân và liều đang dùng
+   ============================================================ */
+
+.patient-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  font-size: 13px;
+  color: var(--text);
+}
+
+.patient-profile svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.dose-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dose-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 9px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  font-size: 12.5px;
+}
+
+.dose-row span:first-child {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.dose-row span:last-child {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.dose-row.is-over {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.doctor-dose-alert {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-sm);
+  background: var(--danger-soft);
+}
+
+.doctor-dose-alert strong {
+  display: block;
+  font-size: 13.5px;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.doctor-dose-alert p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.doctor-dose-alert .doctor-citation {
+  margin-top: 11px;
+}

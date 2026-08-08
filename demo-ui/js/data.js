@@ -30,8 +30,28 @@ const DRUG_CATALOG = [
   "Vitamin C 500mg",
 ];
 
-// Mô phỏng kết quả OCR từ ảnh đơn thuốc (cố định cho demo)
-const RECOGNIZED_MOCK = ["Amlodipine 5mg", "Atorvastatin 20mg", "Aspirin 81mg"];
+// Tài khoản demo cho hai vai trò. Đăng nhập bằng email/mật khẩu khác vẫn vào được,
+// vai trò khi đó lấy theo lựa chọn "Bệnh nhân / Bác sĩ · Dược sĩ" trên form.
+const DEMO_ACCOUNTS = [
+  { email: "benhnhan@demo.vn", password: "123456", role: "patient", name: "Nguyễn An", title: "Bệnh nhân" },
+  { email: "doctor@gmail.com", password: "doctor", role: "doctor", name: "BS. Lê Minh Châu", title: "Nội tổng quát" },
+];
+
+// Mô phỏng kết quả OCR từ ảnh/PDF đơn thuốc. `raw` là chuỗi đọc được từ ảnh, `mapped` là
+// tên đã chuẩn hoá về danh mục thuốc, `confidence` để demo bước người dùng xác nhận —
+// dòng có độ tin cậy thấp được đánh dấu để sửa trước khi tra cứu.
+const OCR_MOCK_RESULTS = [
+  [
+    { raw: "AMLODIPIN 5mg", mapped: "Amlodipine 5mg", confidence: 0.97 },
+    { raw: "ATORVASTATIN 20 mg", mapped: "Atorvastatin 20mg", confidence: 0.93 },
+    { raw: "ASPIRIN 81mg", mapped: "Aspirin 81mg", confidence: 0.88 },
+    { raw: "OMEPRAZOL 20mg", mapped: "Omeprazole 20mg", confidence: 0.62 },
+  ],
+  [
+    { raw: "CLOPIDOGREL 75mg", mapped: "Clopidogrel 75mg", confidence: 0.95 },
+    { raw: "WARFARIN 5 mg", mapped: "Warfarin 5mg", confidence: 0.71 },
+  ],
+];
 
 // Thông tin thuốc minh hoạ, khoá theo tên gốc (không kèm hàm lượng)
 const DRUG_INFO = {
@@ -151,17 +171,71 @@ const FOOD_INTERACTIONS_DB = [
   },
 ];
 
+// Cặp thuốc đã được rà soát trên tờ HDSD và xác nhận là KHÔNG có tương tác. Danh sách này
+// tách bạch hai kết luận rất khác nhau: "đã kiểm chứng, không có tương tác" và "chưa có dữ
+// liệu". Cặp không nằm trong INTERACTIONS_DB lẫn danh sách này sẽ được báo là chưa có dữ
+// liệu — hệ thống không được suy luận là an toàn khi chưa có nguồn.
+const VERIFIED_NO_INTERACTION_PAIRS = [
+  ["Amlodipine", "Atorvastatin"],
+  ["Amlodipine", "Aspirin"],
+  ["Amlodipine", "Omeprazole"],
+  ["Atorvastatin", "Aspirin"],
+  ["Paracetamol", "Vitamin C"],
+  ["Paracetamol", "Amoxicillin"],
+  ["Losartan", "Digoxin"],
+  ["Loratadine", "Paracetamol"],
+];
+
+// Thuốc đã rà soát mục "tương tác với thực phẩm" trên tờ HDSD và không ghi nhận tương tác.
+const FOOD_VERIFIED_NONE = ["Paracetamol", "Amlodipine", "Loratadine", "Vitamin C", "Losartan", "Amoxicillin"];
+
 /** Cắt bỏ phần hàm lượng phía sau tên thuốc, ví dụ "Atorvastatin 20mg" -> "Atorvastatin" */
 function baseDrugName(name) {
   return name.replace(/\s+[\d.].*$/, "").trim();
 }
 
-/** Đối chiếu một danh sách thuốc với INTERACTIONS_DB / FOOD_INTERACTIONS_DB. */
+/** Khoá không phụ thuộc thứ tự cho một cặp thuốc, ví dụ "aspirin|warfarin". */
+function pairKey(a, b) {
+  return [baseDrugName(a).toLowerCase(), baseDrugName(b).toLowerCase()].sort().join("|");
+}
+
+const VERIFIED_NO_INTERACTION_KEYS = new Set(VERIFIED_NO_INTERACTION_PAIRS.map(([a, b]) => pairKey(a, b)));
+
+/**
+ * Đối chiếu một danh sách thuốc với INTERACTIONS_DB / FOOD_INTERACTIONS_DB.
+ * Ngoài các tương tác tìm được, hàm còn trả về những cặp/thuốc CHƯA có dữ liệu để tầng
+ * giao diện hiển thị đúng nhánh "chưa có dữ liệu" thay vì kết luận là không có tương tác.
+ */
 function computeInteractionSummary(drugs) {
-  const baseNames = new Set(drugs.map(baseDrugName));
-  const drugDrug = INTERACTIONS_DB.filter((it) => baseNames.has(it.a) && baseNames.has(it.b));
-  const drugFood = FOOD_INTERACTIONS_DB.filter((it) => baseNames.has(it.drug));
-  return { total: drugDrug.length + drugFood.length, drugDrug, drugFood };
+  const baseNames = [...new Set(drugs.map(baseDrugName))];
+  const nameSet = new Set(baseNames);
+  const drugDrug = INTERACTIONS_DB.filter((it) => nameSet.has(it.a) && nameSet.has(it.b));
+  const drugFood = FOOD_INTERACTIONS_DB.filter((it) => nameSet.has(it.drug));
+
+  const foundKeys = new Set(drugDrug.map((it) => pairKey(it.a, it.b)));
+  const noDataPairs = [];
+  const verifiedNonePairs = [];
+  for (let i = 0; i < baseNames.length; i += 1) {
+    for (let j = i + 1; j < baseNames.length; j += 1) {
+      const key = pairKey(baseNames[i], baseNames[j]);
+      if (foundKeys.has(key)) continue;
+      const pair = { a: baseNames[i], b: baseNames[j] };
+      if (VERIFIED_NO_INTERACTION_KEYS.has(key)) verifiedNonePairs.push(pair);
+      else noDataPairs.push(pair);
+    }
+  }
+
+  const foodFound = new Set(drugFood.map((it) => it.drug));
+  const foodNoData = baseNames.filter((name) => !foodFound.has(name) && !FOOD_VERIFIED_NONE.includes(name));
+
+  return {
+    total: drugDrug.length + drugFood.length,
+    drugDrug,
+    drugFood,
+    noDataPairs,
+    verifiedNonePairs,
+    foodNoData,
+  };
 }
 
 /** Đối chiếu danh sách thuốc + bệnh nền với DISEASE_INTERACTIONS_DB. */
@@ -446,6 +520,206 @@ const DRUG_DETAILS = {
   },
 };
 
+/* ============================================================
+   Ngưỡng liều dùng — dữ liệu cho cảnh báo "liều ngoài phạm vi"
+   ============================================================
+
+   Mọi ngưỡng dưới đây là con số ĐƯỢC GHI trong mục "Liều lượng và cách dùng" của tờ HDSD,
+   kèm nguyên văn câu chứa con số đó. Hệ thống chỉ ĐỐI CHIẾU liều người dùng nhập với con
+   số này rồi nêu chênh lệch — không đề xuất liều nên dùng, không tự suy ra ngưỡng cho
+   thuốc chưa có dữ liệu (nguyên tắc 1 và 2 trong AGENTS.md).
+
+   - `maxPerDose` / `maxPerDay`: ngưỡng tối đa theo tờ HDSD, cùng `unit` với hàm lượng.
+   - `perKgPerDay`: thuốc tính theo cân nặng — thiếu cân nặng thì không đối chiếu được.
+   - `minAge`: ngưỡng chỉ áp dụng cho nhóm tuổi này trở lên; ngoài nhóm thì trả "chưa có
+     dữ liệu" thay vì áp ngưỡng người lớn cho trẻ em.
+*/
+const DOSE_LIMITS = {
+  Paracetamol: {
+    unit: "mg",
+    maxPerDose: 1000,
+    maxPerDay: 4000,
+    minAge: 12,
+    citation: "\"Người lớn: 500-1000mg mỗi 4-6 giờ, tối đa 4g/ngày. Trẻ em tính theo cân nặng, theo hướng dẫn của bác sĩ/dược sĩ.\"",
+    source: "Tờ hướng dẫn sử dụng Paracetamol — mục Liều và cách dùng, trang 2",
+  },
+  Ibuprofen: {
+    unit: "mg",
+    maxPerDose: 400,
+    maxPerDay: 1200,
+    minAge: 12,
+    citation: "\"Người lớn: 200-400mg mỗi 4-6 giờ, tối đa 1200mg/ngày (không kê đơn) trừ khi có chỉ định khác.\"",
+    source: "Tờ hướng dẫn sử dụng Ibuprofen — mục Liều và cách dùng, trang 3",
+  },
+  Aspirin: {
+    unit: "mg",
+    maxPerDay: 100,
+    minAge: 16,
+    scopeNote: "Ngưỡng áp dụng cho mục đích dự phòng tim mạch.",
+    citation: "\"Dự phòng tim mạch: 75-100mg/ngày.\"",
+    source: "Tờ hướng dẫn sử dụng Aspirin — mục Liều và cách dùng, trang 2",
+  },
+  Amlodipine: {
+    unit: "mg",
+    maxPerDose: 10,
+    maxPerDay: 10,
+    citation: "\"Khởi đầu 5mg/ngày, có thể tăng đến 10mg/ngày sau 1-2 tuần theo đáp ứng.\"",
+    source: "Tờ hướng dẫn sử dụng Amlodipine — mục Liều và cách dùng, trang 2",
+  },
+  Atorvastatin: {
+    unit: "mg",
+    maxPerDay: 80,
+    citation: "\"Khởi đầu 10-20mg/ngày, uống buổi tối, điều chỉnh theo mục tiêu LDL-C.\"",
+    source: "Tờ hướng dẫn sử dụng Atorvastatin — mục Liều và cách dùng, trang 3",
+  },
+  Simvastatin: {
+    unit: "mg",
+    maxPerDay: 40,
+    citation: "\"Khởi đầu 10-20mg/ngày uống buổi tối, tối đa 40mg/ngày.\"",
+    source: "Tờ hướng dẫn sử dụng Simvastatin — mục Liều và cách dùng, trang 2",
+  },
+  Losartan: {
+    unit: "mg",
+    maxPerDay: 100,
+    citation: "\"Khởi đầu 50mg/ngày, có thể điều chỉnh 25-100mg/ngày theo đáp ứng huyết áp.\"",
+    source: "Tờ hướng dẫn sử dụng Losartan — mục Liều và cách dùng, trang 3",
+  },
+  Metformin: {
+    unit: "mg",
+    maxPerDay: 2550,
+    citation: "\"Khởi đầu 500mg 1-2 lần/ngày, tăng dần theo đáp ứng, uống cùng bữa ăn.\"",
+    source: "Tờ hướng dẫn sử dụng Metformin — mục Liều và cách dùng, trang 3",
+  },
+  Sertraline: {
+    unit: "mg",
+    maxPerDay: 200,
+    citation: "\"Khởi đầu 50mg/ngày, điều chỉnh theo đáp ứng, tối đa 200mg/ngày.\"",
+    source: "Tờ hướng dẫn sử dụng Sertraline — mục Liều và cách dùng, trang 4",
+  },
+  Loratadine: {
+    unit: "mg",
+    maxPerDay: 10,
+    minAge: 12,
+    citation: "\"10mg/ngày, uống một lần, không phụ thuộc bữa ăn.\"",
+    source: "Tờ hướng dẫn sử dụng Loratadine — mục Liều và cách dùng, trang 2",
+  },
+  Rifampicin: {
+    unit: "mg",
+    perKgPerDay: 10,
+    maxPerDay: 600,
+    citation: "\"10mg/kg/ngày (tối đa 600mg/ngày), uống lúc đói, theo phác đồ chống lao.\"",
+    source: "Tờ hướng dẫn sử dụng Rifampicin — mục Liều và cách dùng, trang 3",
+  },
+};
+
+const GENDER_OPTIONS = [
+  { value: "nu", label: "Nữ" },
+  { value: "nam", label: "Nam" },
+  { value: "khac", label: "Khác / không nêu" },
+];
+
+// Tình trạng đặc biệt gửi kèm cho bác sĩ. Bản demo chỉ hiển thị lại, không dùng để suy
+// luận cảnh báo — mọi cảnh báo vẫn phải xuất phát từ trích dẫn tờ HDSD.
+const CONDITION_OPTIONS = [
+  { value: "mang-thai", label: "Đang mang thai" },
+  { value: "cho-con-bu", label: "Đang cho con bú" },
+  { value: "suy-than", label: "Suy thận" },
+  { value: "suy-gan", label: "Suy gan" },
+];
+
+/** Đọc hàm lượng từ tên thuốc, quy về mg. "Levothyroxine 50mcg" -> 0.05 */
+function parseStrength(name) {
+  const match = name.match(/([\d.,]+)\s*(mcg|µg|mg|g)\b/i);
+  if (!match) return null;
+  const value = parseFloat(match[1].replace(",", "."));
+  if (Number.isNaN(value)) return null;
+  const unit = match[2].toLowerCase();
+  if (unit === "g") return value * 1000;
+  if (unit === "mcg" || unit === "µg") return value / 1000;
+  return value;
+}
+
+/** Làm gọn số để hiển thị: 4000 -> "4000", 0.05 -> "0.05" */
+function formatDoseNumber(value) {
+  return Number.isInteger(value) ? String(value) : String(Math.round(value * 1000) / 1000);
+}
+
+/**
+ * Đối chiếu liều một thuốc với ngưỡng trong tờ HDSD.
+ * `regimen` = { perDose: số viên mỗi lần, perDay: số lần mỗi ngày }.
+ * Trả về một trong các trạng thái: incomplete · no-strength · no-data · age-out-of-scope ·
+ * need-weight · over · ok. Không có ngưỡng trong nguồn thì luôn là "no-data", hệ thống
+ * không tự nghĩ ra ngưỡng.
+ */
+function checkDose(drugName, regimen, profile) {
+  const base = baseDrugName(drugName);
+  const result = { drug: drugName, base, status: "ok", exceeded: [] };
+
+  const perDose = Number(regimen && regimen.perDose);
+  const perDay = Number(regimen && regimen.perDay);
+  if (!perDose || !perDay) {
+    result.status = "incomplete";
+    return result;
+  }
+
+  const limit = DOSE_LIMITS[base];
+  if (!limit) {
+    result.status = "no-data";
+    return result;
+  }
+  result.limit = limit;
+
+  const strength = parseStrength(drugName);
+  if (strength === null) {
+    result.status = "no-strength";
+    return result;
+  }
+
+  const age = profile && profile.age ? Number(profile.age) : null;
+  if (limit.minAge && age !== null && age < limit.minAge) {
+    result.status = "age-out-of-scope";
+    result.minAge = limit.minAge;
+    return result;
+  }
+
+  const dosePerIntake = strength * perDose;
+  const dosePerDay = dosePerIntake * perDay;
+  result.dosePerIntake = dosePerIntake;
+  result.dosePerDay = dosePerDay;
+  result.unit = limit.unit;
+
+  let maxPerDay = limit.maxPerDay;
+  if (limit.perKgPerDay) {
+    const weight = profile && profile.weight ? Number(profile.weight) : null;
+    if (!weight) {
+      result.status = "need-weight";
+      return result;
+    }
+    const byWeight = limit.perKgPerDay * weight;
+    maxPerDay = maxPerDay ? Math.min(maxPerDay, byWeight) : byWeight;
+    result.weightBased = { weight, perKgPerDay: limit.perKgPerDay, computed: byWeight };
+  }
+  result.maxPerDay = maxPerDay;
+
+  if (limit.maxPerDose && dosePerIntake > limit.maxPerDose) {
+    result.exceeded.push({
+      kind: "moi-lan",
+      value: dosePerIntake,
+      max: limit.maxPerDose,
+    });
+  }
+  if (maxPerDay && dosePerDay > maxPerDay) {
+    result.exceeded.push({ kind: "moi-ngay", value: dosePerDay, max: maxPerDay });
+  }
+  result.status = result.exceeded.length > 0 ? "over" : "ok";
+  return result;
+}
+
+/** Đối chiếu liều cho cả danh sách thuốc. */
+function computeDoseFindings(drugs, regimens, profile) {
+  return drugs.map((name) => checkDose(name, regimens[name], profile));
+}
+
 // Danh sách bệnh nền minh hoạ cho màn "Tra cứu thuốc và bệnh nền"
 const DISEASE_CATALOG = [
   "Tăng huyết áp",
@@ -564,6 +838,159 @@ const DOCTORS_MOCK = [
   { id: "d1", name: "BS. Nguyễn Văn An", role: "Nội tim mạch" },
   { id: "d2", name: "DS. Trần Thị Bích", role: "Dược lâm sàng" },
   { id: "d3", name: "BS. Lê Minh Châu", role: "Nội tổng quát" },
+];
+
+// Ba kết luận chuyên môn theo Project Brief. Bác sĩ/dược sĩ chọn một trong ba khi duyệt.
+const REVIEW_CONCLUSIONS = [
+  {
+    value: "verified",
+    label: "Đã xác minh có tương tác",
+    hint: "Trích dẫn và nguồn phù hợp với cặp thuốc bệnh nhân đang dùng.",
+  },
+  {
+    value: "insufficient",
+    label: "Không đủ thông tin",
+    hint: "Nguồn hiện có chưa đủ để kết luận về trường hợp này.",
+  },
+  {
+    value: "need-data",
+    label: "Cần bổ sung dữ liệu",
+    hint: "Cần trích xuất thêm tờ HDSD trước khi phản hồi chính thức.",
+  },
+];
+
+const SEVERITY_OPTIONS = [
+  { value: "nghiem-trong", label: "Nghiêm trọng" },
+  { value: "trung-binh", label: "Trung bình" },
+  { value: "nhe", label: "Nhẹ" },
+];
+
+/**
+ * Hàng đợi yêu cầu khởi tạo cho màn bác sĩ. Yêu cầu bệnh nhân gửi từ màn tra cứu sẽ được
+ * ghi thêm vào cùng kho localStorage này (xem `js/app.js`), nên hai vai trò dùng chung một
+ * danh sách. `kind` phân biệt hai nhánh trong sơ đồ luồng: "doi-chieu" (gửi đối chiếu kết
+ * quả có tương tác) và "kiem-tra" (gửi kiểm tra khi hệ thống báo chưa có dữ liệu).
+ */
+const SEED_REQUESTS = [
+  {
+    id: "YC-260807-014",
+    patient: "Nguyễn An",
+    sentAt: "2026-08-07T14:32:00+07:00",
+    kind: "doi-chieu",
+    scope: "Tương tác thuốc - thuốc",
+    doctorName: "BS. Lê Minh Châu",
+    origin: "seed",
+    note: "Tôi đang dùng thuốc sau đợt khám tim mạch. Gần đây hay xuất hiện vết bầm, nhờ bác sĩ xem giúp kết quả tương tác.",
+    drugs: ["Warfarin 5mg", "Aspirin 81mg"],
+    interactions: [
+      {
+        pair: "Warfarin 5mg × Aspirin 81mg",
+        severity: "nghiem-trong",
+        severityLabel: "Nghiêm trọng",
+        citation: "\"Phối hợp Warfarin với Aspirin làm tăng nguy cơ chảy máu do tác dụng cộng gộp trên quá trình đông máu và chức năng tiểu cầu.\"",
+        source: "Tờ hướng dẫn sử dụng Warfarin, mục Tương tác thuốc, trang 3",
+        display: "Dùng đồng thời hai thuốc này làm tăng nguy cơ chảy máu.",
+        status: "pending",
+      },
+    ],
+    noDataPairs: [],
+    review: null,
+  },
+  {
+    id: "YC-260807-011",
+    patient: "Trần Minh Hoàng",
+    sentAt: "2026-08-07T10:18:00+07:00",
+    kind: "doi-chieu",
+    scope: "Tương tác thuốc - thuốc",
+    doctorName: "DS. Trần Thị Bích",
+    origin: "seed",
+    note: "Tôi dùng thuốc dạ dày mỗi sáng và thuốc tim theo đơn sau đặt stent. Xin bác sĩ đánh giá giúp.",
+    drugs: ["Clopidogrel 75mg", "Omeprazole 20mg"],
+    interactions: [
+      {
+        pair: "Clopidogrel 75mg × Omeprazole 20mg",
+        severity: "trung-binh",
+        severityLabel: "Trung bình",
+        citation: "\"Omeprazole có thể làm giảm tác dụng chống kết tập tiểu cầu của Clopidogrel do ức chế chuyển hoá qua CYP2C19.\"",
+        source: "Tờ hướng dẫn sử dụng Clopidogrel, mục Tương tác thuốc, trang 4",
+        display: "Thuốc dạ dày có thể làm giảm hiệu quả của thuốc chống kết tập tiểu cầu.",
+        status: "pending",
+      },
+    ],
+    noDataPairs: [],
+    review: null,
+  },
+  {
+    id: "YC-260806-031",
+    patient: "Vũ Thị Hạnh",
+    sentAt: "2026-08-06T20:05:00+07:00",
+    kind: "kiem-tra",
+    scope: "Tương tác thuốc - thuốc",
+    doctorName: "DS. Trần Thị Bích",
+    origin: "seed",
+    note: "Hệ thống báo chưa có dữ liệu cho các cặp thuốc này. Nhờ dược sĩ kiểm tra giúp tôi.",
+    drugs: ["Sertraline 50mg", "Tamoxifen 20mg", "Rifampicin 300mg"],
+    interactions: [],
+    noDataPairs: ["Sertraline × Tamoxifen", "Sertraline × Rifampicin", "Tamoxifen × Rifampicin"],
+    review: null,
+  },
+  {
+    id: "YC-260806-028",
+    patient: "Phạm Thị Lan",
+    sentAt: "2026-08-06T16:45:00+07:00",
+    kind: "doi-chieu",
+    scope: "Tương tác thuốc - thuốc",
+    doctorName: "BS. Nguyễn Văn An",
+    origin: "seed",
+    note: "Đơn mới có thêm kháng sinh. Tôi chưa uống liều đầu tiên và muốn hỏi trước khi dùng cùng thuốc mỡ máu.",
+    drugs: ["Simvastatin 20mg", "Clarithromycin 500mg"],
+    interactions: [
+      {
+        pair: "Simvastatin 20mg × Clarithromycin 500mg",
+        severity: "nghiem-trong",
+        severityLabel: "Nghiêm trọng",
+        citation: "\"Sử dụng đồng thời Simvastatin với thuốc ức chế CYP3A4 mạnh như Clarithromycin làm tăng nồng độ Simvastatin trong huyết tương, tăng nguy cơ bệnh cơ và tiêu cơ vân.\"",
+        source: "Tờ hướng dẫn sử dụng Simvastatin, mục Chống chỉ định phối hợp, trang 2",
+        display: "Kháng sinh này làm tăng nồng độ thuốc mỡ máu trong máu, tăng nguy cơ tổn thương cơ.",
+        status: "confirmed",
+      },
+    ],
+    noDataPairs: [],
+    review: null,
+  },
+  {
+    id: "YC-260805-019",
+    patient: "Đỗ Quang Huy",
+    sentAt: "2026-08-05T09:10:00+07:00",
+    kind: "doi-chieu",
+    scope: "Tương tác thuốc - thuốc",
+    doctorName: "BS. Lê Minh Châu",
+    origin: "seed",
+    note: "Tôi thấy chóng mặt khi đứng lên và đang dùng cả hai thuốc này. Nhờ bác sĩ kiểm tra giúp.",
+    drugs: ["Losartan 50mg", "Furosemide 40mg", "Digoxin 0.25mg"],
+    interactions: [
+      {
+        pair: "Losartan 50mg × Furosemide 40mg",
+        severity: "nhe",
+        severityLabel: "Nhẹ",
+        citation: "\"Phối hợp với thuốc lợi tiểu có thể làm tăng tác dụng hạ huyết áp của Losartan, cần theo dõi huyết áp khi bắt đầu điều trị.\"",
+        source: "Tờ hướng dẫn sử dụng Losartan, mục Tương tác thuốc, trang 3",
+        display: "Hai thuốc cùng hạ huyết áp, cần theo dõi huyết áp khi mới dùng.",
+        status: "confirmed",
+      },
+      {
+        pair: "Digoxin 0.25mg × Furosemide 40mg",
+        severity: "trung-binh",
+        severityLabel: "Trung bình",
+        citation: "\"Furosemide có thể gây hạ kali máu, làm tăng nguy cơ ngộ độc Digoxin.\"",
+        source: "Tờ hướng dẫn sử dụng Digoxin, mục Thận trọng khi phối hợp, trang 2",
+        display: "Thuốc lợi tiểu làm hạ kali máu, khiến nguy cơ ngộ độc Digoxin tăng lên.",
+        status: "pending",
+      },
+    ],
+    noDataPairs: [],
+    review: null,
+  },
 ];
 
 // Lịch sử tra cứu minh hoạ, hiển thị ở sidebar và trang chủ

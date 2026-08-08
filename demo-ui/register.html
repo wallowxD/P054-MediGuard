@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Đăng nhập — Demo giao diện</title>
+  <title>Đăng ký — Demo giao diện</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -23,10 +23,10 @@
         </span>
         Trợ lý An toàn Thuốc
       </a>
-      <h1>Đăng nhập</h1>
-      <p class="auth-sub">Chọn vai trò rồi đăng nhập để vào đúng không gian làm việc.</p>
+      <h1>Đăng ký</h1>
+      <p class="auth-sub">Tạo tài khoản để lưu lịch sử tra cứu và trao đổi với bác sĩ, dược sĩ.</p>
 
-      <form id="loginForm">
+      <form id="registerForm" novalidate>
         <div class="field-group">
           <span class="field-label">Vai trò</span>
           <div class="role-switch" role="radiogroup" aria-label="Vai trò người dùng">
@@ -50,34 +50,41 @@
         </div>
 
         <div class="field-group">
+          <label for="fullName">Họ và tên</label>
+          <input class="text-input" type="text" id="fullName" placeholder="Nguyễn Văn A" required />
+        </div>
+        <div class="field-group" id="titleField" hidden>
+          <label for="title">Chuyên khoa</label>
+          <input class="text-input" type="text" id="title" placeholder="Ví dụ: Dược lâm sàng" />
+        </div>
+        <div class="field-group">
           <label for="email">Email</label>
           <input class="text-input" type="email" id="email" placeholder="ban@benhvien.vn" required />
         </div>
         <div class="field-group">
           <label for="password">Mật khẩu</label>
-          <input class="text-input" type="password" id="password" placeholder="••••••••" required />
+          <input class="text-input" type="password" id="password" placeholder="Ít nhất 6 ký tự" required />
         </div>
+        <div class="field-group">
+          <label for="confirmPassword">Nhập lại mật khẩu</label>
+          <input class="text-input" type="password" id="confirmPassword" placeholder="••••••••" required />
+        </div>
+
+        <p class="form-error hidden" id="formError"></p>
+
+        <p class="auth-consent">
+          Tài khoản demo không lưu dữ liệu y tế thật. Kết quả tra cứu là cảnh báo tham khảo có dẫn nguồn,
+          không thay thế chỉ định của bác sĩ.
+        </p>
+
         <button type="submit" class="btn btn-primary btn-block">
-          Đăng nhập
+          Tạo tài khoản
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><path d="m14 6 6 6-6 6"/></svg>
         </button>
       </form>
 
-      <div class="demo-accounts">
-        <span class="demo-accounts-title">Tài khoản demo</span>
-        <button type="button" class="demo-account" data-email="benhnhan@demo.vn" data-password="123456" data-role="patient">
-          Bệnh nhân · benhnhan@demo.vn / 123456
-        </button>
-        <button type="button" class="demo-account" data-email="doctor@gmail.com" data-password="doctor" data-role="doctor">
-          Bác sĩ · doctor@gmail.com / doctor
-        </button>
-      </div>
-
-      <div class="auth-divider">hoặc</div>
-      <a class="btn btn-secondary btn-block" href="home.html">Xem demo không cần đăng nhập</a>
-
       <p class="auth-footnote">
-        Chưa có tài khoản? <a href="register.html">Đăng ký</a>
+        Đã có tài khoản? <a href="login.html">Đăng nhập</a>
       </p>
       <p class="auth-footnote">
         <a href="index.html">← Về trang giới thiệu</a>
@@ -89,49 +96,47 @@
   <script src="js/app.js"></script>
   <script>
     const roleOptions = Array.from(document.querySelectorAll(".role-option"));
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-
-    function syncRoleOptions() {
-      roleOptions.forEach((option) => {
-        option.classList.toggle("is-active", option.querySelector("input").checked);
-      });
-    }
-    roleOptions.forEach((option) => option.addEventListener("change", syncRoleOptions));
+    const titleField = document.getElementById("titleField");
+    const errorEl = document.getElementById("formError");
 
     function selectedRole() {
       return document.querySelector('input[name="role"]:checked').value;
     }
 
-    // Bấm vào tài khoản demo để điền sẵn email/mật khẩu và chọn đúng vai trò.
-    document.querySelectorAll(".demo-account").forEach((button) => {
-      button.addEventListener("click", () => {
-        emailInput.value = button.dataset.email;
-        passwordInput.value = button.dataset.password;
-        document.querySelector(`input[name="role"][value="${button.dataset.role}"]`).checked = true;
-        syncRoleOptions();
-      });
-    });
+    function syncRoleOptions() {
+      roleOptions.forEach((option) => option.classList.toggle("is-active", option.querySelector("input").checked));
+      titleField.hidden = selectedRole() !== "doctor";
+    }
+    roleOptions.forEach((option) => option.addEventListener("change", syncRoleOptions));
+    syncRoleOptions();
 
-    document.getElementById("loginForm").addEventListener("submit", (e) => {
+    function showError(message) {
+      errorEl.textContent = message;
+      errorEl.classList.remove("hidden");
+    }
+
+    document.getElementById("registerForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      const email = emailInput.value.trim().toLowerCase();
-      const password = passwordInput.value;
+      errorEl.classList.add("hidden");
 
-      // Tài khoản demo có sẵn thì lấy đúng tên và vai trò; email khác vẫn vào được và
-      // dùng vai trò người dùng vừa chọn ở trên.
-      const account = DEMO_ACCOUNTS.find((item) => item.email === email && item.password === password);
-      const role = account ? account.role : selectedRole();
-      const session = account
-        ? { role: account.role, name: account.name, title: account.title, email: account.email }
-        : {
-            role,
-            name: email.split("@")[0] || "Người dùng demo",
-            title: role === "doctor" ? "Bác sĩ · Dược sĩ" : "Bệnh nhân",
-            email,
-          };
+      const name = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const role = selectedRole();
+      const title = document.getElementById("title").value.trim();
 
-      writeSession(session);
+      if (!name) return showError("Vui lòng nhập họ và tên.");
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showError("Email chưa đúng định dạng.");
+      if (password.length < 6) return showError("Mật khẩu cần ít nhất 6 ký tự.");
+      if (password !== confirmPassword) return showError("Hai lần nhập mật khẩu chưa khớp.");
+
+      writeSession({
+        role,
+        name,
+        title: role === "doctor" ? title || "Bác sĩ · Dược sĩ" : "Bệnh nhân",
+        email,
+      });
       window.location.href = role === "doctor" ? "doctor.html" : "home.html";
     });
   </script>
