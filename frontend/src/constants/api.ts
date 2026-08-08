@@ -67,10 +67,14 @@ export const API_ENDPOINTS = {
     GET_DETAILS: (id: string) => `${API_V1}/interactions/${id}`,
   },
 
-  /** Danh mục thuốc + chuẩn hoá tên (khớp mờ) */
+  /**
+   * Danh mục thuốc. SEARCH, GET_ALL và LETTERS đã CHẠY THẬT ở backend (VMEC-29);
+   * GET_DETAILS thì chưa — xem `backend/src/medsafe/api/v1/drugs.py`.
+   */
   DRUGS: {
     SEARCH: `${API_V1}/drugs/search`,
     GET_ALL: `${API_V1}/drugs`,
+    LETTERS: `${API_V1}/drugs/letters`,
     GET_DETAILS: (id: string) => `${API_V1}/drugs/${id}`,
   },
 

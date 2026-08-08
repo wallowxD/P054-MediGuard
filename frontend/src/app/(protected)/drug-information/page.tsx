@@ -1,10 +1,5 @@
-import { BookOpen } from "lucide-react";
-import { DrugCatalogPicker, DrugSourcePanel } from "@/components/drugs";
-import EmptyState from "@/components/EmptyState";
+import { DrugCatalogBrowser, DrugSourcePanel } from "@/components/drugs";
 
-// TODO(API): ráp useDrugSearch() (src/queries/interactions.ts) khi backend mở
-// GET /api/v1/drugs/search — DrugCatalogPicker hiện chỉ mô phỏng debounce/loading UI,
-// không gọi fetch, không hiển thị kết quả suy đoán.
 export default function DrugInformationPage() {
   return (
     <div className="space-y-6">
@@ -16,16 +11,7 @@ export default function DrugInformationPage() {
         </p>
       </header>
 
-      <DrugCatalogPicker
-        label="Tìm thuốc trong danh mục bệnh viện"
-        placeholder="Nhập tên biệt dược hoặc hoạt chất…"
-      />
-
-      <EmptyState
-        icon={<BookOpen className="h-10 w-10" aria-hidden />}
-        title="Chưa có thông tin để hiển thị"
-        description="Chọn một thuốc từ danh mục bệnh viện để xem thông tin có dẫn nguồn. Nội dung không có trích dẫn nguyên văn từ tờ hướng dẫn sử dụng sẽ không được hiển thị."
-      />
+      <DrugCatalogBrowser />
 
       <DrugSourcePanel />
     </div>

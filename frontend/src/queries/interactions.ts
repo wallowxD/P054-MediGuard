@@ -3,14 +3,16 @@
  * Component chỉ import từ đây, không import thẳng `services/*`.
  */
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   checkInteractionsRequest,
   getDrugDetailsRequest,
+  getDrugLettersRequest,
   getInteractionCheckDetailsRequest,
   getInteractionChecksRequest,
   getInteractionDetailsRequest,
   getInteractionsRequest,
+  listDrugsRequest,
   searchDrugsRequest,
 } from "@/services/interactions";
 
@@ -24,13 +26,16 @@ export const interactionKeys = {
   list: (params: IInteractionsGetAllRequest) => [...interactionKeys.lists(), params] as const,
   details: () => [...interactionKeys.all, "detail"] as const,
   detail: (id: string) => [...interactionKeys.details(), id] as const,
-  drugSearch: (keyword: string) => ["drugs", "search", keyword] as const,
+  drugSearch: (keyword: string, limit?: number) => ["drugs", "search", keyword, limit] as const,
 };
 
 export const drugKeys = {
   all: ["drugs"] as const,
   details: () => [...drugKeys.all, "detail"] as const,
   detail: (id: string) => [...drugKeys.details(), id] as const,
+  lists: () => [...drugKeys.all, "list"] as const,
+  list: (params: IDrugListRequest) => [...drugKeys.lists(), params] as const,
+  letters: () => [...drugKeys.all, "letters"] as const,
 };
 
 export const interactionCheckKeys = {
@@ -58,13 +63,48 @@ export const useInteraction = (id: string, enabled: boolean = true) =>
     enabled: enabled && !!id,
   });
 
-/** Gõ tên thuốc → gợi ý. Chuẩn hoá tên (khớp mờ) do backend `domain/normalization.py` lo. */
-export const useDrugSearch = (keyword: string, enabled: boolean = true) =>
+/**
+ * Gõ tên thuốc → gợi ý. Chuẩn hoá tên và xếp hạng do backend `domain/normalization.py` lo.
+ *
+ * Chạy từ MỘT ký tự: backend xếp hạng tiền tố tên biệt dược trước nên gõ "H" đã ra thuốc
+ * vần H. Chặn ở 2 ký tự như trước sẽ làm hỏng đúng trường hợp phổ biến nhất.
+ */
+export const useDrugSearch = (keyword: string, enabled: boolean = true, limit?: number) =>
   useQuery({
-    queryKey: interactionKeys.drugSearch(keyword),
-    queryFn: () => searchDrugsRequest({ q: keyword }),
-    enabled: enabled && keyword.trim().length > 1,
+    queryKey: interactionKeys.drugSearch(keyword, limit),
+    queryFn: () => searchDrugsRequest({ q: keyword, limit }),
+    enabled: enabled && keyword.trim().length > 0,
+    placeholderData: keepPreviousData,
     staleTime: 5 * 60 * 1000,
+  });
+
+/**
+ * Duyệt danh mục theo chữ cái, có phân trang.
+ *
+ * `keepPreviousData` giữ trang cũ trong lúc tải trang mới — không có nó thì mỗi lần bấm
+ * số trang danh sách sẽ nháy về rỗng rồi mới hiện lại, và chiều cao trang nhảy theo.
+ */
+export const useDrugList = (params: IDrugListRequest, enabled: boolean = true) =>
+  useQuery({
+    queryKey: drugKeys.list(params),
+    queryFn: () => listDrugsRequest(params),
+    enabled,
+    placeholderData: keepPreviousData,
+    staleTime: 5 * 60 * 1000,
+  });
+
+/**
+ * Chỉ mục A–Z cho thanh chữ cái.
+ *
+ * Danh mục bệnh viện gần như không đổi trong một phiên làm việc nên cache dài; gọi lại ở
+ * mỗi lần đổi vần là lãng phí một round-trip cho dữ liệu không đổi.
+ */
+export const useDrugLetters = (enabled: boolean = true) =>
+  useQuery({
+    queryKey: drugKeys.letters(),
+    queryFn: () => getDrugLettersRequest(),
+    enabled,
+    staleTime: 30 * 60 * 1000,
   });
 
 /** Chi tiết một thuốc cho `/drug-information/[id]` — chuẩn bị cho GET /api/v1/drugs/{id} */

@@ -1,5 +1,11 @@
 export {};
 
+/**
+ * Type của luồng cảnh báo tương tác và lịch sử tra cứu.
+ *
+ * Type của danh mục thuốc (`IDrugItem`, `IDrugListResponse`, `IDrugCandidate`…) nằm ở
+ * `drugs.d.ts`. Cả hai file đều khai báo global nên không cần import qua lại.
+ */
 declare global {
   /** Mức nghiêm trọng — xếp tất định ở backend `domain/severity.py`, FE không tự suy ra */
   type TSeverity = "contraindicated" | "major" | "moderate" | "minor" | "unknown";
@@ -8,16 +14,6 @@ declare global {
   type TReviewStatus = "pending" | "approved" | "rejected";
 
   type TInteractionKind = "drug-drug" | "drug-food";
-
-  interface IDrugItem {
-    id: string;
-    /** Tên biệt dược, ví dụ "Panadol Extra" */
-    brandName: string;
-    /** Hoạt chất + hàm lượng */
-    ingredient: string;
-    /** Link tờ HDSD gốc */
-    leafletUrl?: string;
-  }
 
   /**
    * ★ Đoạn trích minh chứng. Luật số 1 của dự án: KHÔNG có citation thì KHÔNG
@@ -89,29 +85,6 @@ declare global {
   interface IInteractionsGetAllResponse {
     items: IInteractionItem[];
     metadata: IPaginationMetadata;
-  }
-
-  interface IDrugSearchRequest {
-    q: string;
-    limit?: number;
-  }
-
-  interface IDrugSearchResponse {
-    query: string;
-    candidates: IDrugCandidate[];
-    requiresConfirmation: boolean;
-  }
-
-  interface IDrugCandidate {
-    drugId: string;
-    brandName: string;
-    ingredient: string;
-    confidence: number;
-  }
-
-  /** Chi tiết một thuốc cho `/drug-information/[id]` — bắt buộc có citation mới được hiển thị */
-  interface IDrugInformationDetail extends IDrugItem {
-    citations: ICitation[];
   }
 
   /** Một dòng trong `/history` — tóm tắt một lượt tra cứu đã thực hiện */
