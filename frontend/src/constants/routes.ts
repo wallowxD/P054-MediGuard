@@ -51,6 +51,7 @@ export const ROUTES = {
   INTERACTIONS_DRUG_DRUG: "/interactions/drug-drug",
   INTERACTIONS_DRUG_FOOD: "/interactions/drug-food",
   INTERACTIONS_DRUG_DISEASE: "/interactions/drug-disease",
+  PRESCRIPTIONS_REVIEW: "/prescriptions/review",
   SETTINGS: "/settings",
   REVIEW: "/review",
   REVIEW_QUEUE: "/review/queue",
