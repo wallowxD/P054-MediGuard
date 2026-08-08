@@ -36,14 +36,24 @@ COPY . .
 # ★ Biến NEXT_PUBLIC_* được NHÚNG THẲNG vào bundle lúc build, không đọc lúc chạy.
 #   Nên phải truyền dạng build arg, đặt ở `environment:` của compose là vô tác dụng.
 #   ⚠️ Tên phải khớp CHÍNH XÁC biến mà code đọc:
-#     - src/constants/api.ts   → NEXT_PUBLIC_API_BASE_URL
-#     - src/config/seo-config.ts → NEXT_PUBLIC_APP_URL
+#     - src/constants/api.ts                    → NEXT_PUBLIC_API_BASE_URL
+#     - src/config/seo-config.ts                → NEXT_PUBLIC_APP_URL
+#     - src/components/auth/GoogleSignInButton.tsx → NEXT_PUBLIC_GOOGLE_CLIENT_ID
 #   Sai tên thì không có lỗi nào cả, chỉ là giá trị rỗng nằm im trong bundle.
 ARG NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
 ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
 
 ARG NEXT_PUBLIC_APP_URL=http://localhost:3000
 ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
+
+ARG NEXT_PUBLIC_ENVIRONMENT=production
+ENV NEXT_PUBLIC_ENVIRONMENT=$NEXT_PUBLIC_ENVIRONMENT
+
+# Không phải secret (client ID công khai trong OAuth consent screen) nhưng vẫn phải là
+# build arg vì browser cần đọc để khởi tạo Google Identity Services. Không có giá trị
+# mặc định: thà fail lúc build còn hơn ship một bundle mà nút đăng nhập Google chết.
+ARG NEXT_PUBLIC_GOOGLE_CLIENT_ID
+ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
 ENV NEXT_TELEMETRY_DISABLED=1
 

@@ -1,0 +1,53 @@
+# Reverse proxy cho VPS — mot domain duy nhat, tach theo path.
+#
+# Caddy tu xin va gia han chung chi Let's Encrypt, mien la:
+#   - ban ghi DNS A cua {$PUBLIC_DOMAIN} tro dung IP VPS,
+#   - cong 80 va 443 mo tren firewall (Caddy dung cong 80 de xac thuc ACME).
+#
+# Bien lay tu .env o repo root qua `environment:` trong docker-compose.prod.yml.
+{
+	# Let's Encrypt gui canh bao het han chung chi ve dia chi nay.
+	email {$ACME_EMAIL}
+}
+
+{$PUBLIC_DOMAIN} {
+	encode zstd gzip
+
+	# ────────────────────────────────────────────────────────────────────
+	# ★ BAY QUAN TRONG NHAT CUA FILE NAY
+	#
+	# Khong duoc viet `handle /api/*` roi day het sang backend. Duong dan /api
+	# bi CHIA DOI giua hai service:
+	#
+	#   /api/v1/*        -> FastAPI      (main.py: include_router prefix="/api/v1")
+	#   /api/auth/*      -> Next.js      (app/api/auth/[...nextauth]/route.ts)
+	#   /api/external/*  -> Next.js      (next.config.ts: rewrites)
+	#
+	# Cuop /api/auth/* khoi Next.js = toan bo luong dang nhap chet, va trieu chung
+	# la 404 tu FastAPI chu khong phai loi cua next-auth, rat mat thoi gian truy.
+	# ────────────────────────────────────────────────────────────────────
+	handle /api/v1/* {
+		reverse_proxy backend:8000
+	}
+
+	# Health check cho monitoring/uptime. Next.js khong dinh nghia route nay.
+	handle /health {
+		reverse_proxy backend:8000
+	}
+
+	# OpenAPI schema — frontend sinh src/lib/api/types.gen.ts tu day, va Swagger UI
+	# huu ich luc demo. Muon dong lai thi xoa hai block nay va dat
+	# `docs_url=None, openapi_url=None` trong create_app().
+	handle /openapi.json {
+		reverse_proxy backend:8000
+	}
+
+	handle /docs* {
+		reverse_proxy backend:8000
+	}
+
+	# Tat ca phan con lai thuoc ve Next.js, gom ca /api/auth/* va /api/external/*.
+	handle {
+		reverse_proxy frontend:3000
+	}
+}

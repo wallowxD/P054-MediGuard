@@ -2,7 +2,8 @@ SHELL := /bin/bash
 
 .PHONY: help install run test lint format check ingest-pilot up down clean \
         migrate migration migrate-down \
-        web-install web web-build web-lint dev
+        web-install web web-build web-lint dev \
+        prod-up prod-down prod-logs prod-config
 
 help:
 	@echo "install      — uv sync (tạo .venv ở repo root)"
@@ -15,7 +16,13 @@ help:
 	@echo "migrate      — alembic upgrade head (áp schema lên DATABASE_URL)"
 	@echo "migration    — sinh revision mới: make migration m=\"mô tả\""
 	@echo "migrate-down — lùi lại một revision"
-	@echo "up / down    — docker compose"
+	@echo "up / down    — docker compose local"
+	@echo "clean        — xoa cache __pycache__/.pytest_cache/.ruff_cache"
+	@echo ""
+	@echo "prod-config  — validate compose prod (chay TRUOC khi deploy)"
+	@echo "prod-up      — deploy len VPS: compose + Caddy + HTTPS"
+	@echo "prod-down    — dung stack prod"
+	@echo "prod-logs    — theo doi log prod"
 	@echo ""
 	@echo "web-install  — yarn install cho frontend"
 	@echo "web          — chạy Next.js dev tại http://localhost:3000"
@@ -82,6 +89,24 @@ up:
 
 down:
 	docker compose down
+
+# ---- VPS (xem docs/deployment.md) ----
+# Luon nap ca hai file: docker-compose.prod.yml chi THEM Caddy, khong dung mot minh duoc.
+COMPOSE_PROD := docker compose -f docker-compose.yml -f docker-compose.prod.yml
+
+prod-up:
+	$(COMPOSE_PROD) up -d --build
+
+prod-down:
+	$(COMPOSE_PROD) down
+
+prod-logs:
+	$(COMPOSE_PROD) logs -f
+
+# Render compose da thay the bien va validate — chay truoc khi deploy that.
+# Bien con thieu se bao loi ngay tai day thay vi lam stack chet luc up.
+prod-config:
+	$(COMPOSE_PROD) config --quiet && echo "docker-compose prod: OK"
 
 clean:
 	find . -type d -name __pycache__ -not -path "./.venv/*" -exec rm -rf {} +

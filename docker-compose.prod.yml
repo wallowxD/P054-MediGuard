@@ -1,0 +1,37 @@
+# Lop phu cho VPS. Luon nap KEM docker-compose.yml, khong dung mot minh:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# hoac ngan gon: `make prod-up`.
+#
+# File nay chi them Caddy. Viec KHONG phoi cong 3000/8000 ra Internet duoc xu ly bang
+# BIND_HOST=127.0.0.1 trong .env cua VPS, chu khong ghi de `ports:` o day — compose
+# GOP list `ports` giua cac file thay vi thay the, nen ghi de se ra hai binding chong nhau.
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      # HTTP/3. Bo dong nay neu nha cung cap VPS chan UDP.
+      - "443:443/udp"
+    environment:
+      # Nháy kép là bắt buộc: chuỗi báo lỗi có dấu `:` nên YAML sẽ hiểu nhầm thành mapping.
+      PUBLIC_DOMAIN: "${PUBLIC_DOMAIN:?chua set trong .env — vi du medsafe.example.com}"
+      ACME_EMAIL: "${ACME_EMAIL:?chua set trong .env — email nhan canh bao het han chung chi}"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # ★ caddy_data giu chung chi da cap. Mat volume nay = xin lai chung chi tu dau,
+      #   va Let's Encrypt gioi han 5 lan/tuan cho moi bo domain. Dung `docker compose
+      #   down -v` tren prod.
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - backend
+      - frontend
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -1,3 +1,8 @@
+// ★ PHẢI là import đầu tiên. File này nạp NEXT_PUBLIC_* từ `.env` ở repo root vào
+//   process.env; `./src/constants/api` đọc process.env NGAY LÚC IMPORT, nên đảo thứ tự
+//   hai dòng này sẽ khiến API_BASE_URL rỗng mà không có lỗi nào.
+import "./load-root-env";
+
 import type { NextConfig } from "next";
 import { API_BASE_URL } from "./src/constants/api";
 
