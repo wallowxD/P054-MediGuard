@@ -74,6 +74,12 @@ export const API_ENDPOINTS = {
     GET_DETAILS: (id: string) => `${API_V1}/drugs/${id}`,
   },
 
+  /** Lịch sử tra cứu — một lượt tra cứu có thể gồm nhiều cặp thuốc/thuốc hoặc thuốc/thực phẩm */
+  INTERACTION_CHECKS: {
+    GET_ALL: `${API_V1}/interaction-checks`,
+    GET_DETAILS: (id: string) => `${API_V1}/interaction-checks/${id}`,
+  },
+
   /** Đơn thuốc người dùng lưu lại */
   PRESCRIPTIONS: {
     GET_ALL: `${API_V1}/prescriptions`,

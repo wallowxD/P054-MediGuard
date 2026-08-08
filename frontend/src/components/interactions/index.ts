@@ -7,5 +7,6 @@ export { default as InteractionResultsPlaceholder } from "./InteractionResultsPl
 export { default as InteractionTableHeader } from "./InteractionTableHeader";
 export { default as InteractionTableRow } from "./InteractionTableRow";
 export { default as ReviewStatusTag } from "./ReviewStatusTag";
+export { default as SendToDoctorButton } from "./SendToDoctorButton";
 export { default as SeverityBadge } from "./SeverityBadge";
 export { default as UnavailableInteractionList } from "./UnavailableInteractionList";

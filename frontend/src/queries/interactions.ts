@@ -6,6 +6,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   checkInteractionsRequest,
+  getDrugDetailsRequest,
+  getInteractionCheckDetailsRequest,
+  getInteractionChecksRequest,
   getInteractionDetailsRequest,
   getInteractionsRequest,
   searchDrugsRequest,
@@ -22,6 +25,19 @@ export const interactionKeys = {
   details: () => [...interactionKeys.all, "detail"] as const,
   detail: (id: string) => [...interactionKeys.details(), id] as const,
   drugSearch: (keyword: string) => ["drugs", "search", keyword] as const,
+};
+
+export const drugKeys = {
+  all: ["drugs"] as const,
+  details: () => [...drugKeys.all, "detail"] as const,
+  detail: (id: string) => [...drugKeys.details(), id] as const,
+};
+
+export const interactionCheckKeys = {
+  all: ["interaction-checks"] as const,
+  lists: () => [...interactionCheckKeys.all, "list"] as const,
+  details: () => [...interactionCheckKeys.all, "detail"] as const,
+  detail: (id: string) => [...interactionCheckKeys.details(), id] as const,
 };
 
 // ── Queries ──────────────────────────────────────────────────────────────────
@@ -49,6 +65,30 @@ export const useDrugSearch = (keyword: string, enabled: boolean = true) =>
     queryFn: () => searchDrugsRequest({ q: keyword }),
     enabled: enabled && keyword.trim().length > 1,
     staleTime: 5 * 60 * 1000,
+  });
+
+/** Chi tiết một thuốc cho `/drug-information/[id]` — chuẩn bị cho GET /api/v1/drugs/{id} */
+export const useDrugDetails = (id: string, enabled: boolean = true) =>
+  useQuery({
+    queryKey: drugKeys.detail(id),
+    queryFn: () => getDrugDetailsRequest(id),
+    enabled: enabled && !!id,
+  });
+
+/** Danh sách lượt tra cứu cho `/history` — chuẩn bị cho GET /api/v1/interaction-checks */
+export const useInteractionChecks = (enabled: boolean = true) =>
+  useQuery({
+    queryKey: interactionCheckKeys.lists(),
+    queryFn: () => getInteractionChecksRequest(),
+    enabled,
+  });
+
+/** Chi tiết một lượt tra cứu cho `/interaction-checks/[id]` */
+export const useInteractionCheckDetail = (id: string, enabled: boolean = true) =>
+  useQuery({
+    queryKey: interactionCheckKeys.detail(id),
+    queryFn: () => getInteractionCheckDetailsRequest(id),
+    enabled: enabled && !!id,
   });
 
 // ── Mutations ────────────────────────────────────────────────────────────────
