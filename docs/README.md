@@ -12,6 +12,7 @@
 | [frontend.md](frontend.md) | Cấu trúc frontend, Yarn 4, Next.js 16 và layering |
 | [architecture_diagram.md](architecture_diagram.md) | Sơ đồ hệ thống và data flow |
 | [runbook.md](runbook.md) | Cách vận hành và xử lý sự cố |
+| [deployment.md](deployment.md) | Triển khai lên VPS: Caddy, HTTPS, biến môi trường production |
 | [guide/](guide/) | Technical Guidebook của chương trình — chỉ tham khảo, không sửa |
 
 ## Trước khi sửa code

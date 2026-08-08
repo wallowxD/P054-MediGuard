@@ -6,7 +6,29 @@
  * `backend/src/medsafe/api/routes.py` — bật dần khi từng module sẵn sàng.
  */
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+/**
+ * Base URL của backend. Dùng trực tiếp trong `services/*`, tự đúng ở cả hai phía.
+ *
+ * ★ Vì sao không chỉ đọc mỗi NEXT_PUBLIC_API_BASE_URL:
+ *   `authorize()` của NextAuth CredentialsProvider chạy TRONG process Next, không phải
+ *   trong trình duyệt. Khi deploy bằng Docker, `localhost:8000` ở đó trỏ về CHÍNH
+ *   container frontend chứ không phải backend → connection refused. Triệu chứng là
+ *   "Không thể đăng nhập. Vui lòng thử lại." còn backend không ghi log gì cả, vì request
+ *   chưa từng rời khỏi container.
+ *
+ *   Nên phía server ưu tiên API_INTERNAL_URL (compose đặt = http://backend:8000, đi thẳng
+ *   qua mạng nội bộ). Trên VPS điều này còn tránh việc request vòng ra Internet rồi quay
+ *   lại qua Caddy. Khi chạy `make dev`, biến đó để trống nên tự lùi về giá trị public —
+ *   lúc ấy Next và FastAPI cùng trên host nên `localhost:8000` vốn đã đúng.
+ *
+ * Nhánh `typeof window === "undefined"` bị webpack loại bỏ hẳn khỏi bundle client, nên
+ * API_INTERNAL_URL không bao giờ lộ ra trình duyệt. Nó cũng không có tiền tố
+ * NEXT_PUBLIC_ nên được đọc lúc CHẠY, không bị nhúng cứng lúc build.
+ */
+export const API_BASE_URL =
+  (typeof window === "undefined" ? process.env.API_INTERNAL_URL : "") ||
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "";
 
 if (!API_BASE_URL && typeof window === "undefined") {
   console.warn("⚠️ NEXT_PUBLIC_API_BASE_URL chưa được set!");

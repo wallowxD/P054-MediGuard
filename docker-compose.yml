@@ -1,3 +1,16 @@
+# File nen, dung cho CA local lan VPS.
+#
+#   Local  : make up            (mac dinh -> localhost, publish ra 0.0.0.0)
+#   VPS    : make prod-up       (nap them docker-compose.prod.yml -> Caddy + HTTPS)
+#
+# Moi gia tri deu lay tu `.env` o repo root — docker compose tu doc file do de thay the
+# ${...} ben duoi. Khong hardcode URL o day nua: cung mot file compose phai chay duoc o
+# hai moi truong, chi khac noi dung .env.
+#
+# ⚠️ Khong con service `db`. DATABASE_URL trong .env tro thang toi Supabase pooler; truoc
+#    day compose ghi de bien nay ve postgres local, khien container noi chuyen voi mot
+#    database KHAC han luc `make dev` — cung schema nhung khac du lieu.
+
 services:
   backend:
     build:
@@ -5,40 +18,43 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     ports:
-      - "8000:8000"
+      # Prod đặt BIND_HOST=127.0.0.1 để chỉ Caddy trên cùng host gọi được, không
+      # phơi 8000 ra Internet. Local để trống -> 0.0.0.0, gọi từ máy khác trong LAN được.
+      - "${BIND_HOST:-0.0.0.0}:8000:8000"
     env_file:
       - .env
-    environment:
-      DATABASE_URL: postgresql+psycopg://medsafe:medsafe@db:5432/medsafe
     volumes:
       - ./data:/app/data
       - ./dataset:/app/dataset:ro
-    depends_on:
-      db:
-        condition: service_healthy
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    # healthcheck đã khai báo trong backend/Dockerfile, không lặp lại ở đây.
 
   frontend:
     build:
       # yarn.lock nằm trong frontend/ nên context này là đúng
       context: ./frontend
       args:
-        # NEXT_PUBLIC_* nhúng vào bundle lúc BUILD, không đọc lúc chạy —
-        # nên phải là build arg. Giá trị là URL trình duyệt gọi tới, tức
-        # cổng đã publish ra host, không phải hostname nội bộ của compose.
-        NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
-        NEXT_PUBLIC_APP_URL: http://localhost:3000
+        # ★ NEXT_PUBLIC_* nhúng vào bundle lúc BUILD, không đọc lúc chạy — nên phải là
+        #   build arg. Đặt ở `environment:` là vô tác dụng hoàn toàn.
+        #   Giá trị là URL TRÌNH DUYỆT gọi tới (tức domain công khai hoặc cổng đã publish
+        #   ra host), không phải hostname nội bộ của compose.
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000}
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+        NEXT_PUBLIC_ENVIRONMENT: ${NEXT_PUBLIC_ENVIRONMENT:-development}
+        # Thiếu client ID thì nút "Đăng nhập Google" hiện toast lỗi lúc chạy chứ không
+        # fail lúc build — dùng `:?` để chặn ngay tại đây.
+        NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID:?chua set trong .env o repo root — xem .env.example}
     ports:
-      - "3000:3000"
+      - "${BIND_HOST:-0.0.0.0}:3000:3000"
     environment:
-      # Ngược lại, biến KHÔNG có tiền tố NEXT_PUBLIC_ là secret phía server,
-      # đọc lúc chạy — đặt ở đây mới đúng, đừng đưa vào build arg.
-      NEXTAUTH_URL: http://localhost:3000
+      # Ngược lại, biến KHÔNG có tiền tố NEXT_PUBLIC_ là secret hoặc cấu hình phía
+      # server, đọc lúc chạy — đặt ở đây mới đúng, đừng đưa vào build arg.
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      # ★ URL backend dành cho code chạy TRONG container (authorize() của NextAuth).
+      #   Bắt buộc dùng service name: `localhost:8000` ở trong container này trỏ về
+      #   chính nó, không phải backend → đăng nhập hỏng mà backend không hề ghi log.
+      #   Xem src/constants/api.ts -> apiBaseUrl().
+      API_INTERNAL_URL: http://backend:8000
       # Thiếu secret thì next-auth ném NO_SECRET và đá MỌI route về /signin,
       # kể cả landing page công khai. Dùng `:?` để compose báo lỗi ngay thay vì
       # dựng lên một stack hỏng âm thầm.
@@ -46,21 +62,3 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
-
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: medsafe
-      POSTGRES_PASSWORD: medsafe
-      POSTGRES_DB: medsafe
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U medsafe"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-volumes:
-  pgdata:

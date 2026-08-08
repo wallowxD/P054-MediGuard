@@ -35,4 +35,6 @@ backend/tests/
 
 .dockerignore
 docker-compose.yml
+docker-compose.prod.yml
+Caddyfile
 Makefile

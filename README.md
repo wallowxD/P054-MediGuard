@@ -41,8 +41,8 @@ Nam hoặc đưa kết luận mà không hiển thị nguồn.
 | Chuẩn hóa tên thuốc | rapidfuzz + unidecode |
 | Frontend | Next.js 16 App Router + React 19 + strict TypeScript |
 | Giao diện | Tailwind CSS v4 + shadcn/ui |
-| Dữ liệu | Supabase PostgreSQL + private Storage · PostgreSQL local cho development |
-| Triển khai | Dự kiến một VPS; production topology chờ ADR được phê duyệt |
+| Dữ liệu | Supabase PostgreSQL + private Storage (dùng chung cho cả development và production) |
+| Triển khai | Một VPS · Caddy reverse proxy lo HTTPS — xem [docs/deployment.md](docs/deployment.md) |
 | Tooling | uv · Yarn 4 · ruff · pytest |
 | DevOps | Docker Compose + GitHub Actions |
 
@@ -79,13 +79,19 @@ corepack enable
 
 ```bash
 cp .env.example .env
-cp frontend/.env.example frontend/.env.local
 openssl rand -base64 32
 ```
 
-Điền secret vừa sinh vào `NEXTAUTH_SECRET` trong `frontend/.env.local`; nếu dùng Docker
-Compose, điền thêm vào `.env` tại root. Chỉ cấu hình credential cần cho phần việc đang làm.
-Mỗi thành viên dùng `AI_LOG_API_KEY` cá nhân.
+Điền secret vừa sinh vào `NEXTAUTH_SECRET` trong `.env`. Chỉ cấu hình credential cần cho
+phần việc đang làm. Mỗi thành viên dùng `AI_LOG_API_KEY` cá nhân.
+
+> **Dự án chỉ có một file `.env`, đặt tại repository root.** Next.js vốn không đọc file env
+> ngoài thư mục của nó, nên [frontend/load-root-env.ts](frontend/load-root-env.ts) làm cầu
+> nối: nó nạp vào process của Next **chỉ** những key có tiền tố `NEXT_PUBLIC_` hoặc
+> `NEXTAUTH_`, còn secret backend nằm cùng file thì không bao giờ lọt qua.
+>
+> **Không tạo `frontend/.env` hay `frontend/.env.local`.** Next.js đọc chúng trước, nên
+> chúng sẽ ghi đè và làm `.env` ở root mất tác dụng một cách âm thầm.
 
 Nếu làm việc với backend auth, cần thêm hai biến trong `.env`:
 
@@ -97,10 +103,8 @@ openssl rand -hex 32   # dán vào JWT_SECRET_KEY
 **Session pooler (cổng 5432)**, đổi tiền tố `postgresql://` thành `postgresql+psycopg://`
 và percent-encode ký tự đặc biệt trong mật khẩu (`@` → `%40`). Sau đó chạy `make migrate`.
 
-- Secret backend: `.env` tại root.
-- Biến local của Next.js: `frontend/.env.local`.
-- Không commit hai file này.
-- `backend/.env.example` chỉ là tài liệu tên biến.
+- Toàn bộ biến môi trường: `.env` tại root. Không commit file này.
+- `.env.example` là tài liệu tên biến, có kèm block giá trị dành cho production.
 
 ### Bước 3 — Cài hook ghi AI log
 
@@ -139,6 +143,61 @@ make web   # Next.js: http://localhost:3000
 | http://localhost:8000/docs | Swagger UI |
 | http://localhost:8000/health | `{"status": "ok", "env": "development"}` |
 
+### Bước 7 — Dừng khi xong việc
+
+`make dev` và `make up` là **hai thế giới tách biệt**, cách dừng khác nhau:
+
+| Bạn khởi động bằng | Chạy ở đâu | Cách dừng |
+|---|---|---|
+| `make dev` / `make run` / `make web` | thẳng trên máy, chiếm terminal | `Ctrl-C` — hết |
+| `make up` | container Docker, chạy nền | `make down` |
+
+**Với `make dev` thì `Ctrl-C` là đủ, không cần `make down`.** Target `dev` trong Makefile
+đặt `trap 'kill 0'`, nên một lần `Ctrl-C` giết cả backend lẫn frontend và trả lại cả hai
+cổng.
+
+**Với `make up` thì `Ctrl-C` vô tác dụng** — container chạy nền, đóng terminal nó vẫn sống
+và vẫn giữ cổng 3000/8000. Bắt buộc `make down`.
+
+Chỉ khi nghi ngờ mới cần kiểm tra:
+
+```bash
+docker compose ps                          # phải rỗng
+lsof -nP -iTCP:3000 -sTCP:LISTEN           # phải rỗng
+```
+
+Hằng ngày bạn chỉ dùng `make dev`. `make up` để dành cho lúc cần kiểm tra đúng thứ sẽ chạy
+trên VPS — và nhớ `make down` trước khi quay lại `make dev`, vì hai bên tranh nhau cùng cổng.
+
+## 🔁 Quay lại làm việc hôm sau
+
+```bash
+cd P-054
+git pull --ff-only        # hoặc: git checkout VMEC-NN của bạn
+make install              # đồng bộ dependency Python
+make web-install          # đồng bộ dependency frontend
+make migrate              # áp migration mới nếu có
+make dev
+```
+
+Cứ chạy đủ cả 5 lệnh, **không cần phân vân lệnh nào là thừa**. Khi không có gì thay đổi
+thì `make install` mất ~0,1s và `make web-install` mất ~0,5s vì chúng chỉ đối chiếu
+lockfile; `make migrate` cũng không làm gì nếu schema đã ở bản mới nhất.
+
+Không cần `cp .env.example .env` lại — `.env` không bị git đụng tới, nó vẫn nằm nguyên chỗ
+cũ. Sau khi `git pull`, liệt kê biến có trong `.env.example` mà `.env` của bạn chưa có:
+
+```bash
+comm -23 <(grep -o '^[A-Z_]*=' .env.example | sort -u) <(grep -o '^[A-Z_]*=' .env | sort -u)
+```
+
+Phần lớn kết quả là biến **tùy chọn** (OCR, Qdrant, Vertex…) — chỉ điền khi bạn làm đúng
+phần việc đó. Bốn biến gần như ai cũng cần: `DATABASE_URL`, `JWT_SECRET_KEY`,
+`NEXTAUTH_SECRET`, `AI_LOG_API_KEY`.
+
+Ba lệnh `install` / `web-install` / `migrate` chạy thừa cũng vô hại, nên khi phân vân thì
+cứ chạy.
+
 ## Lệnh thường dùng
 
 | Lệnh | Mục đích |
@@ -151,11 +210,18 @@ make web   # Next.js: http://localhost:3000
 | `make ingest-pilot` | Chạy ingestion cho pilot 50 thuốc |
 | `make migrate` | Áp schema lên `DATABASE_URL` (Alembic) |
 | `make migration m="..."` | Sinh revision Alembic mới |
+| `make migrate-down` | Lùi lại một revision |
 | `make web-install` | Cài dependency frontend bằng Yarn |
 | `make web` | Chạy frontend tại cổng 3000 |
 | `make web-lint` / `make web-build` | ESLint / production build |
 | `make dev` | Chạy frontend và backend song song |
 | `make up` / `make down` | Khởi động/dừng Docker Compose local |
+| `make clean` | Xoá cache `__pycache__`, `.pytest_cache`, `.ruff_cache` |
+| `make prod-config` | Validate cấu hình deploy trước khi lên VPS |
+| `make prod-up` / `make prod-down` | Deploy/dừng stack production kèm Caddy |
+| `make prod-logs` | Theo dõi log production |
+
+Quên lệnh thì chạy `make help` — nó liệt kê toàn bộ target kèm mô tả.
 
 ## 📁 Cấu trúc không gian làm việc
 
@@ -255,6 +321,16 @@ Chạy lại `make web-install`. Không dùng `npx next dev`.
 
 ### Port vẫn bận sau `Ctrl-C`
 
+Nguyên nhân hay gặp nhất: stack Docker vẫn đang chạy nền từ lần `make up` trước. `Ctrl-C`
+không dừng được nó. Kiểm tra trước tiên:
+
+```bash
+docker compose ps      # có container nào không?
+make down              # nếu có
+```
+
+Nếu vẫn bận thì mới truy process trên host:
+
 ```bash
 lsof -nP -iTCP:3000 -sTCP:LISTEN
 lsof -nP -iTCP:8000 -sTCP:LISTEN
@@ -262,6 +338,17 @@ lsof -nP -iTCP:8000 -sTCP:LISTEN
 
 Xác định đúng PID của process development rồi mới dừng; không dùng pattern kill rộng trên
 máy dùng chung.
+
+### Đăng nhập báo "Không thể đăng nhập. Vui lòng thử lại."
+
+Nếu đang chạy bằng Docker, xem log backend có nhận được request không:
+
+```bash
+docker compose logs backend | grep auth/login
+```
+
+Không thấy dòng nào nghĩa là request chết trong container frontend, không phải sai mật
+khẩu. Xem mục xử lý sự cố trong [docs/deployment.md](docs/deployment.md).
 
 ### Pre-push hook lỗi
 
@@ -280,13 +367,25 @@ docker compose ps
 make down
 ```
 
-`db` và `backend` phải ở trạng thái `healthy`; `frontend` ở trạng thái `running`.
-`NEXT_PUBLIC_*` được nhúng lúc build, vì vậy thay backend URL trong
-`build.args.NEXT_PUBLIC_API_BASE_URL` của `docker-compose.yml` rồi build lại.
+`backend` phải ở trạng thái `healthy`, `frontend` ở trạng thái `running`. Compose không có
+service database: `DATABASE_URL` trong `.env` trỏ thẳng tới Supabase, giống hệt `make dev`.
 
-Compose hiện tại chỉ dùng cho local development. Trước khi triển khai lên VPS cần ADR và
-runbook riêng cho HTTPS reverse proxy, secrets, migrations, backup, monitoring, CD và
-rollback.
+`NEXT_PUBLIC_*` được nhúng vào bundle lúc build chứ không đọc lúc chạy. Đổi giá trị trong
+`.env` rồi restart là vô tác dụng — phải build lại, và `make up` đã kèm `--build`.
+
+## 🚀 Triển khai VPS
+
+Frontend và backend là hai container riêng trên cùng một VPS, đứng sau reverse proxy Caddy
+lo HTTPS. Một domain duy nhất, tách theo path: `/api/v1/*` sang backend, phần còn lại sang
+frontend.
+
+```bash
+make prod-config    # validate, biến thiếu báo lỗi ngay
+make prod-up
+```
+
+Quy trình đầy đủ — DNS, chứng chỉ, biến production, Google OAuth, rollback — nằm trong
+[docs/deployment.md](docs/deployment.md).
 
 ## 👥 Đội Cuvée Tech
 
