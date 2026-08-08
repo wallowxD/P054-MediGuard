@@ -31,6 +31,13 @@ export const metadata: Metadata = {
 // Thứ tự provider: Store → Query → NextAuth.
 // NextAuth trong cùng vì `utils/request.ts` gọi getSession() trong interceptor,
 // mà interceptor đó được React Query kích hoạt.
+// Đọc lựa chọn theme đã lưu trước khi React hydrate để tránh nháy màu sai lúc tải
+// trang. Không có lựa chọn thì để CSS media query (`:root:not(.light)` trong
+// globals.css) tự quyết theo system preference — script chỉ cần thêm class khi có
+// lựa chọn tường minh. Landing page dùng `.landing-theme` để ép sáng, không đọc
+// class này nên không bị ảnh hưởng.
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("medsafe-theme");if(t==="dark"){document.documentElement.classList.add("dark");}else if(t==="light"){document.documentElement.classList.add("light");}}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -40,6 +47,7 @@ export default function RootLayout({
       className={`${headingFont.variable} ${bodyFont.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-background text-foreground">
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <StoreProvider>
           <QueryProvider>
             <NextAuthProvider>
