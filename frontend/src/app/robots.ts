@@ -19,6 +19,7 @@ export default function robots(): MetadataRoute.Robots {
       disallow: [
         ...AUTH_ROUTES,
         ROUTES.DASHBOARD,
+        ROUTES.DRUG_INFORMATION,
         ROUTES.INTERACTIONS,
         ROUTES.SETTINGS,
         ROUTES.REVIEW,

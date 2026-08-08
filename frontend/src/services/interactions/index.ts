@@ -68,3 +68,41 @@ export const searchDrugsRequest = async (
   // }
   return apiNotReady(API_ENDPOINTS.DRUGS.SEARCH, params);
 };
+
+export const getDrugDetailsRequest = async (id: string): Promise<IDrugInformationDetail> => {
+  // try {
+  //   const apiUrl = API_BASE_URL + API_ENDPOINTS.DRUGS.GET_DETAILS(id);
+  //   const retrieved = await clientRequest.get(apiUrl);
+  //   return retrieved?.data;
+  // } catch (error: unknown) {
+  //   const message = error instanceof Error ? error.message : "Đã có lỗi xảy ra";
+  //   throw new Error(message);
+  // }
+  return apiNotReady(API_ENDPOINTS.DRUGS.GET_DETAILS(id));
+};
+
+export const getInteractionChecksRequest = async (): Promise<IInteractionCheckSummaryItem[]> => {
+  // try {
+  //   const apiUrl = API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.GET_ALL;
+  //   const retrieved = await clientRequest.get(apiUrl);
+  //   return retrieved?.data;
+  // } catch (error: unknown) {
+  //   const message = error instanceof Error ? error.message : "Đã có lỗi xảy ra";
+  //   throw new Error(message);
+  // }
+  return apiNotReady(API_ENDPOINTS.INTERACTION_CHECKS.GET_ALL);
+};
+
+export const getInteractionCheckDetailsRequest = async (
+  id: string
+): Promise<IInteractionCheckDetail> => {
+  // try {
+  //   const apiUrl = API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.GET_DETAILS(id);
+  //   const retrieved = await clientRequest.get(apiUrl);
+  //   return retrieved?.data;
+  // } catch (error: unknown) {
+  //   const message = error instanceof Error ? error.message : "Đã có lỗi xảy ra";
+  //   throw new Error(message);
+  // }
+  return apiNotReady(API_ENDPOINTS.INTERACTION_CHECKS.GET_DETAILS(id));
+};

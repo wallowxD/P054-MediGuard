@@ -108,4 +108,31 @@ declare global {
     ingredient: string;
     confidence: number;
   }
+
+  /** Chi tiết một thuốc cho `/drug-information/[id]` — bắt buộc có citation mới được hiển thị */
+  interface IDrugInformationDetail extends IDrugItem {
+    citations: ICitation[];
+  }
+
+  /** Một dòng trong `/history` — tóm tắt một lượt tra cứu đã thực hiện */
+  interface IInteractionCheckSummaryItem {
+    id: string;
+    kind: TInteractionKind;
+    drugNames: string[];
+    foodNames?: string[];
+    checkedAt: string;
+    resultCount: number;
+    unavailableCount: number;
+  }
+
+  /** Toàn bộ kết quả của một lượt tra cứu — `/interaction-checks/[id]` */
+  interface IInteractionCheckDetail {
+    id: string;
+    kind: TInteractionKind;
+    drugs: IDrugItem[];
+    foods: string[];
+    checkedAt: string;
+    items: IInteractionItem[];
+    unavailable: IUnavailableResult[];
+  }
 }
