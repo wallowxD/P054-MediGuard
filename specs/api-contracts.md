@@ -25,7 +25,63 @@ Không sửa `types.gen.ts` bằng tay và không tạo handwritten type trùng 
 | Tính năng | Contract |
 |---|---|
 | Core interaction check | `specs/001-core-interaction-check/contracts/interaction-check.openapi.yaml` |
+| Danh mục thuốc (duyệt A–Z, tìm kiếm) | cùng file trên — `listDrugs`, `searchDrugs` |
 | Auth (đăng ký, token, hồ sơ) | `backend/src/medsafe/schemas/auth.py` → OpenAPI tại `/docs` |
+
+## Danh mục thuốc
+
+| Endpoint | Query | Trả về |
+|---|---|---|
+| `GET /api/v1/drugs` | `letter`, `q`, `page`, `pageSize` | `200` + `DrugListResponse` |
+| `GET /api/v1/drugs/letters` | — | `200` + `DrugLetterIndexResponse` |
+| `GET /api/v1/drugs/search` | `q`, `limit` | `200` + `DrugSearchResponse` |
+
+Ba endpoint này khác nhau về **cơ chế khớp**, không phải về dữ liệu trả về:
+
+- `/drugs` lọc **tất định** bằng chuỗi con — người dùng đang duyệt danh mục nên phải thấy
+  đúng nội dung bảng `drugs`; gõ sai chính tả trả về rỗng chứ không đoán.
+- `/drugs/letters` chỉ đếm, không trả nội dung thuốc.
+- `/drugs/search` là **autocomplete theo tên biệt dược**: xếp hạng theo bậc tất định
+  trước, fuzzy chỉ dùng để bắt lỗi chính tả.
+
+### Xếp hạng của `/drugs/search`
+
+| Bậc | Điểm | Điều kiện |
+|---|---|---|
+| Khớp tuyệt đối | 100 | Chuỗi chuẩn hoá bằng đúng tên biệt dược hoặc hoạt chất |
+| Tiền tố biệt dược | 96 | Tên biệt dược bắt đầu bằng chuỗi người dùng gõ |
+| Chuỗi con biệt dược | 93 | Từ 2 ký tự trở lên |
+| Chuỗi con hoạt chất | 90 | Từ 2 ký tự trở lên |
+| Fuzzy | ≥ 88 | Từ 4 ký tự trở lên, so với **từng token** của tên |
+
+Ràng buộc độ dài không phải để tối ưu tốc độ mà để chặn kết quả rác: `token_set_ratio`
+chấm điểm cao bất thường trên chuỗi ngắn — gõ `Ha` từng trả về `Viên Sáng Mắt`. Fuzzy so
+với từng token thay vì cả chuỗi vì `fuzz.ratio("panadl", "panadol vien sui")` chỉ đạt
+54.5 trong khi so với riêng token `panadol` đạt 92.3; so cả chuỗi thì fuzzy là code chết.
+
+`requiresConfirmation` chỉ bằng `false` khi có **đúng một** ứng viên và ứng viên đó khớp
+tuyệt đối. Khớp tiền tố hay chuỗi con không đủ để hệ thống tự chọn hộ — thuốc chọn sai đi
+thẳng vào lượt kiểm tra tương tác. Không có ứng viên nào thì cũng là `false` vì không có
+gì để xác nhận.
+
+`/drugs/letters` luôn trả **đủ 27 nhóm** A–Z + `other` kể cả nhóm `count = 0`, để FE
+disable đúng nút thay vì dẫn người dùng tới trang rỗng. Mỗi `count` bằng đúng `total` mà
+`/drugs?letter=` trả về cho cùng chữ cái.
+
+`letter` nhận `A`–`Z` (không phân biệt hoa thường) hoặc `other` cho tên không bắt đầu bằng
+chữ cái Latin. **Không dùng ký tự `#`** dù UI hiển thị nhãn đó: `?letter=#` bị trình duyệt
+cắt thành fragment nên tham số không bao giờ tới server, và lỗi này im lặng hoàn toàn.
+
+`q` khớp không phân biệt hoa thường và không phân biệt dấu trên tên biệt dược
+(`brand_name_unaccent`), khớp trên chuỗi gốc viết thường với hoạt chất. Ký tự `%` và `_`
+người dùng nhập được escape, không phải wildcard.
+
+`total` là tổng số dòng khớp bộ lọc, không phải số dòng của trang hiện tại. Trang vượt quá
+phạm vi vẫn trả `200` với `items: []` và `total` giữ nguyên.
+
+`DrugListItem` **không có citation** vì danh sách không hiển thị nội dung lâm sàng; nó chỉ
+báo `hasLeaflet` để FE biết trang chi tiết có nguồn hay không. Nội dung có dẫn nguồn thuộc
+về endpoint chi tiết.
 
 ## Auth
 

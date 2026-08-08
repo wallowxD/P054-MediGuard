@@ -12,6 +12,8 @@ import pytest
 from medsafe.db.models.drug import Drug
 from medsafe.db.models.evidence import EvidenceChunk
 from medsafe.db.models.interaction import REVIEW_STATUS_APPROVED, DrugDrugInteraction, DrugFoodInteraction
+from medsafe.domain.catalog import NON_ALPHA_LETTER
+from medsafe.domain.normalization import remove_vietnamese_accents
 from medsafe.domain.pairing import DrugPair
 
 
@@ -21,6 +23,40 @@ class FakeDrugRepository:
 
     async def list_catalog_pairs(self) -> list[tuple[UUID, str, str]]:
         return [(d.id, d.brand_name, d.ingredient_raw) for d in self._drugs]
+
+    async def list_catalog_page(
+        self,
+        *,
+        letter: str | None = None,
+        query: str | None = None,
+        offset: int = 0,
+        limit: int = 40,
+    ) -> tuple[list[Drug], int]:
+        """Bản in-memory mô phỏng đúng ngữ nghĩa của `build_catalog_conditions` + ORDER BY."""
+        matched = self._drugs
+        if letter == NON_ALPHA_LETTER:
+            matched = [d for d in matched if not d.brand_name_unaccent[:1].isalpha()]
+        elif letter:
+            matched = [d for d in matched if d.brand_name_unaccent.startswith(letter.lower())]
+
+        if query:
+            brand_needle = remove_vietnamese_accents(query).lower()
+            ingredient_needle = query.lower()
+            matched = [
+                d
+                for d in matched
+                if brand_needle in d.brand_name_unaccent or ingredient_needle in d.ingredient_raw.lower()
+            ]
+
+        matched = sorted(matched, key=lambda d: (d.brand_name_unaccent, str(d.id)))
+        return matched[offset : offset + limit], len(matched)
+
+    async def count_by_first_letter(self) -> dict[str, int]:
+        counts: dict[str, int] = {}
+        for drug in self._drugs:
+            first_char = drug.brand_name_unaccent[:1]
+            counts[first_char] = counts.get(first_char, 0) + 1
+        return counts
 
     async def get_by_id(self, drug_id: UUID) -> Drug | None:
         return next((d for d in self._drugs if d.id == drug_id), None)
