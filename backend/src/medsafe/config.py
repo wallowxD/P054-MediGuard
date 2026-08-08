@@ -46,6 +46,22 @@ def get_auth_config() -> AuthConfig:
     return AuthConfig(**load_yaml_config().get("auth", {}))
 
 
+class CatalogConfig(BaseModel):
+    """Tham số duyệt danh mục thuốc (`GET /api/v1/drugs`).
+
+    Đọc qua `get_catalog_config()` vì giá trị được dùng làm default/giới hạn của Query
+    param, tức là đánh giá đúng một lần lúc import router.
+    """
+
+    page_size_default: int = Field(default=40, gt=0)
+    page_size_max: int = Field(default=100, gt=0)
+
+
+@lru_cache
+def get_catalog_config() -> CatalogConfig:
+    return CatalogConfig(**load_yaml_config().get("catalog", {}))
+
+
 class Settings(BaseSettings):
     """Secret + tham số môi trường. Nạp từ <repo-root>/.env."""
 

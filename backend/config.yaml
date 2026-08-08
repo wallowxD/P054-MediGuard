@@ -28,6 +28,11 @@ auth:
   # của admin — tự chọn role lúc đăng ký là lỗ hổng leo thang đặc quyền.
   self_signup_role: "PATIENT"
 
+catalog:
+  # Duyệt danh mục thuốc theo chữ cái (GET /api/v1/drugs).
+  page_size_default: 40
+  page_size_max: 100
+
 chunking:
   chunk_size: 800
   chunk_overlap: 120

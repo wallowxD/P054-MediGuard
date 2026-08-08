@@ -7,17 +7,89 @@ info:
     interaction checks. Successful operations return direct payloads under ADR 0011.
 x-status: accepted-for-implementation
 paths:
+  /api/v1/drugs:
+    get:
+      operationId: listDrugs
+      summary: Browse the hospital catalog alphabetically, with pagination
+      description: >-
+        Deterministic substring filtering only. Unlike /api/v1/drugs/search this operation
+        never scores fuzzy matches: the patient is browsing the catalog and must see
+        exactly what the drugs table holds. One row is one catalog entry (brand level).
+      parameters:
+        - name: letter
+          in: query
+          required: false
+          description: >-
+            First letter of the brand name. Use "other" for names that do not start with a
+            Latin letter; the literal "#" is rejected because a URL fragment marker never
+            reaches the server.
+          schema:
+            type: string
+            pattern: '^([A-Za-z]|other)$'
+        - name: q
+          in: query
+          required: false
+          description: Case- and accent-insensitive substring match on brand name or ingredient
+          schema:
+            type: string
+            maxLength: 200
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          required: false
+          description: Default and maximum come from catalog.page_size_* in backend/config.yaml
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 40
+      responses:
+        '200':
+          description: Direct catalog page payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrugListResponse'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /api/v1/drugs/letters:
+    get:
+      operationId: listDrugLetters
+      summary: Count catalog entries per alphabet group, for the A-Z bar
+      description: >-
+        Always returns all 27 groups (A-Z then "other"), including groups whose count is 0
+        so the UI can disable a letter instead of linking to an empty page. Each count
+        equals the total that GET /api/v1/drugs returns for the same letter.
+      responses:
+        '200':
+          description: Direct alphabet index payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrugLetterIndexResponse'
   /api/v1/drugs/search:
     get:
       operationId: searchDrugs
       summary: Return catalog candidates for explicit patient selection
+      description: >-
+        Autocomplete over brand names. Deterministic tiers rank first — exact (100), brand
+        prefix (96), brand substring (93), ingredient substring (90) — and fuzzy scoring
+        only handles typos below those tiers. A one-character query matches prefixes only;
+        fuzzy needs at least 4 characters, because token scoring on short strings ranks
+        unrelated products highly.
       parameters:
         - name: q
           in: query
           required: true
           schema:
             type: string
-            minLength: 2
+            minLength: 1
             maxLength: 200
         - name: limit
           in: query
@@ -70,6 +142,82 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetail'
   schemas:
+    DrugLetterIndexResponse:
+      type: object
+      additionalProperties: false
+      required: [letters, total]
+      properties:
+        letters:
+          type: array
+          minItems: 27
+          maxItems: 27
+          items:
+            $ref: '#/components/schemas/DrugLetterCount'
+        total:
+          type: integer
+          minimum: 0
+          description: Sum of every group count; equals the unfiltered total of GET /api/v1/drugs
+    DrugLetterCount:
+      type: object
+      additionalProperties: false
+      required: [letter, count]
+      properties:
+        letter:
+          type: string
+          pattern: '^([A-Z]|other)$'
+        count:
+          type: integer
+          minimum: 0
+    DrugListResponse:
+      type: object
+      additionalProperties: false
+      required: [items, page, pageSize, total, totalPages]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DrugListItem'
+        page:
+          type: integer
+          minimum: 1
+        pageSize:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+          description: Total rows matching the filter, not the size of this page
+        totalPages:
+          type: integer
+          minimum: 0
+        letter:
+          type: [string, 'null']
+          description: Echo of the applied letter, uppercased ("A") or "other"
+        query:
+          type: [string, 'null']
+          description: Echo of the applied substring filter, trimmed
+    DrugListItem:
+      type: object
+      additionalProperties: false
+      required: [id, brandName, ingredient, hasLeaflet]
+      properties:
+        id:
+          type: string
+          minLength: 1
+        brandName:
+          type: string
+          minLength: 1
+        ingredient:
+          type: string
+        dosageForm:
+          type: [string, 'null']
+        route:
+          type: [string, 'null']
+        hasLeaflet:
+          type: boolean
+          description: >-
+            Whether a source leaflet URL exists. The list itself shows no clinical content,
+            so it carries no citations; the detail endpoint owns cited content.
     DrugSearchResponse:
       type: object
       additionalProperties: false
