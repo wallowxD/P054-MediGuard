@@ -39,8 +39,17 @@ Riêng `gate/gate_1/` là bất biến và không thể được nới lỏng b�
 
 ### Ngoài phạm vi — không tự ý bổ sung
 
-Chẩn đoán hoặc kê đơn · AI tự đổi thuốc · tương tác thuốc–bệnh nền · bộ nhớ dài hạn · sao
-chép giao diện hoặc dữ liệu thật của bệnh viện tham chiếu.
+Chẩn đoán hoặc kê đơn · AI tự đổi thuốc · bộ nhớ dài hạn của agent · sao chép giao diện
+hoặc dữ liệu thật của bệnh viện tham chiếu.
+
+**Thuốc–bệnh nền đã được đưa vào phạm vi** theo
+[ADR 0017](adrs/0017-self-reported-health-profile.md), giới hạn ở bệnh nền **do người dùng
+tự khai**. Agent không chẩn đoán, không suy luận bệnh và không tự thêm bệnh nền cho ai;
+cảnh báo thuốc–bệnh nền vẫn phải có trích dẫn nguyên văn như mọi cảnh báo khác.
+
+**Bộ nhớ dài hạn vẫn ngoài phạm vi.** Hồ sơ sức khoẻ tự khai không phải ngoại lệ của quy
+tắc này: đó là dữ liệu người dùng chủ động nhập, nhìn thấy và xoá được, không phải thứ
+agent tự ghi nhớ giữa các phiên.
 
 ## Đội ngũ
 

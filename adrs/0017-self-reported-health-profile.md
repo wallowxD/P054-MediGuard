@@ -1,20 +1,21 @@
 # ADR 0017 — Hồ sơ sức khoẻ tự khai nằm ở bảng riêng, không nằm trong identity
 
-- **Trạng thái:** Đề xuất
+- **Trạng thái:** Được chấp nhận
 - **Ngày:** 2026-08-09
-- **Liên quan:** đảo lại một phần ranh giới phạm vi trong `specs/product-vision.md`; giữ
-  nguyên ADR 0005, 0006 và 0012; bổ sung ADR 0015 (backend sở hữu identity)
+- **Liên quan:** mở rộng phạm vi sản phẩm so với `specs/product-vision.md`; giữ nguyên ADR
+  0005, 0006 và 0012; bổ sung ADR 0015 (backend sở hữu identity)
 
 ## Bối cảnh
 
 Sản phẩm cần biết tuổi và bệnh nền của người dùng để phục vụ luồng *tra thuốc với bệnh
-nền*. Hiện trạng tài liệu và code đang mâu thuẫn với nhau ở ba điểm:
+nền*. Hiện trạng như sau:
 
-- [`gate/gate_1/README.md`](../gate/gate_1/README.md) — **đã nộp, bất biến** — mô tả bệnh
-  nhân có ba chức năng, một trong đó là *"Tra thuốc với bệnh nền: chọn thuốc và bệnh nền →
-  xem kết quả và lưu ý"*.
-- `specs/product-vision.md` và `AGENTS.md` liệt kê *drug-condition interaction* và
-  *long-term memory* vào phần ngoài phạm vi.
+- [`gate/gate_1/README.md`](../gate/gate_1/README.md) — đã nộp, bất biến — **tự mâu thuẫn**.
+  Mục *Out of Scope* của PRD (dòng 49) loại *"tương tác thuốc–bệnh lý"*, nhưng phần mô tả
+  sơ đồ UI Flow (dòng 64) lại vẽ *"Tra thuốc với bệnh nền"* là một trong ba chức năng của
+  bệnh nhân.
+- `specs/product-vision.md` và `AGENTS.md` chép đúng theo mục *Out of Scope* của PRD. Hai
+  file này **không sai**; chỗ lệch nằm trong chính gate 1, giữa PRD và sơ đồ.
 - Backend đã có model `DrugDiseaseInteraction`, `disease_repository.py` và một migration
   tạo bảng `drug_disease_interactions`, trong khi frontend `interactions/drug-disease/page.tsx`
   là server component tĩnh với mọi control disabled.
@@ -22,9 +23,14 @@ nền*. Hiện trạng tài liệu và code đang mâu thuẫn với nhau ở ba
   bao giờ chạy được và sẽ không bao giờ chạy — xem mục "Chặn kỹ thuật" bên dưới. Mọi query
   qua `disease_repository.py` hiện sẽ chết với `relation … does not exist`.
 
-AGENTS.md quy định `gate/gate_1/` không thể bị nới lỏng bởi bất kỳ tài liệu nào. Theo đó,
-phần "ngoài phạm vi" viết sau trong `product-vision.md` là chỗ sai lệch cần sửa, không
-phải gate 1.
+Vì gate 1 không tự phân xử được, đây **không phải sửa lỗi tài liệu mà là mở rộng phạm vi
+có chủ đích**, do leader quyết định theo cơ chế AGENTS.md đã mở sẵn: *"Các nguyên tắc sản
+phẩm có thể được leader sửa thông qua spec và ADR được phê duyệt."*
+
+Điều khoản *"`gate/gate_1/` là bất biến và không thể được nới lỏng bởi bất kỳ tài liệu
+nào"* vẫn được tôn trọng. Nó cấm **nới lỏng ràng buộc**, mà ba nguyên tắc an toàn của gate
+1 đều giữ nguyên và được nhắc lại ở mục Quyết định bên dưới. Thêm một chức năng vào phạm vi
+là mở rộng, không phải nới lỏng.
 
 Vấn đề kỹ thuật đi kèm: `AuthUserResponse` được nhét nguyên vào JWT của NextAuth
 (`frontend/src/lib/auth.ts`, callback `jwt`), và JWT đó nằm trong cookie trình duyệt.
@@ -154,6 +160,9 @@ Việc này **phải xong trước** khi thêm bảng hồ sơ sức khoẻ, vì
 - **Chỉ lưu ở phía client (localStorage).** Không phát sinh nghĩa vụ bảo vệ dữ liệu và là
   phương án rủi ro thấp nhất. Bị loại vì mất dữ liệu khi đổi thiết bị, và vì dược sĩ không
   đọc được hồ sơ khi duyệt — mà human-in-the-loop là nguyên tắc số 3 của sản phẩm.
-- **Giữ nguyên "ngoài phạm vi".** Bị loại vì `gate/gate_1/` đã nộp có hứa chức năng này, và
-  vì repo đã mang sẵn model, repository và migration cho `drug_disease_interactions` — giữ
-  nguyên nghĩa là để nguyên một nhánh code chết mà không ai dám xoá cũng không ai được dùng.
+- **Giữ nguyên "ngoài phạm vi".** Đây là phương án đúng nếu bám sát mục *Out of Scope* của
+  PRD trong gate 1, và nó cũng có cái lợi thật: không phát sinh nghĩa vụ bảo vệ dữ liệu sức
+  khoẻ. Bị loại vì sơ đồ UI Flow trong cùng file gate 1 đã vẽ màn này, và vì repo đã mang
+  sẵn model, repository và migration cho `drug_disease_interactions` — giữ nguyên nghĩa là
+  để một nhánh code chết mà không ai dám xoá cũng không ai được dùng. Leader chấp nhận đánh
+  đổi đó một cách có ý thức, không phải vì tưởng rằng tài liệu đang sai.

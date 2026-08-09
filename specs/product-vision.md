@@ -60,5 +60,15 @@ Số đo thật lưu tại `eval/results/report.md`.
 
 ## Ngoài phạm vi
 
-Diagnosis/prescribing · AI tự đổi thuốc · drug-condition interaction · long-term memory ·
-full-gate review · clone UI hoặc private data của bệnh viện tham chiếu.
+Diagnosis/prescribing · AI tự đổi thuốc · agent long-term memory · full-gate review ·
+clone UI hoặc private data của bệnh viện tham chiếu.
+
+*Drug-condition interaction* từng nằm trong danh sách này theo mục Out of Scope của PRD
+gate 1, nhưng sơ đồ UI Flow trong cùng file gate 1 lại vẽ màn *"Tra thuốc với bệnh nền"*.
+[ADR 0017](../adrs/0017-self-reported-health-profile.md) phân xử mâu thuẫn đó theo hướng
+đưa vào phạm vi, giới hạn ở **bệnh nền do người dùng tự khai**. Hệ thống không chẩn đoán,
+không suy luận bệnh và không tự thêm bệnh nền cho ai.
+
+*Agent long-term memory* vẫn ngoài phạm vi và không bị ADR 0017 nới lỏng: hồ sơ sức khoẻ
+là dữ liệu người dùng chủ động nhập, nhìn thấy và xoá được, không phải thứ agent tự ghi nhớ
+giữa các phiên.
