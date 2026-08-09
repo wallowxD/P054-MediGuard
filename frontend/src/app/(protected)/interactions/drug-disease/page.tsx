@@ -6,16 +6,20 @@ import { buildPrivateMetadata } from "@/utils/metadata-utils";
 
 export const metadata: Metadata = buildPrivateMetadata(
   "Tra cứu thuốc – bệnh nền",
-  "Tương tác thuốc–bệnh nền hiện ngoài phạm vi sản phẩm."
+  "Tra cứu thuốc–bệnh nền đang được phát triển, chưa khả dụng."
 );
 
-const SCOPE_NOTE = "Tra cứu thuốc – bệnh nền chưa thuộc phạm vi hỗ trợ hiện tại.";
+const SCOPE_NOTE = "Tra cứu thuốc – bệnh nền đang được phát triển, chưa khả dụng.";
 
 /**
- * Ngoài phạm vi theo AGENTS.md/product-vision — thuốc–bệnh nền không có spec/ADR
- * riêng. Trang này CHỦ ĐÍCH là Server Component tĩnh: không state, không Redux,
- * không hook, mọi control đều disabled sẵn trong markup. Không thêm state hay gọi
- * API cho tính năng này nếu chưa có Jira decision + ADR mới.
+ * Tính năng ĐÃ trong phạm vi theo ADR 0017, nhưng CHƯA có backend: bảng
+ * `drug_disease_interactions` chưa tồn tại trong database (xem VMEC-72) và hồ sơ
+ * bệnh nền của người dùng chưa có API (VMEC-71).
+ *
+ * Trang này CHỦ ĐÍCH là Server Component tĩnh: không state, không Redux, không hook,
+ * mọi control đều disabled sẵn trong markup. Chỉ mở khoá khi cả hai ticket trên xong —
+ * bật sớm sẽ cho ra một màn tra cứu luôn trả rỗng, mà với sản phẩm cảnh báo an toàn
+ * thuốc thì "không có kết quả" dễ bị đọc nhầm thành "không có tương tác".
  */
 export default function DrugDiseaseInteractionsPage() {
   return (
@@ -29,7 +33,7 @@ export default function DrugDiseaseInteractionsPage() {
 
       <PrescriptionImageUpload
         disabled
-        disabledDescription="Không thể xử lý đơn thuốc vì tra cứu thuốc – bệnh nền chưa thuộc phạm vi hỗ trợ hiện tại."
+        disabledDescription="Không thể xử lý đơn thuốc vì tra cứu thuốc – bệnh nền đang được phát triển, chưa khả dụng."
       />
 
       <div className="space-y-5 rounded-xl border border-border bg-card p-4 opacity-70 sm:p-5">

@@ -31,6 +31,9 @@ Chi tiết sản phẩm: [gate/gate_1/README.md](gate/gate_1/README.md) và
    dụng gốc và đường dẫn nguồn. Không có trích dẫn thì trả về “chưa có dữ liệu”; model
    không được tự suy luận tương tác.
 2. **Không kết luận lâm sàng.** Không chẩn đoán, kê đơn, đề xuất đổi thuốc hoặc đưa liều.
+   Nguyên tắc này cấm hệ thống **tự nghĩ ra** một liều. Trích lại ngưỡng liều đã ghi trong
+   tờ HDSD rồi đối chiếu với liều người dùng nhập thì được phép, theo ranh giới của
+   [ADR 0018](adrs/0018-dose-comparison-boundary.md).
 3. **Duyệt chuyên môn không chặn hiển thị.** Cảnh báo hợp lệ, kể cả mức nghiêm trọng, được
    hiển thị ngay với nhãn “đang chờ xác nhận chuyên môn”; dược sĩ duyệt song song.
 
@@ -39,8 +42,17 @@ Riêng `gate/gate_1/` là bất biến và không thể được nới lỏng b�
 
 ### Ngoài phạm vi — không tự ý bổ sung
 
-Chẩn đoán hoặc kê đơn · AI tự đổi thuốc · tương tác thuốc–bệnh nền · bộ nhớ dài hạn · sao
-chép giao diện hoặc dữ liệu thật của bệnh viện tham chiếu.
+Chẩn đoán hoặc kê đơn · AI tự đổi thuốc · bộ nhớ dài hạn của agent · sao chép giao diện
+hoặc dữ liệu thật của bệnh viện tham chiếu.
+
+**Thuốc–bệnh nền đã được đưa vào phạm vi** theo
+[ADR 0017](adrs/0017-self-reported-health-profile.md), giới hạn ở bệnh nền **do người dùng
+tự khai**. Agent không chẩn đoán, không suy luận bệnh và không tự thêm bệnh nền cho ai;
+cảnh báo thuốc–bệnh nền vẫn phải có trích dẫn nguyên văn như mọi cảnh báo khác.
+
+**Bộ nhớ dài hạn vẫn ngoài phạm vi.** Hồ sơ sức khoẻ tự khai không phải ngoại lệ của quy
+tắc này: đó là dữ liệu người dùng chủ động nhập, nhìn thấy và xoá được, không phải thứ
+agent tự ghi nhớ giữa các phiên.
 
 ## Đội ngũ
 
@@ -130,6 +142,7 @@ P-054/
 |---|---|---|
 | Thuốc–thuốc có tương tác không, mức độ nào? | `db/repositories/` + `domain/` — **tra cứu exact key** | Bản ghi cặp chuẩn là nguồn sự thật; similarity có thể trả nhầm cặp gần nghĩa |
 | Thuốc–thực phẩm có tương tác không? | `retrieval/` — semantic search theo leaflet đã chọn | Không có bảng quan hệ có cấu trúc cho thực phẩm |
+| Thuốc–bệnh nền có tương tác không? | `db/repositories/` + `domain/` — **tra cứu exact key** | Cùng lý do với thuốc–thuốc: bản ghi của một bệnh gần nghĩa có nguồn thật nhưng sai cặp |
 | Trích dẫn nguyên văn | `retrieval/` rồi resolve evidence trong PostgreSQL | Mọi nội dung hiển thị phải truy vết được |
 | Hỏi đáp thông tin thuốc | `retrieval/` + prompt chuyên biệt | Chỉ trả lời dựa trên nguồn |
 | Người dùng gõ sai tên thuốc | `domain/normalization.py` | Fuzzy matching ký tự phù hợp tên riêng tiếng Việt hơn embedding |

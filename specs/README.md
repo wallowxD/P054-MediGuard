@@ -15,14 +15,19 @@
 | [domains.md](domains.md) | Entity, thuật ngữ và RAG boundary |
 | [user-roles.md](user-roles.md) | Role, access tier và permission matrix |
 | [api-contracts.md](api-contracts.md) | Quy ước API và chỉ mục contract |
+| [acceptance-criteria.md](acceptance-criteria.md) | Sổ AC theo tính năng, bổ sung cho PRD gate 1 |
 
 Priority và delivery status chỉ nằm trong Jira `VMEC`.
+
+Giao diện tham chiếu nằm ở [`demo-ui/`](../demo-ui/) — bản demo HTML/CSS đã duyệt ngày
+08/08/2026, dùng làm nguồn bố cục màn hình tới khi có wireframe Figma đầy đủ.
 
 ## Không gian tài liệu tính năng
 
 | Workspace | Phạm vi |
 |---|---|
 | [001-core-interaction-check/](001-core-interaction-check/spec.md) | Core flow tra tương tác có dẫn nguồn cho pilot 50 thuốc |
+| [002-drug-disease-check/](002-drug-disease-check/spec.md) | Hồ sơ sức khoẻ tự khai và tra cứu thuốc–bệnh nền có dẫn nguồn |
 
 ```text
 specs/NNN-feature-name/
