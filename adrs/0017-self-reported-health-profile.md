@@ -40,23 +40,39 @@ Vấn đề kỹ thuật đi kèm: `AuthUserResponse` được nhét nguyên và
 **1. Đưa hồ sơ sức khoẻ tự khai vào phạm vi**, giới hạn ở dữ liệu do người dùng tự nhập.
 Hệ thống không suy luận, không chẩn đoán và không tự thêm bệnh nền cho ai.
 
-**2. Hai bảng mới**, không thêm cột vào `users`:
+**2. Hai bảng mới**, không thêm cột vào `users`. Các trường bám đúng form hồ sơ trong bản
+demo đã duyệt (`demo-ui/js/app.js`, `renderProfile`):
 
 | Bảng | Quan hệ | Nội dung |
 |---|---|---|
-| `patient_profiles` | 1-1 với `users` | `user_id`, `date_of_birth`, `sex`, `updated_at` |
-| `patient_conditions` | 1-n với `users` | `user_id`, `disease_name`, `disease_name_unaccent`, `source`, `created_at` |
+| `patient_profiles` | 1-1 với `users` | `user_id`, `date_of_birth`, `sex`, `weight_kg`, `height_cm`, `updated_at` |
+| `patient_conditions` | 1-n với `users` | `user_id`, `condition_code`, `source`, `created_at` |
+
+`patient_conditions` lưu **tình trạng đặc biệt** trong hồ sơ — đang mang thai, đang cho con
+bú, suy thận, suy gan — chứ không phải danh sách bệnh nền của một lượt tra cứu. Hai thứ
+này khác nhau và bản demo cố ý tách:
+
+| | Hồ sơ (`patient_conditions`) | Bệnh nền của lượt tra cứu |
+|---|---|---|
+| Vòng đời | Lưu lâu dài theo tài khoản | Nhập lại mỗi lượt, nằm trong request |
+| Tập giá trị | 4 tình trạng cố định | Danh mục bệnh `diseases` |
+| Vai trò | Hiển thị lại và gửi kèm cho chuyên môn | Đầu vào của exact lookup |
+
+Gộp hai thứ làm một sẽ khiến hệ thống tự đưa "suy thận" trong hồ sơ vào mọi lượt tra cứu và
+tự sinh cảnh báo — tức là suy luận thay người dùng, đúng thứ nguyên tắc số 2 cấm.
 
 Lưu `date_of_birth`, **không** lưu tuổi. Tuổi là giá trị dẫn xuất; lưu số tuổi thì sang năm
 dữ liệu sai mà không có tín hiệu nào báo.
 
-`disease_name_unaccent` chuẩn hoá bằng đúng `domain/normalization.py` mà migration của
-`drug_disease_interactions` đã chọn cho cột cùng tên, để hai bên join được khi bảng đó
-thực sự tồn tại.
-
 `source` có hai giá trị: `self_reported` và `pharmacist_confirmed`. Đưa vào ngay từ
 migration đầu tiên, không thêm sau — thêm sau phải backfill toàn bộ dữ liệu đã có và không
 có cách nào biết dòng cũ thuộc loại nào.
+
+**2b. Danh mục bệnh nền là bảng thứ ba, `diseases`**, phục vụ ô gợi ý ở màn tra cứu. Có cột
+không dấu chuẩn hoá bằng đúng `domain/normalization.py` mà migration của
+`drug_disease_interactions` đã chọn cho `disease_name_unaccent`, để hai bên join được khi
+bảng đó thực sự tồn tại. Danh mục là **tập đóng do đội duyệt**: người dùng chọn từ gợi ý,
+không tự tạo bệnh mới — tên bệnh tự do sẽ không bao giờ khớp được với bản ghi evidence.
 
 **3. API riêng, ngoài namespace auth:**
 
@@ -65,7 +81,12 @@ GET    /api/v1/patients/me/health-profile
 PUT    /api/v1/patients/me/health-profile
 POST   /api/v1/patients/me/conditions
 DELETE /api/v1/patients/me/conditions/{id}
+GET    /api/v1/diseases?q=              danh mục bệnh nền cho ô gợi ý
+POST   /api/v1/interactions/drug-disease  tra cứu một lượt
 ```
+
+Tra cứu **không** đọc hồ sơ để tự thêm bệnh nền vào request. Danh sách bệnh nền nằm trong
+body do người dùng chọn, đúng như bản demo.
 
 `AuthUserResponse` **giữ nguyên**, chỉ chứa `id`, `email`, `name`, `roles`.
 
@@ -96,8 +117,8 @@ thì trả "chưa có dữ liệu" chứ không suy đoán.
 - ✅ Contract identity không đổi; frontend `types/auth.d.ts` và NextAuth không phải sửa.
 - ✅ Dữ liệu sức khoẻ tách bảng nên xoá theo yêu cầu người dùng là một `DELETE`, không đụng
   tới tài khoản.
-- ✅ Join thẳng được với `drug_disease_interactions` khi bảng đó được tạo, vì dùng chung
-  quy ước `disease_name_unaccent`.
+- ✅ Danh mục `diseases` join thẳng được với `drug_disease_interactions` khi bảng đó được
+  tạo, vì dùng chung quy ước `disease_name_unaccent`.
 - ✅ `source` cho phép dược sĩ xác nhận bệnh nền mà vẫn phân biệt được với dữ liệu tự khai.
 - ❌ Dự án bắt đầu lưu **dữ liệu sức khoẻ ở trạng thái nghỉ**. Kéo theo nghĩa vụ chưa từng
   có: thông báo và thu thập đồng ý khi nhập, cho phép xoá, và không đưa dữ liệu này vào log

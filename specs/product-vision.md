@@ -37,7 +37,10 @@ review. Agent không kết luận lâm sàng và không thay thế bác sĩ.
 
 1. **Không bịa cảnh báo:** warning bắt buộc có verbatim quote + source URL; thiếu evidence
    thì trả “chưa có dữ liệu”.
-2. **Không kết luận lâm sàng:** không chẩn đoán, kê đơn, đổi thuốc hoặc đưa liều.
+2. **Không kết luận lâm sàng:** không chẩn đoán, kê đơn, đổi thuốc hoặc đưa liều. Nguyên
+   tắc này cấm hệ thống **tự nghĩ ra** một liều; trích lại ngưỡng liều đã ghi trong tờ HDSD
+   và đối chiếu với liều người dùng nhập thì được, theo ranh giới của
+   [ADR 0018](../adrs/0018-dose-comparison-boundary.md).
 3. **Review không chặn:** pending warning hợp lệ hiển thị ngay với nhãn chờ xác nhận.
 
 ## Chỉ số thành công
