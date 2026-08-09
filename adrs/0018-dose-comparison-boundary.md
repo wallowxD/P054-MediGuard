@@ -1,6 +1,6 @@
 # ADR 0018 — Đối chiếu liều dùng là trình bày bằng chứng, không phải đưa liều
 
-- **Trạng thái:** Đề xuất
+- **Trạng thái:** Được chấp nhận
 - **Ngày:** 2026-08-09
 - **Liên quan:** làm rõ nguyên tắc an toàn số 2 trong `AGENTS.md`; tuân thủ ADR 0006
 
