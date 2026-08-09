@@ -23,6 +23,7 @@ delivery status hoặc catalog quy ước code.
 | [0014](0014-defer-spec-kit.md) | Tạm dừng Spec Kit | Được chấp nhận |
 | [0015](0015-backend-owned-identity.md) | Backend tự sở hữu identity, không dùng Supabase Auth | Được chấp nhận |
 | [0016](0016-google-oidc-login.md) | Đăng nhập Google OpenID Connect | Được chấp nhận |
+| [0017](0017-self-reported-health-profile.md) | Hồ sơ sức khoẻ tự khai ở bảng riêng | Đề xuất |
 
 ## Quy tắc
 
