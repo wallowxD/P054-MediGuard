@@ -1,12 +1,14 @@
 # Tầm nhìn sản phẩm — Trợ lý An toàn Thuốc
 
-> Nguồn gốc: Project Brief và PRD đã nộp tại `gate/gate_1/`. File GATE là immutable;
-> tài liệu này là baseline làm việc dễ đọc cho thành viên và AI.
+> Nguồn gốc: Project Brief và PRD tại `gate/gate_1/`, bản sửa ngày 09/08/2026. Tài liệu này
+> là baseline làm việc dễ đọc cho thành viên và AI; lệch nhau thì sửa cả hai trong cùng
+> pull request.
 
 ## Một câu mô tả
 
 Người bệnh đang phải tự đọc leaflet và đối chiếu từng cặp thuốc → một AI agent tra cứu
-tương tác thuốc–thuốc và thuốc–thực phẩm có dẫn nguồn trong hệ thống bệnh viện.
+tương tác thuốc–thuốc, thuốc–thực phẩm và thuốc–bệnh nền có dẫn nguồn trong hệ thống bệnh
+viện.
 
 ## Bài toán
 
@@ -45,13 +47,22 @@ review. Agent không kết luận lâm sàng và không thay thế bác sĩ.
 
 ## Chỉ số thành công
 
-- Độ chính xác chuẩn hóa tên thuốc.
-- Tỷ lệ warning được pharmacist approve.
-- Extraction coverage của pilot.
-- Response time.
-- 100% qualifying pending warnings hiển thị không chờ approval.
+Cột *Mục tiêu* là **target demo do Project Brief đặt ra, chưa phải kết quả đo**. Số đo thật
+chỉ nằm ở [`eval/results/report.md`](../eval/results/report.md); không chép target sang đó.
 
-Số đo thật lưu tại `eval/results/report.md`.
+| Chỉ số | Mục tiêu | Đo ở đâu |
+|---|---|---|
+| Tỷ lệ hoàn thành tra cứu end-to-end | ≥ 90% người dùng test | Phiên test có người dùng |
+| Độ chính xác chuẩn hoá tên thuốc | ≥ 90% | Bộ ≥ 30 case, SC-007 feature 001 |
+| Tỷ lệ cảnh báo được dược sĩ approve | ≥ 80% | Hàng đợi duyệt trong pilot |
+| Coverage trích xuất leaflet | Đo trên pilot 50 thuốc trước khi scale | Báo cáo pilot |
+| Thời gian phản hồi, đường nhập tay | p95 ≤ 5 giây tới cảnh báo đầu tiên | ≥ 30 run, SC-008 feature 001 |
+| Thời gian phản hồi, đường ảnh/PDF | p95 ≤ 15 giây tới màn xác nhận thuốc | ≥ 30 run, cùng phép đo |
+| Cảnh báo hợp lệ hiển thị không chờ duyệt | 100% | Test tự động |
+
+Hai mốc thời gian tách đôi vì đường ảnh/PDF phải gọi thêm OCR; gộp chung một con số 5 giây
+như Project Brief là không đo được. Xem
+[gate-1-feedback-response.md](gate-1-feedback-response.md).
 
 ## Giả định
 

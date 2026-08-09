@@ -19,7 +19,7 @@
 - [ ] REQ013 Plan tuân thủ cấu trúc backend/frontend và các ADR hiện hành.
 - [ ] REQ014 Mọi requirement có ít nhất một task và test/evidence task tương ứng.
 - [ ] REQ015 `tasks.md` không sao chép assignee, priority, sprint hoặc workflow status từ Jira.
-- [ ] REQ016 Không task nào sửa `gate/gate_1/`, generated API type hoặc logging infrastructure.
+- [ ] REQ016 Không task nào sửa generated API type hoặc logging infrastructure.
 - [ ] REQ017 Không còn assumption chưa duyệt trong spec, plan, research, model, contract, task.
 - [ ] REQ018 Reviewer đã ghi finding và resolution vào Jira; không còn CRITICAL/HIGH gap.
 

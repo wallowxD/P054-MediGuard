@@ -236,7 +236,7 @@ P-054/
 ├── backend/            FastAPI + LangGraph + adapter Qdrant
 ├── frontend/           Next.js App Router + TypeScript + Tailwind
 ├── dataset/            danh mục thuốc bệnh viện
-├── gate/gate_1/        ★ ĐÃ NỘP — không sửa, xóa, đổi tên hoặc di chuyển
+├── gate/               hồ sơ nộp theo từng gate
 ├── eval/  presentation/  scripts/
 ├── WORKLOG.md  JOURNAL.md
 └── .env  .venv/        phải nằm tại root
@@ -277,13 +277,22 @@ Jira VMEC-NN
 → merge và cập nhật Jira
 ```
 
-Tạo branch:
+Tạo branch — tên branch đúng bằng Jira key, không thêm tiền tố hay mô tả:
 
 ```bash
 git checkout main
 git pull --ff-only
 git checkout -b VMEC-NN
 ```
+
+Commit trên branch đó dùng Conventional Commits với **scope là Jira key**:
+
+```bash
+git commit -m "feat(VMEC-NN): add drug catalog browsing endpoints"
+```
+
+`type` ∈ `feat` · `fix` · `docs` · `refactor` · `chore` · `test` · `ci` · `perf`. Mô tả viết
+tiếng Anh, thể mệnh lệnh, không dấu chấm cuối. Không đặt ticket key ở cuối câu.
 
 Trước khi code, đọc `spec.md`, `plan.md`, `tasks.md`, contract, checklist và ADR liên quan.
 Nếu acceptance criterion hoặc kiến trúc chưa rõ, hỏi leader; không để AI hoặc developer tự
@@ -309,9 +318,9 @@ git diff --check
 git status --short
 ```
 
-Commit bằng tiếng Anh theo Conventional Commits. PR phải link Jira issue và spec, nêu rõ
-kết quả kiểm thử, đồng thời pass toàn bộ GitHub checks. Không commit secret, sửa GATE,
-`.ai-log/`, generated API types hoặc logging scripts.
+PR phải link Jira issue và spec, nêu rõ kết quả kiểm thử, đồng thời pass toàn bộ GitHub
+checks. Không commit secret, `.ai-log/`, generated API types hoặc logging scripts. Sửa
+`gate/` thì theo [ADR 0019](adrs/0019-gate-1-no-longer-immutable.md).
 
 ## Các lỗi thường gặp
 

@@ -54,8 +54,8 @@ nhiều nhất và dễ sửa nhất.
 - Mặc định review `git diff main...HEAD`. User chỉ định phạm vi khác thì theo user.
 - Trước mỗi gate, soát cả repo chứ không chỉ diff.
 - **Không sửa code.** Chỉ báo cáo.
-- `gate/gate_1/` đã submit — soát để tham chiếu nội dung, nhưng không đề xuất sửa gì
-  trong đó.
+- `gate/gate_1/` sửa được (ADR 0019). Đề xuất sửa được, nhưng phải kèm lý do và chỉ ra chỗ
+  cần ghi lại trong `specs/`.
 
 ## Báo cáo
 

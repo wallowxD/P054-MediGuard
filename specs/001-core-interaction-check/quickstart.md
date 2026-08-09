@@ -21,7 +21,6 @@ test -f specs/001-core-interaction-check/data-model.md
 test -f specs/001-core-interaction-check/contracts/interaction-check.openapi.yaml
 test -f specs/001-core-interaction-check/checklists/requirements.md
 test -f specs/001-core-interaction-check/checklists/safety.md
-shasum -a 256 -c .github/gate-1.sha256
 ```
 
 Sau đó reviewer đối chiếu thủ công:

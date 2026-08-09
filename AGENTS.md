@@ -38,7 +38,6 @@ Chi tiết sản phẩm: [gate/gate_1/README.md](gate/gate_1/README.md) và
    hiển thị ngay với nhãn “đang chờ xác nhận chuyên môn”; dược sĩ duyệt song song.
 
 Các nguyên tắc sản phẩm có thể được leader sửa thông qua spec và ADR được phê duyệt.
-Riêng `gate/gate_1/` là bất biến và không thể được nới lỏng bởi bất kỳ tài liệu nào.
 
 ### Ngoài phạm vi — không tự ý bổ sung
 
@@ -58,10 +57,10 @@ agent tự ghi nhớ giữa các phiên.
 
 | Họ tên | Vai trò |
 |---|---|
-| Lê Nguyễn Minh Quang | PM / PO / Tech Lead / Developer |
+| Lê Nguyễn Minh Quang | PM / PO / Tech Lead / Fullstack Developer |
 | Nguyễn Thanh Hùng | Backend + Database |
 | Đỗ Quý Đức | Frontend + Backend |
-| Lê Nhật Minh | Frontend |
+| Lê Nhật Minh | Frontend + Database |
 
 Đội: **Cuvée Tech** · Mã dự án: **P-054**
 
@@ -112,7 +111,7 @@ P-054/
 ├── adrs/               quyết định kiến trúc, đánh số tăng dần
 ├── planning/           chỉ có README trỏ tới Jira
 ├── docs/               hướng dẫn kỹ thuật và vận hành
-├── gate/gate_1/        ★ ĐÃ NỘP — KHÔNG SỬA, XÓA, ĐỔI TÊN HOẶC DI CHUYỂN
+├── gate/                hồ sơ nộp theo từng gate
 ├── backend/
 │   ├── config.yaml     tham số cấu hình, không chứa secret
 │   └── src/medsafe/
@@ -196,11 +195,41 @@ threshold chỉ để ép hệ thống trả kết quả.
 
 ### Git
 
-- Commit message viết bằng tiếng Anh theo Conventional Commits: `feat:`, `fix:`, `docs:`,
-  `refactor:`, `chore:`.
+**Branch mang đúng Jira key, không thêm gì khác.** Ticket `VMEC-12` → branch `VMEC-12`.
+Không dùng `feature/VMEC-12`, không dùng `VMEC-12-them-man-hinh`.
+
+```bash
+git checkout main && git pull --ff-only
+git checkout -b VMEC-12
+```
+
+**Commit message = Conventional Commits với scope là Jira key**, viết bằng tiếng Anh:
+
+```text
+<type>(VMEC-12): <mô tả ngắn, thể mệnh lệnh>
+```
+
+- `type` ∈ `feat` · `fix` · `docs` · `refactor` · `chore` · `test` · `ci` · `perf`.
+- Scope là ticket key viết hoa, luôn có, và phải **trùng ticket của branch**. Một branch chỉ
+  mang một ticket key.
+- Mô tả viết thể mệnh lệnh, không dấu chấm cuối: `add`, không phải `added` hay `adds`.
+- Không đặt ticket key ở cuối câu — `feat: add search UI (VMEC-27)` là sai dạng.
+
+```text
+✅ feat(VMEC-29): add drug catalog browsing endpoints
+✅ docs(VMEC-71): spec the drug-condition feature
+✅ fix(VMEC-22): keep letter counts in sync with the list total
+❌ feat: add drug catalog browsing endpoints (VMEC-29)
+❌ VMEC-29: add drug catalog browsing endpoints
+❌ update code
+```
+
+Merge commit do GitHub sinh ra khi merge pull request không cần theo quy ước này.
+
+Ngoài ra:
+
 - Không commit `.env` hoặc `frontend/.env.local`.
 - Không dùng `git push --no-verify`.
-- Branch dùng đúng Jira key, ví dụ `VMEC-42`.
 
 ### Kiểm thử
 
@@ -233,4 +262,7 @@ Nếu pre-push hook lỗi, báo leader; không bypass. Chi tiết:
 
 Checklist đầy đủ: [docs/guide/deliverables/checklist.md](docs/guide/deliverables/checklist.md).
 
-**`gate/gate_1/` đã được nộp — tuyệt đối không sửa, xóa, đổi tên hoặc di chuyển.**
+`gate/gate_1/` sửa được theo [ADR 0019](adrs/0019-gate-1-no-longer-immutable.md). Mỗi lần
+sửa phải ghi lý do vào tài liệu phản hồi trong `specs/` và nêu rõ ở đầu
+`gate/gate_1/README.md` rằng bản đang đọc đã được sửa ngày nào, vì sao. Bản nộp gốc vẫn truy
+được qua lịch sử git.
