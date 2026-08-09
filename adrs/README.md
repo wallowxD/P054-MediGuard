@@ -24,7 +24,8 @@ delivery status hoặc catalog quy ước code.
 | [0015](0015-backend-owned-identity.md) | Backend tự sở hữu identity, không dùng Supabase Auth | Được chấp nhận |
 | [0016](0016-google-oidc-login.md) | Đăng nhập Google OpenID Connect | Được chấp nhận |
 | [0017](0017-self-reported-health-profile.md) | Hồ sơ sức khoẻ tự khai ở bảng riêng | Được chấp nhận |
-| [0018](0018-dose-comparison-boundary.md) | Đối chiếu liều là trình bày bằng chứng | Đề xuất |
+| [0018](0018-dose-comparison-boundary.md) | Đối chiếu liều là trình bày bằng chứng | Được chấp nhận |
+| [0019](0019-gate-1-no-longer-immutable.md) | `gate/gate_1/` không còn bất biến | Được chấp nhận |
 
 ## Quy tắc
 

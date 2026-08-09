@@ -33,7 +33,7 @@ generated frontend type và React Query layering.
 | Domain deterministic/offline | PASS | FR-004/005/007, SC-006 |
 | Một cửa cho side effect | PASS | repository, retriever, model adapter, React Query |
 | Jira/spec/evidence có một owner | PASS | Jira giữ delivery; feature giữ intent/evidence |
-| GATE bất biến | PASS | Không task nào target GATE; CI checksum |
+| GATE | PASS | Không task nào target GATE; sửa GATE phải theo ADR 0019 |
 
 ## Quyết định thiết kế
 

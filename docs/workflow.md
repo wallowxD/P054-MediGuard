@@ -39,7 +39,7 @@ lớn hơn và đánh dấu ADR cũ bị thay thế.
 ## Quy trình tính năng
 
 1. Tạo/chọn Jira issue `VMEC-NN`, gán sprint, assignee, priority, status và product context.
-2. Tạo branch đúng Jira key từ base branch đã thống nhất.
+2. Tạo branch tên đúng bằng Jira key từ base branch đã thống nhất, ví dụ `VMEC-12`.
 3. Leader/PO duyệt `spec.md`: user story, acceptance criteria, edge case, success criteria
    và non-goals; không đưa chi tiết framework vào spec hành vi.
 4. Làm rõ mọi ambiguity. Luồng cảnh báo không được triển khai dựa trên assumption chưa duyệt.
@@ -70,9 +70,7 @@ Leader xác nhận:
 
 Các workflow trong `.github/workflows/` phải pass:
 
-- **Submitted gate integrity:** từ trusted base, từ chối mọi thay đổi dưới `gate/gate_1/`
-  và kiểm tra SHA-256.
-- **Repository integrity:** kiểm tra GATE, ownership của Markdown/planning và cấu hình Docker
+- **Repository integrity:** kiểm tra ownership của Markdown/planning và cấu hình Docker
   Compose.
 - **Backend lint, format, tests:** cài dependency từ lockfile rồi chạy ruff và pytest.
 - **Frontend lint và build:** cài Yarn immutable, chạy ESLint, TypeScript và production build.
@@ -83,8 +81,10 @@ branch cập nhật và toàn bộ checks; chặn force push và xóa branch.
 ## Quy ước Jira và Git
 
 - Project key: `VMEC`.
-- Branch: đúng Jira key, ví dụ `VMEC-37`.
-- Commit: tiếng Anh theo Conventional Commits.
+- Branch: đúng Jira key và chỉ Jira key, ví dụ `VMEC-37` — không `feature/VMEC-37`.
+- Commit: tiếng Anh theo Conventional Commits, scope là Jira key của branch:
+  `<type>(VMEC-37): <mô tả thể mệnh lệnh>`. Ví dụ `feat(VMEC-37): add exact pair lookup`.
+  Không đặt ticket key ở cuối câu. Merge commit của GitHub được miễn.
 - PR: link Jira và `spec.md`, tóm tắt evidence thay vì chép task list.
 - Jira là nơi duy nhất thay đổi sprint, assignee, priority và status.
 

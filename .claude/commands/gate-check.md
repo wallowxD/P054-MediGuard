@@ -39,7 +39,8 @@ thiếu gì để đạt ngưỡng tối thiểu (8/7/7/6/7).
 
 - `.env` có bị commit nhầm không (`git log --all --full-history -- .env`)
 - Còn sót code template không (`example_node`, `example_tool`)
-- `gate/gate_1/` còn nguyên 4 file không — **phải luôn nguyên vẹn**
+- `gate/gate_1/` có đủ 4 deliverable không; nếu nội dung đã sửa thì lý do đã được ghi lại
+  trong `specs/` và ở đầu `gate/gate_1/README.md` chưa (ADR 0019)
 - CI lần chạy gần nhất xanh hay đỏ
 
 ## Báo cáo

@@ -14,7 +14,7 @@ Feature này cung cấp một vertical slice cho pilot 50 thuốc: tìm và xác
 catalog, kiểm tra mọi cặp đã xác nhận, tùy chọn kiểm tra thực phẩm và chỉ hiển thị warning
 có evidence gốc cùng review state hiện tại.
 
-GATE 1 là nguồn gốc immutable. Baseline hiện hành và ADR chi phối implementation khi giả
+GATE 1 là nguồn gốc của feature này. Baseline hiện hành và ADR chi phối implementation khi giả
 định dữ liệu ban đầu đã thay đổi: ingestion tạo exact-pair record có evidence từ leaflet;
 drug-food dùng leaflet retrieval. Feature tuân thủ product vision, domain model, app flow,
 ADR 0012, 0005 và 0006.

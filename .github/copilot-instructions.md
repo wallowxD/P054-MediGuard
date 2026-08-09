@@ -11,8 +11,8 @@ Tóm tắt constraint hiện hành:
 2. **Không kết luận lâm sàng** — không chẩn đoán, không đề xuất đổi thuốc, không đưa liều.
 3. **Human-in-the-loop không chặn luồng** — cảnh báo hiện ngay kèm nhãn "chờ xác nhận
    chuyên môn". Không implement full-gate.
-4. **`gate/gate_1/` đã submit** — đây là vùng duy nhất bất biến: không sửa, xoá, đổi tên
-   hay di chuyển.
+4. **`gate/gate_1/` sửa được** — theo ADR 0019. Sửa thì phải ghi lý do vào tài liệu phản
+   hồi trong `specs/` và ghi chú ở đầu `gate/gate_1/README.md`.
 5. **Không đụng `scripts/` và `.ai-log/`** — hạ tầng logging của BTC, tự động hoàn toàn.
    Không gọi tay script `log_*`. Không `git push --no-verify`.
 6. **Luôn mở repo ở thư mục gốc `P-054/`**, không mở `backend/` hay `frontend/` làm
@@ -23,5 +23,8 @@ Các product/architecture constraint khác có thể thay đổi khi leader duy�
 spec/ADR liên quan; không tự thay đổi trong lúc implement.
 
 Quy ước: Python 3.11 · ruff line-length 120 · type hint bắt buộc · không bare `except:` ·
-Pydantic v2 · commit message tiếng Anh theo Conventional Commits · tài liệu team sở hữu
-viết bằng tiếng Việt.
+Pydantic v2 · tài liệu team sở hữu viết bằng tiếng Việt.
+
+Git: branch tên đúng bằng Jira key (`VMEC-12`, không `feature/VMEC-12`). Commit message
+tiếng Anh theo Conventional Commits với scope là Jira key của branch:
+`feat(VMEC-12): add exact pair lookup`. Không đặt ticket key ở cuối câu.

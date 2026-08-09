@@ -23,8 +23,9 @@ nhật ADR/contract authorization.
 1. Check interaction: nhập/search hoặc OCR candidate → xác nhận danh sách → check → warning
    có nguồn hoặc unavailable.
 2. Tra thông tin thuốc: chọn thuốc → đọc thông tin có nguồn.
-3. Drug-condition từng xuất hiện trong GATE flow nhưng PRD xếp ngoài phạm vi; không
-   implement nếu chưa có quyết định mới.
+3. Tra thuốc–bệnh nền: khai hồ sơ sức khoẻ → chọn bệnh nền từ danh mục → check → cảnh báo
+   có nguồn hoặc unavailable. Đã vào phạm vi theo
+   [ADR 0017](../adrs/0017-self-reported-health-profile.md), giới hạn ở bệnh nền tự khai.
 
 ## Luồng dược sĩ
 

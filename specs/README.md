@@ -16,6 +16,7 @@
 | [user-roles.md](user-roles.md) | Role, access tier và permission matrix |
 | [api-contracts.md](api-contracts.md) | Quy ước API và chỉ mục contract |
 | [acceptance-criteria.md](acceptance-criteria.md) | Sổ AC theo tính năng, bổ sung cho PRD gate 1 |
+| [gate-1-feedback-response.md](gate-1-feedback-response.md) | Phản hồi góp ý gate 1 và danh sách mâu thuẫn cần sửa trong Brief/PRD |
 
 Priority và delivery status chỉ nằm trong Jira `VMEC`.
 

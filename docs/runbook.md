@@ -46,7 +46,6 @@ make check
 make web-lint
 make web-build
 docker compose config --quiet
-shasum -a 256 -c .github/gate-1.sha256
 ```
 
 Với feature có workspace riêng, chạy thêm `quickstart.md` và hoàn thành checklist tương ứng.

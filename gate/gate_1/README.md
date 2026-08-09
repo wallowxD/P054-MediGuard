@@ -1,6 +1,11 @@
 # GATE 1 — Cuvée Tech (P-054)
 
-**Dự án:** Medication Safety Copilot — AI Agent tra cứu tương tác **thuốc–thuốc** và **thuốc–thực phẩm** có nguồn, đặt trong bối cảnh web app *"Hệ thống y tế X"*.
+> **Bản sửa ngày 09/08/2026** theo góp ý của leader: bổ sung Acceptance Criteria cho từng
+> dòng Requirements trong PRD, chốt mốc thời gian phản hồi, và xử lý mâu thuẫn giữa mục
+> *Out of Scope* của PRD với chức năng *"Tra thuốc với bệnh nền"* trong UI Flow. Toàn bộ
+> danh sách thay đổi: [`specs/gate-1-feedback-response.md`](../../specs/gate-1-feedback-response.md).
+
+**Dự án:** Medication Safety Copilot — AI Agent tra cứu tương tác **thuốc–thuốc**, **thuốc–thực phẩm** và **thuốc–bệnh nền tự khai** có nguồn, đặt trong bối cảnh web app *"Hệ thống y tế X"*.
 
 > Agent đóng vai trò **cảnh báo an toàn tham khảo**, hiển thị nguyên văn trích dẫn kèm nguồn và trạng thái review — **không tự kết luận lâm sàng và không thay thế quyết định của bác sĩ**.
 
@@ -10,10 +15,10 @@
 
 | Họ tên | Vai trò |
 |---|---|
-| Lê Nguyễn Minh Quang | PM / PO / Tech Lead / Dev |
+| Lê Nguyễn Minh Quang | PM / PO / Tech Lead / Fullstack Developer |
 | Nguyễn Thanh Hùng | Backend + Database |
 | Đỗ Quý Đức | Frontend + Backend |
-| Lê Nhật Minh | Frontend |
+| Lê Nhật Minh | Frontend + Database|
 
 ---
 
@@ -36,17 +41,18 @@
 ### 1. Brief — Project Brief
 Xác định bức tranh tổng quan của sản phẩm:
 - **Problem Statement** — người dùng phải tự tra từng thuốc, tự đọc tờ HDSD và tự đối chiếu nhiều cặp tương tác; quy trình chậm, dễ bỏ sót, khó đánh giá mức độ nghiêm trọng. Danh mục thuốc của bệnh viện **không có sẵn dữ liệu tương tác**, buộc phải trích xuất từ PDF HDSD và review trước khi dùng.
-- **Target Audience** — (a) bệnh nhân / người chăm sóc: tra cứu nhanh từ danh sách thuốc, ảnh hoặc PDF; (b) bác sĩ / dược sĩ: review đoạn trích, nguồn và xác nhận kết quả.
+- **Target Audience** — (a) bệnh nhân / người chăm sóc: tra cứu nhanh từ danh sách thuốc, ảnh hoặc PDF; (b) bác sĩ / dược sĩ: review đoạn trích, nguồn và xác nhận kết quả. Trạng thái duyệt dùng đúng bộ từ của hệ thống: `pending` / `approved` / `rejected`, thiếu dữ liệu là `unavailable`.
+- **Phạm vi tra cứu** — thuốc–thuốc, thuốc–thực phẩm và thuốc–bệnh nền do người dùng tự khai; agent không chẩn đoán và không suy luận bệnh nền.
 - **Định vị sản phẩm** — một agent nằm trong hệ thống y tế của bệnh viện, nhấn mạnh tính "có nguồn" và "có human-in-the-loop".
 
 ### 2. PRD — Product Requirements Document
 Tài liệu yêu cầu sản phẩm đầy đủ, gồm:
-- **Objective** — AI Agent tra cứu tương tác thuốc–thuốc và thuốc–thực phẩm, UI lấy cảm hứng từ mô hình *Drug Interaction Checker* (tag-based search), cải tiến bằng severity trực quan, giải thích có nguồn và cơ chế human-in-the-loop **không chặn trải nghiệm**.
-- **Success Metrics** — tỷ lệ chuẩn hóa tên thuốc đúng, tỷ lệ cảnh báo được dược sĩ approve, độ phủ dữ liệu trích xuất trong pilot, tốc độ phản hồi, và 100% cảnh báo hiển thị ngay không cần chờ duyệt.
+- **Objective** — AI Agent tra cứu tương tác thuốc–thuốc, thuốc–thực phẩm và thuốc–bệnh nền tự khai, dựa trên dữ liệu trích xuất từ tờ HDSD của danh mục BV GTVT; UI lấy cảm hứng từ mô hình *Drug Interaction Checker* (tag-based search), cải tiến bằng severity trực quan, giải thích có nguồn và cơ chế human-in-the-loop **không chặn trải nghiệm**.
+- **Success Metrics** — hoàn thành tra cứu ≥ 90%, chuẩn hóa tên thuốc đúng ≥ 90%, cảnh báo được dược sĩ approve ≥ 80%, độ phủ dữ liệu trích xuất đo trên pilot 50 thuốc trước khi scale, tốc độ phản hồi p95 ≤ 5 giây (đường nhập tay) và ≤ 15 giây (đường ảnh/PDF), và 100% cảnh báo hiển thị ngay không cần chờ duyệt.
 - **Assumptions** — nguồn dữ liệu chính là danh mục thuốc BV GTVT (`drug_list_bv_gtvt.csv`, ~1073 dòng, tiếng Việt); dữ liệu tương tác và severity **được vision model trích xuất từ PDF HDSD** rồi **bắt buộc con người review**; giữ nguyên văn text gốc ở bước lưu trữ.
 - **Milestones** — M1 Foundation (cuối tuần 2) → M2 Core flow (cuối tuần 3) → M3 MVP hoàn chỉnh (cuối tuần 4) → M4 Polish (cuối tuần 6).
-- **Requirements** — bảng user story phân theo mức HIGH / MEDIUM / LOW.
-- **Out of Scope** — chẩn đoán/kê đơn, AI tự đổi thuốc, mô hình full-gate chặn cảnh báo, tương tác thuốc–bệnh lý, memory dài hạn, clone UI/dữ liệu thật của bệnh viện tham khảo.
+- **Requirements** — bảng user story phân theo mức HIGH / MEDIUM / LOW, mỗi dòng kèm **Acceptance Criteria** kiểm chứng được; chi tiết và cách đo nằm ở [`specs/acceptance-criteria.md`](../../specs/acceptance-criteria.md).
+- **Out of Scope** — chẩn đoán/kê đơn, suy luận bệnh nền từ triệu chứng, AI tự đổi thuốc, mô hình full-gate chặn cảnh báo, memory dài hạn, clone UI/dữ liệu thật của bệnh viện tham khảo.
 
 **Các quyết định thiết kế đáng chú ý:**
 1. **Bỏ mô hình full-gate.** Mọi cảnh báo (kể cả severe/major) hiển thị ngay cho bệnh nhân, kèm nhãn *"chờ xác nhận chuyên môn"*; dược sĩ xử lý song song, không chặn luồng.

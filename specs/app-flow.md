@@ -107,7 +107,9 @@ Pending không phải điều kiện chặn hiển thị; rejected evidence khô
 
 - Feature 001: catalog confirmation + cited drug-drug/drug-food check.
 - Feature 002: hồ sơ sức khoẻ tự khai + cited drug-disease check (ADR 0017).
-- Đối chiếu liều dùng: chờ [ADR 0018](../adrs/0018-dose-comparison-boundary.md) được duyệt.
+- Đối chiếu liều dùng: trong phạm vi theo [ADR 0018](../adrs/0018-dose-comparison-boundary.md)
+  (chấp nhận 09/08/2026); chặn kỹ thuật còn lại là ingestion chưa trích ngưỡng liều dạng có
+  cấu trúc từ mục *Liều và cách dùng*.
 - Prescription OCR: cần spec, privacy rule, contract và validation riêng.
 - Pharmacist mutation: cần authorization/evidence-version spec riêng.
 - Production VPS: chờ ADR topology triển khai được leader duyệt.

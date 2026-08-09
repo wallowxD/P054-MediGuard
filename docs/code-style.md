@@ -106,9 +106,14 @@ Không viết raw query-key array inline; cấu trúc phân cấp cho phép inva
 
 ## Git và tài liệu
 
-- Commit message bằng tiếng Anh theo Conventional Commits: `feat:`, `fix:`, `docs:`,
-  `refactor:`, `chore:`.
-- Một branch cho một Jira ticket, ví dụ `VMEC-16`.
+- Branch mang đúng Jira key, không thêm tiền tố hay hậu tố: ticket `VMEC-16` → branch
+  `VMEC-16`.
+- Commit message bằng tiếng Anh theo Conventional Commits, **scope là Jira key**:
+  `<type>(VMEC-16): <mô tả thể mệnh lệnh>`, với `type` ∈ `feat` · `fix` · `docs` ·
+  `refactor` · `chore` · `test` · `ci` · `perf`.
+- Scope phải trùng ticket của branch; không đặt ticket key ở cuối câu.
+  `feat(VMEC-16): add dose comparison block` đúng;
+  `feat: add dose comparison block (VMEC-16)` sai dạng.
 - Thay đổi product behavior phải cập nhật `specs/` trong cùng pull request.
 - Không commit `.env`; không dùng `git push --no-verify`.
 - Tài liệu team sở hữu viết bằng tiếng Việt chuyên nghiệp; giữ identifier, command,

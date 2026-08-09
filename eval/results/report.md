@@ -35,7 +35,7 @@ File này lưu evidence sản phẩm đã đo. Không ghi estimate thành kết 
 | Pure-domain isolation | `uv run pytest backend/tests/unit/domain -q` | Exit 0; 4 test đang skip | Chưa đo behavior domain |
 | Feature quickstart | `specs/001-core-interaction-check/quickstart.md` | Chưa chạy | — |
 | Review artifact trước code | Đối chiếu spec/plan/tasks/contract/model | Pass tại thời điểm ghi; 0 CRITICAL/HIGH | 19 FR và 8 SC map vào 45 task |
-| Tính toàn vẹn GATE | `shasum -a 256 -c .github/gate-1.sha256` | Pass | 4 file submitted khớp checksum |
+| Tính toàn vẹn GATE | Đọc diff của `gate/` khi review PR | Không còn đo tự động | Guard checksum đã gỡ theo ADR 0019 |
 
 ## Phát hiện và xử lý tiếp theo
 
