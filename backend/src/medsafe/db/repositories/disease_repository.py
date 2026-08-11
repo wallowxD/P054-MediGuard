@@ -51,16 +51,26 @@ class SqlDrugDiseaseRepository:
     async def find_interactions(
         self, canonical_ingredient: str, disease_name: str, only_approved: bool = True
     ) -> list[DrugDiseaseInteraction]:
-        """Tìm các tương tác giữa một hoạt chất và một tên bệnh nền.
+        """Tra cứu EXACT theo cặp (hoạt chất chuẩn hoá, tên bệnh chuẩn hoá).
 
-        Canonical ingredient và disease_name được chuẩn hóa chữ thường / bỏ dấu để khớp mờ.
+        ★ Cả hai vế phải so bằng dấu bằng. KHÔNG dùng `.contains()`, `ilike` hay similarity
+          search ở đây — bảng ranh giới RAG trong AGENTS.md xếp thuốc–bệnh nền vào cột
+          "tra cứu exact key", cùng lý do đã áp cho thuốc–thuốc ở ADR 0004.
+
+          `.contains()` sinh ra `LIKE '%suy gan%'`, nên tra "Suy gan" trả về bản ghi của
+          "Suy gan mất bù": nguồn thật, trích dẫn nguyên văn thật, review status thật —
+          chỉ sai bệnh. Cảnh báo trả ra trông hoàn toàn hợp lệ nên review mắt thường
+          không bắt được. Xem VMEC-82 và regression test đi kèm.
+
+          Không khớp được thì trả rỗng để tầng trên báo "chưa có dữ liệu". Nới lỏng phép
+          so khớp để "đỡ trả rỗng" là đổi một câu trả lời trung thực lấy một câu sai.
         """
         norm_ingredient = normalize_for_matching(canonical_ingredient)
         disease_unaccent = normalize_disease_name(disease_name)
 
         stmt = select(DrugDiseaseInteraction).where(
             DrugDiseaseInteraction.canonical_ingredient == norm_ingredient,
-            DrugDiseaseInteraction.disease_name_unaccent.contains(disease_unaccent),
+            DrugDiseaseInteraction.disease_name_unaccent == disease_unaccent,
         )
 
         if only_approved:
