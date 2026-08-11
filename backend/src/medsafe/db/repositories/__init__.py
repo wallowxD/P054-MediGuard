@@ -1,10 +1,6 @@
 """Repository — nơi DUY NHẤT được viết truy vấn database."""
 
-from medsafe.db.repositories.disease_catalog_repository import (
-    DiseaseCatalogRepository,
-    SqlDiseaseCatalogRepository,
-    normalize_disease_name,
-)
+from medsafe.db.repositories.disease_catalog_repository import DiseaseCatalogRepository, SqlDiseaseCatalogRepository
 from medsafe.db.repositories.disease_repository import DrugDiseaseRepository, SqlDrugDiseaseRepository
 from medsafe.db.repositories.drug_interaction_repository import (
     DrugDrugInteractionRepository,
@@ -37,5 +33,4 @@ __all__ = [
     "SqlPatientProfileRepository",
     "SqlUserRepository",
     "UserRepository",
-    "normalize_disease_name",
 ]

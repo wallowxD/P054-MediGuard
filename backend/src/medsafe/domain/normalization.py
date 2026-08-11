@@ -43,6 +43,23 @@ def remove_vietnamese_accents(text: str) -> str:
     return text
 
 
+def normalize_disease_name(name: str) -> str:
+    """Chuẩn hoá tên bệnh về khoá so khớp không dấu.
+
+    ★ ĐÂY LÀ ĐỊNH NGHĨA DUY NHẤT của khoá đó. Cả danh mục `diseases.name_unaccent` lẫn
+      bản ghi `drug_disease_interactions.disease_name_unaccent` đều phải đi qua hàm này.
+      Trước đây công thức được viết lại tay ở từng repository; hai bản lệch nhau một bước
+      là exact lookup theo cặp (hoạt chất, bệnh) không join được, và người dùng chọn đúng
+      một bệnh có thật trong danh mục vẫn nhận "chưa có dữ liệu".
+
+    CỐ Ý KHÔNG dùng `normalize_for_matching`: hàm đó bỏ hàm lượng thuốc và thay dấu ngoặc
+    bằng khoảng trắng, nên "Bệnh phổi tắc nghẽn mạn tính (COPD)" mất luôn cặp ngoặc và
+    không còn khớp dữ liệu đã ingest. Đổi công thức ở đây bắt buộc phải backfill
+    `disease_name_unaccent` trong cùng một migration.
+    """
+    return remove_vietnamese_accents(name).lower().strip()
+
+
 def normalize_for_matching(text: str) -> str:
     """Đưa chuỗi về dạng chuẩn để so khớp: bỏ dấu, thường hoá, bỏ hàm lượng, gọn khoảng trắng."""
     if not text:

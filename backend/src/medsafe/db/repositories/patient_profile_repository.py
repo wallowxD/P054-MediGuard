@@ -13,12 +13,17 @@ from decimal import Decimal
 from typing import Protocol
 from uuid import UUID
 
-from sqlalchemy import delete, select
+from sqlalchemy import case, delete, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import func
 
-from medsafe.db.models.patient import SOURCE_SELF_REPORTED, PatientCondition, PatientProfile
+from medsafe.db.models.patient import (
+    SOURCE_PHARMACIST_CONFIRMED,
+    SOURCE_SELF_REPORTED,
+    PatientCondition,
+    PatientProfile,
+)
 
 
 class PatientProfileRepository(Protocol):
@@ -39,6 +44,8 @@ class PatientProfileRepository(Protocol):
     async def record_consent(self, user_id: UUID) -> PatientProfile: ...
 
     async def delete_profile(self, user_id: UUID) -> bool: ...
+
+    async def delete_all_health_data(self, user_id: UUID) -> None: ...
 
     async def list_conditions(self, user_id: UUID) -> list[PatientCondition]: ...
 
@@ -134,11 +141,26 @@ class SqlPatientProfileRepository:
         await self._session.refresh(profile)
         return profile
 
-    async def delete_profile(self, user_id: UUID) -> bool:
-        """Xoá hồ sơ. KHÔNG đụng tới tài khoản đăng nhập và KHÔNG xoá `patient_conditions`.
+    async def delete_all_health_data(self, user_id: UUID) -> None:
+        """Xoá TOÀN BỘ dữ liệu sức khoẻ của một người dùng trong MỘT transaction.
 
-        Người dùng bấm "xoá toàn bộ hồ sơ" thì tầng API gọi thêm `delete_all_conditions`.
-        Tách làm hai để việc xoá luôn là hành động tường minh, không có tác dụng phụ ẩn.
+        Đây là hàm mà endpoint "xoá hồ sơ của tôi" phải gọi. Gọi lần lượt `delete_profile`
+        rồi `delete_all_conditions` thì mỗi hàm tự commit, nên một lỗi ở giữa để lại
+        "đang mang thai" hay "suy thận" mồ côi trong database của một người vừa được báo
+        là dữ liệu sức khoẻ đã xoá xong. Không có FK cascade nào che chỗ này vì hai bảng
+        cùng trỏ tới `users`, không trỏ vào nhau.
+
+        Không đụng tới tài khoản đăng nhập.
+        """
+        await self._session.execute(delete(PatientCondition).where(PatientCondition.user_id == user_id))
+        await self._session.execute(delete(PatientProfile).where(PatientProfile.user_id == user_id))
+        await self._session.commit()
+
+    async def delete_profile(self, user_id: UUID) -> bool:
+        """Xoá riêng dòng hồ sơ. KHÔNG đụng tài khoản và KHÔNG xoá `patient_conditions`.
+
+        Dùng cho thao tác hẹp "xoá phần thông tin cơ thể" trên UI. Xoá toàn bộ dữ liệu
+        sức khoẻ thì dùng `delete_all_health_data` để hai bảng đi trong cùng transaction.
         """
         result = await self._session.execute(delete(PatientProfile).where(PatientProfile.user_id == user_id))
         await self._session.commit()
@@ -157,15 +179,28 @@ class SqlPatientProfileRepository:
     ) -> PatientCondition:
         """Thêm một tình trạng đặc biệt. Idempotent: thêm lại mã đã có không tạo dòng lặp.
 
-        Nhánh DO UPDATE chỉ ghi lại `source` — nó cho phép dược sĩ xác nhận một tình
-        trạng người dùng đã tự khai mà không cần xoá rồi thêm lại.
+        Nhánh DO UPDATE cho phép dược sĩ xác nhận một tình trạng người dùng đã tự khai mà
+        không cần xoá rồi thêm lại. Nhưng nó CHỈ ĐI MỘT CHIỀU: `pharmacist_confirmed` đã
+        có thì giữ nguyên, kể cả khi lệnh mới mang `self_reported`.
+
+        Không có nhánh CASE này thì người dùng bỏ chọn rồi chọn lại một chip — thao tác
+        hoàn toàn bình thường trên UI — sẽ âm thầm hạ cấp xác nhận của dược sĩ xuống dữ
+        liệu tự khai, mà không ai nhìn thấy gì bất thường.
+
+        Hạ cấp có chủ ý (dược sĩ rút lại xác nhận) phải đi bằng đường khác, không đi lẫn
+        vào thao tác thêm của người dùng.
         """
         stmt = (
             insert(PatientCondition)
             .values(user_id=user_id, condition_code=condition_code, source=source)
             .on_conflict_do_update(
                 constraint="uq_patient_conditions_user_code",
-                set_={"source": source},
+                set_={
+                    "source": case(
+                        (PatientCondition.source == SOURCE_PHARMACIST_CONFIRMED, SOURCE_PHARMACIST_CONFIRMED),
+                        else_=source,
+                    )
+                },
             )
             .returning(PatientCondition)
         )

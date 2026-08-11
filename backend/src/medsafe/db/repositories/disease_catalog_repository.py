@@ -11,17 +11,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from medsafe.db.models.disease import Disease
-from medsafe.domain.normalization import remove_vietnamese_accents
-
-
-def normalize_disease_name(name: str) -> str:
-    """Chuẩn hoá tên bệnh về dạng không dấu để so khớp.
-
-    ★ Phải giống hệt công thức `disease_repository.py` dùng cho
-      `drug_disease_interactions.disease_name_unaccent`. Lệch một bước là danh mục và bản
-      ghi tương tác không join được với nhau.
-    """
-    return remove_vietnamese_accents(name).lower().strip()
+from medsafe.domain.normalization import normalize_disease_name
 
 
 class DiseaseCatalogRepository(Protocol):

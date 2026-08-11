@@ -17,14 +17,16 @@ from types import ModuleType
 
 import pytest
 
+from medsafe.db.models import patient as patient_models
 from medsafe.db.models.patient import (
     CONDITION_CODES,
     CONDITION_SOURCES,
     SEX_VALUES,
     SOURCE_SELF_REPORTED,
 )
-from medsafe.db.repositories.disease_catalog_repository import normalize_disease_name
-from medsafe.domain.normalization import remove_vietnamese_accents
+from medsafe.db.repositories import disease_catalog_repository, disease_repository
+from medsafe.domain import normalization
+from medsafe.domain.normalization import normalize_disease_name
 
 MIGRATION_PATH = (
     Path(__file__).resolve().parents[3] / "migrations" / "versions" / "20260811_0005_patient_health_profile.py"
@@ -53,15 +55,22 @@ def test_disease_seed_unaccent_matches_normalization():
         assert unaccent == normalize_disease_name(name), f"seed lệch chuẩn hoá ở bệnh {name!r}"
 
 
-def test_disease_catalog_normalization_matches_interaction_convention():
-    """Danh mục và `drug_disease_interactions` phải dùng chung một công thức không dấu.
+def test_both_repositories_share_one_normalization_function():
+    """Danh mục và `drug_disease_interactions` phải dùng CHUNG MỘT hàm, không phải hai bản giống nhau.
 
-    Công thức của bản ghi tương tác nằm trong `disease_repository.py`:
-    `remove_vietnamese_accents(disease_name).lower().strip()`. Test viết lại nguyên văn
-    công thức đó để một thay đổi ở `normalize_disease_name` không lặng lẽ tách hai bên ra.
+    Kiểm tra bằng danh tính object chứ không so kết quả trên vài chuỗi mẫu: hai bản sao
+    của cùng công thức sẽ cho kết quả giống nhau ở mọi ví dụ test nghĩ ra được, rồi lệch
+    đúng vào ngày một bên được sửa. Ai viết lại công thức inline sẽ làm test này chết vì
+    module không còn tham chiếu tới hàm chung nữa.
     """
-    for name in ("Suy thận mạn", "Đái tháo đường type 2", "  Bệnh phổi tắc nghẽn mạn tính (COPD)  "):
-        assert normalize_disease_name(name) == remove_vietnamese_accents(name).lower().strip()
+    assert disease_catalog_repository.normalize_disease_name is normalization.normalize_disease_name
+    assert disease_repository.normalize_disease_name is normalization.normalize_disease_name
+
+
+def test_disease_repository_does_not_reimplement_normalization():
+    """Chặn việc quay lại gọi thẳng `remove_vietnamese_accents` cho tên bệnh."""
+    source = Path(disease_repository.__file__).read_text(encoding="utf-8")
+    assert "remove_vietnamese_accents" not in source
 
 
 def test_disease_seed_has_no_duplicate_unaccent():
@@ -86,16 +95,33 @@ def test_normalize_disease_name_cases(query: str, expected: str):
     assert normalize_disease_name(query) == expected
 
 
-def test_model_constants_match_migration_check_constraints():
-    """Hằng số Python và CHECK constraint của database phải nói cùng một tập giá trị."""
-    migration_source = MIGRATION_PATH.read_text(encoding="utf-8")
+def _check_expression(column: str, values: tuple[str, ...]) -> str:
+    """Dựng lại nguyên văn biểu thức CHECK từ hằng số Python."""
+    return f"{column} IN ({', '.join(repr(v) for v in values)})"
 
-    for code in CONDITION_CODES:
-        assert f"'{code}'" in migration_source, f"condition_code {code!r} thiếu trong CHECK constraint"
-    for sex in SEX_VALUES:
-        assert f"'{sex}'" in migration_source, f"sex {sex!r} thiếu trong CHECK constraint"
-    for source in CONDITION_SOURCES:
-        assert f"'{source}'" in migration_source, f"source {source!r} thiếu trong CHECK constraint"
+
+@pytest.mark.parametrize(
+    ("column", "values"),
+    [
+        ("condition_code", CONDITION_CODES),
+        ("sex", SEX_VALUES),
+        ("source", CONDITION_SOURCES),
+    ],
+)
+def test_model_constants_match_migration_check_constraints(column: str, values: tuple[str, ...]):
+    """Hằng số Python và CHECK constraint của database phải nói cùng một tập giá trị.
+
+    So khớp NGUYÊN CẢ BIỂU THỨC chứ không tìm từng giá trị rời. Tìm rời thì một giá trị
+    chỉ nằm trong comment cũng làm test xanh, mà comment thì không chặn được INSERT nào.
+    Cách này còn bắt được cả trường hợp CHECK constraint có thừa một giá trị mà hằng số
+    Python không biết.
+    """
+    expression = _check_expression(column, values)
+
+    assert expression in MIGRATION_PATH.read_text(encoding="utf-8"), f"migration 0005 thiếu CHECK: {expression}"
+    assert expression in Path(patient_models.__file__).read_text(encoding="utf-8"), (
+        f"model patient.py thiếu CHECK: {expression}"
+    )
 
 
 def test_condition_source_defaults_to_self_reported():

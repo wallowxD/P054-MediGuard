@@ -11,7 +11,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from medsafe.db.models.interaction import REVIEW_STATUS_APPROVED, DrugDiseaseInteraction
-from medsafe.domain.normalization import normalize_for_matching, remove_vietnamese_accents
+from medsafe.domain.normalization import normalize_disease_name, normalize_for_matching
 
 
 class DrugDiseaseRepository(Protocol):
@@ -56,7 +56,7 @@ class SqlDrugDiseaseRepository:
         Canonical ingredient và disease_name được chuẩn hóa chữ thường / bỏ dấu để khớp mờ.
         """
         norm_ingredient = normalize_for_matching(canonical_ingredient)
-        disease_unaccent = remove_vietnamese_accents(disease_name).lower().strip()
+        disease_unaccent = normalize_disease_name(disease_name)
 
         stmt = select(DrugDiseaseInteraction).where(
             DrugDiseaseInteraction.canonical_ingredient == norm_ingredient,
@@ -84,7 +84,7 @@ class SqlDrugDiseaseRepository:
         review_status: str = "pending_review",
     ) -> DrugDiseaseInteraction:
         norm_ingredient = normalize_for_matching(canonical_ingredient)
-        disease_unaccent = remove_vietnamese_accents(disease_name).lower().strip()
+        disease_unaccent = normalize_disease_name(disease_name)
 
         interaction = DrugDiseaseInteraction(
             drug_id=drug_id,
