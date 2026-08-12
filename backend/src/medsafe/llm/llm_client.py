@@ -9,6 +9,7 @@ Tự động Retry với Exponential Backoff khi dính Rate Limit (429).
 
 import json
 import os
+import random
 import time
 from typing import Any
 
@@ -35,11 +36,16 @@ class GeminiRateLimitError(Exception):
 def repair_truncated_json(raw_json: str) -> dict[str, Any]:
     """Tự động vá lỗi JSON bị cắt ngang do max_tokens."""
     cleaned = raw_json.strip()
-    if "```" in cleaned:
-        if "```json" in cleaned:
-            cleaned = cleaned.split("```json")[1].split("```")[0].strip()
-        else:
-            cleaned = cleaned.split("```")[1].split("```")[0].strip()
+    if "```json" in cleaned:
+        parts = cleaned.split("```json")
+        cleaned = parts[1]
+        if "```" in cleaned:
+            cleaned = cleaned.split("```")[0]
+        cleaned = cleaned.strip()
+    elif "```" in cleaned:
+        parts = cleaned.split("```")
+        cleaned = parts[1] if len(parts) > 1 else parts[0]
+        cleaned = cleaned.strip()
 
     # Thử load trực tiếp trước
     try:
@@ -48,11 +54,9 @@ def repair_truncated_json(raw_json: str) -> dict[str, Any]:
         pass
 
     # Vá chuỗi string bị cắt dở
-    # Bỏ bớt phần dở dang ở cuối
     pos = max(cleaned.rfind("}"), cleaned.rfind("]"))
     if pos != -1:
         truncated_candidate = cleaned[: pos + 1]
-        # Thêm đóng ngoặc nhọn nếu cần
         if not truncated_candidate.endswith("}"):
             truncated_candidate += "}"
         try:
@@ -116,8 +120,10 @@ class LLMClient:
 
                 if is_rate_limit:
                     if attempt < max_retries:
-                        print(f"⚠️ Gemini Rate Limit (429). Thử lại lần {attempt}/{max_retries} sau {delay:.1f} giây...")
-                        time.sleep(delay)
+                        jitter = random.uniform(0.2, 1.0)
+                        sleep_time = delay + jitter
+                        print(f"⚠️ Gemini Rate Limit (429). Thử lại lần {attempt}/{max_retries} sau {sleep_time:.1f} giây...")
+                        time.sleep(sleep_time)
                         delay *= 2.0
                         continue
                     else:

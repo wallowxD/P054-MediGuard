@@ -44,9 +44,14 @@ class EvidenceChunk(Base):
 
     source_url: Mapped[str | None] = mapped_column(Text)
 
+    version: Mapped[str | None] = mapped_column(Text, server_default="v2")
+
     created_at: Mapped[datetime | None] = mapped_column(postgresql.TIMESTAMP(timezone=True), server_default=func.now())
 
-    __table_args__ = (Index("idx_evidence_drug_id", "drug_id"),)
+    __table_args__ = (
+        Index("idx_evidence_drug_id", "drug_id"),
+        Index("idx_evidence_version", "version"),
+    )
 
     def __repr__(self) -> str:
         return f"<EvidenceChunk id={self.id} section={self.section_name!r} idx={self.chunk_index}>"
