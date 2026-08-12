@@ -64,7 +64,7 @@ class Drug(Base):
     side_effects: Mapped[str | None] = mapped_column(Text)
     notes: Mapped[str | None] = mapped_column(Text)
 
-    version: Mapped[str | None] = mapped_column(Text, server_default="v2")
+    version: Mapped[str | None] = mapped_column(Text, default="v2", server_default="v2")
 
     created_at: Mapped[datetime | None] = mapped_column(postgresql.TIMESTAMP(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime | None] = mapped_column(postgresql.TIMESTAMP(timezone=True), server_default=func.now())
