@@ -128,3 +128,15 @@ CREATE INDEX IF NOT EXISTS idx_d2dis_ingredient ON drug_disease_interactions(can
 CREATE INDEX IF NOT EXISTS idx_d2dis_disease_unaccent ON drug_disease_interactions(disease_name_unaccent);
 CREATE INDEX IF NOT EXISTS idx_d2dis_review_status ON drug_disease_interactions(review_status);
 
+-- 6. Bảng Bệnh Nền Lưu Theo Tài Khoản Người Dùng (patient_diseases)
+CREATE TABLE IF NOT EXISTS patient_diseases (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    disease_id UUID NOT NULL REFERENCES diseases(id),
+    source VARCHAR(32) NOT NULL DEFAULT 'self_reported',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT ck_patient_diseases_source CHECK (source IN ('self_reported', 'pharmacist_confirmed')),
+    CONSTRAINT uq_patient_diseases_user_disease UNIQUE (user_id, disease_id)
+);
+CREATE INDEX IF NOT EXISTS idx_patient_diseases_user_id ON patient_diseases(user_id);
+

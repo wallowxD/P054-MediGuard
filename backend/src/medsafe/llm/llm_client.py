@@ -140,6 +140,26 @@ class LLMClient:
             return response_schema.model_validate(response.parsed)
         return response_schema.model_validate_json(response.text or "")
 
+    async def async_complete(self, prompt: str, *, system: str | None = None, timeout_seconds: float = 15.0) -> str:
+        """API async sinh văn bản tự do cho chat / request path."""
+        if self.client is None or types is None:
+            raise RuntimeError("Chưa cấu hình GEMINI_API_KEY hoặc google-genai.")
+        try:
+            config = types.GenerateContentConfig(system_instruction=system) if system else None
+            response = await asyncio.wait_for(
+                self.client.aio.models.generate_content(
+                    model=self.model,
+                    contents=prompt,
+                    config=config,
+                ),
+                timeout=timeout_seconds,
+            )
+            return response.text or ""
+        except TimeoutError:
+            raise
+        except Exception as exc:
+            _translate_provider_error(exc)
+
     def complete(self, prompt: str, *, system: str | None = None, max_retries: int = 1) -> str:
         """API đồng bộ giữ tương thích ingestion; không tự retry."""
         del max_retries
