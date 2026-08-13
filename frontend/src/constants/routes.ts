@@ -25,7 +25,19 @@ export const AUTH_ROUTES = ["/signin", "/signup"];
  */
 export const OPEN_ROUTES = ["/", "/privacy-policy", "/terms-of-service"];
 
-export const PUBLIC_ROUTES = [...AUTH_ROUTES, ...OPEN_ROUTES];
+/**
+ * Route công khai nhưng CỐ Ý không nằm trong OPEN_ROUTES.
+ *
+ * `/vinmec` là bản mô phỏng tĩnh cổng Vinmec, chỉ dùng để trình diễn luồng điều
+ * hướng sang landing page MediGuard. Nó mang thương hiệu của một tổ chức có thật
+ * nên KHÔNG được vào sitemap và bị chặn trong robots.txt — để nó lọt vào
+ * OPEN_ROUTES là tự đẩy một trang nhái lên Google.
+ *
+ * Vẫn phải có mặt trong PUBLIC_ROUTES, nếu không middleware đá khách về /signin.
+ */
+export const DEMO_ROUTES = ["/vinmec"];
+
+export const PUBLIC_ROUTES = [...AUTH_ROUTES, ...OPEN_ROUTES, ...DEMO_ROUTES];
 
 /**
  * Prefix URL thật của khu vực dược sĩ.
@@ -64,4 +76,18 @@ export const ROUTES = {
   SETTINGS: "/settings",
   REVIEW: "/review",
   REVIEW_QUEUE: "/review/queue",
+  /** Cổng Vinmec mô phỏng — xem ghi chú ở DEMO_ROUTES */
+  VINMEC: "/vinmec",
 } as const;
+
+/**
+ * Query param đánh dấu "khách vừa từ cổng Vinmec bấm sang".
+ *
+ * Landing page MediGuard dùng nó để hiện thanh quay lại Vinmec. Không có param
+ * thì trang giữ nguyên như cũ — khách vào thẳng "/" không thấy gì thay đổi.
+ */
+export const VINMEC_REFERRER_PARAM = "from";
+export const VINMEC_REFERRER_VALUE = "vinmec";
+
+/** Link từ nav Vinmec sang landing page MediGuard, kèm dấu vết để quay lại được. */
+export const MEDIGUARD_FROM_VINMEC = `${ROUTES.HOME}?${VINMEC_REFERRER_PARAM}=${VINMEC_REFERRER_VALUE}`;

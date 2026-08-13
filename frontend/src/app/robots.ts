@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SEO_CONFIG } from "@/config/seo-config";
-import { AUTH_ROUTES, ROUTES } from "@/constants/routes";
+import { AUTH_ROUTES, DEMO_ROUTES, ROUTES } from "@/constants/routes";
 
 /**
  * Sinh động thay cho `public/robots.txt` tĩnh.
@@ -10,6 +10,8 @@ import { AUTH_ROUTES, ROUTES } from "@/constants/routes";
  * sitemap. Ở đây URL lấy từ SEO_CONFIG nên đi theo NEXT_PUBLIC_APP_URL.
  *
  * Chặn mọi route sau đăng nhập; landing page và trang pháp lý để mở.
+ * DEMO_ROUTES cũng bị chặn: `/vinmec` mang thương hiệu của tổ chức có thật, chỉ
+ * phục vụ demo nội bộ nên không được để công cụ tìm kiếm thu thập.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -18,6 +20,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: ROUTES.HOME,
       disallow: [
         ...AUTH_ROUTES,
+        ...DEMO_ROUTES,
         ROUTES.DASHBOARD,
         ROUTES.DRUG_INFORMATION,
         ROUTES.INTERACTIONS,

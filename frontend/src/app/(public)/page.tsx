@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import {
   CtaBand,
   FeaturesSection,
@@ -8,6 +9,7 @@ import {
   LandingHeader,
 } from "@/components/landing";
 import { MAIN_CONTENT_ID } from "@/components/ui/SkipLink";
+import { VinmecReturnBar } from "@/components/vinmec";
 import { SEO_CONFIG } from "@/config/seo-config";
 import { buildPublicMetadata } from "@/utils/metadata-utils";
 
@@ -27,6 +29,12 @@ export const metadata: Metadata = buildPublicMetadata(
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Chỉ hiện khi tới từ nav Vinmec (`/?from=vinmec`); mặc định render null nên
+          trang giữ nguyên như cũ. `<Suspense>` là bắt buộc — bên trong đọc
+          `useSearchParams()`, không có ranh giới này thì cả "/" mất prerender. */}
+      <Suspense fallback={null}>
+        <VinmecReturnBar />
+      </Suspense>
       <LandingHeader />
       <main id={MAIN_CONTENT_ID} tabIndex={-1} className="flex-1">
         <HeroSection />
