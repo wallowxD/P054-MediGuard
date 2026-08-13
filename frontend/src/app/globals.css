@@ -155,7 +155,14 @@
   --color-severity-unknown: var(--severity-unknown);
 
   --font-sans: var(--font-body);
-  --font-heading: var(--font-app);
+  /* ★ Trỏ về CÙNG một font với `font-sans`: toàn site dùng Inter, kể cả tiêu đề —
+     đúng như trang chủ Vinmec (xem docs/frontend.md § Typography).
+
+     Vẫn giữ utility `font-heading` thay vì xoá khỏi 14 file đang dùng, vì hai lý do:
+     nó ghi lại ý định "đây là tiêu đề", và nếu sau này team muốn tiêu đề dùng font
+     khác thì chỉ sửa đúng dòng này. Đừng hiểu nhầm `font-heading` là một font riêng
+     — hiện tại nó bằng hệt `font-sans`. */
+  --font-heading: var(--font-body);
 }
 
 body {
@@ -203,14 +210,20 @@ body {
   --cta-accent: var(--primary-blue);
   --cta-accent-hover: color-mix(in srgb, var(--primary-blue) 78%, black);
 
-  /* Chiều cao LandingHeader chiếm TRONG LUỒNG: card h-16 cộng 2 đường viền 1px.
-     Đây là con số duy nhất được trừ khỏi chiều cao viewport khi tính min-height của
-     hero — trừ thêm bất cứ thứ gì nữa là để lộ mép section kế tiếp ở đáy màn hình. */
-  --landing-header-block: calc(4rem + 2px);
-  /* `sm:top-4` của header sticky. Ở scroll 0, sticky đẩy header xuống 1rem nên card
-     đè lên 1rem đầu của hero (rơi đúng vào padding, không che chữ). Con số này chỉ
-     dùng khi tính chỗ trống THẬT cho nội dung, không dùng cho min-height. */
-  --landing-header-offset: 1rem;
+  /* Chiều cao header chiếm TRONG LUỒNG, dùng để trừ khỏi viewport khi tính
+     min-height của hero. Trừ sai là hero dài/ngắn hơn màn hình một cách khó hiểu.
+
+     ★ Từ khi màn "/" dùng VinmecHeader thay cho LandingHeader, con số này là tổng
+       ba tầng của header Vinmec ở `lg` trở lên:
+         36px  topbar gradient (h-9)
+       + 68px  hàng logo + tìm kiếm (h-[68px])
+       + 49px  hàng nav chính (py-3.5 + border-top 1px)
+       = 153px
+       Sửa chiều cao bất kỳ tầng nào trong VinmecHeader thì phải sửa cả ở đây. */
+  --landing-header-block: 153px;
+  /* Header Vinmec nằm trong luồng, KHÔNG sticky và không đè lên hero như header
+     cũ, nên phần bù bằng 0. Giữ biến lại để phép tính bên dưới không phải đổi. */
+  --landing-header-offset: 0px;
   /* `lg:py-12` của grid hero — khai báo ở đây để phép tính giới hạn ảnh không phải
      lặp lại một magic number đã nằm trong className. */
   --landing-hero-block-padding: 3rem;
@@ -364,8 +377,9 @@ body {
 
   background: #ffffff;
   color: var(--vm-text);
-  /* Vinmec dùng Inter; `--font-body` của dự án cũng là Inter nên tái dùng luôn,
-     đồng thời tránh kéo thêm một font family thứ ba vào bundle. */
+  /* Trùng font với phần còn lại của site (Inter). Khai báo lại ở đây là thừa nhưng
+     cố ý: khối này là nơi gom mọi thứ "trông giống Vinmec", để người đọc thấy ngay
+     font cũng nằm trong nhóm đó. */
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
 }
 

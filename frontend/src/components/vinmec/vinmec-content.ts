@@ -9,9 +9,9 @@
  * chiếu cho buổi demo luồng điều hướng sang MediGuard.
  */
 
-import { MEDIGUARD_FROM_VINMEC } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 
-/** Link "chết" — mọi mục điều hướng của Vinmec đều là giả, chỉ MediGuard là thật. */
+/** Link "chết" — mọi mục điều hướng của Vinmec đều là giả, chỉ "Tính năng" là thật. */
 export const DEAD_LINK = "#";
 
 export type VinmecNavItem = {
@@ -19,13 +19,19 @@ export type VinmecNavItem = {
   href: string;
   /** Có giá trị thì mục nav mở dropdown khi hover/focus. */
   children?: readonly string[];
-  /** Mục dẫn sang sản phẩm thật, được tô nổi bật trong nav. */
-  highlight?: boolean;
+  /**
+   * Mục trỏ tới route THẬT trong app, không phải link `#` giả như các mục còn lại.
+   *
+   * Chỉ dùng để chọn cách render (dùng `<Link>` và theo dõi trạng thái active) —
+   * KHÔNG phải cờ "tô nổi bật". Mục này trông y hệt các mục nav khác.
+   */
+  isAppRoute?: boolean;
 };
 
 /**
- * Nav chính. Sáu mục đầu chép theo bản gốc; "MediGuard" là mục được THÊM cho demo
- * và là mục duy nhất điều hướng thật.
+ * Nav chính. Sáu mục đầu chép theo bản gốc; "Tính năng" là mục được THÊM cho demo
+ * và là mục duy nhất điều hướng thật — nó dẫn tới màn tra cứu an toàn thuốc ở
+ * `/tinh-nang`. Logo Vinmec ở hàng trên mới là thứ trỏ về trang chủ "/".
  *
  * `Chuyên khoa` giữ nguyên dạng dropdown như bản gốc — đây là chỗ danh sách chuyên
  * khoa xuất hiện trên vinmec.com, trang chủ không có section riêng cho nó.
@@ -86,7 +92,7 @@ export const VINMEC_NAV: readonly VinmecNavItem[] = [
     ],
   },
   { label: "Online.Vinmec", href: DEAD_LINK },
-  { label: "MediGuard", href: MEDIGUARD_FROM_VINMEC, highlight: true },
+  { label: "Tính năng", href: ROUTES.FEATURE, isAppRoute: true },
 ];
 
 export const VINMEC_TOPBAR_LINKS = ["Tìm bác sĩ", "Chăm sóc khách hàng"] as const;

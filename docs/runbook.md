@@ -63,7 +63,7 @@ pipeline có coverage thấp hoặc citation không truy vết được.
 
 ### 1. Mọi route redirect tới `/signin?error=Configuration`
 
-**Hiện tượng:** landing page public cũng trả 307 dù container vẫn healthy.
+**Hiện tượng:** trang công khai (`/`, `/tinh-nang`) cũng trả 307 dù container vẫn healthy.
 
 ```bash
 docker compose logs frontend | grep NO_SECRET

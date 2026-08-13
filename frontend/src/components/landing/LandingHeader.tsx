@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
 import { LANDING_SECTIONS, ROUTES } from "@/constants/routes";
-import { SEO_CONFIG } from "@/config/seo-config";
 import { useSectionSpy } from "./use-section-spy";
 
 const LINK_FOCUS =
@@ -61,10 +60,7 @@ export default function LandingHeader() {
               href={ROUTES.HOME}
               className={`flex shrink-0 items-center gap-2.5 text-primary ${LINK_FOCUS}`}
             >
-              <Logo className="h-9 w-9" />
-              <span className="font-heading text-base font-semibold tracking-tight text-foreground">
-                {SEO_CONFIG.brandName}
-              </span>
+              <Logo className="h-9 w-auto" />
             </Link>
 
             <nav

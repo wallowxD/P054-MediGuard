@@ -1,26 +1,14 @@
 import { ArrowRight } from "lucide-react";
-import { Roboto } from "next/font/google";
 import Button from "@/components/ui/Button";
 import { LANDING_SECTIONS, ROUTES } from "@/constants/routes";
 import Reveal from "./Reveal";
-
-/**
- * Scoped to this component only (via `.variable`, not the root layout), so the
- * rest of the site keeps `font-heading` (Lora) untouched — only the hero
- * headline uses Roboto.
- */
-const heroDisplayFont = Roboto({
-  subsets: ["latin", "vietnamese"],
-  weight: ["500", "600", "700"],
-  variable: "--font-hero-display",
-});
 
 // `id` của section là neo cho mục nav "Trang chủ" và là section đầu tiên scroll spy dò.
 export default function HeroSection() {
   return (
     <section
       id={LANDING_SECTIONS.HOME.slice(1)}
-      className={`relative overflow-hidden scroll-mt-20 ${heroDisplayFont.variable}`}
+      className="relative overflow-hidden scroll-mt-20"
     >
       <div aria-hidden className="landing-hero-gradient absolute inset-0 -z-10" />
       <div
@@ -54,11 +42,11 @@ export default function HeroSection() {
 
         {/* Right zone — headline, subtext, CTA. */}
         <Reveal delay="short" className="max-w-xl lg:justify-self-start">
+          {/* Chỉ còn `fontSize` inline vì cỡ chữ theo `clamp()` không có sẵn ở
+              utility Tailwind. Font family cố tình KHÔNG khai báo — hero thừa
+              hưởng Inter như toàn site, xem docs/frontend.md § Typography. */}
           <h1
-            style={{
-              fontFamily: "var(--font-hero-display)",
-              fontSize: "clamp(2rem, 1.3rem + 3vw, 3rem)",
-            }}
+            style={{ fontSize: "clamp(2rem, 1.3rem + 3vw, 3rem)" }}
             className="font-semibold leading-[1.12] tracking-tight text-foreground"
           >
             Hiểu rõ hơn về thuốc

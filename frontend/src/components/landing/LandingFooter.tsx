@@ -26,10 +26,7 @@ export default function LandingFooter() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5 text-primary">
-              <Logo className="h-8 w-8" />
-              <span className="font-heading text-[15px] font-semibold text-foreground">
-                {SEO_CONFIG.brandName}
-              </span>
+              <Logo className="h-8 w-auto" />
             </div>
             <p className="mt-4 max-w-sm text-sm leading-7 text-foreground-secondary">
               Sản phẩm mô phỏng phục vụ học tập và demo, không thay thế tư vấn hoặc chỉ

@@ -19,22 +19,27 @@ const FOCUS_DARK =
  *   2. hàng logo + ô tìm kiếm + icon đặt lịch + cờ
  *   3. thanh nav chính, căn giữa
  *
- * ★ Chỉ mục "MediGuard" là link thật. Mọi mục còn lại trỏ `#` — đây là bản dựng
+ * ★ Chỉ mục "Tính năng" là link thật. Mọi mục còn lại trỏ `#` — đây là bản dựng
  *   giao diện để demo luồng, không phải cổng Vinmec hoạt động được.
  *
- * Trạng thái active của MediGuard dò bằng `usePathname()` chứ không hardcode: nếu
- * sau này header được render trên chính trang MediGuard thì mục đó tự sáng, không
- * phải sửa thêm chỗ nào.
+ * ★ Header này được dùng ở CẢ HAI trang: trang chủ `/` và màn tính năng
+ *   `/tinh-nang`. Vì vậy nó tự mang class `vinmec-theme` — không phụ thuộc trang cha
+ *   có bọc hay không, nếu không thì mọi biến `--vm-*` rỗng và header mất sạch màu.
+ *
+ * ★ Nút Đăng nhập/Đăng ký nằm ở đây vì header MediGuard cũ (nơi từng chứa chúng)
+ *   đã bị thay hoàn toàn bằng header này. Bỏ đi là khách không còn đường vào app.
+ *
+ * Trạng thái active của "Tính năng" dò bằng `usePathname()` chứ không hardcode.
  */
 export default function VinmecHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const pathname = usePathname();
 
-  const isMediGuardActive = pathname === ROUTES.HOME;
+  const isFeatureActive = pathname === ROUTES.FEATURE;
 
   return (
-    <header className="relative z-50 bg-white">
+    <header className="vinmec-theme relative z-50 bg-white">
       {/* ── Tầng 1: thanh gradient ─────────────────────────────────────── */}
       <div className="vinmec-topbar">
         <div className="vinmec-container flex h-9 items-center justify-end gap-5 text-[12px] text-white">
@@ -58,7 +63,7 @@ export default function VinmecHeader() {
       {/* ── Tầng 2: logo + tìm kiếm ────────────────────────────────────── */}
       <div className="vinmec-container flex h-[68px] items-center gap-4">
         <Link
-          href={ROUTES.VINMEC}
+          href={ROUTES.HOME}
           aria-label="Vinmec — về trang chủ"
           className={`shrink-0 rounded-sm ${FOCUS_DARK}`}
         >
@@ -95,6 +100,21 @@ export default function VinmecHeader() {
             <CalendarDays className="h-5 w-5" aria-hidden="true" />
           </button>
 
+          <span className="hidden h-5 w-px bg-[var(--vm-border)] lg:block" aria-hidden="true" />
+
+          <Link
+            href={ROUTES.SIGNIN}
+            className={`hidden text-[13px] text-[var(--vm-text)] transition-colors hover:text-[var(--vm-menu-blue)] lg:block ${FOCUS_DARK}`}
+          >
+            Đăng nhập
+          </Link>
+          <Link
+            href={ROUTES.SIGNUP}
+            className={`hidden rounded-full bg-[var(--vm-menu-blue)] px-4 py-2 text-[13px] font-semibold text-white transition-opacity hover:opacity-90 lg:block ${FOCUS_DARK}`}
+          >
+            Đăng ký
+          </Link>
+
           <button
             type="button"
             onClick={() => setMobileOpen((open) => !open)}
@@ -115,16 +135,20 @@ export default function VinmecHeader() {
       <div className="hidden border-t border-[var(--vm-border)] lg:block">
         <nav className="vinmec-container flex items-center justify-center" aria-label="Điều hướng chính">
           {VINMEC_NAV.map((item) => {
-            if (item.highlight) {
+            // Dùng ĐÚNG lớp style của mục nav thường (cùng padding, cỡ chữ, màu, độ
+            // đậm) — mục này không được nổi hơn các mục khác. Khác biệt duy nhất:
+            // khi đang ở chính trang đó thì đổi màu chữ, cùng tông với màu hover
+            // nên vẫn nằm trong ngôn ngữ thiết kế của nav.
+            if (item.isAppRoute) {
               return (
                 <Link
                   key={item.label}
                   href={item.href}
-                  aria-current={isMediGuardActive ? "page" : undefined}
-                  className={`my-2 ml-2 rounded-full px-4 py-1.5 text-[13px] font-semibold transition-colors ${FOCUS_DARK} ${
-                    isMediGuardActive
-                      ? "bg-[var(--vm-blue)] text-white"
-                      : "bg-[var(--vm-gray-bg)] text-[var(--vm-menu-blue)] ring-1 ring-[var(--vm-menu-blue)]/30 hover:bg-[var(--vm-menu-blue)] hover:text-white hover:ring-transparent"
+                  aria-current={isFeatureActive ? "page" : undefined}
+                  className={`flex items-center px-4 py-3.5 text-[13px] transition-colors ${FOCUS_DARK} ${
+                    isFeatureActive
+                      ? "text-[var(--vm-menu-blue)]"
+                      : "text-[var(--vm-text)] hover:text-[var(--vm-menu-blue)]"
                   }`}
                 >
                   {item.label}
@@ -185,21 +209,41 @@ export default function VinmecHeader() {
             {VINMEC_NAV.map((item) => {
               // MediGuard đứng riêng ở cuối: link thật, luôn hiển thị, không gập vào
               // submenu nào — trên mobile nó vẫn phải bấm được ngay.
-              if (item.highlight) {
+              if (item.isAppRoute) {
                 return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    aria-current={isMediGuardActive ? "page" : undefined}
-                    className={`my-3 block rounded-full px-4 py-2.5 text-center text-sm font-semibold transition-colors ${FOCUS_DARK} ${
-                      isMediGuardActive
-                        ? "bg-[var(--vm-blue)] text-white"
-                        : "bg-[var(--vm-menu-blue)] text-white"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
+                  <div key={item.label}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      aria-current={isFeatureActive ? "page" : undefined}
+                      className={`my-3 block rounded-full px-4 py-2.5 text-center text-sm font-semibold transition-colors ${FOCUS_DARK} ${
+                        isFeatureActive
+                          ? "bg-[var(--vm-blue)] text-white"
+                          : "bg-[var(--vm-menu-blue)] text-white"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+
+                    {/* Đăng nhập/Đăng ký chỉ hiện ở desktop trên hàng logo, nên bản
+                        mobile phải nhắc lại ở đây — nếu không, màn hẹp mất lối vào app. */}
+                    <div className="mb-2 flex gap-2">
+                      <Link
+                        href={ROUTES.SIGNIN}
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex-1 rounded-full border border-[var(--vm-border)] px-4 py-2.5 text-center text-sm text-[var(--vm-text)] ${FOCUS_DARK}`}
+                      >
+                        Đăng nhập
+                      </Link>
+                      <Link
+                        href={ROUTES.SIGNUP}
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex-1 rounded-full bg-[var(--vm-gray-bg)] px-4 py-2.5 text-center text-sm font-semibold text-[var(--vm-menu-blue)] ${FOCUS_DARK}`}
+                      >
+                        Đăng ký
+                      </Link>
+                    </div>
+                  </div>
                 );
               }
 

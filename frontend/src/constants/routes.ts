@@ -19,25 +19,30 @@ export type Role = (typeof ROLES)[keyof typeof ROLES];
 export const AUTH_ROUTES = ["/signin", "/signup"];
 
 /**
- * Route trong (public) — ai cũng vào được.
- * "/" là landing page: khách xem được, đã đăng nhập thì proxy đá về dashboard.
+ * Route trong (public) — ai cũng vào được, kể cả người đã đăng nhập.
+ *
+ * "/" là TRANG CHỦ VINMEC (cổng bệnh viện), "/tinh-nang" là màn tra cứu an toàn
+ * thuốc. Trước đây hai trang này ngược lại; đổi rồi thì mọi link trỏ "/" đều rơi
+ * vào cổng chứ không còn vào màn tính năng nữa.
+ *
  * Đây cũng là nguồn sinh sitemap nên chỉ để route muốn Google index.
  */
-export const OPEN_ROUTES = ["/", "/privacy-policy", "/terms-of-service"];
+export const OPEN_ROUTES = ["/", "/tinh-nang", "/privacy-policy", "/terms-of-service"];
+
+export const PUBLIC_ROUTES = [...AUTH_ROUTES, ...OPEN_ROUTES];
 
 /**
- * Route công khai nhưng CỐ Ý không nằm trong OPEN_ROUTES.
+ * Route ĐÃ GỠ nhưng từng tồn tại và đã được đẩy lên remote.
  *
- * `/vinmec` là bản mô phỏng tĩnh cổng Vinmec, chỉ dùng để trình diễn luồng điều
- * hướng sang landing page MediGuard. Nó mang thương hiệu của một tổ chức có thật
- * nên KHÔNG được vào sitemap và bị chặn trong robots.txt — để nó lọt vào
- * OPEN_ROUTES là tự đẩy một trang nhái lên Google.
+ * Middleware từ chối mọi path lạ rồi đá về /signin (deny-by-default). Với một URL
+ * đã xoá, hành vi đó gây hiểu nhầm: ai bấm link cũ sẽ tưởng mình thiếu quyền, trong
+ * khi thật ra trang không còn nữa. Liệt kê ở đây để middleware cho request đi tiếp
+ * và Next trả đúng 404.
  *
- * Vẫn phải có mặt trong PUBLIC_ROUTES, nếu không middleware đá khách về /signin.
+ * ⚠️ CHỈ thêm path chắc chắn KHÔNG có route nào. Thêm nhầm một path có thật là tự
+ * gỡ lớp bảo vệ của nó.
  */
-export const DEMO_ROUTES = ["/vinmec"];
-
-export const PUBLIC_ROUTES = [...AUTH_ROUTES, ...OPEN_ROUTES, ...DEMO_ROUTES];
+export const GONE_ROUTES = ["/vinmec"];
 
 /**
  * Prefix URL thật của khu vực dược sĩ.
@@ -61,7 +66,10 @@ export const LANDING_SECTIONS = {
 } as const;
 
 export const ROUTES = {
+  /** Trang chủ Vinmec — cổng bệnh viện, KHÔNG phải màn tra cứu thuốc. */
   HOME: "/",
+  /** Màn tra cứu an toàn thuốc, vào từ mục "Tính năng" trên nav Vinmec. */
+  FEATURE: "/tinh-nang",
   SIGNIN: "/signin",
   SIGNUP: "/signup",
   DASHBOARD: "/dashboard",
@@ -76,18 +84,4 @@ export const ROUTES = {
   SETTINGS: "/settings",
   REVIEW: "/review",
   REVIEW_QUEUE: "/review/queue",
-  /** Cổng Vinmec mô phỏng — xem ghi chú ở DEMO_ROUTES */
-  VINMEC: "/vinmec",
 } as const;
-
-/**
- * Query param đánh dấu "khách vừa từ cổng Vinmec bấm sang".
- *
- * Landing page MediGuard dùng nó để hiện thanh quay lại Vinmec. Không có param
- * thì trang giữ nguyên như cũ — khách vào thẳng "/" không thấy gì thay đổi.
- */
-export const VINMEC_REFERRER_PARAM = "from";
-export const VINMEC_REFERRER_VALUE = "vinmec";
-
-/** Link từ nav Vinmec sang landing page MediGuard, kèm dấu vết để quay lại được. */
-export const MEDIGUARD_FROM_VINMEC = `${ROUTES.HOME}?${VINMEC_REFERRER_PARAM}=${VINMEC_REFERRER_VALUE}`;

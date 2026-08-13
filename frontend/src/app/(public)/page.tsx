@@ -1,48 +1,49 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
-import {
-  CtaBand,
-  FeaturesSection,
-  HeroSection,
-  HowItWorksSection,
-  LandingFooter,
-  LandingHeader,
-} from "@/components/landing";
 import { MAIN_CONTENT_ID } from "@/components/ui/SkipLink";
-import { VinmecReturnBar } from "@/components/vinmec";
+import {
+  VinmecCertifications,
+  VinmecFacilities,
+  VinmecFooter,
+  VinmecHeader,
+  VinmecHero,
+  VinmecPartners,
+  VinmecWhyUs,
+} from "@/components/vinmec";
 import { SEO_CONFIG } from "@/config/seo-config";
 import { buildPublicMetadata } from "@/utils/metadata-utils";
 
 /**
- * Landing page cho khách chưa đăng nhập.
- * Đã đăng nhập thì `src/proxy.ts` đá thẳng về /dashboard, không render trang này.
+ * TRANG CHỦ — cổng Vinmec, dựng lại giao diện trang chủ vinmec.com/vie.
  *
- * Header/footer đặt ở đây chứ không ở `(public)/layout.tsx`, vì /signin, /signup
- * và trang pháp lý dùng chung layout đó nhưng không cần chrome của landing.
+ * ★ Đây là "/" kể từ khi hoán đổi route. Màn tra cứu an toàn thuốc chuyển sang
+ *   `/tinh-nang` (xem `(public)/tinh-nang/page.tsx`), vào từ mục "Tính năng" trên
+ *   nav. Trước đây hai trang này ngược lại — link cũ trỏ "/" giờ ra cổng, không
+ *   còn ra màn tra cứu.
+ *
+ * ★ Nội dung tĩnh hoàn toàn: không API, không đăng nhập, không đặt lịch. Mọi liên
+ *   kết trỏ `#` trừ mục "Tính năng".
+ *
+ * ★ Người đã đăng nhập VẪN xem được trang này — `src/proxy.ts` cố ý không đá họ về
+ *   dashboard nữa, vì cổng bệnh viện là trang công khai.
  */
 export const metadata: Metadata = buildPublicMetadata(
-  `${SEO_CONFIG.brandName} — Hiểu rõ hơn về thuốc bạn đang sử dụng`,
-  SEO_CONFIG.description,
+  `${SEO_CONFIG.brandName} — Hệ thống Y tế`,
+  "Hệ thống Y tế Vinmec: chuyên khoa, hệ thống cơ sở y tế, chứng nhận quốc tế và tra cứu an toàn thuốc.",
   "/"
 );
 
-export default function LandingPage() {
+export default function VinmecHomePage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* Chỉ hiện khi tới từ nav Vinmec (`/?from=vinmec`); mặc định render null nên
-          trang giữ nguyên như cũ. `<Suspense>` là bắt buộc — bên trong đọc
-          `useSearchParams()`, không có ranh giới này thì cả "/" mất prerender. */}
-      <Suspense fallback={null}>
-        <VinmecReturnBar />
-      </Suspense>
-      <LandingHeader />
+    <div className="vinmec-theme flex min-h-screen flex-col">
+      <VinmecHeader />
       <main id={MAIN_CONTENT_ID} tabIndex={-1} className="flex-1">
-        <HeroSection />
-        <FeaturesSection />
-        <HowItWorksSection />
-        <CtaBand />
+        <VinmecHero />
+        <VinmecWhyUs />
+        <VinmecCertifications />
+        <VinmecFacilities />
+        <VinmecPartners />
       </main>
-      <LandingFooter />
+      <VinmecFooter />
     </div>
   );
 }

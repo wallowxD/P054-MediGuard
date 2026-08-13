@@ -1,5 +1,6 @@
-import { History, Pill } from "lucide-react";
+import { History } from "lucide-react";
 import Link from "next/link";
+import Logo from "@/components/ui/Logo";
 import { ROUTES } from "@/constants/routes";
 import SidebarNavList from "./SidebarNavList";
 import SidebarUserFooter from "./SidebarUserFooter";
@@ -12,10 +13,7 @@ export default function AppSidebar() {
         href={ROUTES.DASHBOARD}
         className="flex h-14 items-center gap-2 border-b border-border px-4 font-heading text-base font-semibold text-foreground"
       >
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-          <Pill className="h-4 w-4" aria-hidden />
-        </span>
-        MediGuard
+        <Logo className="h-8 w-auto" />
       </Link>
 
       <div className="flex flex-1 flex-col justify-between overflow-y-auto px-3 py-4">

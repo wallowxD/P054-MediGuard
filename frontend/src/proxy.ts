@@ -23,6 +23,7 @@ import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import {
   AUTH_ROUTES,
+  GONE_ROUTES,
   PUBLIC_ROUTES,
   REVIEW_PREFIX,
   ROLES,
@@ -46,10 +47,10 @@ export default withAuth(
     const dashboardRoute = dashboardForRoles(roles);
     const isPharmacist = roles?.includes(ROLES.PHARMACIST) ?? false;
 
-    // User đã đăng nhập luôn vào dashboard đúng role.
-    if (pathname === ROUTES.HOME && dashboardRoute) {
-      return NextResponse.redirect(new URL(dashboardRoute, req.url));
-    }
+    // ★ "/" KHÔNG còn đá người đã đăng nhập về dashboard.
+    //   Trước đây "/" là landing page cho khách, nên đá đi là hợp lý. Từ khi "/" là
+    //   trang chủ Vinmec — cổng bệnh viện công khai — thì chặn người đã đăng nhập
+    //   xem trang chủ là vô lý; họ tự bấm vào khu vực của mình khi cần.
 
     // Đã đăng nhập thì không hiển thị lại signin/signup.
     if (AUTH_ROUTES.includes(pathname) && dashboardRoute) {
@@ -77,6 +78,10 @@ export default withAuth(
         if (pathname === ROUTES.HOME || PUBLIC_ROUTES.includes(pathname)) {
           return true;
         }
+
+        // Route đã gỡ: cho đi tiếp để Next trả 404, thay vì đá về /signin khiến
+        // người dùng tưởng trang vẫn còn và chỉ thiếu quyền. Xem GONE_ROUTES.
+        if (GONE_ROUTES.includes(pathname)) return true;
         if (!token) return false;
 
         // Chỉ token mang role hợp lệ mới được vào khu protected. Việc đưa user

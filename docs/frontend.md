@@ -45,7 +45,7 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 
 | Path | Trách nhiệm |
 |---|---|
-| `src/app/(public)/` | Landing, sign-in/sign-up và legal page |
+| `src/app/(public)/` | Trang chủ Vinmec, màn tính năng, sign-in/sign-up và legal page |
 | `src/app/(protected)/` | Dashboard, interaction lookup, settings cho user đã đăng nhập |
 | `src/app/(review)/` | Review queue cho role `PHARMACIST` dưới `/review` |
 | `src/proxy.ts` | Access gate thật chạy tại edge |
@@ -53,7 +53,8 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 | `src/services/` | HTTP function thuần, không React/hook |
 | `src/queries/` | Query key, React Query hook và invalidation |
 | `src/store/` | Chỉ client state như filter và drug basket |
-| `src/components/landing/` | Section của landing page công khai (`/`) — hero, nav, feature card, CTA, footer |
+| `src/components/landing/` | Section của màn tính năng (`/tinh-nang`) — hero, feature card, CTA. `LandingHeader`/`LandingFooter` trong thư mục này KHÔNG còn được render, xem ghi chú ở đầu `(public)/tinh-nang/page.tsx` |
+| `src/components/vinmec/` | Cổng Vinmec: header, footer, hero và các section của trang chủ (`/`) |
 | `src/components/interactions/` | Warning card, severity badge, citation block |
 | `src/lib/api/types.gen.ts` | Generated type từ OpenAPI; không sửa tay |
 
@@ -79,13 +80,27 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 7. constants/routes.ts              → đăng ký route nếu public hoặc review
 ```
 
-## Hệ thống thị giác MediGuard (landing page)
+## Bản đồ route công khai
 
-Đây là nguồn sự thật cho toàn team về màu sắc và kiểu chữ của landing page công khai (`/`).
+| URL | Nội dung | File |
+|---|---|---|
+| `/` | Trang chủ Vinmec — cổng bệnh viện, nội dung tĩnh | `app/(public)/page.tsx` |
+| `/tinh-nang` | Màn tra cứu an toàn thuốc, vào từ mục "Tính năng" trên nav | `app/(public)/tinh-nang/page.tsx` |
+| `/privacy-policy`, `/terms-of-service` | Trang pháp lý | `app/(public)/…` |
+
+Hai trang đầu **từng ngược nhau** (`/` là màn tra cứu, `/vinmec` là cổng). Route `/vinmec`
+đã bị gỡ và nay trả 404 — xem `GONE_ROUTES` trong `constants/routes.ts`. Link cũ trỏ `/`
+giờ ra cổng bệnh viện chứ không còn ra màn tra cứu, kiểm lại trước khi copy link cũ.
+
+Người đã đăng nhập vẫn xem được `/`; `src/proxy.ts` cố ý không đá họ về dashboard nữa.
+
+## Hệ thống thị giác (màn tính năng)
+
+Đây là nguồn sự thật cho toàn team về màu sắc của màn tính năng (`/tinh-nang`).
 Phần implementation nằm ở `frontend/src/app/globals.css`; nếu đổi giá trị palette, cập nhật
 bảng này và token CSS trong cùng một pull request.
 
-### Bảng màu thương hiệu — landing page nền sáng
+### Bảng màu thương hiệu — màn tính năng nền sáng
 
 | Token | Hex | Dùng cho |
 |---|---|---|
@@ -100,27 +115,76 @@ bảng này và token CSS trong cùng một pull request.
 | `hero-tint` | `#EAF1FB` | Điểm bắt đầu gradient hero và vòng tròn icon |
 | `hero-tint-mid` | `#F0F5FF` | Điểm giữa gradient hero |
 | `hero-tint-soft` | `#F5F9FF` | Điểm kết gradient CTA và nền tông nhẹ |
-| `primary-blue` | `#4B7FC3` | Màu xanh tương tác duy nhất của landing page — CTA hero, CTA `CtaBand`, nav link đang active |
+| `primary-blue` | `#4B7FC3` | Màu xanh tương tác duy nhất của màn tính năng — CTA hero, CTA `CtaBand`, nav link đang active |
 | `coral` | `#F28C78` | Điểm nhấn minh hoạ ấm, chỉ dùng nhỏ (hiện chưa dùng, giữ chỗ dự phòng) |
 | `cta-accent` | `#4B7FC3` (= `primary-blue`) | CTA hero, CTA `CtaBand` và nav link active. Không dùng cho gì khác. |
 | `cta-accent-hover` | `color-mix(primary-blue 78%, black)` | Trạng thái hover cho `cta-accent` |
 
 ### Typography (kiểu chữ)
 
+**Toàn site dùng đúng MỘT font: Inter.** Tiêu đề, thân bài, nút, nav — tất cả cùng một
+font family. Không có font serif cho heading, không có display font riêng cho hero.
+
+Đây không phải lựa chọn thẩm mỹ tuỳ hứng mà là để khớp trang chủ Vinmec. CSS gốc của
+Vinmec (`/css/reset.css`) đặt:
+
+```css
+html,
+body {
+  font-family: "Inter", "roboto", Arial, Helvetica, sans-serif;
+}
+```
+
+và **không** khai báo font nào khác cho `h1`–`h6`. Giao diện của mình đứng cạnh cổng
+Vinmec trong cùng một luồng, nên lệch font là lộ ngay.
+
 | Dùng cho | Font | Áp dụng qua |
 |---|---|---|
-| Body text toàn site | Inter | `font-sans` (mặc định, hiếm khi phải khai báo tay) |
-| Heading toàn site **trừ** hero landing | Lora | `font-heading`, load một lần ở `app/layout.tsx` |
-| Riêng `<h1>` của hero landing | Roboto | xem bên dưới — **không** dùng `font-heading` |
+| Mọi text trong app | Inter | `font-sans` — mặc định, **hiếm khi phải khai báo tay** |
+| Tiêu đề | Inter | `font-heading` (xem lưu ý bên dưới) |
 
-Headline của hero là ngoại lệ duy nhất cho quy tắc "một font heading cho toàn site". Font này
-được load qua một instance `next/font/google` cục bộ trong `HeroSection.tsx` (`variable:
-"--font-hero-display"`), áp dụng bằng `style={{ fontFamily: "var(--font-hero-display)" }}`
-chỉ trên thẻ `<h1>`. Font này **không** đăng ký ở `app/layout.tsx` và không đụng tới
-`font-heading`, nên mọi heading khác trên site vẫn dùng Lora. Nếu cần thêm một display font
-riêng cho một section khác, hãy copy đúng pattern này (`variable` khai báo cục bộ trong
-component, `fontFamily` inline) thay vì đổi `font-heading` toàn cục — đổi biến toàn cục sẽ
-âm thầm restyle mọi trang khác.
+#### `font-heading` hiện bằng hệt `font-sans`
+
+`font-heading` vẫn tồn tại và vẫn dùng được, nhưng nó **không còn là một font khác**:
+
+```css
+/* globals.css */
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-body); /* ← cùng một font */
+}
+```
+
+Giữ lại utility này vì hai lý do: nó ghi lại ý định "đây là tiêu đề" ngay trong markup, và
+nếu sau này team muốn tiêu đề đổi font thì **chỉ sửa một dòng** thay vì đi sửa 14 file.
+Đừng nhìn thấy `font-heading` rồi tưởng đang có font tiêu đề riêng.
+
+#### Cân nặng (weight)
+
+Inter được nạp ở dạng **variable font**, có sẵn dải 100–900, đúng như Vinmec nạp
+(`family=Inter:wght@100..900`). Nghĩa là:
+
+- Cứ dùng thẳng `font-medium`, `font-semibold`, `font-bold`… không phải khai báo trước.
+- **Không** thêm mảng `weight` vào `Inter()` trong `app/layout.tsx`. Thêm vào là khoá lại
+  đúng vài weight đó, và mọi weight khác sẽ bị trình duyệt giả lập (faux bold) — chữ dày
+  bệt, xấu, mà không có lỗi nào báo.
+
+Thang weight đang dùng trong dự án: `font-medium` (500) cho nhãn/nav, `font-semibold` (600)
+cho tiêu đề và nút, `font-bold` (700) khi thật sự cần nhấn mạnh.
+
+#### Quy tắc bắt buộc
+
+- **Không** thêm font family thứ hai. Muốn phân cấp thị giác thì đổi **cỡ chữ, weight, màu**
+  — đừng đổi font.
+- **Không** khai báo `fontFamily` inline trong component. Trước đây `HeroSection.tsx` từng
+  làm vậy để dùng Roboto riêng cho `<h1>`; pattern đó đã bị gỡ, đừng dựng lại.
+- **Không** thêm instance `next/font/google` ở component. Font chỉ được đăng ký một chỗ duy
+  nhất: `src/app/layout.tsx`.
+- Cần một cỡ chữ mà Tailwind không có (ví dụ `clamp()` co giãn theo viewport) thì chỉ đặt
+  `fontSize` inline, giữ nguyên font family kế thừa.
+
+Muốn đổi font cho toàn site (kể cả quay về hai-font): sửa `interFont` trong
+`src/app/layout.tsx` và hai dòng `--font-*` trong `globals.css`. Đó là toàn bộ điểm chạm.
 
 ### Màu ngữ nghĩa (semantic colours)
 
@@ -255,7 +319,7 @@ lệ gốc khi vướng `max-width`/`max-height`, nên ảnh nhỏ lại chứ k
 - `cta-accent` chỉ dành cho CTA chính của hero, CTA của `CtaBand`, và nav link đang active.
   Không tái sử dụng cho chỗ khác. Đây là alias của `primary-blue`, không phải một tông màu
   thứ hai — giữ nguyên như vậy thay vì thêm một sắc xanh thứ ba vào palette.
-- Nhịp spacing dọc của landing page là `py-20 sm:py-24` (khoảng 80–96px) cho các section nội
+- Nhịp spacing dọc của màn tính năng là `py-20 sm:py-24` (khoảng 80–96px) cho các section nội
   dung đầy đủ (`FeaturesSection`, `HowItWorksSection`); `CtaBand` và `LandingFooter` chặt hơn vì
   là band, không phải content section. Ưu tiên tăng padding *bên trong* card/band thay vì tăng
   khoảng trống *giữa* các section — khi phân vân, trang nên đọc như "có padding", không phải
@@ -279,7 +343,7 @@ lệ gốc khi vướng `max-width`/`max-height`, nên ảnh nhỏ lại chứ k
   file này đã tồn tại, đối chiếu với `src/types/*.d.ts` (hiện đang viết tay) và xoá phần
   trùng lặp.
 - Dark mode, responsive và keyboard accessibility là acceptance requirement, đồng thời là
-  **tiêu chí chấm điểm**. Ngoại lệ duy nhất là landing page công khai — giao diện thương hiệu
+  **tiêu chí chấm điểm**. Ngoại lệ duy nhất là trang công khai — giao diện thương hiệu
   MediGuard của trang này chủ đích chỉ có chế độ sáng.
 - Severity phải có text/icon; không truyền đạt chỉ bằng màu.
 - Warning phải hiển thị quote, source và review status đầy đủ.
@@ -319,7 +383,7 @@ lý do dưới đây:
 | `useRef` cho store tạo một lần | `useState(makeStore)` | Tránh vi phạm React 19 refs rule |
 | Provider bọc `<html>` | Provider nằm trong `<body>` | Root layout cần `<html>/<body>` ở root |
 | Matcher liệt kê extension | Loại mọi path có extension | Không redirect sitemap, robots, manifest, PDF |
-| `/` redirect sign-in | `/` là landing page public | Guest phải xem được trang giới thiệu |
+| `/` redirect sign-in | `/` là trang chủ Vinmec công khai | Ai cũng xem được cổng bệnh viện, kể cả khách lẫn người đã đăng nhập |
 | `public/robots.txt` cố định | `src/app/robots.ts` | Sinh URL đúng theo deployment |
 
 Chi tiết quyết định tại [ADR 0007](../adrs/0007-frontend-structure-and-auth.md) và
