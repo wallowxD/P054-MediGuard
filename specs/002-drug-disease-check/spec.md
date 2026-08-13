@@ -31,8 +31,9 @@ nguồn và trích dẫn đều thật nhưng sai cặp.
 
 ### US1 — Khai báo hồ sơ sức khoẻ
 
-Người dùng nhập tuổi, cân nặng, chiều cao, giới tính và các tình trạng đặc biệt (đang mang
-thai, đang cho con bú, suy thận, suy gan) một lần và dùng lại ở các lần tra cứu sau.
+Người dùng nhập tuổi, cân nặng, chiều cao, giới tính; tích hai tình trạng đặc biệt (đang
+mang thai, đang cho con bú); và chọn nhiều bệnh nền từ danh mục gợi ý để dùng lại ở các
+lần tra cứu sau.
 
 1. Hồ sơ trống → form mở sẵn; hồ sơ đã có → thu gọn thành một dòng tóm tắt, bấm để mở lại.
 2. Sửa và lưu hồ sơ không làm mất danh sách thuốc hoặc bệnh nền đang nhập dở trên màn hình.
@@ -41,6 +42,8 @@ thai, đang cho con bú, suy thận, suy gan) một lần và dùng lại ở c�
 4. Hồ sơ **không** tự sinh cảnh báo. Nó được hiển thị lại cho người dùng và đính kèm khi
    gửi cho bác sĩ/dược sĩ; mọi cảnh báo vẫn phải xuất phát từ trích dẫn tờ HDSD.
 5. Tuổi lưu dưới dạng ngày sinh; màn hình hiển thị tuổi được tính ra, không lưu số tuổi.
+6. Bệnh nền không nhập text tự do: người dùng gõ để tìm, rồi chọn stable disease ID từ
+   danh mục. Một người có thể lưu nhiều bệnh và không tạo dòng trùng.
 
 ### US2 — Nhập thuốc đang dùng
 
@@ -117,7 +120,8 @@ khuyến nghị xử trí.
 | Thực thể | Vai trò |
 |---|---|
 | `patient_profiles` | Hồ sơ sức khoẻ tự khai, 1-1 với `users` |
-| `patient_conditions` | Tình trạng đặc biệt của hồ sơ, 1-n |
+| `patient_conditions` | Hai tình trạng đặc biệt mang thai/cho con bú của hồ sơ, 1-n |
+| `patient_diseases` | Bảng nối nhiều bệnh nền tự khai với một người dùng |
 | `diseases` | Danh mục bệnh nền được duyệt, có cột không dấu |
 | `drug_disease_interactions` | Bản ghi cặp thuốc–bệnh kèm trích dẫn (**bảng đã có schema nhưng chưa tồn tại trong database — xem VMEC-72**) |
 

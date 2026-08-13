@@ -54,7 +54,21 @@ export default function DrugDrugInteractionsPage() {
             <SelectedDrugList label="Thuốc đã xác nhận" drugs={drugs} onRemove={(id) => dispatch(removeDrug(id))} emptyHint="Chọn thuốc từ danh mục bệnh viện; không nhận tên tự do." />
             <DiseaseAutocomplete selected={diseases} onChange={setDiseases} />
           </div>
-          <PrescriptionImageUpload />
+          <PrescriptionImageUpload
+            selectedDrugIds={drugs.map((drug) => drug.id)}
+            selectedDiseaseIds={allDiseases.map((disease) => disease.id)}
+            onApplyDrugs={(recognizedDrugs) => {
+              recognizedDrugs.forEach((drug) => dispatch(addDrug(drug)));
+            }}
+            onApplyDiseases={(recognizedDiseases) => {
+              setDiseases((current) =>
+                [...current, ...recognizedDiseases].filter(
+                  (disease, index, values) =>
+                    values.findIndex((candidate) => candidate.id === disease.id) === index
+                )
+              );
+            }}
+          />
         </div>
         <div className="mt-6 border-t border-border pt-5">
           <Button size="md" disabled={!canCheck || check.isPending} onClick={() => check.mutate({ drugIds: drugs.map((drug) => drug.id), diseaseIds: allDiseases.map((disease) => disease.id) })}>

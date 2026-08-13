@@ -1,7 +1,8 @@
-import { History } from "lucide-react";
+import { Pill } from "lucide-react";
 import Link from "next/link";
 import Logo from "@/components/ui/Logo";
 import { ROUTES } from "@/constants/routes";
+import SidebarHistory from "./SidebarHistory";
 import SidebarNavList from "./SidebarNavList";
 import SidebarUserFooter from "./SidebarUserFooter";
 
@@ -19,23 +20,7 @@ export default function AppSidebar() {
       <div className="flex flex-1 flex-col justify-between overflow-y-auto px-3 py-4">
         <SidebarNavList />
 
-        <div className="mt-6">
-          <div className="flex items-center justify-between px-3">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">
-              Lịch sử tra cứu
-            </h2>
-            <Link
-              href={ROUTES.HISTORY}
-              className="rounded text-xs font-medium text-primary hover:text-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Xem tất cả
-            </Link>
-          </div>
-          <div className="mt-2 flex flex-col items-center gap-2 rounded-lg border border-dashed border-border px-3 py-6 text-center">
-            <History className="h-5 w-5 text-foreground-muted" aria-hidden />
-            <p className="text-xs text-foreground-muted">Chưa có lượt tra cứu nào.</p>
-          </div>
-        </div>
+        <SidebarHistory />
       </div>
 
       <SidebarUserFooter />

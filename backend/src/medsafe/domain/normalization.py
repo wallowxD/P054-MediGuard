@@ -75,6 +75,32 @@ def normalize_for_matching(text: str) -> str:
     return s
 
 
+# Chỉ chứa các tên hoạt chất đã được đối chiếu là cùng một thuốc trong corpus nội bộ.
+# Đây là tập alias đóng dùng cho exact lookup, không phải fuzzy matching và không tự
+# suy rộng sang các tiền dược/muối khác không có trong danh sách.
+_INGREDIENT_LOOKUP_ALIASES: tuple[frozenset[str], ...] = (
+    frozenset(
+        {
+            "tenofovir",
+            "tenofovir disoproxil fumarat",
+            "tenofovir disoproxil fumarate",
+        }
+    ),
+)
+
+
+def ingredient_lookup_keys(ingredient: str) -> tuple[str, ...]:
+    """Trả các exact key tương đương đã kiểm soát cho lookup interaction.
+
+    Dữ liệu hiện có dùng cả cách viết dược chất tiếng Việt `fumarat`, tiếng Anh
+    `fumarate` và tên hoạt chất gốc `tenofovir` cho cùng chế phẩm TDF. Không mở rộng
+    bằng similarity: nếu key không nằm trong tập alias đóng thì chỉ trả chính nó.
+    """
+    normalized = normalize_for_matching(ingredient)
+    aliases = next((values for values in _INGREDIENT_LOOKUP_ALIASES if normalized in values), None)
+    return tuple(sorted(aliases)) if aliases else (normalized,)
+
+
 def extract_ingredient_from_brand(brand_name: str) -> str | None:
     """Rút hoạt chất từ tên biệt dược.
 

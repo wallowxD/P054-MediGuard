@@ -62,7 +62,7 @@ export default function HealthProfilePanel({
         <p className="mt-1 text-xs text-foreground-muted">Chỉ áp dụng khi bạn chủ động xác nhận cho lượt tra cứu hiện tại.</p>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {CONDITIONS.map((condition) => {
-            const saved = profile?.conditions.find((item) => item.conditionCode === condition.code);
+            const saved = profile?.conditions?.find((item) => item.conditionCode === condition.code);
             const active = applied.includes(condition.code);
             return (
               <div key={condition.code} className="rounded-xl border border-border p-3">

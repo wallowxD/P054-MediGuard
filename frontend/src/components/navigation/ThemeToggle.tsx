@@ -39,11 +39,11 @@ function getServerSnapshot(): TTheme {
 }
 
 /**
- * Nút chuyển sáng/tối cho khu protected app — dùng ở chân AppSidebar (desktop)
- * và drawer của MobileTopbar. Landing page công khai không đọc `.dark`/`.light`
+ * Nút chuyển sáng/tối cho khu protected app — action đầy đủ nằm trong trang hồ sơ.
+ * Landing page công khai không đọc `.dark`/`.light`
  * trên `<html>` (xem `.landing-theme` trong globals.css) nên không bị ảnh hưởng.
  */
-export default function ThemeToggle() {
+export default function ThemeToggle({ showLabel = false }: { showLabel?: boolean }) {
   const theme = useSyncExternalStore(subscribe, readTheme, getServerSnapshot);
   const isDark = theme === "dark";
   const label = isDark ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối";
@@ -62,9 +62,12 @@ export default function ThemeToggle() {
       aria-label={label}
       title={label}
       aria-pressed={isDark}
-      className="shrink-0 rounded-lg p-2 text-foreground-secondary hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className={`shrink-0 rounded-lg text-foreground-secondary transition-colors hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+        showLabel ? "inline-flex items-center gap-2 px-3 py-2 text-sm font-medium" : "p-2"
+      }`}
     >
       {isDark ? <Sun className="h-4 w-4" aria-hidden /> : <Moon className="h-4 w-4" aria-hidden />}
+      {showLabel ? <span>{isDark ? "Dùng giao diện sáng" : "Dùng giao diện tối"}</span> : null}
     </button>
   );
 }

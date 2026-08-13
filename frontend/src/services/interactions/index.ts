@@ -161,10 +161,39 @@ export const deleteHealthConditionRequest = async (id: string): Promise<void> =>
   await clientRequest.delete(API_BASE_URL + API_ENDPOINTS.HEALTH_PROFILE.DELETE_CONDITION(id));
 };
 
+export const addPatientDiseaseRequest = async (diseaseId: string): Promise<IPatientDisease> =>
+  (
+    await clientRequest.post<IPatientDisease>(API_BASE_URL + API_ENDPOINTS.HEALTH_PROFILE.DISEASES, {
+      diseaseId,
+    })
+  ).data;
+
+export const deletePatientDiseaseRequest = async (id: string): Promise<void> => {
+  await clientRequest.delete(API_BASE_URL + API_ENDPOINTS.HEALTH_PROFILE.DELETE_DISEASE(id));
+};
+
 export const deleteInteractionCheckRequest = async (id: string): Promise<void> => {
   await clientRequest.delete(API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.DELETE(id));
 };
 
 export const clearInteractionChecksRequest = async (): Promise<void> => {
   await clientRequest.delete(API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.CLEAR);
+};
+
+export const extractPrescriptionRequest = async (
+  images: File[]
+): Promise<IPrescriptionExtractionResponse> => {
+  const formData = new FormData();
+  images.forEach((image) => formData.append("images", image));
+  try {
+    return (
+      await clientRequest.post<IPrescriptionExtractionResponse>(
+        API_BASE_URL + API_ENDPOINTS.PRESCRIPTIONS.EXTRACT,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      )
+    ).data;
+  } catch (error) {
+    throw apiError(error, "Không thể đọc ảnh đơn thuốc. Vui lòng thử lại hoặc nhập thuốc thủ công.");
+  }
 };

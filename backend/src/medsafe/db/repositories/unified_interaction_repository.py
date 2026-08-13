@@ -7,6 +7,11 @@ from uuid import UUID
 from sqlalchemy import and_, case, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from medsafe.db.models.disease import (
+    DISEASE_ALIAS_REVIEW_REJECTED,
+    DISEASE_VERSION_V2,
+    DiseaseAlias,
+)
 from medsafe.db.models.drug import Drug
 from medsafe.db.models.evidence import EvidenceChunk
 from medsafe.db.models.interaction import (
@@ -17,7 +22,7 @@ from medsafe.db.models.interaction import (
     DrugSupplementInteraction,
     Supplement,
 )
-from medsafe.domain.normalization import normalize_disease_name, normalize_for_matching
+from medsafe.domain.normalization import ingredient_lookup_keys, normalize_for_matching
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,29 +33,72 @@ class CategorizedSupplementInteraction:
     category: str | None
 
 
+@dataclass(frozen=True, slots=True)
+class MappedDiseaseInteraction:
+    """Interaction raw kèm canonical disease ID đã resolve bằng exact alias v2."""
+
+    interaction: DrugDiseaseInteraction
+    disease_id: UUID
+    requires_context: bool = False
+    requested_ingredient: str | None = None
+
+
 class SqlUnifiedInteractionRepository:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
     async def find_disease_interactions(
-        self, ingredient_disease_pairs: Sequence[tuple[str, str]]
-    ) -> list[DrugDiseaseInteraction]:
+        self, ingredient_disease_pairs: Sequence[tuple[str, UUID]]
+    ) -> list[MappedDiseaseInteraction]:
+        requested_pairs = {
+            (normalize_for_matching(ingredient), disease_id): ingredient_lookup_keys(ingredient)
+            for ingredient, disease_id in set(ingredient_disease_pairs)
+        }
         conditions = [
             and_(
-                DrugDiseaseInteraction.canonical_ingredient == normalize_for_matching(ingredient),
-                DrugDiseaseInteraction.disease_name_unaccent == normalize_disease_name(disease),
+                DrugDiseaseInteraction.canonical_ingredient.in_(lookup_keys),
+                DiseaseAlias.disease_id == disease_id,
             )
-            for ingredient, disease in set(ingredient_disease_pairs)
+            for (_, disease_id), lookup_keys in requested_pairs.items()
         ]
         if not conditions:
             return []
         result = await self._session.execute(
-            select(DrugDiseaseInteraction).where(
+            select(
+                DrugDiseaseInteraction,
+                DiseaseAlias.disease_id,
+                DiseaseAlias.is_compound,
+                DiseaseAlias.severity,
+                DiseaseAlias.criteria_text,
+            )
+            .join(
+                DiseaseAlias,
+                and_(
+                    DiseaseAlias.raw_name_unaccent == DrugDiseaseInteraction.disease_name_unaccent,
+                    DiseaseAlias.version == DISEASE_VERSION_V2,
+                ),
+            )
+            .where(
                 or_(*conditions),
                 func.coalesce(DrugDiseaseInteraction.review_status, "pending_review") != REVIEW_STATUS_REJECTED,
+                DiseaseAlias.review_status != DISEASE_ALIAS_REVIEW_REJECTED,
             )
+            .order_by(DrugDiseaseInteraction.canonical_ingredient, DrugDiseaseInteraction.id, DiseaseAlias.disease_id)
         )
-        return list(result.scalars().all())
+        mapped: list[MappedDiseaseInteraction] = []
+        for row, disease_id, is_compound, severity, criteria_text in result.all():
+            row_ingredient = normalize_for_matching(row.canonical_ingredient)
+            mapped.extend(
+                MappedDiseaseInteraction(
+                    interaction=row,
+                    disease_id=disease_id,
+                    requires_context=is_compound or severity is not None or bool(criteria_text),
+                    requested_ingredient=requested_ingredient,
+                )
+                for (requested_ingredient, requested_disease_id), lookup_keys in requested_pairs.items()
+                if requested_disease_id == disease_id and row_ingredient in lookup_keys
+            )
+        return mapped
 
     async def find_food_notes(self, ingredients: Sequence[str], drug_ids: Sequence[UUID]) -> list[DrugFoodInteraction]:
         normalized = {normalize_for_matching(value) for value in ingredients}
@@ -88,8 +136,7 @@ class SqlUnifiedInteractionRepository:
             .outerjoin(Supplement, Supplement.id == DrugSupplementInteraction.supplement_id)
             .outerjoin(
                 category_by_name,
-                category_by_name.c.supplement_name_unaccent
-                == DrugSupplementInteraction.supplement_name_unaccent,
+                category_by_name.c.supplement_name_unaccent == DrugSupplementInteraction.supplement_name_unaccent,
             )
             .where(
                 or_(

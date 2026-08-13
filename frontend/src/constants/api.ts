@@ -92,10 +92,13 @@ export const API_ENDPOINTS = {
     UPDATE: `${API_V1}/patients/me/health-profile`,
     CONDITIONS: `${API_V1}/patients/me/conditions`,
     DELETE_CONDITION: (id: string) => `${API_V1}/patients/me/conditions/${id}`,
+    DISEASES: `${API_V1}/patients/me/diseases`,
+    DELETE_DISEASE: (id: string) => `${API_V1}/patients/me/diseases/${id}`,
   },
 
   /** Đơn thuốc người dùng lưu lại */
   PRESCRIPTIONS: {
+    EXTRACT: `${API_V1}/prescriptions/extract`,
     GET_ALL: `${API_V1}/prescriptions`,
     CREATE: `${API_V1}/prescriptions`,
     GET_DETAILS: (id: string) => `${API_V1}/prescriptions/${id}`,

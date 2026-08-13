@@ -10,4 +10,4 @@
 - [x] T008 Dựng severity bar, highlight, raw detail, notes và unavailable state.
 - [x] T009 Hoàn thiện list/detail history bằng snapshot.
 - [ ] T010 Chạy smoke test Supabase sau khi migration 0006 được áp vào môi trường.
-
+- [x] T011 Hợp nhất note food/beverage trùng chéo giữa bảng legacy và bảng supplement đã phân loại.

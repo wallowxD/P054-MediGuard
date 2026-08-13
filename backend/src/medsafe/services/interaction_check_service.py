@@ -2,8 +2,10 @@
 
 import asyncio
 import json
+import re
 import time
 from collections import Counter, defaultdict
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from itertools import combinations
 from typing import Any, Literal
@@ -17,7 +19,6 @@ from medsafe.config import get_llm_config
 from medsafe.db.models.drug import Drug
 from medsafe.db.models.evidence import EvidenceChunk
 from medsafe.db.models.interaction import (
-    DrugDiseaseInteraction,
     DrugDrugInteraction,
     DrugFoodInteraction,
 )
@@ -27,6 +28,7 @@ from medsafe.db.repositories.drug_repository import SqlDrugRepository
 from medsafe.db.repositories.history_repository import SqlInteractionHistoryRepository
 from medsafe.db.repositories.unified_interaction_repository import (
     CategorizedSupplementInteraction,
+    MappedDiseaseInteraction,
     SqlUnifiedInteractionRepository,
 )
 from medsafe.domain.normalization import normalize_for_matching
@@ -67,6 +69,15 @@ class _SummaryBatch(BaseModel):
     summaries: list[_SummaryRecord]
 
 
+@dataclass(frozen=True, slots=True)
+class _NoteCandidate:
+    kind: Literal["drug-food", "drug-supplement"]
+    row: Any
+    object_name: str
+    source_priority: int
+    citation: Citation
+
+
 def _review_status(value: str | None) -> Literal["pending", "approved"]:
     return "approved" if value == "approved" else "pending"
 
@@ -103,7 +114,7 @@ class InteractionCheckService:
 
         drug_pairs = self._cross_drug_pairs(selected_drugs)
         disease_pairs = [
-            (ingredient, disease.name)
+            (ingredient, disease.id)
             for drug in selected_drugs
             for ingredient in drug.canonical_ingredients
             for disease in selected_diseases
@@ -119,7 +130,7 @@ class InteractionCheckService:
             value
             for value in [
                 *(row.source_drug_id for row in ddi_rows),
-                *(row.drug_id for row in disease_rows),
+                *(value.interaction.drug_id for value in disease_rows),
                 *(row.drug_id for row in food_rows),
                 *(value.interaction.drug_id for value in supplement_rows),
             ]
@@ -289,7 +300,7 @@ class InteractionCheckService:
         diseases: list[Any],
         requested_pairs: list[DrugPair],
         ddi_rows: list[DrugDrugInteraction],
-        disease_rows: list[DrugDiseaseInteraction],
+        disease_rows: list[MappedDiseaseInteraction],
         evidence: list[EvidenceChunk],
     ) -> tuple[list[InteractionItem], list[UnavailableResult]]:
         items: list[InteractionItem] = []
@@ -328,16 +339,19 @@ class InteractionCheckService:
                     )
                 )
 
-        disease_by_pair: dict[tuple[str, str], list[DrugDiseaseInteraction]] = defaultdict(list)
-        for row in disease_rows:
-            disease_by_pair[(row.canonical_ingredient, row.disease_name_unaccent)].append(row)
+        disease_by_pair: dict[tuple[str, UUID], list[MappedDiseaseInteraction]] = defaultdict(list)
+        for value in disease_rows:
+            requested_ingredient = value.requested_ingredient or value.interaction.canonical_ingredient
+            disease_by_pair[(requested_ingredient, value.disease_id)].append(value)
+        rendered_disease_rows: set[tuple[UUID, str]] = set()
         for drug in drugs:
             for ingredient in drug.canonical_ingredients:
                 for disease in diseases:
-                    key = (normalize_for_matching(ingredient), disease.name_unaccent)
+                    key = (normalize_for_matching(ingredient), disease.id)
                     rows = disease_by_pair[key]
                     valid = 0
-                    for row in rows:
+                    for mapped_row in rows:
+                        row = mapped_row.interaction
                         citation = self._citation(
                             kind="drug-disease",
                             row=row,
@@ -351,7 +365,14 @@ class InteractionCheckService:
                         if not citation:
                             continue
                         valid += 1
-                        items.append(self._item_from_row(row, "drug-disease", drug.brand_name, disease.name, citation))
+                        row_key = (drug.id, row.disease_name_unaccent)
+                        if row_key in rendered_disease_rows:
+                            continue
+                        rendered_disease_rows.add(row_key)
+                        object_name = disease.name
+                        if mapped_row.requires_context:
+                            object_name = f"{row.disease_name} — thuộc nhóm {disease.name}"
+                        items.append(self._item_from_row(row, "drug-disease", drug.brand_name, object_name, citation))
                     if not rows or not valid:
                         unavailable.append(
                             UnavailableResult(
@@ -396,16 +417,18 @@ class InteractionCheckService:
         supplement_rows: list[CategorizedSupplementInteraction],
         evidence: list[EvidenceChunk],
     ) -> list[InteractionNote]:
-        notes: list[InteractionNote] = []
-        categorized_rows: list[tuple[Literal["drug-food", "drug-supplement"], Any, str]] = [
-            ("drug-food", row, row.food_item) for row in food_rows
-        ]
-        categorized_rows.extend(
-            (kind, value.interaction, value.interaction.supplement_name)
+        # `drug_supplement_interactions + supplements.category` là nguồn phân loại chính.
+        # `drug_food_interactions` là nguồn legacy, chỉ bổ sung nội dung/citation còn thiếu
+        # khi cùng hoạt chất + thực phẩm đã có ở nguồn chính.
+        categorized_rows: list[tuple[Literal["drug-food", "drug-supplement"], Any, str, int]] = [
+            (kind, value.interaction, value.interaction.supplement_name, 0)
             for value in supplement_rows
             if (kind := supplement_note_kind(value.category)) is not None
-        )
-        for kind, row, object_name in categorized_rows:
+        ]
+        categorized_rows.extend(("drug-food", row, row.food_item, 1) for row in food_rows)
+
+        grouped: dict[tuple[str, str, str], list[_NoteCandidate]] = defaultdict(list)
+        for kind, row, object_name, source_priority in categorized_rows:
             ingredient = row.canonical_ingredient
             citation = self._citation(
                 kind=kind,
@@ -419,24 +442,92 @@ class InteractionCheckService:
             )
             if not citation:
                 continue
-            raw = {"effectDescription": row.effect_description, "management": row.management}
+            key = (kind, self._note_text_key(ingredient), self._note_text_key(object_name))
+            grouped[key].append(
+                _NoteCandidate(
+                    kind=kind,
+                    row=row,
+                    object_name=object_name,
+                    source_priority=source_priority,
+                    citation=citation,
+                )
+            )
+
+        notes: list[InteractionNote] = []
+        for key in sorted(grouped):
+            candidates = sorted(grouped[key], key=lambda value: (value.source_priority, str(value.row.id)))
+            primary = candidates[0]
+            effect_description = self._merge_note_text(
+                [getattr(value.row, "effect_description", None) for value in candidates]
+            )
+            management = self._merge_note_text([getattr(value.row, "management", None) for value in candidates])
+            if (
+                effect_description
+                and management
+                and self._note_text_key(effect_description) == self._note_text_key(management)
+            ):
+                management = None
+            citations: list[Citation] = []
+            citation_keys: set[tuple[str, str]] = set()
+            for candidate in candidates:
+                citation_key = (
+                    self._quote_key(candidate.citation.quote),
+                    candidate.citation.source_url.split("?", maxsplit=1)[0].rstrip("/").casefold(),
+                )
+                if citation_key in citation_keys:
+                    continue
+                citation_keys.add(citation_key)
+                citations.append(candidate.citation)
+
+            severities = {
+                value
+                for candidate in candidates
+                if (value := getattr(candidate.row, "severity", None)) in SEVERITY_ORDER
+            }
+            severity = min(severities, key=SEVERITY_ORDER.index) if severities else "unknown"
+            review_status: Literal["pending", "approved"] = (
+                "approved"
+                if all(_review_status(candidate.row.review_status) == "approved" for candidate in candidates)
+                else "pending"
+            )
+            raw = {"effectDescription": effect_description, "management": management}
             notes.append(
                 InteractionNote(
-                    id=f"{kind}:{row.id}",
-                    kind=kind,
-                    severity=getattr(row, "severity", None)
-                    if getattr(row, "severity", None) in SEVERITY_ORDER
-                    else "unknown",
-                    review_status=_review_status(row.review_status),
-                    subject=ingredient,
-                    object=object_name,
-                    effect_description=row.effect_description,
-                    management=row.management,
+                    id=f"{primary.kind}:{primary.row.id}",
+                    kind=primary.kind,
+                    severity=severity,
+                    review_status=review_status,
+                    subject=primary.row.canonical_ingredient,
+                    object=primary.object_name,
+                    effect_description=effect_description,
+                    management=management,
                     ai_summary=_fallback_summary(raw),
-                    citations=[citation],
+                    citations=citations,
                 )
             )
         return notes
+
+    @staticmethod
+    def _note_text_key(value: str) -> str:
+        return " ".join(normalize_for_matching(value).split())
+
+    @classmethod
+    def _quote_key(cls, value: str) -> str:
+        without_marker = re.sub(r"^[\s\-–—•*]+", "", value)
+        return cls._note_text_key(without_marker)
+
+    @classmethod
+    def _merge_note_text(cls, values: list[str | None]) -> str | None:
+        merged: list[str] = []
+        seen: set[str] = set()
+        for value in values:
+            stripped = value.strip() if value else ""
+            key = cls._quote_key(stripped)
+            if not stripped or not key or key in seen:
+                continue
+            seen.add(key)
+            merged.append(stripped)
+        return " ".join(merged) or None
 
     async def _summarize(self, records: list[InteractionItem | InteractionNote]) -> list[dict[str, Any]]:
         values = [record.model_dump(mode="json", by_alias=True) for record in records]

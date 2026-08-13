@@ -27,6 +27,9 @@ delivery status hoặc catalog quy ước code.
 | [0018](0018-dose-comparison-boundary.md) | Đối chiếu liều là trình bày bằng chứng | Được chấp nhận |
 | [0019](0019-gate-1-no-longer-immutable.md) | `gate/gate_1/` không còn bất biến | Được chấp nhận |
 | [0020](0020-gemini-grounded-summary.md) | Gemini tóm tắt record đã xác thực | Được chấp nhận |
+| [0021](0021-canonical-condition-normalization.md) | Chuẩn hóa mention bệnh thành canonical condition có human review | Được chấp nhận |
+| [0022](0022-show-contextual-condition-warnings.md) | Hiển thị cảnh báo bệnh cụ thể từ lựa chọn canonical rộng | Được chấp nhận |
+| [0023](0023-transient-prescription-image-extraction.md) | Trích xuất ảnh đơn thuốc tạm thời và xác nhận catalog | Được chấp nhận |
 
 ## Quy tắc
 

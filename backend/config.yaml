@@ -79,7 +79,13 @@ normalization:
 ocr:
   prescription:
     provider: "google_genai"
-    model: "gemini-2.5-flash"
+    model: "gemini-3.5-flash-lite"
+    max_files: 5
+    max_file_size_bytes: 10485760
+    max_total_size_bytes: 26214400
+    max_pixels: 40000000
+    candidate_limit: 5
+    timeout_seconds: 30
   leaflet:
     provider: "qwen_model_studio"
     model: "qwen-vl-ocr-2025-11-20"
@@ -94,6 +100,13 @@ llm:
   allowed_uses:
     - "bounded_structured_extraction"
     - "source_grounded_presentation"
+
+condition_normalization:
+  # Batch toàn bộ condition mention, không nằm trên request path và không ghi database.
+  model: "gemini-3.5-flash-lite"
+  limit: 5000
+  batch_size: 20
+  timeout_seconds: 90
 
 logging:
   level: "INFO"

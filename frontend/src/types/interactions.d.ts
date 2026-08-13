@@ -23,6 +23,7 @@ declare global {
   type IInteractionCheckDetail = IInteractionCheckResponse;
   type IPatientCondition = components["schemas"]["PatientConditionResponse"];
   type TConditionCode = components["schemas"]["PatientConditionCreate"]["conditionCode"];
+  type IPatientDisease = components["schemas"]["PatientDiseaseResponse"];
   type IHealthProfile = components["schemas"]["HealthProfileResponse"];
   type IHealthProfileUpdate = components["schemas"]["HealthProfileUpdate"];
 

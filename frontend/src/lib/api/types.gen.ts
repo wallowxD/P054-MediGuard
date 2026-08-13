@@ -304,6 +304,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/prescriptions/extract": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Extract Prescription Images
+         * @description Ảnh chỉ sống trong request; Gemini output vẫn phải được người dùng xác nhận với catalog.
+         */
+        post: operations["extract_prescription_images_api_v1_prescriptions_extract_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/status": {
         parameters: {
             query?: never;
@@ -376,6 +396,14 @@ export interface components {
             name: string;
             /** Roles */
             roles: string[];
+        };
+        /** Body_extract_prescription_images_api_v1_prescriptions_extract_post */
+        Body_extract_prescription_images_api_v1_prescriptions_extract_post: {
+            /**
+             * Images
+             * @description 1–5 ảnh JPG, PNG hoặc WEBP của cùng một đơn thuốc
+             */
+            images: string[];
         };
         /** Citation */
         Citation: {
@@ -531,6 +559,30 @@ export interface components {
             /** Message */
             message: string;
         };
+        /** ExtractedPrescriptionDisease */
+        ExtractedPrescriptionDisease: {
+            /** Rawtext */
+            rawText: string;
+            /** Name */
+            name: string;
+            /** Uncertain */
+            uncertain: boolean;
+            /** Candidates */
+            candidates: components["schemas"]["PrescriptionDiseaseCandidate"][];
+        };
+        /** ExtractedPrescriptionDrug */
+        ExtractedPrescriptionDrug: {
+            /** Rawtext */
+            rawText: string;
+            /** Name */
+            name: string;
+            /** Ingredient */
+            ingredient?: string | null;
+            /** Uncertain */
+            uncertain: boolean;
+            /** Candidates */
+            candidates: components["schemas"]["PrescriptionDrugCandidate"][];
+        };
         /**
          * GoogleLoginRequest
          * @description Body của `POST /api/v1/auth/google` — xem ADR 0016.
@@ -556,11 +608,8 @@ export interface components {
             heightCm?: string | null;
             /** Consentedat */
             consentedAt?: string | null;
-            /**
-             * Conditions
-             * @default []
-             */
-            conditions: components["schemas"]["PatientConditionResponse"][];
+            /** Conditions */
+            conditions?: components["schemas"]["PatientConditionResponse"][];
         };
         /** HealthProfileUpdate */
         HealthProfileUpdate: {
@@ -587,7 +636,7 @@ export interface components {
             /** Drugids */
             drugIds: string[];
             /** Diseaseids */
-            diseaseIds?: string[];
+            diseaseIds: string[];
         };
         /** InteractionCheckResponse */
         InteractionCheckResponse: {
@@ -762,15 +811,62 @@ export interface components {
              * Format: uuid
              */
             id: string;
-            /** Conditioncode */
-            conditionCode: string;
-            /** Source */
-            source: string;
+            /**
+             * Conditioncode
+             * @enum {string}
+             */
+            conditionCode: "mang-thai" | "cho-con-bu" | "suy-than" | "suy-gan";
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "self_reported" | "pharmacist_confirmed";
             /**
              * Createdat
              * Format: date-time
              */
             createdAt: string;
+        };
+        /** PrescriptionDiseaseCandidate */
+        PrescriptionDiseaseCandidate: {
+            /**
+             * Diseaseid
+             * Format: uuid
+             */
+            diseaseId: string;
+            /** Name */
+            name: string;
+            /** Confidence */
+            confidence: number;
+        };
+        /** PrescriptionDrugCandidate */
+        PrescriptionDrugCandidate: {
+            /**
+             * Drugid
+             * Format: uuid
+             */
+            drugId: string;
+            /** Brandname */
+            brandName: string;
+            /** Ingredient */
+            ingredient: string;
+            /** Confidence */
+            confidence: number;
+        };
+        /** PrescriptionExtractionResponse */
+        PrescriptionExtractionResponse: {
+            /** Drugs */
+            drugs: components["schemas"]["ExtractedPrescriptionDrug"][];
+            /** Diseases */
+            diseases: components["schemas"]["ExtractedPrescriptionDisease"][];
+            /** Model */
+            model: string;
+            /**
+             * Requiresconfirmation
+             * @default true
+             * @constant
+             */
+            requiresConfirmation: true;
         };
         /**
          * RefreshRequest
@@ -1469,6 +1565,39 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    extract_prescription_images_api_v1_prescriptions_extract_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_extract_prescription_images_api_v1_prescriptions_extract_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrescriptionExtractionResponse"];
+                };
             };
             /** @description Validation Error */
             422: {

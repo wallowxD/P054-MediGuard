@@ -1,4 +1,4 @@
-"""Hồ sơ sức khoẻ TỰ KHAI — bảng `patient_profiles` và `patient_conditions`.
+"""Hồ sơ sức khoẻ TỰ KHAI — profile, tình trạng đặc biệt và bệnh nền đã lưu.
 
 Gọi là "hồ sơ sức khoẻ tự khai", không gọi là "hồ sơ bệnh án": bệnh án hàm ý dữ liệu do
 cơ sở y tế lập và chịu trách nhiệm, đúng thứ sản phẩm này không làm (ADR 0017 mục 4).
@@ -8,7 +8,7 @@ cơ sở y tế lập và chịu trách nhiệm, đúng thứ sản phẩm này 
   nguyên văn tờ HDSD (ADR 0006). Đừng viết code tự đọc `patient_conditions` rồi thêm bệnh
   nền vào request tra cứu — đó là suy luận thay người dùng.
 
-★ Hai bảng nằm trong schema `public` nên PostgREST của Supabase expose chúng cho anon key
+★ Các bảng nằm trong schema `public` nên PostgREST của Supabase expose chúng cho anon key
   (khoá này nằm công khai trong bundle frontend). Migration 0005 bật Row Level Security
   và KHÔNG tạo policy nào. Tắt RLS ở đây đồng nghĩa công khai ngày sinh và bệnh nền của
   toàn bộ người dùng.
@@ -39,19 +39,21 @@ SEX_MALE = "nam"
 SEX_OTHER = "khac"
 SEX_VALUES = (SEX_FEMALE, SEX_MALE, SEX_OTHER)
 
-# Bốn tình trạng đặc biệt của HỒ SƠ, khớp `CONDITION_OPTIONS` của bản demo. Đây là tập
-# đóng, không phải danh mục bệnh nền — bệnh nền của một lượt tra cứu nằm ở bảng
-# `diseases` và được người dùng chọn lại mỗi lần.
+# Hai tình trạng đặc biệt của HỒ SƠ. Suy thận/suy gan là mã legacy từ revision 0005;
+# API mới không nhận chúng nữa vì bệnh nền phải chọn bằng stable ID từ `diseases`.
 CONDITION_PREGNANT = "mang-thai"
 CONDITION_BREASTFEEDING = "cho-con-bu"
 CONDITION_RENAL_IMPAIRMENT = "suy-than"
 CONDITION_HEPATIC_IMPAIRMENT = "suy-gan"
-CONDITION_CODES = (
+SPECIAL_CONDITION_CODES = (
     CONDITION_PREGNANT,
     CONDITION_BREASTFEEDING,
+)
+LEGACY_CONDITION_CODES = (
     CONDITION_RENAL_IMPAIRMENT,
     CONDITION_HEPATIC_IMPAIRMENT,
 )
+CONDITION_CODES = SPECIAL_CONDITION_CODES + LEGACY_CONDITION_CODES
 
 # Xuất xứ của một dòng tình trạng. Có mặt ngay từ migration đầu tiên để dược sĩ xác nhận
 # được tình trạng mà vẫn phân biệt với dữ liệu người dùng tự khai.
@@ -149,3 +151,42 @@ class PatientCondition(Base):
 
     def __repr__(self) -> str:
         return f"<PatientCondition user_id={self.user_id} code={self.condition_code}>"
+
+
+class PatientDisease(Base):
+    """Một bệnh nền tự khai đã lưu trong hồ sơ người dùng.
+
+    Đây là dữ liệu để hiển thị lại và gợi ý. Nó KHÔNG tự chảy vào request tra cứu;
+    người dùng vẫn phải xác nhận bệnh cho lượt hiện tại theo ADR 0017.
+    """
+
+    __tablename__ = "patient_diseases"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        postgresql.UUID(as_uuid=True), primary_key=True, server_default=func.gen_random_uuid()
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        postgresql.UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    disease_id: Mapped[uuid.UUID] = mapped_column(
+        postgresql.UUID(as_uuid=True), ForeignKey("diseases.id"), nullable=False
+    )
+    source: Mapped[str] = mapped_column(String(32), nullable=False, server_default=SOURCE_SELF_REPORTED)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now())
+
+    __table_args__ = (
+        CheckConstraint(
+            "source IN ('self_reported', 'pharmacist_confirmed')",
+            name="ck_patient_diseases_source",
+        ),
+        UniqueConstraint("user_id", "disease_id", name="uq_patient_diseases_user_disease"),
+        {
+            "comment": (
+                "Bệnh nền tự khai đã lưu theo tài khoản; chỉ gợi ý, không tự đưa vào lượt tra cứu. "
+                "RLS bật, không policy."
+            )
+        },
+    )
+
+    def __repr__(self) -> str:
+        return f"<PatientDisease user_id={self.user_id} disease_id={self.disease_id}>"

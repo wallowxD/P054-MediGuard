@@ -115,7 +115,9 @@ Pending không phải điều kiện chặn hiển thị; rejected evidence khô
 - Đối chiếu liều dùng: trong phạm vi theo [ADR 0018](../adrs/0018-dose-comparison-boundary.md)
   (chấp nhận 09/08/2026); chặn kỹ thuật còn lại là ingestion chưa trích ngưỡng liều dạng có
   cấu trúc từ mục *Liều và cách dùng*.
-- Prescription OCR: cần spec, privacy rule, contract và validation riêng.
+- Prescription image extraction: đã có [spec 005](005-prescription-image-extraction/spec.md) và
+  [ADR 0023](../adrs/0023-transient-prescription-image-extraction.md). Ảnh chỉ sống trong request,
+  Gemini trả candidate và người dùng phải xác nhận catalog ID; PDF vẫn ngoài phạm vi hiện tại.
 - Pharmacist mutation: cần authorization/evidence-version spec riêng.
 - Production VPS: chờ ADR topology triển khai được leader duyệt.
 

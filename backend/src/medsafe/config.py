@@ -76,6 +76,38 @@ def get_llm_config() -> LLMConfig:
     return LLMConfig(**load_yaml_config().get("llm", {}))
 
 
+class PrescriptionExtractionConfig(BaseModel):
+    """Model và giới hạn an toàn cho upload ảnh đơn thuốc trên request path."""
+
+    model: str = "gemini-3.5-flash-lite"
+    max_files: int = Field(default=5, ge=1, le=10)
+    max_file_size_bytes: int = Field(default=10 * 1024 * 1024, ge=1024, le=20 * 1024 * 1024)
+    max_total_size_bytes: int = Field(default=25 * 1024 * 1024, ge=1024, le=50 * 1024 * 1024)
+    max_pixels: int = Field(default=40_000_000, ge=1_000_000, le=100_000_000)
+    candidate_limit: int = Field(default=5, ge=1, le=10)
+    timeout_seconds: float = Field(default=30.0, gt=0, le=60)
+
+
+@lru_cache
+def get_prescription_extraction_config() -> PrescriptionExtractionConfig:
+    ocr = load_yaml_config().get("ocr", {})
+    return PrescriptionExtractionConfig(**ocr.get("prescription", {}))
+
+
+class ConditionNormalizationConfig(BaseModel):
+    """Tham số batch dry-run chuẩn hóa toàn bộ condition mention."""
+
+    model: str = "gemini-3.5-flash-lite"
+    limit: int = Field(default=5000, ge=1, le=10000)
+    batch_size: int = Field(default=20, ge=1, le=50)
+    timeout_seconds: float = Field(default=90.0, gt=0, le=300)
+
+
+@lru_cache
+def get_condition_normalization_config() -> ConditionNormalizationConfig:
+    return ConditionNormalizationConfig(**load_yaml_config().get("condition_normalization", {}))
+
+
 class Settings(BaseSettings):
     """Secret + tham số môi trường. Nạp từ <repo-root>/.env."""
 

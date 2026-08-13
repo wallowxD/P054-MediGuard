@@ -7,9 +7,12 @@ import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tansta
 import {
   checkInteractionsRequest,
   addHealthConditionRequest,
+  addPatientDiseaseRequest,
   clearInteractionChecksRequest,
   deleteHealthConditionRequest,
+  deletePatientDiseaseRequest,
   deleteInteractionCheckRequest,
+  extractPrescriptionRequest,
   getDrugDetailsRequest,
   getDrugLettersRequest,
   getInteractionCheckDetailsRequest,
@@ -194,6 +197,22 @@ export const useDeleteHealthCondition = () => {
   });
 };
 
+export const useAddPatientDisease = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: addPatientDiseaseRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: healthKeys.profile }),
+  });
+};
+
+export const useDeletePatientDisease = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deletePatientDiseaseRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: healthKeys.profile }),
+  });
+};
+
 export const useDeleteInteractionCheck = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -209,3 +228,6 @@ export const useClearInteractionChecks = () => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: interactionCheckKeys.all }),
   });
 };
+
+export const useExtractPrescription = () =>
+  useMutation({ mutationFn: (images: File[]) => extractPrescriptionRequest(images) });

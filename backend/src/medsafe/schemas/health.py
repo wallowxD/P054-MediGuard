@@ -12,18 +12,9 @@ from medsafe.schemas.base import CamelModel
 
 class PatientConditionResponse(CamelModel):
     id: UUID
-    condition_code: Literal["mang-thai", "cho-con-bu", "suy-than", "suy-gan"]
+    condition_code: Literal["mang-thai", "cho-con-bu"]
     source: Literal["self_reported", "pharmacist_confirmed"]
     created_at: datetime
-
-
-class HealthProfileResponse(CamelModel):
-    date_of_birth: date | None = None
-    sex: Literal["nu", "nam", "khac"] | None = None
-    weight_kg: Decimal | None = None
-    height_cm: Decimal | None = None
-    consented_at: datetime | None = None
-    conditions: list[PatientConditionResponse] = Field(default_factory=list)
 
 
 class HealthProfileUpdate(CamelModel):
@@ -35,7 +26,29 @@ class HealthProfileUpdate(CamelModel):
 
 
 class PatientConditionCreate(CamelModel):
-    condition_code: Literal["mang-thai", "cho-con-bu", "suy-than", "suy-gan"]
+    condition_code: Literal["mang-thai", "cho-con-bu"]
+
+
+class PatientDiseaseCreate(CamelModel):
+    disease_id: UUID
+
+
+class PatientDiseaseResponse(CamelModel):
+    id: UUID
+    disease_id: UUID
+    name: str
+    source: Literal["self_reported", "pharmacist_confirmed"]
+    created_at: datetime
+
+
+class HealthProfileResponse(CamelModel):
+    date_of_birth: date | None = None
+    sex: Literal["nu", "nam", "khac"] | None = None
+    weight_kg: Decimal | None = None
+    height_cm: Decimal | None = None
+    consented_at: datetime | None = None
+    conditions: list[PatientConditionResponse] = Field(default_factory=list)
+    diseases: list[PatientDiseaseResponse] = Field(default_factory=list)
 
 
 class DiseaseResponse(CamelModel):
