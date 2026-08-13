@@ -1,12 +1,11 @@
 "use client";
 
 /**
- * Nút đăng nhập/đăng ký Google, giữ nguyên style hệ thống (Button + GoogleMark).
+ * Nút đăng nhập/đăng ký do Google Identity Services (GIS) render trực tiếp.
  *
- * Google Identity Services (GIS) không cho tự style nút của họ, nên nút GIS THẬT được
- * render ở dạng ẩn (`hiddenContainerRef`); bấm nút hiển thị (custom) sẽ forward click
- * sang nút ẩn đó. Đây vẫn là một click thật do người dùng thực hiện — xảy ra đồng bộ
- * trong cùng lời gọi hàm — nên không bị trình duyệt chặn như khi tự ý mở popup.
+ * GIS không cung cấp API để khởi động button flow bằng code. Vì vậy nút Google phải
+ * hiển thị thật và nhận click trực tiếp từ người dùng; không bọc bằng nút custom rồi gọi
+ * `.click()` lên iframe ẩn.
  *
  * `authorize()` ở `lib/auth.ts` là nơi DUY NHẤT gọi backend; component này chỉ lấy
  * idToken rồi giao cho `signIn("google", { idToken })`.
@@ -17,9 +16,7 @@ import { useRouter } from "next/navigation";
 import Script from "next/script";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import Button from "@/components/ui/Button";
 import { ROUTES } from "@/constants/routes";
-import GoogleMark from "./GoogleMark";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? "";
 
@@ -45,7 +42,7 @@ type GoogleSignInButtonProps = {
 
 export default function GoogleSignInButton({ label }: GoogleSignInButtonProps) {
   const router = useRouter();
-  const hiddenContainerRef = useRef<HTMLDivElement>(null);
+  const googleButtonRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleCredential = useCallback(
@@ -64,10 +61,10 @@ export default function GoogleSignInButton({ label }: GoogleSignInButtonProps) {
   );
 
   // `onReady`: chạy sau khi script load xong VÀ mỗi lần component này mount lại — cần
-  // thiết vì signin/signup đều dùng component này, mount lại phải render lại nút ẩn vào
+  // thiết vì signin/signup đều dùng component này, mount lại phải render lại nút vào
   // container ref mới (next/script chỉ tải script một lần, không tự lặp `onLoad`).
   const initializeGoogle = useCallback(() => {
-    if (!window.google || !hiddenContainerRef.current || !GOOGLE_CLIENT_ID) return;
+    if (!window.google || !googleButtonRef.current || !GOOGLE_CLIENT_ID) return;
 
     window.google.accounts.id.initialize({
       client_id: GOOGLE_CLIENT_ID,
@@ -75,38 +72,33 @@ export default function GoogleSignInButton({ label }: GoogleSignInButtonProps) {
         void handleCredential(response.credential);
       },
     });
-    window.google.accounts.id.renderButton(hiddenContainerRef.current, {
+    window.google.accounts.id.renderButton(googleButtonRef.current, {
       type: "standard",
       theme: "outline",
       size: "large",
+      text: label.startsWith("Đăng ký") ? "signup_with" : "signin_with",
+      shape: "rectangular",
+      logo_alignment: "left",
+      width: Math.min(googleButtonRef.current.clientWidth || 360, 400),
     });
-  }, [handleCredential]);
-
-  const handleClick = () => {
-    if (!GOOGLE_CLIENT_ID) {
-      toast.error("Đăng nhập Google chưa được cấu hình (thiếu NEXT_PUBLIC_GOOGLE_CLIENT_ID).");
-      return;
-    }
-    const realButton = hiddenContainerRef.current?.querySelector<HTMLElement>('div[role="button"]');
-    if (!realButton) {
-      toast.error("Google chưa sẵn sàng, thử lại sau vài giây.");
-      return;
-    }
-    realButton.click();
-  };
+  }, [handleCredential, label]);
 
   return (
     <>
-      <Script src="https://accounts.google.com/gsi/client" strategy="afterInteractive" onReady={initializeGoogle} />
-      <div
-        ref={hiddenContainerRef}
-        className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
-        aria-hidden
+      <Script
+        src="https://accounts.google.com/gsi/client?hl=vi"
+        strategy="afterInteractive"
+        onReady={initializeGoogle}
       />
-      <Button type="button" variant="outline" className="w-full" onClick={handleClick} disabled={isSubmitting}>
-        <GoogleMark />
-        {isSubmitting ? "Đang đăng nhập..." : label}
-      </Button>
+      <div
+        className={isSubmitting ? "pointer-events-none w-full opacity-60" : "w-full"}
+        aria-busy={isSubmitting}
+      >
+        <div ref={googleButtonRef} className="flex min-h-10 w-full justify-center" />
+      </div>
+      <span className="sr-only" aria-live="polite">
+        {isSubmitting ? "Đang đăng nhập bằng Google" : ""}
+      </span>
     </>
   );
 }

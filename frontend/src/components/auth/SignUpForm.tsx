@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import Button from "@/components/ui/Button";
 import { ROUTES } from "@/constants/routes";
 import { useRegister } from "@/queries/auth";
-import GoogleMark from "./GoogleMark";
 import GoogleSignInButton from "./GoogleSignInButton";
 
 type SignUpFormValues = {
