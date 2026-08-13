@@ -1,16 +1,23 @@
 import CitationBlock from "./CitationBlock";
+import PendingReviewNotice from "./PendingReviewNotice";
+import { isRejectedForPatient } from "./review-status";
 import ReviewStatusTag from "./ReviewStatusTag";
 import SeverityBadge from "./SeverityBadge";
 
 /**
- * ★ Chốt chặn cuối của luật "không bịa cảnh báo" ở tầng UI.
+ * ★ Chốt chặn cuối của hai luật an toàn ở tầng UI.
  *
- * Không có citation → KHÔNG render cảnh báo. Trả về null thay vì hiển thị một
- * cảnh báo trần trụi, vì cảnh báo không nguồn còn tệ hơn không có cảnh báo.
+ * 1. Không có citation → KHÔNG render cảnh báo (ADR 0006). Trả về null thay vì hiển
+ *    thị một cảnh báo trần trụi, vì cảnh báo không nguồn còn tệ hơn không có cảnh báo.
+ * 2. `rejected` → KHÔNG render cho patient client (ADR 0005). Backend chịu trách nhiệm
+ *    không trả bản ghi đã bị bác bỏ, nhưng UI không dựa vào đó: một lỗi filter phía
+ *    backend không được biến thành cảnh báo dược sĩ đã bác bỏ hiển thị trên màn bệnh nhân.
+ *
  * Tầng gọi chịu trách nhiệm đếm và báo "chưa có dữ liệu" cho người dùng.
  */
 export default function InteractionCard({ interaction }: { interaction: IInteractionItem }) {
   if (!interaction.citations?.length) return null;
+  if (isRejectedForPatient(interaction.reviewStatus)) return null;
 
   return (
     <article className="rounded-xl border border-border bg-card p-4">
@@ -26,6 +33,12 @@ export default function InteractionCard({ interaction }: { interaction: IInterac
         <ReviewStatusTag status={interaction.reviewStatus} />
       </div>
 
+      {interaction.reviewStatus === "pending" ? (
+        <div className="mt-3">
+          <PendingReviewNotice />
+        </div>
+      ) : null}
+
       <dl className="mt-3 space-y-1.5 text-sm">
         {interaction.mechanism ? (
           <div>
@@ -39,9 +52,13 @@ export default function InteractionCard({ interaction }: { interaction: IInterac
             <dd className="inline text-foreground-secondary">{interaction.consequence}</dd>
           </div>
         ) : null}
+        {/* Nhãn cũ "Xử trí" đọc như chỉ định điều trị cho chính người dùng. Đây là nội
+            dung chép lại từ tài liệu nguồn, không phải hướng xử trí cho ca cụ thể. */}
         {interaction.management ? (
           <div>
-            <dt className="inline font-medium text-foreground-secondary">Xử trí: </dt>
+            <dt className="inline font-medium text-foreground-secondary">
+              Nội dung trong tài liệu nguồn:{" "}
+            </dt>
             <dd className="inline text-foreground-secondary">{interaction.management}</dd>
           </div>
         ) : null}

@@ -55,7 +55,7 @@ export default function DrugCatalogSearchBar({
             type="button"
             onClick={onClear}
             aria-label="Xoá từ khoá tìm kiếm"
-            className="shrink-0 rounded-full p-1 text-foreground-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-foreground-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <X className="h-4 w-4" aria-hidden />
           </button>

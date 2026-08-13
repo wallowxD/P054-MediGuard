@@ -185,27 +185,65 @@ chọn cố ý, khác với thanh sticky phẳng phần còn lại của app hay
   cho nav desktop.
 - Nav link active được đánh dấu bằng `border-b-2 border-[var(--cta-accent)]`, cùng màu với
   CTA hero — đây là nơi duy nhất khác được phép dùng `cta-accent`.
+- **Mục nav nào đang active do scroll spy quyết định, không hardcode.** `useSectionSpy`
+  (`components/landing/use-section-spy.ts`) dùng `IntersectionObserver` với vạch đọc
+  `-45% 0px -50% 0px`: section nào chiếm khoảng giữa viewport thì mục nav tương ứng sáng
+  underline và mang `aria-current="page"`. Nav desktop và drawer mobile đọc chung một
+  `activeId` nên không thể lệch nhau. Không thêm listener `scroll` để tính lại việc này —
+  observer đã đủ và rẻ hơn nhiều.
+- Mỗi mục nav phải có một section mang đúng `id` khai báo trong `LANDING_SECTIONS`
+  (`#trang-chu` là hero, `#lien-he` là `LandingFooter`). Thêm mục nav mà quên gắn `id` thì
+  link vẫn cuộn được nhưng underline không bao giờ sáng.
+- Bấm nav link sẽ `preventDefault` rồi tự cuộn (có bù `HEADER_OFFSET` và tôn trọng
+  `prefers-reduced-motion`) để active state đổi ngay thay vì nhảy qua từng section trung
+  gian trong lúc cuộn mượt. `href` vẫn là neo thật để link hoạt động khi JS chưa chạy.
 - **Nav đầy đủ (link giữa + action bên phải) chỉ hiện từ `lg:` (1024px), không phải `md:`
   (768px).** Đây là chủ đích, không phải thiếu sót: ở 768px không đủ chỗ cho logo, 5 link nav
   và action bên phải trên một dòng, chúng sẽ bị xuống dòng. Nếu thêm nav item mới, kiểm tra lại
   ở cả 768px và 1024px trước khi ship — đừng chỉ nhìn ở 1440px.
 
-### Căn giữa theo chiều dọc ở Hero — lưu ý khi chỉnh sửa
+### Chiều cao Hero — hero chiếm trọn viewport đầu tiên
 
-`lg:min-h-[clamp(620px,70vh,820px)]` và `lg:items-center` của hero nằm trên **cùng một**
-element (grid `.landing-wide-container` bên trong `HeroSection`), không tách ra giữa
-`<section>` và phần tử con. Đặt `min-height` ở `<section>` rồi `height: 100%` + `items-center`
-ở grid con nhìn tương đương nhưng không đáng tin cậy — việc resolve percentage-height dựa trên
-parent có `min-height` khá mong manh, kết quả là nội dung bị dồn lên trên với khoảng trống lệch
-phía dưới thay vì được căn giữa. Muốn chỉnh chiều cao hoặc cách căn giữa của hero, giữ cả hai
-thuộc tính trên cùng một element.
+Ở `lg` trở lên, hero cao đúng phần viewport còn lại dưới `LandingHeader`, để màn hình đầu
+tiên chỉ có nav và hero — section "Tính năng" không được ló ra đáy màn hình khi chưa cuộn.
+Logic nằm ở class `.landing-hero-viewport` trong `globals.css`, không phải utility trong JSX,
+vì cần hai dòng `min-height` (fallback `vh` rồi `dvh`) mà arbitrary value của Tailwind không
+diễn đạt được.
+
+```
+min-height: calc(100dvh - var(--landing-header-block));   /* --landing-header-block = 4rem + 2px */
+```
+
+Ba điều dễ làm sai khi chỉnh:
+
+- **Chỉ trừ `--landing-header-block`, không trừ thêm `--landing-header-offset`.** Header
+  chiếm trong luồng đúng chiều cao card (h-16 + 2 đường viền 1px); `top-3/top-4` chỉ là vị trí
+  sticky, ở scroll 0 nó đẩy card xuống và card đè lên padding trên của hero. Trừ thêm 1rem nữa
+  là chừa lại đúng 1rem cho mép "Tính năng" lộ ra — quay lại đúng lỗi ban đầu.
+- **`min-height`, không phải `height`.** Màn hình thấp thì hero phải dài ra được; đặt `height`
+  sẽ cắt mất headline/CTA/disclaimer.
+- **Chỉ áp từ `lg`.** Dưới `lg` hero cao theo nội dung; ép full-screen trên điện thoại chỉ tạo
+  overflow chứ không đẹp hơn.
+
+`min-height` và `lg:items-center` phải nằm trên **cùng một** element (grid
+`.landing-wide-container` bên trong `HeroSection`), không tách ra giữa `<section>` và phần tử
+con. Đặt `min-height` ở `<section>` rồi `height: 100%` + `items-center` ở grid con nhìn tương
+đương nhưng không đáng tin cậy — việc resolve percentage-height dựa trên parent có `min-height`
+khá mong manh, kết quả là nội dung bị dồn lên trên với khoảng trống lệch phía dưới thay vì được
+căn giữa.
 
 ### Ảnh minh hoạ Hero
 
-Ảnh viên nang của hero nằm ở `frontend/public/pill-render.png`, dùng thẻ `<img>` thường (không
-phải `next/image`) vì đây là asset trang trí, nền trong suốt, tràn ra ngoài nền chứ không phải
-ảnh nội dung cần crop/tối ưu. `yarn lint` sẽ cảnh báo việc này — cảnh báo đó là dự tính, không
-cần sửa.
+Ảnh viên nang của hero nằm ở `frontend/public/pill-render.png` (1448×1086), dùng thẻ `<img>`
+thường (không phải `next/image`) vì đây là asset trang trí, nền trong suốt, tràn ra ngoài nền
+chứ không phải ảnh nội dung cần crop/tối ưu. `yarn lint` sẽ cảnh báo việc này — cảnh báo đó là
+dự tính, không cần sửa.
+
+Ở `lg`, ảnh dùng `lg:w-auto lg:max-w-[min(100%,38rem)]` cộng `max-height` từ class
+`.landing-hero-figure` (chỗ trống thật còn lại sau header, phần sticky đè lên và `lg:py-12`).
+Chỉ đặt trần chứ không đặt `height`: với thẻ ảnh, trình duyệt tự co cả hai chiều theo đúng tỉ
+lệ gốc khi vướng `max-width`/`max-height`, nên ảnh nhỏ lại chứ không méo và không bị crop. Từ
+1366×768 trở lên trần này chưa chạm tới — nó chỉ có tác dụng trên laptop màn hình rất thấp.
 
 ### Quy tắc màu sắc và thị giác
 
@@ -245,7 +283,22 @@ cần sửa.
   MediGuard của trang này chủ đích chỉ có chế độ sáng.
 - Severity phải có text/icon; không truyền đạt chỉ bằng màu.
 - Warning phải hiển thị quote, source và review status đầy đủ.
-- `pending` vẫn hiển thị ngay với nhãn chờ xác nhận chuyên môn; `rejected` không hiển thị.
+- `pending` vẫn hiển thị ngay, kèm `PendingReviewNotice` — không chỉ một nhãn text nhỏ.
+  `rejected` không hiển thị: `InteractionCard` và `InteractionTableRow` đều gọi
+  `isRejectedForPatient()` làm chốt chặn runtime, kể cả khi type đã loại `"rejected"`.
+- Nhãn của `interaction.management` là **"Nội dung trong tài liệu nguồn"**, không phải
+  "Xử trí". Đây là nội dung chép lại từ tờ HDSD, không phải hướng xử trí cho ca cụ thể;
+  wording mang tính chỉ định điều trị vi phạm nguyên tắc "không kết luận lâm sàng".
+- Text có nghĩa phải đạt WCAG AA 4.5:1. `--foreground-muted` đã đổi từ `#94a3b8` (2.56:1
+  trên nền trắng) sang `#64748b` ở light và `#9ca3af` ở dark; đừng làm nhạt lại. Nếu cần
+  text mờ hơn nữa trên nền `surface`, dùng `foreground-secondary` thay vì hạ token.
+- Vùng chạm của icon-only button tối thiểu 24×24 CSS px, ưu tiên 32–44px. Đặt kích thước
+  bằng `h-*/w-*` + flex centering, không dựa vào `p-0.5` quanh icon 12px.
+- Mọi layout có chrome cố định phải có `SkipLink`; `<main>` tương ứng mang
+  `id={MAIN_CONTENT_ID}` và `tabIndex={-1}`. Hiện có ở `(public)` và `(protected)`;
+  `(review)` chưa có.
+- `Modal` (`components/ui/Modal.tsx`) là nơi duy nhất cài focus trap, Escape, khoá scroll
+  nền và trả focus về trigger. Đừng viết overlay dialog riêng — thêm prop vào đây.
 - Giữ `output: "standalone"` trong `next.config.ts` vì Docker image phụ thuộc output này.
 - `NEXT_PUBLIC_*` được đóng vào bundle lúc build; Docker truyền qua `build.args`.
 - Application route không được chứa dấu chấm vì proxy matcher loại path có extension.
@@ -277,3 +330,29 @@ Chi tiết quyết định tại [ADR 0007](../adrs/0007-frontend-structure-and-
 Backend chưa có auth module và business router chưa được bật. Các service liên quan vẫn
 gọi `apiNotReady()`; khôi phục function body theo TODO khi backend sẵn sàng. Frontend test
 framework chưa được chốt; không tự cài thêm trước khi có Jira decision/ADR phù hợp.
+
+### Màn hình nào đang thật sự dùng được
+
+| Màn | Trạng thái |
+|---|---|
+| `/drug-information` | Chạy thật — `/drugs`, `/drugs/letters`, `/drugs/search` đã có |
+| `/drug-information/[id]` | Chưa có endpoint chi tiết |
+| `/interactions`, `/interactions/drug-drug`, `/interactions/drug-food` | `FeatureUnavailable` |
+| `/interactions/drug-disease` | `FeatureUnavailable` — chờ VMEC-71 và VMEC-72 |
+| `/prescriptions/review` | `FeatureUnavailable` — chưa có upload/OCR |
+
+Ba màn tra cứu tương tác trước đây dựng đủ ô nhập nhưng nút tra cứu disabled vĩnh viễn.
+Với sản phẩm cảnh báo an toàn thuốc, một màn tra cứu không bao giờ trả kết quả rất dễ bị
+đọc thành "không có tương tác", nên chúng đã đổi sang `components/FeatureUnavailable.tsx`:
+nói thẳng là chưa khả dụng, liệt kê phần còn thiếu, và chỉ chứa link tới trang chạy thật.
+`PRIMARY_NAV_ITEMS` đánh dấu các mục này `unsupported: true` để sidebar và dashboard hiển
+thị badge "Chưa hỗ trợ" khớp với thực tế.
+
+Hệ quả: `DrugCatalogPicker`, `SelectedDrugList`, `BasketInputField`, `OcrCandidateList`,
+`OcrProcessingState`, `OcrFailureState`, `InteractionResultsPlaceholder` và Redux slice
+`drug-basket` hiện **không được mount ở đâu**. Giữ lại làm scaffold cho lúc backend mở —
+xem TODO(API) trong từng file — chứ không phải code chết cần xoá.
+
+`PrescriptionImageUpload` đã bỏ hoàn toàn `<input type="file">`, vùng kéo thả và preview:
+chọn được ảnh rồi thấy thumbnail khiến người dùng tin đơn thuốc đã được gửi lên và đang
+được AI đọc. Chỉ mở lại các affordance đó cùng lúc với endpoint upload + OCR thật.

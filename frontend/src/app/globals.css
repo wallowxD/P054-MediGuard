@@ -19,7 +19,11 @@
 
   --foreground: #0f172a;
   --foreground-secondary: #475569;
-  --foreground-muted: #94a3b8;
+  /* Text phụ vẫn là text có nghĩa nên phải đạt WCAG AA 4.5:1 với nền dưới nó.
+     Giá trị cũ #94a3b8 chỉ đạt 2.56:1 trên nền trắng — đọc được trên màn thiết kế,
+     không đọc được ngoài nắng hay trên màn rẻ tiền. #64748b đạt 4.76:1 và trùng đúng
+     token muted của landing theme, nên hai theme không lệch nhau. */
+  --foreground-muted: #64748b;
 
   --primary: #1b2a4a;
   --primary-hover: #263b5e;
@@ -55,7 +59,8 @@
 
   --foreground: #ffffff;
   --foreground-secondary: #a3abb8;
-  --foreground-muted: #6b7280;
+  /* #6b7280 chỉ đạt 3.55:1 trên nền card tối — dưới ngưỡng AA. #9ca3af đạt 6.7:1. */
+  --foreground-muted: #9ca3af;
 
   --primary: #7ca6e6;
   --primary-hover: #9cbef0;
@@ -89,7 +94,8 @@
 
     --foreground: #ffffff;
     --foreground-secondary: #a3abb8;
-    --foreground-muted: #6b7280;
+    /* Giữ trùng giá trị với khối .dark ở trên — xem ghi chú tương phản tại đó. */
+    --foreground-muted: #9ca3af;
 
     --primary: #7ca6e6;
     --primary-hover: #9cbef0;
@@ -157,6 +163,19 @@ body {
   color: var(--foreground);
 }
 
+/*
+ * Trình duyệt tự cuộn phần tử vừa nhận focus vào khung nhìn, nhưng nó không biết
+ * MobileTopbar dính trên đỉnh và BottomNav dính dưới đáy. Không có scroll-margin,
+ * phần tử đang focus có thể nằm gọn dưới một trong hai thanh đó — người dùng bàn phím
+ * mất dấu hoàn toàn. Chỉ áp dưới `lg` vì từ `lg` trở lên hai thanh này không hiển thị.
+ */
+@media (max-width: 1023px) {
+  :where(a, button, input, select, textarea, summary, [tabindex]) {
+    scroll-margin-top: 4.5rem;
+    scroll-margin-bottom: 5.5rem;
+  }
+}
+
 /* Marketing pages stay calm and light even when the authenticated app follows dark mode. */
 .landing-theme {
   --background: #ffffff;
@@ -183,6 +202,19 @@ body {
 
   --cta-accent: var(--primary-blue);
   --cta-accent-hover: color-mix(in srgb, var(--primary-blue) 78%, black);
+
+  /* Chiều cao LandingHeader chiếm TRONG LUỒNG: card h-16 cộng 2 đường viền 1px.
+     Đây là con số duy nhất được trừ khỏi chiều cao viewport khi tính min-height của
+     hero — trừ thêm bất cứ thứ gì nữa là để lộ mép section kế tiếp ở đáy màn hình. */
+  --landing-header-block: calc(4rem + 2px);
+  /* `sm:top-4` của header sticky. Ở scroll 0, sticky đẩy header xuống 1rem nên card
+     đè lên 1rem đầu của hero (rơi đúng vào padding, không che chữ). Con số này chỉ
+     dùng khi tính chỗ trống THẬT cho nội dung, không dùng cho min-height. */
+  --landing-header-offset: 1rem;
+  /* `lg:py-12` của grid hero — khai báo ở đây để phép tính giới hạn ảnh không phải
+     lặp lại một magic number đã nằm trong className. */
+  --landing-hero-block-padding: 3rem;
+
   scroll-behavior: smooth;
 }
 
@@ -197,6 +229,46 @@ body {
     var(--hero-tint-mid) 40%,
     var(--background) 100%
   );
+}
+
+/*
+ * Hero chiếm trọn phần viewport còn lại dưới LandingHeader.
+ *
+ * Chỉ áp dụng từ `lg` trở lên: trên mobile/tablet ép full-screen sẽ đẩy CTA và ảnh ra
+ * ngoài màn hình ở máy màn hình thấp, nên dưới `lg` hero vẫn cao theo nội dung.
+ *
+ * Là `min-height`, không phải `height`: màn hình quá thấp thì hero tự dài ra thay vì
+ * cắt mất headline/CTA/disclaimer.
+ *
+ * Phải nằm CÙNG element với `lg:items-center` (grid `.landing-wide-container` bên trong
+ * HeroSection) — xem ghi chú "Căn giữa theo chiều dọc ở Hero" trong docs/frontend.md.
+ */
+@media (min-width: 1024px) {
+  .landing-hero-viewport {
+    /* Fallback cho trình duyệt chưa có dvh; ở desktop hai đơn vị gần như bằng nhau. */
+    min-height: calc(100vh - var(--landing-header-block));
+    min-height: calc(100dvh - var(--landing-header-block));
+  }
+
+  /*
+   * Trần chiều cao cho ảnh hero, tính theo chỗ trống thật còn lại sau header, phần
+   * sticky đè lên và padding dọc của grid.
+   *
+   * Chỉ đặt `max-height` chứ không đặt `height`: với thẻ ảnh, trình duyệt tự co cả hai
+   * chiều theo đúng tỉ lệ gốc (1448×1086) khi vướng max-width/max-height, nên ảnh nhỏ
+   * lại chứ không bị méo hay bị crop. Ở 1366×768 trở lên trần này chưa chạm tới — nó
+   * chỉ có tác dụng trên laptop màn hình rất thấp.
+   */
+  .landing-hero-figure {
+    max-height: calc(
+      100vh - var(--landing-header-block) - var(--landing-header-offset) -
+        var(--landing-hero-block-padding) * 2
+    );
+    max-height: calc(
+      100dvh - var(--landing-header-block) - var(--landing-header-offset) -
+        var(--landing-hero-block-padding) * 2
+    );
+  }
 }
 
 .landing-cta-gradient {

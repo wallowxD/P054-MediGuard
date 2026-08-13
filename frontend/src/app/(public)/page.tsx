@@ -7,6 +7,7 @@ import {
   LandingFooter,
   LandingHeader,
 } from "@/components/landing";
+import { MAIN_CONTENT_ID } from "@/components/ui/SkipLink";
 import { SEO_CONFIG } from "@/config/seo-config";
 import { buildPublicMetadata } from "@/utils/metadata-utils";
 
@@ -27,7 +28,7 @@ export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <LandingHeader />
-      <main className="flex-1">
+      <main id={MAIN_CONTENT_ID} tabIndex={-1} className="flex-1">
         <HeroSection />
         <FeaturesSection />
         <HowItWorksSection />

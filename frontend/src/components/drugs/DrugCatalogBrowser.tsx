@@ -157,7 +157,7 @@ export default function DrugCatalogBrowser() {
 
         <div id="danh-sach-chu-cai" hidden={!showAlphabet}>
           {lettersQuery.isError ? (
-            <p className="flex items-center gap-2 text-sm text-error">
+            <p role="alert" className="flex items-center gap-2 text-sm text-error">
               <AlertTriangle className="h-4 w-4 shrink-0" aria-hidden />
               {lettersQuery.error instanceof Error
                 ? lettersQuery.error.message
@@ -175,7 +175,7 @@ export default function DrugCatalogBrowser() {
         </div>
 
         {errorMessage ? (
-          <p className="flex items-center gap-2 text-sm text-error">
+          <p role="alert" className="flex items-center gap-2 text-sm text-error">
             <AlertTriangle className="h-4 w-4 shrink-0" aria-hidden />
             {errorMessage}
           </p>

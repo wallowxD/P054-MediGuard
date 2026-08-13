@@ -34,8 +34,15 @@ export const PUBLIC_ROUTES = [...AUTH_ROUTES, ...OPEN_ROUTES];
  */
 export const REVIEW_PREFIX = "/review";
 
-/** Neo tới từng section của landing page — dùng cho nav và nút CTA */
+/**
+ * Neo tới từng section của landing page — dùng cho nav và nút CTA.
+ *
+ * Mỗi giá trị PHẢI khớp `id` của đúng một element trên `/`: scroll spy trong
+ * `LandingHeader` dò section hiện hành bằng chính các id này. Thêm neo mới mà quên
+ * gắn `id` sẽ hỏng IM LẶNG — link vẫn bấm được nhưng underline không bao giờ sáng.
+ */
 export const LANDING_SECTIONS = {
+  HOME: "#trang-chu",
   FEATURES: "#tinh-nang",
   HOW_IT_WORKS: "#cach-hoat-dong",
   CONTACT: "#lien-he",

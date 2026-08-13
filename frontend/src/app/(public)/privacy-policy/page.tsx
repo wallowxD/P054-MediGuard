@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MAIN_CONTENT_ID } from "@/components/ui/SkipLink";
 import { buildPublicMetadata } from "@/utils/metadata-utils";
 
 export const metadata: Metadata = buildPublicMetadata(
@@ -10,7 +11,7 @@ export const metadata: Metadata = buildPublicMetadata(
 // TODO: điền nội dung pháp lý thật trước khi lên production
 export default function PrivacyPolicyPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12">
+    <main id={MAIN_CONTENT_ID} tabIndex={-1} className="mx-auto max-w-3xl px-4 py-12">
       <h1 className="text-2xl font-semibold text-foreground">Chính sách bảo mật</h1>
       <p className="mt-4 text-sm text-foreground-secondary">Nội dung đang được soạn.</p>
     </main>

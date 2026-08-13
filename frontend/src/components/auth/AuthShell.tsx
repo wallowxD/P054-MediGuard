@@ -2,6 +2,7 @@ import { FileCheck2, ShieldCheck, UserRoundCheck } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import Logo from "@/components/ui/Logo";
+import { MAIN_CONTENT_ID } from "@/components/ui/SkipLink";
 import { ROUTES } from "@/constants/routes";
 
 type AuthShellProps = {
@@ -26,7 +27,11 @@ const TRUST_POINTS = [
 
 export default function AuthShell({ eyebrow, title, description, children }: AuthShellProps) {
   return (
-    <main className="grid min-h-[100dvh] bg-background lg:grid-cols-[minmax(0,0.9fr)_minmax(30rem,1.1fr)]">
+    <main
+      id={MAIN_CONTENT_ID}
+      tabIndex={-1}
+      className="grid min-h-[100dvh] bg-background lg:grid-cols-[minmax(0,0.9fr)_minmax(30rem,1.1fr)]"
+    >
       <aside className="relative hidden overflow-hidden bg-hero-tint px-10 py-12 lg:flex lg:flex-col lg:justify-between xl:px-16 xl:py-16">
         <div
           aria-hidden
