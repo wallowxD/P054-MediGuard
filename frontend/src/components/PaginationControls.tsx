@@ -21,7 +21,7 @@ export default function PaginationControls({
         type="button"
         onClick={() => onPageChange(page - 1)}
         disabled={page <= 1}
-        className="rounded-lg border border-border p-2 disabled:opacity-40"
+        className="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground-secondary transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-40 disabled:hover:border-border disabled:hover:text-foreground-secondary"
         aria-label="Trang trước"
       >
         <ChevronLeft className="h-4 w-4" aria-hidden />
@@ -35,7 +35,7 @@ export default function PaginationControls({
         type="button"
         onClick={() => onPageChange(page + 1)}
         disabled={page >= totalPages}
-        className="rounded-lg border border-border p-2 disabled:opacity-40"
+        className="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground-secondary transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-40 disabled:hover:border-border disabled:hover:text-foreground-secondary"
         aria-label="Trang sau"
       >
         <ChevronRight className="h-4 w-4" aria-hidden />

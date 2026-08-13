@@ -32,7 +32,7 @@ export default function SidebarNavList({ onNavigate }: SidebarNavListProps) {
             <Icon className="h-4 w-4 shrink-0" aria-hidden />
             <span className="flex-1">{label}</span>
             {unsupported ? (
-              <span className="shrink-0 rounded-full border border-border bg-card px-1.5 py-0.5 text-[10px] font-medium text-foreground-muted">
+              <span className="shrink-0 rounded-full border border-border bg-card px-1.5 py-0.5 text-[10px] font-medium text-foreground-secondary">
                 Chưa hỗ trợ
               </span>
             ) : null}

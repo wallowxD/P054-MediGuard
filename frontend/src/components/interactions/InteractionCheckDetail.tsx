@@ -6,6 +6,7 @@ import { TextSkeleton } from "@/components/ui/Skeleton";
 import { useInteractionCheckDetail } from "@/queries/interactions";
 import InteractionCard from "./InteractionCard";
 import InteractionCheckSummary from "./InteractionCheckSummary";
+import { isRejectedForPatient } from "./review-status";
 import UnavailableInteractionList from "./UnavailableInteractionList";
 
 interface InteractionCheckDetailProps {
@@ -40,10 +41,17 @@ export default function InteractionCheckDetail({ id }: InteractionCheckDetailPro
     );
   }
 
+  // Đếm đúng những gì thật sự hiển thị được: `InteractionCard` tự bỏ qua item thiếu
+  // trích dẫn và item đã bị bác bỏ, nên `data.items.length` sẽ nói nhiều hơn số card
+  // trên màn hình — với màn kết quả cảnh báo thì lệch số là lệch niềm tin.
+  const visibleItems = data.items.filter(
+    (item) => item.citations?.length && !isRejectedForPatient(item.reviewStatus)
+  );
+
   return (
     <div className="space-y-6">
       <InteractionCheckSummary
-        resultCount={data.items.length}
+        resultCount={visibleItems.length}
         unavailableCount={data.unavailable.length}
       />
 
@@ -63,7 +71,7 @@ export default function InteractionCheckDetail({ id }: InteractionCheckDetailPro
 
       <section className="space-y-3">
         <h2 className="text-sm font-semibold text-foreground">Kết quả có trích dẫn</h2>
-        {data.items.map((item) => (
+        {visibleItems.map((item) => (
           <InteractionCard key={item.id} interaction={item} />
         ))}
       </section>

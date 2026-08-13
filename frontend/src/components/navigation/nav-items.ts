@@ -26,12 +26,14 @@ export const PRIMARY_NAV_ITEMS: INavItem[] = [
     label: "Tra cứu thuốc – thuốc",
     shortLabel: "Thuốc – thuốc",
     Icon: Combine,
+    unsupported: true,
   },
   {
     href: ROUTES.INTERACTIONS_DRUG_FOOD,
     label: "Tra cứu thuốc – thực phẩm",
     shortLabel: "Thuốc – thực phẩm",
     Icon: Apple,
+    unsupported: true,
   },
   {
     href: ROUTES.INTERACTIONS_DRUG_DISEASE,

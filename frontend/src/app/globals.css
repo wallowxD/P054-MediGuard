@@ -19,7 +19,11 @@
 
   --foreground: #0f172a;
   --foreground-secondary: #475569;
-  --foreground-muted: #94a3b8;
+  /* Text phụ vẫn là text có nghĩa nên phải đạt WCAG AA 4.5:1 với nền dưới nó.
+     Giá trị cũ #94a3b8 chỉ đạt 2.56:1 trên nền trắng — đọc được trên màn thiết kế,
+     không đọc được ngoài nắng hay trên màn rẻ tiền. #64748b đạt 4.76:1 và trùng đúng
+     token muted của landing theme, nên hai theme không lệch nhau. */
+  --foreground-muted: #64748b;
 
   --primary: #1b2a4a;
   --primary-hover: #263b5e;
@@ -55,7 +59,8 @@
 
   --foreground: #ffffff;
   --foreground-secondary: #a3abb8;
-  --foreground-muted: #6b7280;
+  /* #6b7280 chỉ đạt 3.55:1 trên nền card tối — dưới ngưỡng AA. #9ca3af đạt 6.7:1. */
+  --foreground-muted: #9ca3af;
 
   --primary: #7ca6e6;
   --primary-hover: #9cbef0;
@@ -89,7 +94,8 @@
 
     --foreground: #ffffff;
     --foreground-secondary: #a3abb8;
-    --foreground-muted: #6b7280;
+    /* Giữ trùng giá trị với khối .dark ở trên — xem ghi chú tương phản tại đó. */
+    --foreground-muted: #9ca3af;
 
     --primary: #7ca6e6;
     --primary-hover: #9cbef0;
@@ -149,12 +155,32 @@
   --color-severity-unknown: var(--severity-unknown);
 
   --font-sans: var(--font-body);
-  --font-heading: var(--font-app);
+  /* ★ Trỏ về CÙNG một font với `font-sans`: toàn site dùng Inter, kể cả tiêu đề —
+     đúng như trang chủ Vinmec (xem docs/frontend.md § Typography).
+
+     Vẫn giữ utility `font-heading` thay vì xoá khỏi 14 file đang dùng, vì hai lý do:
+     nó ghi lại ý định "đây là tiêu đề", và nếu sau này team muốn tiêu đề dùng font
+     khác thì chỉ sửa đúng dòng này. Đừng hiểu nhầm `font-heading` là một font riêng
+     — hiện tại nó bằng hệt `font-sans`. */
+  --font-heading: var(--font-body);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+/*
+ * Trình duyệt tự cuộn phần tử vừa nhận focus vào khung nhìn, nhưng nó không biết
+ * MobileTopbar dính trên đỉnh và BottomNav dính dưới đáy. Không có scroll-margin,
+ * phần tử đang focus có thể nằm gọn dưới một trong hai thanh đó — người dùng bàn phím
+ * mất dấu hoàn toàn. Chỉ áp dưới `lg` vì từ `lg` trở lên hai thanh này không hiển thị.
+ */
+@media (max-width: 1023px) {
+  :where(a, button, input, select, textarea, summary, [tabindex]) {
+    scroll-margin-top: 4.5rem;
+    scroll-margin-bottom: 5.5rem;
+  }
 }
 
 /* Marketing pages stay calm and light even when the authenticated app follows dark mode. */
@@ -183,6 +209,25 @@ body {
 
   --cta-accent: var(--primary-blue);
   --cta-accent-hover: color-mix(in srgb, var(--primary-blue) 78%, black);
+
+  /* Chiều cao header chiếm TRONG LUỒNG, dùng để trừ khỏi viewport khi tính
+     min-height của hero. Trừ sai là hero dài/ngắn hơn màn hình một cách khó hiểu.
+
+     ★ Từ khi màn "/" dùng VinmecHeader thay cho LandingHeader, con số này là tổng
+       ba tầng của header Vinmec ở `lg` trở lên:
+         36px  topbar gradient (h-9)
+       + 68px  hàng logo + tìm kiếm (h-[68px])
+       + 49px  hàng nav chính (py-3.5 + border-top 1px)
+       = 153px
+       Sửa chiều cao bất kỳ tầng nào trong VinmecHeader thì phải sửa cả ở đây. */
+  --landing-header-block: 153px;
+  /* Header Vinmec nằm trong luồng, KHÔNG sticky và không đè lên hero như header
+     cũ, nên phần bù bằng 0. Giữ biến lại để phép tính bên dưới không phải đổi. */
+  --landing-header-offset: 0px;
+  /* `lg:py-12` của grid hero — khai báo ở đây để phép tính giới hạn ảnh không phải
+     lặp lại một magic number đã nằm trong className. */
+  --landing-hero-block-padding: 3rem;
+
   scroll-behavior: smooth;
 }
 
@@ -197,6 +242,46 @@ body {
     var(--hero-tint-mid) 40%,
     var(--background) 100%
   );
+}
+
+/*
+ * Hero chiếm trọn phần viewport còn lại dưới LandingHeader.
+ *
+ * Chỉ áp dụng từ `lg` trở lên: trên mobile/tablet ép full-screen sẽ đẩy CTA và ảnh ra
+ * ngoài màn hình ở máy màn hình thấp, nên dưới `lg` hero vẫn cao theo nội dung.
+ *
+ * Là `min-height`, không phải `height`: màn hình quá thấp thì hero tự dài ra thay vì
+ * cắt mất headline/CTA/disclaimer.
+ *
+ * Phải nằm CÙNG element với `lg:items-center` (grid `.landing-wide-container` bên trong
+ * HeroSection) — xem ghi chú "Căn giữa theo chiều dọc ở Hero" trong docs/frontend.md.
+ */
+@media (min-width: 1024px) {
+  .landing-hero-viewport {
+    /* Fallback cho trình duyệt chưa có dvh; ở desktop hai đơn vị gần như bằng nhau. */
+    min-height: calc(100vh - var(--landing-header-block));
+    min-height: calc(100dvh - var(--landing-header-block));
+  }
+
+  /*
+   * Trần chiều cao cho ảnh hero, tính theo chỗ trống thật còn lại sau header, phần
+   * sticky đè lên và padding dọc của grid.
+   *
+   * Chỉ đặt `max-height` chứ không đặt `height`: với thẻ ảnh, trình duyệt tự co cả hai
+   * chiều theo đúng tỉ lệ gốc (1448×1086) khi vướng max-width/max-height, nên ảnh nhỏ
+   * lại chứ không bị méo hay bị crop. Ở 1366×768 trở lên trần này chưa chạm tới — nó
+   * chỉ có tác dụng trên laptop màn hình rất thấp.
+   */
+  .landing-hero-figure {
+    max-height: calc(
+      100vh - var(--landing-header-block) - var(--landing-header-offset) -
+        var(--landing-hero-block-padding) * 2
+    );
+    max-height: calc(
+      100dvh - var(--landing-header-block) - var(--landing-header-offset) -
+        var(--landing-hero-block-padding) * 2
+    );
+  }
 }
 
 .landing-cta-gradient {
@@ -258,6 +343,126 @@ body {
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Cổng Vinmec mô phỏng (/vinmec) — chỉ dùng để trình diễn luồng điều hướng.
+ *
+ * ★ Token đặt tiền tố `--vm-*`, KHÔNG ghi đè token của app.
+ *   `.vinmec-theme` nằm LỒNG trong `.landing-theme` (do (public)/layout.tsx bọc).
+ *   Nếu đặt lại `--primary`, `--background`… ở đây thì mọi component dùng chung
+ *   (Button, Badge…) sẽ đổi màu theo Vinmec khi vô tình được render bên trong —
+ *   hỏng im lặng và rất khó lần ra. Tiền tố riêng khiến hai bảng màu sống cạnh
+ *   nhau mà không đụng nhau.
+ *
+ * Giá trị lấy đúng từ CSS gốc của vinmec.com (`/css/rs-head-foot.css`,
+ * `/css/reset.css`, `/css/homepage.css`), không phải ước lượng bằng mắt.
+ * ────────────────────────────────────────────────────────────────────────── */
+.vinmec-theme {
+  --vm-blue: #0076c0;
+  --vm-blue-start: #008ca8;
+  --vm-blue-end: #0068ab;
+  --vm-menu-blue: #0077aa;
+  --vm-title-blue: #3274ba;
+  --vm-green: #51be9d;
+  --vm-green-line: #6fbc9f;
+  --vm-gray-bg: #f3f7fb;
+  --vm-text: #4d4c4c;
+  --vm-text-muted: #828282;
+  --vm-text-faint: #a7a7a7;
+  --vm-border: #dfdede;
+  --vm-border-soft: #e0e0e0;
+  /* `--max-body` của Vinmec. Container hẹp hơn phần còn lại của app là ĐÚNG bản gốc. */
+  --vm-body-width: 1110px;
+
+  background: #ffffff;
+  color: var(--vm-text);
+  /* Trùng font với phần còn lại của site (Inter). Khai báo lại ở đây là thừa nhưng
+     cố ý: khối này là nơi gom mọi thứ "trông giống Vinmec", để người đọc thấy ngay
+     font cũng nằm trong nhóm đó. */
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Bản mô phỏng cố tình chỉ có một chế độ sáng — không có biến thể dark. */
+.vinmec-container {
+  width: 100%;
+  max-width: var(--vm-body-width);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* `.title-line` gốc: 35px, gạch chân 135×4px màu #6fbc9f. */
+.vinmec-title {
+  position: relative;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  font-size: clamp(1.5rem, 1.05rem + 1.9vw, 2.1875rem);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.vinmec-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 135px;
+  max-width: 60%;
+  height: 4px;
+  background: var(--vm-green-line);
+}
+
+/* Trong dải xanh đặc, gạch chân đổi sang trắng cho đủ tương phản. */
+.vinmec-title-on-blue::after {
+  background: #ffffff;
+}
+
+.vinmec-title-centered {
+  text-align: center;
+}
+
+.vinmec-title-centered::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.vinmec-topbar {
+  background: linear-gradient(to bottom, var(--vm-blue-start) 0%, var(--vm-blue-end) 100%);
+}
+
+/* Banner gốc: aspect-ratio 1600/500, kẹp trong khoảng 500–600px. Dưới `lg` tỉ lệ
+   này để lại dải ảnh quá thấp nên mobile dùng tỉ lệ riêng, cao hơn. */
+.vinmec-hero-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+@media (min-width: 768px) {
+  .vinmec-hero-frame {
+    aspect-ratio: 1600 / 500;
+    min-height: 380px;
+    max-height: 600px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vinmec-hero-frame {
+    min-height: 500px;
+  }
+}
+
+.vinmec-cta-card {
+  box-shadow: -5px 8px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Mũi tên "Xem thêm" trượt sang phải khi hover, đúng như bản gốc. */
+.vinmec-arrow-link svg {
+  transition: transform 0.15s ease;
+}
+
+.vinmec-arrow-link:hover svg {
+  transform: translateX(6px);
 }
 
 /* Shared by LandingHeader and HeroSection so they align edge-to-edge at every

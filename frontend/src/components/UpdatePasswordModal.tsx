@@ -63,7 +63,9 @@ export default function UpdatePasswordModal({ open, onClose }: Props) {
           className={inputClass}
         />
         {errors.confirmPassword ? (
-          <p className="text-xs text-error">{errors.confirmPassword.message}</p>
+          <p role="alert" className="text-xs text-error">
+            {errors.confirmPassword.message}
+          </p>
         ) : null}
         <button
           type="submit"

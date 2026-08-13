@@ -9,7 +9,7 @@ import { AUTH_ROUTES, ROUTES } from "@/constants/routes";
  * trỏ về localhost:3000 — sai âm thầm, không ai phát hiện cho tới khi Google bỏ qua
  * sitemap. Ở đây URL lấy từ SEO_CONFIG nên đi theo NEXT_PUBLIC_APP_URL.
  *
- * Chặn mọi route sau đăng nhập; landing page và trang pháp lý để mở.
+ * Chặn mọi route sau đăng nhập; trang chủ, màn tính năng và trang pháp lý để mở.
  */
 export default function robots(): MetadataRoute.Robots {
   return {

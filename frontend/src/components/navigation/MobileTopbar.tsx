@@ -1,8 +1,9 @@
 "use client";
 
-import { History, Menu, Pill, X } from "lucide-react";
+import { History, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import Logo from "@/components/ui/Logo";
 import { ROUTES } from "@/constants/routes";
 import SidebarNavList from "./SidebarNavList";
 import SidebarUserFooter from "./SidebarUserFooter";
@@ -57,10 +58,7 @@ export default function MobileTopbar() {
           href={ROUTES.DASHBOARD}
           className="flex items-center gap-2 font-heading text-base font-semibold text-foreground"
         >
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            <Pill className="h-3.5 w-3.5" aria-hidden />
-          </span>
-          MediGuard
+          <Logo className="h-7 w-auto" />
         </Link>
       </header>
 
@@ -84,7 +82,7 @@ export default function MobileTopbar() {
         }`}
       >
         <div className="flex h-14 items-center justify-between border-b border-border px-4">
-          <span className="font-heading text-base font-semibold text-foreground">MediGuard</span>
+          <Logo className="h-7 w-auto" />
           <button
             ref={closeButtonRef}
             type="button"

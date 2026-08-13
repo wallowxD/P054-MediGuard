@@ -1,28 +1,36 @@
 "use client";
 
-import { Menu, Search, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
 import { LANDING_SECTIONS, ROUTES } from "@/constants/routes";
-import { SEO_CONFIG } from "@/config/seo-config";
+import { useSectionSpy } from "./use-section-spy";
 
 const LINK_FOCUS =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
-// This header only renders on "/" (see app/(public)/page.tsx), so "Trang chủ" is
-// always the current page — no scroll-spy needed to know which link is active.
+/**
+ * Header chỉ render trên "/" nên mọi mục nav đều là neo trong trang, kể cả
+ * "Trang chủ" (neo tới hero). "Liên hệ" trỏ tới footer `#lien-he`.
+ *
+ * Hằng số ở module scope, không dựng lại mỗi render — `useSectionSpy` dùng chính
+ * mảng này làm dependency của observer.
+ */
 const NAV = [
-  { href: ROUTES.HOME, label: "Trang chủ", active: true },
+  { href: LANDING_SECTIONS.HOME, label: "Trang chủ" },
   { href: LANDING_SECTIONS.FEATURES, label: "Tính năng" },
   { href: LANDING_SECTIONS.HOW_IT_WORKS, label: "Cách hoạt động" },
   { href: LANDING_SECTIONS.CONTACT, label: "Liên hệ" },
-];
+] as const;
+
+const SECTION_IDS = NAV.map((item) => item.href.slice(1));
 
 export default function LandingHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { activeId, scrollToSection } = useSectionSpy(SECTION_IDS);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -30,6 +38,14 @@ export default function LandingHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // `href` vẫn là neo thật để link hoạt động cả khi JS chưa chạy; chỉ chặn hành vi
+  // mặc định để tự cuộn có bù offset header và chuyển active state tức thì.
+  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    setOpen(false);
+    scrollToSection(id);
+  };
 
   return (
     <header className="sticky top-3 z-50 sm:top-4">
@@ -44,30 +60,32 @@ export default function LandingHeader() {
               href={ROUTES.HOME}
               className={`flex shrink-0 items-center gap-2.5 text-primary ${LINK_FOCUS}`}
             >
-              <Logo className="h-9 w-9" />
-              <span className="font-heading text-base font-semibold tracking-tight text-foreground">
-                {SEO_CONFIG.brandName}
-              </span>
+              <Logo className="h-9 w-auto" />
             </Link>
 
             <nav
               className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex"
               aria-label="Điều hướng chính"
             >
-              {NAV.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  aria-current={item.active ? "page" : undefined}
-                  className={`border-b-2 pb-0.5 text-[15px] transition-colors ${LINK_FOCUS} ${
-                    item.active
-                      ? "border-[var(--cta-accent)] text-foreground"
-                      : "border-transparent text-foreground-secondary hover:text-primary"
-                  }`}
-                >
-                  {item.label}
-                </a>
-              ))}
+              {NAV.map((item) => {
+                const id = item.href.slice(1);
+                const active = activeId === id;
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(event) => handleNavClick(event, id)}
+                    aria-current={active ? "page" : undefined}
+                    className={`border-b-2 pb-0.5 text-[15px] transition-colors ${LINK_FOCUS} ${
+                      active
+                        ? "border-[var(--cta-accent)] text-foreground"
+                        : "border-transparent text-foreground-secondary hover:text-primary"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
             </nav>
 
             <div className="hidden items-center gap-5 lg:flex">
@@ -80,13 +98,6 @@ export default function LandingHeader() {
               <Button href={ROUTES.SIGNUP} variant="accent" size="sm">
                 Đăng ký
               </Button>
-              <button
-                type="button"
-                aria-label="Tìm kiếm"
-                className={`flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground-secondary transition-colors hover:border-primary hover:text-primary ${LINK_FOCUS}`}
-              >
-                <Search className="h-4 w-4" aria-hidden />
-              </button>
             </div>
 
             <button
@@ -103,25 +114,30 @@ export default function LandingHeader() {
           {open ? (
             <div className="border-t border-border lg:hidden">
               <nav className="flex flex-col px-4 py-2" aria-label="Điều hướng chính">
-                {NAV.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    aria-current={item.active ? "page" : undefined}
-                    className={`py-3 text-sm ${LINK_FOCUS} ${
-                      item.active
-                        ? "font-medium text-primary"
-                        : "text-foreground-secondary hover:text-primary"
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                ))}
+                {/* Drawer mobile dùng chung `activeId` với nav desktop — một nguồn sự thật */}
+                {NAV.map((item) => {
+                  const id = item.href.slice(1);
+                  const active = activeId === id;
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={(event) => handleNavClick(event, id)}
+                      aria-current={active ? "page" : undefined}
+                      className={`border-l-2 py-3 pl-3 text-sm ${LINK_FOCUS} ${
+                        active
+                          ? "border-[var(--cta-accent)] font-medium text-primary"
+                          : "border-transparent text-foreground-secondary hover:text-primary"
+                      }`}
+                    >
+                      {item.label}
+                    </a>
+                  );
+                })}
                 <Link
                   href={ROUTES.SIGNIN}
                   onClick={() => setOpen(false)}
-                  className={`py-3 text-sm text-foreground-secondary hover:text-primary ${LINK_FOCUS}`}
+                  className={`py-3 pl-3 text-sm text-foreground-secondary hover:text-primary ${LINK_FOCUS}`}
                 >
                   Đăng nhập
                 </Link>

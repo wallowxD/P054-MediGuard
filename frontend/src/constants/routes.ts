@@ -19,13 +19,30 @@ export type Role = (typeof ROLES)[keyof typeof ROLES];
 export const AUTH_ROUTES = ["/signin", "/signup"];
 
 /**
- * Route trong (public) — ai cũng vào được.
- * "/" là landing page: khách xem được, đã đăng nhập thì proxy đá về dashboard.
+ * Route trong (public) — ai cũng vào được, kể cả người đã đăng nhập.
+ *
+ * "/" là TRANG CHỦ VINMEC (cổng bệnh viện), "/tinh-nang" là màn tra cứu an toàn
+ * thuốc. Trước đây hai trang này ngược lại; đổi rồi thì mọi link trỏ "/" đều rơi
+ * vào cổng chứ không còn vào màn tính năng nữa.
+ *
  * Đây cũng là nguồn sinh sitemap nên chỉ để route muốn Google index.
  */
-export const OPEN_ROUTES = ["/", "/privacy-policy", "/terms-of-service"];
+export const OPEN_ROUTES = ["/", "/tinh-nang", "/privacy-policy", "/terms-of-service"];
 
 export const PUBLIC_ROUTES = [...AUTH_ROUTES, ...OPEN_ROUTES];
+
+/**
+ * Route ĐÃ GỠ nhưng từng tồn tại và đã được đẩy lên remote.
+ *
+ * Middleware từ chối mọi path lạ rồi đá về /signin (deny-by-default). Với một URL
+ * đã xoá, hành vi đó gây hiểu nhầm: ai bấm link cũ sẽ tưởng mình thiếu quyền, trong
+ * khi thật ra trang không còn nữa. Liệt kê ở đây để middleware cho request đi tiếp
+ * và Next trả đúng 404.
+ *
+ * ⚠️ CHỈ thêm path chắc chắn KHÔNG có route nào. Thêm nhầm một path có thật là tự
+ * gỡ lớp bảo vệ của nó.
+ */
+export const GONE_ROUTES = ["/vinmec"];
 
 /**
  * Prefix URL thật của khu vực dược sĩ.
@@ -34,15 +51,25 @@ export const PUBLIC_ROUTES = [...AUTH_ROUTES, ...OPEN_ROUTES];
  */
 export const REVIEW_PREFIX = "/review";
 
-/** Neo tới từng section của landing page — dùng cho nav và nút CTA */
+/**
+ * Neo tới từng section của landing page — dùng cho nav và nút CTA.
+ *
+ * Mỗi giá trị PHẢI khớp `id` của đúng một element trên `/`: scroll spy trong
+ * `LandingHeader` dò section hiện hành bằng chính các id này. Thêm neo mới mà quên
+ * gắn `id` sẽ hỏng IM LẶNG — link vẫn bấm được nhưng underline không bao giờ sáng.
+ */
 export const LANDING_SECTIONS = {
+  HOME: "#trang-chu",
   FEATURES: "#tinh-nang",
   HOW_IT_WORKS: "#cach-hoat-dong",
   CONTACT: "#lien-he",
 } as const;
 
 export const ROUTES = {
+  /** Trang chủ Vinmec — cổng bệnh viện, KHÔNG phải màn tra cứu thuốc. */
   HOME: "/",
+  /** Màn tra cứu an toàn thuốc, vào từ mục "Tính năng" trên nav Vinmec. */
+  FEATURE: "/tinh-nang",
   SIGNIN: "/signin",
   SIGNUP: "/signup",
   DASHBOARD: "/dashboard",

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
+import { isRejectedForPatient } from "./review-status";
 import ReviewStatusTag from "./ReviewStatusTag";
 import SeverityBadge from "./SeverityBadge";
 
@@ -13,8 +14,10 @@ export default function InteractionTableRow({
 }: {
   interaction: IInteractionItem;
 }) {
-  // Cùng luật với InteractionCard: không có trích dẫn thì không dựng dòng cảnh báo.
+  // Cùng luật với InteractionCard: không có trích dẫn thì không dựng dòng cảnh báo,
+  // và cảnh báo đã bị dược sĩ bác bỏ không được hiển thị cho bệnh nhân (ADR 0005).
   if (!interaction.citations?.length) return null;
+  if (isRejectedForPatient(interaction.reviewStatus)) return null;
 
   return (
     <tr className="border-b border-border text-sm last:border-0">
