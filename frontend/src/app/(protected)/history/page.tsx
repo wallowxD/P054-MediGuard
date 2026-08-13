@@ -6,21 +6,23 @@ import EmptyState from "@/components/EmptyState";
 import { TextSkeleton } from "@/components/ui/Skeleton";
 import Button from "@/components/ui/Button";
 import { ROUTES } from "@/constants/routes";
-import { useInteractionChecks } from "@/queries/interactions";
+import { useClearInteractionChecks, useInteractionChecks } from "@/queries/interactions";
 
 // TODO(API): useInteractionChecks() gọi GET /api/v1/interaction-checks; hiện luôn
 // reject vì backend chưa lưu lịch sử tra cứu (xem services/interactions/index.ts).
 export default function HistoryPage() {
   const { data, isLoading } = useInteractionChecks();
+  const clear = useClearInteractionChecks();
   const items = data ?? [];
 
   return (
     <div className="space-y-6">
-      <header className="space-y-1">
-        <h1 className="text-xl font-semibold text-foreground">Lịch sử tra cứu</h1>
+      <header className="flex flex-wrap items-start justify-between gap-3">
+        <div className="space-y-1"><h1 className="text-xl font-semibold text-foreground">Lịch sử tra cứu</h1>
         <p className="text-sm text-foreground-secondary">
           Các lượt tra cứu sẽ hiển thị khi dữ liệu lịch sử được kết nối.
-        </p>
+        </p></div>
+        {items.length ? <Button variant="outline" size="sm" disabled={clear.isPending} onClick={() => { if (window.confirm("Xoá toàn bộ lịch sử tra cứu của bạn?")) clear.mutate(); }}>Xoá tất cả</Button> : null}
       </header>
 
       {isLoading ? (

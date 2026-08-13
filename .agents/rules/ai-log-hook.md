@@ -9,11 +9,15 @@ Logging prompt vào `.ai-log/session.jsonl` đã được **tự động hoá ho
 
 ## Cơ chế
 
-Khi thành viên `git push`:
-1. Pre-push hook chạy `scripts/log_antigravity.py --auto`, đọc trực tiếp transcript của các conversation Antigravity từ `~/.gemini/antigravity-ide/brain/<conv>/.system_generated/logs/transcript.jsonl` và quét mọi prompt (`USER_INPUT` + `USER_EXPLICIT`) thuộc repository hiện tại trong 24 giờ gần nhất.
-2. Pre-push hook chạy `scripts/submit_log.py`, gửi `.ai-log/session.jsonl` lên grading server.
+Trong phiên làm việc:
+1. Codex chạy project hook `UserPromptSubmit` trong `.codex/hooks.json`; hook phải được user review và trust qua `/hooks` sau mỗi lần definition thay đổi.
+2. Antigravity 2.0 chạy lifecycle hook trong `.agents/hooks.json`, đọc prompt nguyên văn từ `transcriptPath` tại `PreInvocation` và retry tại `Stop`.
 
-Toàn bộ prompt user đã gõ trong Antigravity IDE được ghi **nguyên văn từ disk**, không cần AI tự tóm tắt.
+Khi thành viên `git push`:
+1. Pre-push hook chạy `scripts/log_codex.py --auto` và `scripts/log_antigravity.py --auto` để recovery prompt trong 24 giờ gần nhất chưa được realtime hook ghi nhận. Cả hai scanner deduplicate với pending log và archive bằng `entry_id`.
+2. Pre-push hook chạy `scripts/submit_log.py`, gửi `.ai-log/session.jsonl` lên grading server. Batch submit thành công được append vào `.ai-log/archive/YYYY-MM-DD.jsonl`.
+
+Prompt user được ghi **nguyên văn từ transcript local**, không cần AI tự tóm tắt. Database protobuf của Antigravity IDE legacy không phải interface được hỗ trợ; scanner không lấy `task.md` hoặc `walkthrough.md` thay cho prompt thật.
 
 ## Không làm những việc sau
 

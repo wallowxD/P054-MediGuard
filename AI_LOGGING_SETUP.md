@@ -51,6 +51,15 @@ Chạy một lần sau khi clone vì `.git/hooks/` không được version contr
 Hook của các AI tool được hỗ trợ tự ghi log. Khi `git push`, pre-push hook gửi log còn chờ
 trước khi cho phép push tiếp tục.
 
+- Codex ghi prompt theo `UserPromptSubmit` trong `.codex/hooks.json`. Lần đầu mở repository hoặc
+  sau khi hook thay đổi, chạy `/hooks`, review và trust đúng hook của project. Pre-push còn quét
+  rollout JSONL trong 24 giờ gần nhất để recovery nếu hook chưa được trust hoặc tạm thời lỗi.
+- Antigravity 2.0 đọc `.agents/hooks.json` và ghi prompt từ `transcriptPath` tại `PreInvocation`;
+  `Stop` retry nếu transcript chưa flush ở lần đầu. Pre-push quét lại transcript trong 24 giờ gần
+  nhất và deduplicate theo `entry_id`.
+- Prompt mới nằm ở `.ai-log/session.jsonl`. Chỉ sau khi submit thành công, batch mới được append
+  vào `.ai-log/archive/YYYY-MM-DD.jsonl`.
+
 Không chạy thủ công `scripts/log_hook.py`, `scripts/log_antigravity.py` hoặc
 `scripts/submit_log.py`; không sửa/xóa `.ai-log/`, không đổi file trong `scripts/` và không
 dùng `git push --no-verify`.
@@ -64,6 +73,8 @@ Với web AI không có hook, làm theo [quy trình ghi log thủ công](.agents
 - `.venv/` và `.env` nằm tại root.
 - `.env` chứa `AI_LOG_API_KEY` cá nhân.
 - `.git/hooks/pre-push` tồn tại.
+- Codex `/hooks` hiển thị hook project ở trạng thái trusted.
+- Antigravity 2.0 đã reload workspace sau khi pull `.agents/hooks.json`.
 
 Bằng chứng bình thường là một lần `git push` không bypass hook. Nếu pre-push lỗi, lưu đầy
 đủ output và báo leader; tuyệt đối không bỏ qua hook.
@@ -76,5 +87,7 @@ Bằng chứng bình thường là một lần `git push` không bypass hook. N�
 | Không thấy hook local chạy | Mở workspace dưới repository root | Mở lại `P-054/` và cài lại hook |
 | Hook không nạp được môi trường | Thiếu `.venv/` hoặc `.env` ở root | Chạy `make install` và cấu hình `.env` |
 | Pre-push không gửi được log | Sai key, lỗi mạng hoặc lỗi hook | Giữ nguyên lỗi và báo leader; không bypass |
+| Codex không tạo `session.jsonl` | Hook project chưa được trust hoặc đang dùng session mở trước khi hook thay đổi | Chạy `/hooks`, trust hook rồi mở session mới tại root |
+| Antigravity không tạo `session.jsonl` | Workspace chưa reload hoặc đang dùng Antigravity IDE legacy với transcript rỗng | Reload bằng Antigravity 2.0; pre-push chỉ recovery được transcript JSONL có dữ liệu |
 
 Logging là hạ tầng của chương trình. Thành viên chỉ cấu hình và sử dụng, không chỉnh sửa.

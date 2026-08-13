@@ -29,6 +29,7 @@ Giao diện tham chiếu nằm ở [`demo-ui/`](../demo-ui/) — bản demo HTML
 |---|---|
 | [001-core-interaction-check/](001-core-interaction-check/spec.md) | Core flow tra tương tác có dẫn nguồn cho pilot 50 thuốc |
 | [002-drug-disease-check/](002-drug-disease-check/spec.md) | Hồ sơ sức khoẻ tự khai và tra cứu thuốc–bệnh nền có dẫn nguồn |
+| [003-unified-interaction-check/](003-unified-interaction-check/spec.md) | Màn tra cứu tổng hợp, Gemini grounded summary và snapshot history |
 
 ```text
 specs/NNN-feature-name/

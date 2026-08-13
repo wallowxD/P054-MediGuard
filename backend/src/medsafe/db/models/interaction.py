@@ -237,4 +237,3 @@ class DrugSupplementInteraction(Base):
 
     def __repr__(self) -> str:
         return f"<DrugSupplementInteraction {self.canonical_ingredient}+{self.supplement_name!r}>"
-

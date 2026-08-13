@@ -26,6 +26,7 @@ delivery status hoặc catalog quy ước code.
 | [0017](0017-self-reported-health-profile.md) | Hồ sơ sức khoẻ tự khai ở bảng riêng | Được chấp nhận |
 | [0018](0018-dose-comparison-boundary.md) | Đối chiếu liều là trình bày bằng chứng | Được chấp nhận |
 | [0019](0019-gate-1-no-longer-immutable.md) | `gate/gate_1/` không còn bất biến | Được chấp nhận |
+| [0020](0020-gemini-grounded-summary.md) | Gemini tóm tắt record đã xác thực | Được chấp nhận |
 
 ## Quy tắc
 

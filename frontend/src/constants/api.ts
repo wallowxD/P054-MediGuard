@@ -82,6 +82,16 @@ export const API_ENDPOINTS = {
   INTERACTION_CHECKS: {
     GET_ALL: `${API_V1}/interaction-checks`,
     GET_DETAILS: (id: string) => `${API_V1}/interaction-checks/${id}`,
+    DELETE: (id: string) => `${API_V1}/interaction-checks/${id}`,
+    CLEAR: `${API_V1}/interaction-checks`,
+  },
+
+  DISEASES: { SEARCH: `${API_V1}/diseases` },
+  HEALTH_PROFILE: {
+    GET: `${API_V1}/patients/me/health-profile`,
+    UPDATE: `${API_V1}/patients/me/health-profile`,
+    CONDITIONS: `${API_V1}/patients/me/conditions`,
+    DELETE_CONDITION: (id: string) => `${API_V1}/patients/me/conditions/${id}`,
   },
 
   /** Đơn thuốc người dùng lưu lại */

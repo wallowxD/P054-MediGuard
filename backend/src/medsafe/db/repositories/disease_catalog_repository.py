@@ -23,6 +23,8 @@ class DiseaseCatalogRepository(Protocol):
 
     async def get_by_id(self, disease_id: UUID) -> Disease | None: ...
 
+    async def get_by_ids(self, disease_ids: list[UUID]) -> list[Disease]: ...
+
     async def find_by_names(self, names: list[str]) -> list[Disease]: ...
 
 
@@ -61,6 +63,14 @@ class SqlDiseaseCatalogRepository:
 
     async def get_by_id(self, disease_id: UUID) -> Disease | None:
         return await self._session.get(Disease, disease_id)
+
+    async def get_by_ids(self, disease_ids: list[UUID]) -> list[Disease]:
+        if not disease_ids:
+            return []
+        result = await self._session.execute(
+            select(Disease).where(Disease.id.in_(disease_ids), Disease.is_active.is_(True))
+        )
+        return list(result.scalars().all())
 
     async def find_by_names(self, names: list[str]) -> list[Disease]:
         """Khớp CHÍNH XÁC danh sách tên bệnh của một lượt tra cứu với danh mục.

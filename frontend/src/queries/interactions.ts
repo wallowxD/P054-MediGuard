@@ -6,14 +6,21 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   checkInteractionsRequest,
+  addHealthConditionRequest,
+  clearInteractionChecksRequest,
+  deleteHealthConditionRequest,
+  deleteInteractionCheckRequest,
   getDrugDetailsRequest,
   getDrugLettersRequest,
   getInteractionCheckDetailsRequest,
   getInteractionChecksRequest,
+  getHealthProfileRequest,
   getInteractionDetailsRequest,
   getInteractionsRequest,
   listDrugsRequest,
+  searchDiseasesRequest,
   searchDrugsRequest,
+  updateHealthProfileRequest,
 } from "@/services/interactions";
 
 // ── Query Keys ───────────────────────────────────────────────────────────────
@@ -44,6 +51,9 @@ export const interactionCheckKeys = {
   details: () => [...interactionCheckKeys.all, "detail"] as const,
   detail: (id: string) => [...interactionCheckKeys.details(), id] as const,
 };
+
+export const healthKeys = { profile: ["health-profile"] as const };
+export const diseaseKeys = { search: (q: string) => ["diseases", q] as const };
 
 // ── Queries ──────────────────────────────────────────────────────────────────
 
@@ -131,6 +141,17 @@ export const useInteractionCheckDetail = (id: string, enabled: boolean = true) =
     enabled: enabled && !!id,
   });
 
+export const useDiseaseSearch = (query: string, enabled: boolean = true) =>
+  useQuery({
+    queryKey: diseaseKeys.search(query),
+    queryFn: () => searchDiseasesRequest(query),
+    enabled: enabled && query.trim().length > 0,
+    staleTime: 10 * 60 * 1000,
+  });
+
+export const useHealthProfile = () =>
+  useQuery({ queryKey: healthKeys.profile, queryFn: getHealthProfileRequest });
+
 // ── Mutations ────────────────────────────────────────────────────────────────
 
 /**
@@ -144,7 +165,47 @@ export const useCheckInteractions = () => {
   return useMutation({
     mutationFn: (data: IInteractionCheckRequest) => checkInteractionsRequest(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: interactionKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: interactionCheckKeys.lists() });
     },
+  });
+};
+
+export const useUpdateHealthProfile = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateHealthProfileRequest,
+    onSuccess: (data) => queryClient.setQueryData(healthKeys.profile, data),
+  });
+};
+
+export const useAddHealthCondition = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: addHealthConditionRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: healthKeys.profile }),
+  });
+};
+
+export const useDeleteHealthCondition = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteHealthConditionRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: healthKeys.profile }),
+  });
+};
+
+export const useDeleteInteractionCheck = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteInteractionCheckRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: interactionCheckKeys.all }),
+  });
+};
+
+export const useClearInteractionChecks = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: clearInteractionChecksRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: interactionCheckKeys.all }),
   });
 };

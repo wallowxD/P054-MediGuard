@@ -20,7 +20,7 @@ Mọi so sánh đi qua `domain/normalization.py`, không so raw string.
 
 | Field | Ý nghĩa |
 |---|---|
-| `kind` | `drug-drug` hoặc `drug-food`, quyết định lookup mechanism |
+| `kind` | `drug-drug`, `drug-disease`, `drug-food` hoặc `drug-supplement` |
 | `subject` / `object` | Thuốc thứ nhất và thuốc/thực phẩm thứ hai |
 | `severity` | `contraindicated`, `major`, `moderate`, `minor`, `unknown` |
 | `reviewStatus` | `pending`, `approved`, `rejected` |
@@ -37,7 +37,8 @@ Severity được tính deterministic ở backend; frontend chỉ render.
 | `source` | Tên tài liệu/thuốc |
 | `sourceUrl` | Link PDF gốc |
 | `page` | Trang khi extraction cung cấp |
-| `chunkId` | Stable identity để audit |
+| `evidenceId` | Bắt buộc; stable identity của interaction evidence |
+| `chunkId` | Nullable; chỉ có khi resolve được đúng evidence chunk |
 
 ### EvidenceVersion
 
@@ -55,6 +56,7 @@ Danh sách Drug đã được user xác nhận. Từ N ingredient duy nhất, `d
 |---|---|
 | Drug-drug tồn tại/severity? | Canonical exact-pair repository + deterministic domain logic |
 | Drug-food tồn tại? | Semantic retrieval trong leaflet của thuốc đã chọn |
+| Drug-disease tồn tại/severity? | Exact ingredient–disease repository |
 | Supporting quote | Retrieval + resolve authoritative evidence |
 | Drug info Q&A | Retrieval + grounded prompt |
 | Gõ sai tên | Character-level fuzzy normalization |

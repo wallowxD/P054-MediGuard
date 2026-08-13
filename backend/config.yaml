@@ -86,10 +86,11 @@ ocr:
     base_url_env: "DASHSCOPE_BASE_URL"
 
 llm:
-  provider: "openai"
-  model: "gpt-4o"
-  temperature: 0.0
-  max_tokens: 1500
+  provider: "google_genai"
+  model: "gemini-3.5-flash-lite"
+  batch_size: 40
+  concurrency: 3
+  timeout_seconds: 5
   allowed_uses:
     - "bounded_structured_extraction"
     - "source_grounded_presentation"

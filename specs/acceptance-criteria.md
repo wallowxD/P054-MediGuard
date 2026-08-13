@@ -229,3 +229,18 @@ trong PRD đã bị ADR sau đó sửa lại.
   hoặc các bước bấm tay ghi trong PR. "Đã chạy thử thấy chạy" không phải bằng chứng.
 - AC thay đổi thì sửa file này trong cùng PR với code, đúng quy tắc cập nhật tài liệu của
   `AGENTS.md`.
+# Tra cứu tương tác tổng hợp — VMEC-40
+
+- Có thể tra hai thuốc, hoặc một thuốc kèm một bệnh/tình trạng xác nhận trong lượt hiện tại.
+- Exact lookup không trả cặp/bệnh gần nghĩa; pending hiển thị, rejected bị loại.
+- Mọi cảnh báo có quote nguyên văn, URL nguồn và `evidenceId`; thiếu nguồn trả unavailable.
+- Gemini lỗi không làm mất raw result; UI nêu rõ trạng thái fallback.
+- Lịch sử là snapshot thuộc user, có list/detail/delete/clear và không re-query khi mở lại.
+- Uploader chỉ preview cục bộ, ghi rõ chưa upload/OCR.
+- Tình trạng đặc biệt trên UI chỉ có mang thai/cho con bú và chỉ hiện khi giới tính là nữ.
+- Khi tra cứu, UI nói rõ AI đang tìm trong cơ sở dữ liệu và kiểm tra trích dẫn.
+- Citation trong cảnh báo, hướng xử trí và note mặc định được thu gọn; không hiển thị mã
+  bằng chứng cho patient.
+- Nội dung drug-food/drug-supplement luôn hiện, còn nguồn mở theo yêu cầu và phải dẫn tới
+  PDF tờ HDSD trên Google Drive thay vì artifact `.md`.
+- Không dựng khu vực liệt kê nhiều cặp chưa có dữ liệu trên màn kết quả patient.

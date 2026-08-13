@@ -34,6 +34,11 @@ qua repository.
 
 ## Luồng thuốc – bệnh nền
 
+VMEC-40 hợp nhất luồng này vào `POST /api/v1/interactions/check`. Hồ sơ đã lưu chỉ tạo
+gợi ý; bệnh/tình trạng chỉ đi vào exact lookup sau khi người dùng xác nhận cho lượt hiện
+tại. Response được lưu thành snapshot để trang lịch sử không tra lại interaction hoặc
+gọi model.
+
 Bám theo [`demo-ui/interactions-disease.html`](../demo-ui/interactions-disease.html) đã
 được duyệt ngày 08/08/2026. Chi tiết ở
 [`specs/002-drug-disease-check/spec.md`](002-drug-disease-check/spec.md).

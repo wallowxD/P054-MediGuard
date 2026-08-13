@@ -27,6 +27,7 @@ Không sửa `types.gen.ts` bằng tay và không tạo handwritten type trùng 
 | Core interaction check | `specs/001-core-interaction-check/contracts/interaction-check.openapi.yaml` |
 | Danh mục thuốc (duyệt A–Z, tìm kiếm) | cùng file trên — `listDrugs`, `searchDrugs` |
 | Auth (đăng ký, token, hồ sơ) | `backend/src/medsafe/schemas/auth.py` → OpenAPI tại `/docs` |
+| Tra cứu tổng hợp và history | `specs/003-unified-interaction-check/contracts/interaction-check.openapi.yaml` |
 
 ## Danh mục thuốc
 

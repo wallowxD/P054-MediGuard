@@ -62,6 +62,20 @@ def get_catalog_config() -> CatalogConfig:
     return CatalogConfig(**load_yaml_config().get("catalog", {}))
 
 
+class LLMConfig(BaseModel):
+    """Giới hạn request path cho grounded summary."""
+
+    model: str = "gemini-3.5-flash-lite"
+    batch_size: int = Field(default=40, ge=1, le=100)
+    concurrency: int = Field(default=3, ge=1, le=10)
+    timeout_seconds: float = Field(default=5.0, gt=0, le=30)
+
+
+@lru_cache
+def get_llm_config() -> LLMConfig:
+    return LLMConfig(**load_yaml_config().get("llm", {}))
+
+
 class Settings(BaseSettings):
     """Secret + tham số môi trường. Nạp từ <repo-root>/.env."""
 
@@ -91,7 +105,7 @@ class Settings(BaseSettings):
     use_vertex_ai: bool = False
     gcp_project: str = ""
     gcp_location: str = "us-central1"
-    gemini_model: str = "gemini-3.6-flash"
+    gemini_model: str = "gemini-3.5-flash-lite"
 
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai"
 

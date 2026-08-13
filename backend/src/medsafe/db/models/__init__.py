@@ -16,7 +16,10 @@ from medsafe.db.models.interaction import (
     DrugDiseaseInteraction,
     DrugDrugInteraction,
     DrugFoodInteraction,
+    DrugSupplementInteraction,
+    Supplement,
 )
+from medsafe.db.models.interaction_history import InteractionCheck, InteractionCheckEntry
 from medsafe.db.models.oauth_identity import PROVIDER_GOOGLE, OAuthIdentity
 from medsafe.db.models.patient import (
     CONDITION_BREASTFEEDING,
@@ -57,9 +60,13 @@ __all__ = [
     "DrugDiseaseInteraction",
     "DrugDrugInteraction",
     "DrugFoodInteraction",
+    "DrugSupplementInteraction",
     "EvidenceChunk",
     "OAuthIdentity",
     "PatientCondition",
     "PatientProfile",
+    "InteractionCheck",
+    "InteractionCheckEntry",
+    "Supplement",
     "User",
 ]

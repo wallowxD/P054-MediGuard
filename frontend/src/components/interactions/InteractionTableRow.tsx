@@ -7,6 +7,8 @@ import SeverityBadge from "./SeverityBadge";
 const KIND_LABEL: Record<TInteractionKind, string> = {
   "drug-drug": "Thuốc–thuốc",
   "drug-food": "Thuốc–thực phẩm",
+  "drug-disease": "Thuốc–bệnh nền",
+  "drug-supplement": "Thuốc–TPCN",
 };
 
 export default function InteractionTableRow({

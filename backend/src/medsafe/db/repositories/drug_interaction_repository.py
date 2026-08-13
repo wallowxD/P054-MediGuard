@@ -8,10 +8,15 @@
 from typing import Protocol
 from uuid import UUID
 
-from sqlalchemy import or_, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from medsafe.db.models.interaction import REVIEW_STATUS_APPROVED, DrugDrugInteraction, DrugFoodInteraction
+from medsafe.db.models.interaction import (
+    REVIEW_STATUS_APPROVED,
+    REVIEW_STATUS_REJECTED,
+    DrugDrugInteraction,
+    DrugFoodInteraction,
+)
 from medsafe.domain.pairing import DrugPair
 
 
@@ -41,6 +46,10 @@ class SqlDrugDrugInteractionRepository:
         )
         if only_approved:
             stmt = stmt.where(DrugDrugInteraction.review_status == REVIEW_STATUS_APPROVED)
+        else:
+            stmt = stmt.where(
+                func.coalesce(DrugDrugInteraction.review_status, "pending_review") != REVIEW_STATUS_REJECTED
+            )
 
         result = await self._session.execute(stmt)
         return list(result.scalars().all())
@@ -64,6 +73,10 @@ class SqlDrugDrugInteractionRepository:
         stmt = select(DrugDrugInteraction).where(or_(*conditions))
         if only_approved:
             stmt = stmt.where(DrugDrugInteraction.review_status == REVIEW_STATUS_APPROVED)
+        else:
+            stmt = stmt.where(
+                func.coalesce(DrugDrugInteraction.review_status, "pending_review") != REVIEW_STATUS_REJECTED
+            )
 
         result = await self._session.execute(stmt)
         return list(result.scalars().all())
