@@ -48,6 +48,16 @@ def create_app() -> FastAPI:
     register_exception_handlers(app)
     app.include_router(router, prefix="/api/v1")
 
+    @app.get("/", tags=["system"])
+    async def root() -> dict[str, str]:
+        """Điểm vào công khai để domain API không trả 404 khi mở trực tiếp."""
+        return {
+            "status": "ok",
+            "service": settings.app_name,
+            "health": "/health",
+            "docs": "/docs",
+        }
+
     @app.get("/health", tags=["system"])
     async def health() -> dict[str, str]:
         return {"status": "ok", "env": settings.app_env}
