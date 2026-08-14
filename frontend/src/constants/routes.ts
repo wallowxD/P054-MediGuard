@@ -27,7 +27,13 @@ export const AUTH_ROUTES = ["/signin", "/signup"];
  *
  * Đây cũng là nguồn sinh sitemap nên chỉ để route muốn Google index.
  */
-export const OPEN_ROUTES = ["/", "/tinh-nang", "/privacy-policy", "/terms-of-service"];
+export const OPEN_ROUTES = [
+  "/",
+  "/tinh-nang",
+  "/ve-vinmec",
+  "/privacy-policy",
+  "/terms-of-service",
+];
 
 export const PUBLIC_ROUTES = [...AUTH_ROUTES, ...OPEN_ROUTES];
 
@@ -70,6 +76,12 @@ export const ROUTES = {
   HOME: "/",
   /** Màn tra cứu an toàn thuốc, vào từ mục "Tính năng" trên nav Vinmec. */
   FEATURE: "/tinh-nang",
+  /**
+   * Trang "Về Vinmec" — tầm nhìn, giá trị C.A.R.E, năng lực, giải thưởng, cột mốc,
+   * đối tác. Trên vinmec.com đây là NHÓM MENU 9 trang riêng; bản mô phỏng gộp phần
+   * nội dung chính vào một route, nên mọi mục con của dropdown đều trỏ về đây.
+   */
+  ABOUT: "/ve-vinmec",
   SIGNIN: "/signin",
   SIGNUP: "/signup",
   DASHBOARD: "/dashboard",

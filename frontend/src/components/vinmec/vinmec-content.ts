@@ -11,88 +11,36 @@
 
 import { ROUTES } from "@/constants/routes";
 
-/** Link "chết" — mọi mục điều hướng của Vinmec đều là giả, chỉ "Tính năng" là thật. */
+/**
+ * Link "chết" cho các phần trang trí vẫn còn giả: mục footer, icon mạng xã hội,
+ * nút "Xem thêm" ở dải chứng nhận. Nav chính KHÔNG còn dùng nó nữa — xem `VINMEC_NAV`.
+ */
 export const DEAD_LINK = "#";
 
 export type VinmecNavItem = {
   label: string;
+  /** Luôn là route thật trong app. Nav không còn mục `#` nào. */
   href: string;
-  /** Có giá trị thì mục nav mở dropdown khi hover/focus. */
-  children?: readonly string[];
-  /**
-   * Mục trỏ tới route THẬT trong app, không phải link `#` giả như các mục còn lại.
-   *
-   * Chỉ dùng để chọn cách render (dùng `<Link>` và theo dõi trạng thái active) —
-   * KHÔNG phải cờ "tô nổi bật". Mục này trông y hệt các mục nav khác.
-   */
-  isAppRoute?: boolean;
 };
 
 /**
- * Nav chính. Sáu mục đầu chép theo bản gốc; "Tính năng" là mục được THÊM cho demo
- * và là mục duy nhất điều hướng thật — nó dẫn tới màn tra cứu an toàn thuốc ở
- * `/tinh-nang`. Logo Vinmec ở hàng trên mới là thứ trỏ về trang chủ "/".
+ * Nav chính — ĐÚNG BA MỤC, mục nào cũng điều hướng thật, KHÔNG mục nào có dropdown.
  *
- * `Chuyên khoa` giữ nguyên dạng dropdown như bản gốc — đây là chỗ danh sách chuyên
- * khoa xuất hiện trên vinmec.com, trang chủ không có section riêng cho nó.
+ * ★ Đây là quyết định cố ý, KHÔNG phải bản dựng dở. Trước đây nav chép đủ 7 nhóm của
+ *   vinmec.com (Chuyên khoa, Hướng dẫn khách hàng, Phát triển bền vững, Chuyên trang
+ *   sức khoẻ, Online.Vinmec…), phần lớn là dropdown trỏ `#` chết. Trong buổi demo
+ *   những mục đó chỉ tổ dụ người xem bấm vào rồi không đi đâu cả. Nav rút còn ba
+ *   trang thật sự tồn tại.
+ *
+ * ★ Muốn thêm mục thì mục đó phải có route thật. Đừng thêm lại link `#` vào đây.
+ *
+ * Logo Vinmec ở hàng trên cũng trỏ "/" — trùng với mục "Trang chủ" là bình thường,
+ * bản gốc cũng vậy.
  */
 export const VINMEC_NAV: readonly VinmecNavItem[] = [
-  {
-    label: "Chuyên khoa",
-    href: DEAD_LINK,
-    children: [
-      "Cấp cứu",
-      "Trung tâm Tim mạch",
-      "Trung tâm Ung bướu",
-      "Miễn dịch - Dị ứng",
-      "Tiêu hoá - Gan mật",
-      "Trung tâm Nhi",
-      "Trung tâm Sức khoẻ phụ nữ",
-      "Sức khoẻ tổng quát",
-      "Trung tâm Vacxin",
-      "Thần kinh",
-      "Trung tâm Vú",
-      "Khối Dược",
-    ],
-  },
-  {
-    label: "Hướng dẫn khách hàng",
-    href: DEAD_LINK,
-    children: [
-      "Liên hệ với chúng tôi",
-      "Hệ thống Vinmec",
-      "Tìm bác sĩ",
-      "Bảo hiểm",
-      "Dịch vụ y tế",
-      "Tra cứu thuốc",
-      "Sử dụng thuốc an toàn",
-    ],
-  },
-  { label: "Phát triển bền vững", href: DEAD_LINK },
-  {
-    label: "Về Vinmec",
-    href: DEAD_LINK,
-    children: [
-      "Tầm nhìn và sứ mệnh",
-      "Thành tựu và Giải thưởng",
-      "Đối tác của Vinmec",
-      "Làm việc tại Vinmec",
-      "Tin tức",
-      "Chuyên gia Y tế Vinmec",
-    ],
-  },
-  {
-    label: "Chuyên trang sức khoẻ",
-    href: DEAD_LINK,
-    children: [
-      "Tra cứu bệnh",
-      "Hiểu về cơ thể bạn",
-      "Hỏi đáp bác sĩ",
-      "Video",
-    ],
-  },
-  { label: "Online.Vinmec", href: DEAD_LINK },
-  { label: "Tính năng", href: ROUTES.FEATURE, isAppRoute: true },
+  { label: "Trang chủ", href: ROUTES.HOME },
+  { label: "Về Vinmec", href: ROUTES.ABOUT },
+  { label: "Tính năng", href: ROUTES.FEATURE },
 ];
 
 export const VINMEC_TOPBAR_LINKS = ["Tìm bác sĩ", "Chăm sóc khách hàng"] as const;

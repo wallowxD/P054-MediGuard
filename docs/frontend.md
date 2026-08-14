@@ -54,7 +54,7 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 | `src/queries/` | Query key, React Query hook và invalidation |
 | `src/store/` | Chỉ client state như filter và drug basket |
 | `src/components/landing/` | Section của màn tính năng (`/tinh-nang`) — hero, feature card, CTA. `LandingHeader`/`LandingFooter` trong thư mục này KHÔNG còn được render, xem ghi chú ở đầu `(public)/tinh-nang/page.tsx` |
-| `src/components/vinmec/` | Cổng Vinmec: header, footer, hero và các section của trang chủ (`/`) |
+| `src/components/vinmec/` | Cổng Vinmec: header, footer, hero, các section của trang chủ (`/`) và của trang `Về Vinmec` (`/ve-vinmec`) |
 | `src/components/interactions/` | Warning card, severity badge, citation block |
 | `src/lib/api/types.gen.ts` | Generated type từ OpenAPI; không sửa tay |
 
@@ -86,6 +86,7 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 |---|---|---|
 | `/` | Trang chủ Vinmec — cổng bệnh viện, nội dung tĩnh | `app/(public)/page.tsx` |
 | `/tinh-nang` | Màn tra cứu an toàn thuốc, vào từ mục "Tính năng" trên nav | `app/(public)/tinh-nang/page.tsx` |
+| `/ve-vinmec` | Trang "Về Vinmec" — tầm nhìn, C.A.R.E, năng lực, giải thưởng, cột mốc, đối tác | `app/(public)/ve-vinmec/page.tsx` |
 | `/privacy-policy`, `/terms-of-service` | Trang pháp lý | `app/(public)/…` |
 
 Hai trang đầu **từng ngược nhau** (`/` là màn tra cứu, `/vinmec` là cổng). Route `/vinmec`
@@ -93,6 +94,40 @@ Hai trang đầu **từng ngược nhau** (`/` là màn tra cứu, `/vinmec` là
 giờ ra cổng bệnh viện chứ không còn ra màn tra cứu, kiểm lại trước khi copy link cũ.
 
 Người đã đăng nhập vẫn xem được `/`; `src/proxy.ts` cố ý không đá họ về dashboard nữa.
+
+### Nav chính chỉ có ba mục, không dropdown
+
+`VINMEC_NAV` (`components/vinmec/vinmec-content.ts`) đúng ba mục, mỗi mục một route thật:
+
+| Mục | Route |
+|---|---|
+| Trang chủ | `/` |
+| Về Vinmec | `/ve-vinmec` |
+| Tính năng | `/tinh-nang` |
+
+**Đây là quyết định cố ý, không phải bản dựng dở.** Nav từng chép đủ 7 nhóm của vinmec.com
+(Chuyên khoa, Hướng dẫn khách hàng, Phát triển bền vững, Chuyên trang sức khoẻ,
+Online.Vinmec…), phần lớn là dropdown trỏ `#` chết — trong buổi demo chúng chỉ dụ người xem
+bấm vào rồi không đi đâu cả. Toàn bộ cơ chế dropdown (desktop hover + accordion mobile) đã
+được gỡ khỏi `VinmecHeader`; `VinmecNavItem` nay chỉ còn `{ label, href }`.
+
+Muốn thêm mục thì mục đó **phải có route thật**. Đừng thêm lại link `#` vào nav. `DEAD_LINK`
+vẫn còn nhưng chỉ dành cho footer, icon mạng xã hội và nút "Xem thêm" ở dải chứng nhận.
+
+Trên mobile, khối Đăng nhập/Đăng ký nằm **ngoài** vòng lặp nav. Trước đây nó bám vào mục
+"Tính năng" bên trong `.map()`; giờ cả ba mục đều là route thật nên để nguyên chỗ cũ sẽ sinh
+ra ba khối đăng nhập chồng nhau.
+
+### `/ve-vinmec` gộp 9 trang của bản gốc
+
+Trên vinmec.com, "Về Vinmec" **không phải một trang** mà là nhóm menu 9 mục, mỗi mục một
+trang riêng. Bản mô phỏng gộp nội dung chính của ba trang đầu (`/tam-nhin-va-su-menh/`,
+`/thanh-tuu-va-giai-thuong/`, `/doi-tac/`) vào một route duy nhất. Chín mục con đó **không
+còn xuất hiện trên nav** kể từ khi nav rút còn ba mục — vào trang này bằng mục "Về Vinmec".
+
+Nội dung nằm trong `components/vinmec/vinmec-about-content.ts`, tách khỏi `vinmec-content.ts`
+vì khối lượng chữ lớn hơn hẳn phần còn lại của cổng. Số liệu là **chuỗi** giữ nguyên định
+dạng bản gốc (`"1.505"`, `"8.8 triệu"`) — không format lại bằng `Intl.NumberFormat`.
 
 ## Hệ thống thị giác (màn tính năng)
 
