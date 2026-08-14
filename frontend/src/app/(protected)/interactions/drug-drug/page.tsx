@@ -1,4 +1,4 @@
-import FeatureUnavailable from "@/components/FeatureUnavailable";
+"use client";
 
 import { AlertTriangle, Combine, Database, Search } from "lucide-react";
 import { useMemo, useState } from "react";

@@ -251,6 +251,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/patients/me/diseases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add Disease */
+        post: operations["add_disease_api_v1_patients_me_diseases_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/patients/me/diseases/{patient_disease_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Disease */
+        delete: operations["delete_disease_api_v1_patients_me_diseases__patient_disease_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/interactions/check": {
         parameters: {
             query?: never;
@@ -610,6 +644,8 @@ export interface components {
             consentedAt?: string | null;
             /** Conditions */
             conditions?: components["schemas"]["PatientConditionResponse"][];
+            /** Diseases */
+            diseases?: components["schemas"]["PatientDiseaseResponse"][];
         };
         /** HealthProfileUpdate */
         HealthProfileUpdate: {
@@ -802,7 +838,7 @@ export interface components {
              * Conditioncode
              * @enum {string}
              */
-            conditionCode: "mang-thai" | "cho-con-bu" | "suy-than" | "suy-gan";
+            conditionCode: "mang-thai" | "cho-con-bu";
         };
         /** PatientConditionResponse */
         PatientConditionResponse: {
@@ -815,7 +851,40 @@ export interface components {
              * Conditioncode
              * @enum {string}
              */
-            conditionCode: "mang-thai" | "cho-con-bu" | "suy-than" | "suy-gan";
+            conditionCode: "mang-thai" | "cho-con-bu";
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "self_reported" | "pharmacist_confirmed";
+            /**
+             * Createdat
+             * Format: date-time
+             */
+            createdAt: string;
+        };
+        /** PatientDiseaseCreate */
+        PatientDiseaseCreate: {
+            /**
+             * Diseaseid
+             * Format: uuid
+             */
+            diseaseId: string;
+        };
+        /** PatientDiseaseResponse */
+        PatientDiseaseResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Diseaseid
+             * Format: uuid
+             */
+            diseaseId: string;
+            /** Name */
+            name: string;
             /**
              * Source
              * @enum {string}
@@ -1411,6 +1480,68 @@ export interface operations {
             header?: never;
             path: {
                 condition_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_disease_api_v1_patients_me_diseases_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PatientDiseaseCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PatientDiseaseResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_disease_api_v1_patients_me_diseases__patient_disease_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                patient_disease_id: string;
             };
             cookie?: never;
         };

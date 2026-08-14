@@ -24,7 +24,6 @@ export const PRIMARY_NAV_ITEMS: INavItem[] = [
     label: "Tra cứu tương tác thuốc",
     shortLabel: "Tương tác",
     Icon: Combine,
-    unsupported: true,
   },
 ];
 

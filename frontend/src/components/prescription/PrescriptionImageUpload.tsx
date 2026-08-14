@@ -1,4 +1,4 @@
-import { ImageOff } from "lucide-react";
+"use client";
 
 import {
   AlertCircle,
