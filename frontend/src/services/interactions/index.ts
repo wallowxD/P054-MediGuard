@@ -14,7 +14,7 @@ import { API_BASE_URL, API_ENDPOINTS } from "@/constants/api";
 import { apiNotReady } from "@/queries/utils";
 import clientRequest from "@/utils/request";
 
-type ApiErrorBody = { message?: string };
+type ApiErrorBody = { message?: string; detail?: string };
 
 /**
  * Gộp lỗi axios về `Error` có thông điệp đọc được cho người dùng.
@@ -25,7 +25,7 @@ type ApiErrorBody = { message?: string };
  */
 const apiError = (error: unknown, fallback: string): Error => {
   if (axios.isAxiosError<ApiErrorBody>(error)) {
-    return new Error(error.response?.data?.message || fallback);
+    return new Error(error.response?.data?.message || error.response?.data?.detail || fallback);
   }
   return error instanceof Error ? error : new Error(fallback);
 };
@@ -33,15 +33,11 @@ const apiError = (error: unknown, fallback: string): Error => {
 export const checkInteractionsRequest = async (
   data: IInteractionCheckRequest
 ): Promise<IInteractionCheckResponse> => {
-  // try {
-  //   const apiUrl = API_BASE_URL + API_ENDPOINTS.INTERACTIONS.CHECK;
-  //   const retrieved = await clientRequest.post(apiUrl, data);
-  //   return retrieved?.data;
-  // } catch (error: unknown) {
-  //   const message = error instanceof Error ? error.message : "Đã có lỗi xảy ra";
-  //   throw new Error(message);
-  // }
-  return apiNotReady(API_ENDPOINTS.INTERACTIONS.CHECK, data);
+  try {
+    return (await clientRequest.post<IInteractionCheckResponse>(API_BASE_URL + API_ENDPOINTS.INTERACTIONS.CHECK, data)).data;
+  } catch (error) {
+    throw apiError(error, "Không thể tra cứu tương tác. Vui lòng thử lại.");
+  }
 };
 
 export const getInteractionsRequest = async (
@@ -127,27 +123,77 @@ export const getDrugDetailsRequest = async (id: string): Promise<IDrugInformatio
 };
 
 export const getInteractionChecksRequest = async (): Promise<IInteractionCheckSummaryItem[]> => {
-  // try {
-  //   const apiUrl = API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.GET_ALL;
-  //   const retrieved = await clientRequest.get(apiUrl);
-  //   return retrieved?.data;
-  // } catch (error: unknown) {
-  //   const message = error instanceof Error ? error.message : "Đã có lỗi xảy ra";
-  //   throw new Error(message);
-  // }
-  return apiNotReady(API_ENDPOINTS.INTERACTION_CHECKS.GET_ALL);
+  try {
+    return (await clientRequest.get<IInteractionCheckListResponse>(API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.GET_ALL)).data.items;
+  } catch (error) {
+    throw apiError(error, "Không thể tải lịch sử tra cứu.");
+  }
 };
 
 export const getInteractionCheckDetailsRequest = async (
   id: string
 ): Promise<IInteractionCheckDetail> => {
-  // try {
-  //   const apiUrl = API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.GET_DETAILS(id);
-  //   const retrieved = await clientRequest.get(apiUrl);
-  //   return retrieved?.data;
-  // } catch (error: unknown) {
-  //   const message = error instanceof Error ? error.message : "Đã có lỗi xảy ra";
-  //   throw new Error(message);
-  // }
-  return apiNotReady(API_ENDPOINTS.INTERACTION_CHECKS.GET_DETAILS(id));
+  try {
+    return (await clientRequest.get<IInteractionCheckDetail>(API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.GET_DETAILS(id))).data;
+  } catch (error) {
+    throw apiError(error, "Không thể tải lượt tra cứu.");
+  }
+};
+
+export const searchDiseasesRequest = async (q: string): Promise<IDiseaseSearchResponse> => {
+  try {
+    return (await clientRequest.get<IDiseaseSearchResponse>(API_BASE_URL + API_ENDPOINTS.DISEASES.SEARCH, { params: { q, limit: 10 } })).data;
+  } catch (error) {
+    throw apiError(error, "Không thể tìm bệnh nền.");
+  }
+};
+
+export const getHealthProfileRequest = async (): Promise<IHealthProfile> =>
+  (await clientRequest.get<IHealthProfile>(API_BASE_URL + API_ENDPOINTS.HEALTH_PROFILE.GET)).data;
+
+export const updateHealthProfileRequest = async (data: IHealthProfileUpdate): Promise<IHealthProfile> =>
+  (await clientRequest.put<IHealthProfile>(API_BASE_URL + API_ENDPOINTS.HEALTH_PROFILE.UPDATE, data)).data;
+
+export const addHealthConditionRequest = async (conditionCode: TConditionCode): Promise<IPatientCondition> =>
+  (await clientRequest.post<IPatientCondition>(API_BASE_URL + API_ENDPOINTS.HEALTH_PROFILE.CONDITIONS, { conditionCode })).data;
+
+export const deleteHealthConditionRequest = async (id: string): Promise<void> => {
+  await clientRequest.delete(API_BASE_URL + API_ENDPOINTS.HEALTH_PROFILE.DELETE_CONDITION(id));
+};
+
+export const addPatientDiseaseRequest = async (diseaseId: string): Promise<IPatientDisease> =>
+  (
+    await clientRequest.post<IPatientDisease>(API_BASE_URL + API_ENDPOINTS.HEALTH_PROFILE.DISEASES, {
+      diseaseId,
+    })
+  ).data;
+
+export const deletePatientDiseaseRequest = async (id: string): Promise<void> => {
+  await clientRequest.delete(API_BASE_URL + API_ENDPOINTS.HEALTH_PROFILE.DELETE_DISEASE(id));
+};
+
+export const deleteInteractionCheckRequest = async (id: string): Promise<void> => {
+  await clientRequest.delete(API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.DELETE(id));
+};
+
+export const clearInteractionChecksRequest = async (): Promise<void> => {
+  await clientRequest.delete(API_BASE_URL + API_ENDPOINTS.INTERACTION_CHECKS.CLEAR);
+};
+
+export const extractPrescriptionRequest = async (
+  images: File[]
+): Promise<IPrescriptionExtractionResponse> => {
+  const formData = new FormData();
+  images.forEach((image) => formData.append("images", image));
+  try {
+    return (
+      await clientRequest.post<IPrescriptionExtractionResponse>(
+        API_BASE_URL + API_ENDPOINTS.PRESCRIPTIONS.EXTRACT,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      )
+    ).data;
+  } catch (error) {
+    throw apiError(error, "Không thể đọc ảnh đơn thuốc. Vui lòng thử lại hoặc nhập thuốc thủ công.");
+  }
 };

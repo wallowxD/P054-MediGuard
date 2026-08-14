@@ -11,6 +11,8 @@ interface DrugCatalogPickerProps {
   label: string;
   placeholder?: string;
   hint?: string;
+  onSelect?: (drug: IDrugItem) => void;
+  selectedIds?: string[];
 }
 
 /**
@@ -26,7 +28,7 @@ interface DrugCatalogPickerProps {
  * Trang "Tra cứu thuốc" KHÔNG dùng component này: ở đó ô tìm kiếm lọc thẳng danh sách
  * bên dưới nên dùng `DrugCatalogSearchBar`.
  */
-export default function DrugCatalogPicker({ label, placeholder, hint }: DrugCatalogPickerProps) {
+export default function DrugCatalogPicker({ label, placeholder, hint, onSelect, selectedIds = [] }: DrugCatalogPickerProps) {
   const [query, setQuery] = useState("");
   // Chỉ set trong callback của setTimeout (bất đồng bộ) — không set trực tiếp
   // trong thân effect để tránh cascading render (react-hooks/set-state-in-effect).
@@ -87,13 +89,23 @@ export default function DrugCatalogPicker({ label, placeholder, hint }: DrugCata
         ) : (
           <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
             {candidates.map((candidate) => (
-              <li key={candidate.drugId} className="px-3 py-2">
-                <span className="block text-sm font-medium text-foreground">
-                  {candidate.brandName}
-                </span>
-                <span className="mt-0.5 block whitespace-pre-line text-xs text-foreground-secondary">
-                  {candidate.ingredient}
-                </span>
+              <li key={candidate.drugId}>
+                <button
+                  type="button"
+                  disabled={selectedIds.includes(candidate.drugId)}
+                  onClick={() => {
+                    onSelect?.({ id: candidate.drugId, brandName: candidate.brandName, ingredient: candidate.ingredient });
+                    setQuery("");
+                  }}
+                  className="w-full px-3 py-2 text-left transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring disabled:cursor-default disabled:opacity-50"
+                >
+                  <span className="block text-sm font-medium text-foreground">
+                    {candidate.brandName}{selectedIds.includes(candidate.drugId) ? " · Đã chọn" : ""}
+                  </span>
+                  <span className="mt-0.5 block whitespace-pre-line text-xs text-foreground-secondary">
+                    {candidate.ingredient}
+                  </span>
+                </button>
               </li>
             ))}
           </ul>

@@ -103,6 +103,10 @@ openssl rand -hex 32   # dán vào JWT_SECRET_KEY
 **Session pooler (cổng 5432)**, đổi tiền tố `postgresql://` thành `postgresql+psycopg://`
 và percent-encode ký tự đặc biệt trong mật khẩu (`@` → `%40`). Sau đó chạy `make migrate`.
 
+Để dùng chức năng đọc ảnh đơn thuốc, điền `GEMINI_API_KEY` (hoặc `GOOGLE_API_KEY`) trong `.env`;
+model mặc định là `gemini-3.5-flash-lite`. Không có key, nhập thuốc thủ công vẫn hoạt động nhưng
+endpoint trích xuất ảnh sẽ trả lỗi cấu hình an toàn.
+
 - Toàn bộ biến môi trường: `.env` tại root. Không commit file này.
 - `.env.example` là tài liệu tên biến, có kèm block giá trị dành cho production.
 

@@ -1,0 +1,92 @@
+openapi: 3.1.0
+info:
+  title: Prescription image extraction
+  version: 1.0.0
+paths:
+  /api/v1/prescriptions/extract:
+    post:
+      summary: Extract untrusted prescription candidates
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [images]
+              properties:
+                images:
+                  type: array
+                  minItems: 1
+                  maxItems: 5
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: Candidate extraction; no item is confirmed automatically
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrescriptionExtractionResponse"
+        "400": {description: Invalid or unsupported image}
+        "401": {description: Authentication required}
+        "413": {description: File/count/total limit exceeded}
+        "503": {description: Gemini unavailable or invalid structured output}
+        "504": {description: Gemini timeout}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    PrescriptionExtractionResponse:
+      type: object
+      required: [drugs, diseases, model, requiresConfirmation]
+      properties:
+        drugs:
+          type: array
+          items: {$ref: "#/components/schemas/ExtractedPrescriptionDrug"}
+        diseases:
+          type: array
+          items: {$ref: "#/components/schemas/ExtractedPrescriptionDisease"}
+        model: {type: string}
+        requiresConfirmation: {type: boolean, const: true}
+    ExtractedPrescriptionDrug:
+      type: object
+      required: [rawText, name, uncertain, candidates]
+      properties:
+        rawText: {type: string}
+        name: {type: string}
+        ingredient: {type: [string, "null"]}
+        uncertain: {type: boolean}
+        candidates:
+          type: array
+          items: {$ref: "#/components/schemas/PrescriptionDrugCandidate"}
+    PrescriptionDrugCandidate:
+      type: object
+      required: [drugId, brandName, ingredient, confidence]
+      properties:
+        drugId: {type: string, format: uuid}
+        brandName: {type: string}
+        ingredient: {type: string}
+        confidence: {type: number, minimum: 0, maximum: 100}
+    ExtractedPrescriptionDisease:
+      type: object
+      required: [rawText, name, uncertain, candidates]
+      properties:
+        rawText: {type: string}
+        name: {type: string}
+        uncertain: {type: boolean}
+        candidates:
+          type: array
+          items: {$ref: "#/components/schemas/PrescriptionDiseaseCandidate"}
+    PrescriptionDiseaseCandidate:
+      type: object
+      required: [diseaseId, name, confidence]
+      properties:
+        diseaseId: {type: string, format: uuid}
+        name: {type: string}
+        confidence: {type: number, minimum: 0, maximum: 100}

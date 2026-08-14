@@ -38,7 +38,7 @@ flowchart TB
     Repo --> PG[(Supabase PostgreSQL<br/>catalog · canonical pair<br/>citation · evidence version · review)]
     Retr --> Qdrant[(Qdrant Cloud<br/>vector tờ hướng dẫn + evidence ID)]
     Qdrant -->|resolve evidence có thẩm quyền| Repo
-    LLM --> GPT[GPT-4o API]
+    LLM --> Gemini[Gemini 3.5 Flash-Lite API]
 
     subgraph Offline["Ingestion batch — không chạy trên patient request path"]
         Source[Nguồn catalog bệnh viện] --> Stage[CSV đã review và version]
@@ -59,8 +59,8 @@ dùng Qwen; adapter dùng endpoint Alibaba Cloud Model Studio được cấu hì
 dùng adapter Gemini riêng. URL/model ID ở config, secret nằm ngoài Git.
 
 LangGraph chạy workflow đã định nghĩa và gọi typed repository/retrieval adapter; model
-không tạo SQL hoặc tự chọn truth source. GPT-4o chỉ được dùng trong boundary trích xuất có
-schema hoặc trình bày bám nguồn, không quyết định interaction existence hay severity.
+không tạo SQL hoặc tự chọn truth source. Gemini 3.5 Flash-Lite chỉ trình bày record đã qua
+citation validation với structured output, không quyết định interaction existence hoặc severity.
 
 ## Hai đường lookup bắt buộc tách biệt
 
@@ -126,6 +126,7 @@ xem [ADR 0005](../adrs/0005-human-in-the-loop-non-blocking.md).
 | Prescription OCR | Gemini adapter | Tạo candidate chưa tin cậy; user vẫn phải xác nhận |
 | Leaflet OCR | Qwen adapter | Batch extraction qua Alibaba Cloud Model Studio |
 | Relational store | Supabase PostgreSQL | Catalog, pair, citation, evidence version, review state |
+| History snapshot | Supabase PostgreSQL | Input, raw result, AI summary, citation và unavailable theo user |
 | Raw artifact | Private Supabase Storage | Raw OCR có version |
 | Vector store | Qdrant Cloud | Retrieval tờ hướng dẫn có scope và evidence pointer |
 | Ingestion | `ingestion/` | Batch job, không nằm trên request path |
@@ -147,7 +148,7 @@ truyền qua `build.args`, không phải runtime `environment`.
 
 ## Khoảng trống hiện tại
 
-Backend mới có `/health` và `/api/v1/status`; business router trong `api/routes.py` vẫn là
-scaffold. Prescription OCR và pharmacist mutation cần feature contract riêng. FastAPI
+Backend đã có auth, catalog, hồ sơ sức khoẻ, tra cứu tương tác tổng hợp và history snapshot.
+Prescription OCR và pharmacist mutation cần feature contract riêng. FastAPI
 production host, migration/rollback và production observability chưa được chốt; theo dõi
 trong Jira project `VMEC` và ghi ADR khi có quyết định khó đảo ngược.
