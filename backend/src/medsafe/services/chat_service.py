@@ -1,7 +1,6 @@
 """Service điều phối logic cho Chatbot AI."""
 
 from datetime import UTC, datetime
-from typing import Any
 
 from medsafe.config import get_llm_config
 from medsafe.llm.llm_client import LLMClient
@@ -30,9 +29,7 @@ class ChatService:
 
     async def _generate_initial_greeting(self, payload: ChatRequest, context_json: str) -> ChatResponse:
         drugs_str = ", ".join(payload.context.drugs) if payload.context.drugs else "các thuốc đã chọn"
-        diseases_str = (
-            f" (Bệnh nền: {', '.join(payload.context.diseases)})" if payload.context.diseases else ""
-        )
+        diseases_str = f" (Bệnh nền: {', '.join(payload.context.diseases)})" if payload.context.diseases else ""
 
         fallback_greeting = (
             f"Xin chào! Tôi thấy bạn đang tra cứu tương tác giữa **{drugs_str}**{diseases_str}.\n\n"
@@ -76,9 +73,7 @@ class ChatService:
 
         user_query = payload.user_query or ""
 
-        fallback_reply = (
-            "Hiện tại hệ thống AI đang bận. Bạn vui lòng thử đặt lại câu hỏi hoặc tham khảo trực tiếp các thông tin trích dẫn trên bảng kết quả."
-        )
+        fallback_reply = "Hiện tại hệ thống AI đang bận. Bạn vui lòng thử đặt lại câu hỏi hoặc tham khảo trực tiếp các thông tin trích dẫn trên bảng kết quả."
 
         reply_content = fallback_reply
         try:

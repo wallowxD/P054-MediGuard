@@ -62,7 +62,9 @@ async def test_chat_service_initial_greeting_llm_success():
 @pytest.mark.asyncio
 async def test_chat_service_answer_query():
     mock_llm = AsyncMock()
-    mock_llm.async_complete.return_value = "Tương tác giữa hai thuốc này ở mức độ Nguy cơ cao do làm tăng độc tính trên gan."
+    mock_llm.async_complete.return_value = (
+        "Tương tác giữa hai thuốc này ở mức độ Nguy cơ cao do làm tăng độc tính trên gan."
+    )
 
     service = ChatService(llm_client=mock_llm)
     ctx = ChatContextSummary(drugs=["Panadol", "Ibuprofen"])

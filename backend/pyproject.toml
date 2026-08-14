@@ -72,3 +72,7 @@ indent-style = "space"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# rootdir là `backend/`, nên ".." là repo root. Cần thiết vì
+# tests/unit/domain/test_batch_ocr.py import từ package `scripts/` ở root; không có
+# dòng này thì `uv run pytest` fail ngay ở bước collect với ModuleNotFoundError.
+pythonpath = [".."]

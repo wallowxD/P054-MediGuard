@@ -49,8 +49,7 @@ def upgrade() -> None:
         ),
         sa.UniqueConstraint("user_id", "disease_id", name="uq_patient_diseases_user_disease"),
         comment=(
-            "Bệnh nền tự khai đã lưu theo tài khoản; chỉ gợi ý, không tự đưa vào lượt tra cứu. "
-            "RLS bật, không policy."
+            "Bệnh nền tự khai đã lưu theo tài khoản; chỉ gợi ý, không tự đưa vào lượt tra cứu. RLS bật, không policy."
         ),
     )
     op.execute("ALTER TABLE patient_diseases ENABLE ROW LEVEL SECURITY")
