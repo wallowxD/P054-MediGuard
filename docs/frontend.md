@@ -426,8 +426,11 @@ Chi tiết quyết định tại [ADR 0007](../adrs/0007-frontend-structure-and-
 
 ## Trạng thái hiện tại
 
-Backend chưa có auth module và business router chưa được bật. Các service liên quan vẫn
-gọi `apiNotReady()`; khôi phục function body theo TODO khi backend sẵn sàng. Frontend test
+Backend auth đã hoạt động cho đăng ký, đăng nhập email/mật khẩu, Google OIDC, lấy hồ sơ và
+làm mới token. NextAuth giữ refresh token trong JWT cookie phía server, lưu hạn access token
+từ `expiresIn`, rồi gọi `POST /api/v1/auth/refresh` trước hạn 60 giây khi client lấy session;
+không đưa refresh token vào session trả về trình duyệt. Các API quên mật khẩu, đổi mật khẩu
+và MFA vẫn chưa có. Business router chỉ mở theo trạng thái liệt kê bên dưới. Frontend test
 framework chưa được chốt; không tự cài thêm trước khi có Jira decision/ADR phù hợp.
 
 ### Màn hình nào đang thật sự dùng được

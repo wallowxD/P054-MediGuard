@@ -17,14 +17,8 @@ const apiError = (error: unknown, fallback: string): Error => {
 /**
  * Tầng HTTP thuần cho auth.
  *
- * ⚠️ Backend chưa có module auth (email/password). Thân hàm loginRequest/registerRequest/
- * getProfileRequest đang comment lại, chờ nối.
  * `loginRequest` được `src/lib/auth.ts` (CredentialsProvider) gọi tới.
  */
-
-import { apiNotReady } from "@/queries/utils";
-
-// import clientRequest from "@/utils/request";
 
 export const loginRequest = async (
   data: ILoginRequest
@@ -66,6 +60,18 @@ export const registerRequest = async (
 export const loginWithGoogleRequest = async (data: IGoogleLoginRequest): Promise<ILoginResponse> => {
   const apiUrl = API_BASE_URL + API_ENDPOINTS.AUTH.GOOGLE;
   const { data: response } = await axios.post<ILoginResponse>(apiUrl, data);
+  return response;
+};
+
+/**
+ * Dùng axios riêng để tránh interceptor 401 của request nghiệp vụ tự gọi lại chính
+ * endpoint refresh. Hàm này chỉ được gọi từ JWT callback của NextAuth ở phía server.
+ */
+export const refreshTokenRequest = async (
+  data: IRefreshTokenRequest
+): Promise<IRefreshTokenResponse> => {
+  const apiUrl = API_BASE_URL + API_ENDPOINTS.AUTH.REFRESH_TOKEN;
+  const { data: response } = await axios.post<IRefreshTokenResponse>(apiUrl, data);
   return response;
 };
 
