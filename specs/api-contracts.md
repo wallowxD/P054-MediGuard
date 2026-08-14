@@ -27,6 +27,15 @@ Không sửa `types.gen.ts` bằng tay và không tạo handwritten type trùng 
 | Core interaction check | `specs/001-core-interaction-check/contracts/interaction-check.openapi.yaml` |
 | Danh mục thuốc (duyệt A–Z, tìm kiếm) | cùng file trên — `listDrugs`, `searchDrugs` |
 | Auth (đăng ký, token, hồ sơ) | `backend/src/medsafe/schemas/auth.py` → OpenAPI tại `/docs` |
+| Tra cứu tổng hợp và history | `specs/003-unified-interaction-check/contracts/interaction-check.openapi.yaml` |
+| Trích xuất ảnh đơn thuốc | `specs/005-prescription-image-extraction/contracts/openapi.yaml` |
+
+## Trích xuất ảnh đơn thuốc
+
+`POST /api/v1/prescriptions/extract` nhận multipart field `images` gồm 1–5 ảnh JPEG, PNG hoặc WEBP.
+Response chỉ là candidate thuốc/bệnh chưa xác nhận; Gemini không trả stable ID. Backend đối chiếu
+catalog rồi frontend yêu cầu người dùng bấm chọn trước khi thêm vào lượt tra cứu. Ảnh, filename và
+model output không được persist.
 
 ## Danh mục thuốc
 

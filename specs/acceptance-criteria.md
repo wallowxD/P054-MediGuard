@@ -148,19 +148,19 @@ duyệt severity và bảng tương tác có cấu trúc.
 
 **Trạng thái:** chưa đạt — pilot chưa chạy.
 
-### F11 — Nhận diện thuốc từ ảnh hoặc PDF đơn thuốc
+### F11 — Nhận diện thuốc từ ảnh đơn thuốc
 
 | # | Tiêu chí chấp nhận | Đo bằng gì |
 |---|---|---|
-| F11.1 | Upload ảnh (JPG/PNG) và PDF đều ra danh sách thuốc đề xuất | Cùng một đơn ở hai định dạng ra cùng danh sách |
+| F11.1 | Upload 1–5 ảnh JPG/PNG/WEBP ra danh sách thuốc, hoạt chất và bệnh ghi rõ trên đơn | Response structured có `drugs`, `diseases`; PDF không thuộc scope hiện tại |
 | F11.2 | Kết quả OCR luôn là **đề xuất**, phải người dùng xác nhận mới vào danh sách | Không có đường nào đưa thẳng OCR vào lượt kiểm tra |
-| F11.3 | Người dùng sửa hoặc xoá được từng dòng OCR đọc sai trước khi xác nhận | Sửa "Panadl" thành "Panadol" ngay trên màn xác nhận |
-| F11.4 | Upload nhiều đơn trong một lượt gộp thành một danh sách, không dòng trùng | Hai đơn cùng chứa Paracetamol ra một dòng |
+| F11.3 | Người dùng sửa được từng dòng AI đọc sai và tìm lại catalog trước khi xác nhận | Sửa "Panadl" thành "Panadol" ngay trên màn xác nhận |
+| F11.4 | Nhiều ảnh của cùng một đơn được gộp, không tạo dòng trùng | Hai ảnh cùng chứa Paracetamol ra một dòng |
 | F11.5 | File sai định dạng hoặc quá dung lượng bị chặn kèm thông báo rõ | Upload `.exe` báo lỗi, không im lặng |
-| F11.6 | Ảnh đơn thuốc lưu ở storage private | Mở URL không kèm token bị từ chối |
-| F11.7 | Dược sĩ xem và sửa được kết quả nhận diện của lượt đã gửi lên | Hàng đợi hiển thị cả ảnh gốc lẫn danh sách đã nhận diện |
+| F11.6 | Ảnh, filename và model output không được lưu | Không có object storage row, history snapshot hoặc log chứa ảnh/filename |
+| F11.7 | Chỉ stable catalog ID do người dùng bấm xác nhận mới vào lượt tra cứu | Sửa text huỷ lựa chọn cũ; dòng chưa chọn bị bỏ qua |
 
-**Trạng thái:** chưa đạt — cần spec riêng cho prescription OCR (xem `app-flow.md`).
+**Trạng thái:** đã triển khai cho ảnh theo spec 005; PDF, lưu đơn và luồng dược sĩ xem ảnh vẫn ngoài phạm vi.
 
 ### F12 — Ràng buộc an toàn hiển thị, phân quyền và bối cảnh
 
@@ -198,17 +198,17 @@ trong PRD đã bị ADR sau đó sửa lại.
 | Con người review và gán severity | HIGH | F10.4, F9.2 | — |
 | Bảng dữ liệu tương tác có cấu trúc | HIGH | F10.3, F3.5 | — |
 | UI nhập thuốc kiểu tag-based search | HIGH | F1.7, F1.8 | — |
-| Upload ảnh đơn thuốc (OCR) | HIGH | F11.1, F11.2, F11.6 | — |
-| Upload PDF đơn thuốc | HIGH | F11.1, F11.5 | — |
+| Upload ảnh đơn thuốc (OCR) | HIGH | F11.1, F11.2, F11.6 | Đã triển khai theo ADR 0023 |
+| Upload PDF đơn thuốc | HIGH | — | Ngoài phạm vi spec 005 |
 | Chuẩn hoá tên thuốc về danh mục | HIGH | F1.1, F1.3, F1.4, F1.5 | — |
 | Giải thích cảnh báo kèm nguồn | HIGH | F3.1, F4.1, F5.2 | — |
 | Hiển thị cảnh báo ngay, không chặn bởi duyệt | HIGH | F3.3, F9.1 | — |
 | Nhãn "chờ xác nhận chuyên môn" cho mức nặng | HIGH | F3.3, F3.4 | — |
-| Dược sĩ xem và sửa kết quả OCR/mapping | HIGH | F11.7, F9.2, F9.3 | — |
+| Dược sĩ xem và sửa kết quả OCR/mapping | HIGH | F9.2, F9.3 | Ngoài phạm vi spec 005 vì ảnh/output không lưu |
 | Disclaimer an toàn nổi bật | HIGH | F12.1, F12.2 | — |
 | Phân quyền theo role | HIGH | F12.4 | — |
 | Cảnh báo liều ngoài phạm vi | HIGH | F7.1–F7.4 | Ranh giới do ADR 0018 quy định: chỉ đối chiếu, không đề xuất liều |
-| Đọc nhiều đơn thuốc cùng lúc | HIGH | F11.4 | — |
+| Đọc nhiều ảnh của cùng đơn thuốc | HIGH | F11.4 | Tối đa 5 ảnh/request |
 | Duyệt danh mục thuốc A–Z | — | F2.1–F2.5 | Có trong UI Flow gate 1 nhưng **thiếu dòng trong bảng Requirements**; đã implement |
 | Hồ sơ sức khoẻ tự khai | — | F6.1–F6.4 | Yêu cầu mới theo ADR 0017; PRD chưa có dòng |
 | Tra cứu thuốc–bệnh nền | — | F5.1–F5.4 | Yêu cầu mới theo ADR 0017; PRD chưa có dòng |
@@ -229,3 +229,18 @@ trong PRD đã bị ADR sau đó sửa lại.
   hoặc các bước bấm tay ghi trong PR. "Đã chạy thử thấy chạy" không phải bằng chứng.
 - AC thay đổi thì sửa file này trong cùng PR với code, đúng quy tắc cập nhật tài liệu của
   `AGENTS.md`.
+# Tra cứu tương tác tổng hợp — VMEC-40
+
+- Có thể tra hai thuốc, hoặc một thuốc kèm một bệnh/tình trạng xác nhận trong lượt hiện tại.
+- Exact lookup không trả cặp/bệnh gần nghĩa; pending hiển thị, rejected bị loại.
+- Mọi cảnh báo có quote nguyên văn, URL nguồn và `evidenceId`; thiếu nguồn trả unavailable.
+- Gemini lỗi không làm mất raw result; UI nêu rõ trạng thái fallback.
+- Lịch sử là snapshot thuộc user, có list/detail/delete/clear và không re-query khi mở lại.
+- Uploader gửi ảnh tới Gemini khi người dùng chủ động bấm đọc; kết quả phải sửa/chọn lại trong catalog.
+- Tình trạng đặc biệt trên UI chỉ có mang thai/cho con bú và chỉ hiện khi giới tính là nữ.
+- Khi tra cứu, UI nói rõ AI đang tìm trong cơ sở dữ liệu và kiểm tra trích dẫn.
+- Citation trong cảnh báo, hướng xử trí và note mặc định được thu gọn; không hiển thị mã
+  bằng chứng cho patient.
+- Nội dung drug-food/drug-supplement luôn hiện, còn nguồn mở theo yêu cầu và phải dẫn tới
+  PDF tờ HDSD trên Google Drive thay vì artifact `.md`.
+- Không dựng khu vực liệt kê nhiều cặp chưa có dữ liệu trên màn kết quả patient.

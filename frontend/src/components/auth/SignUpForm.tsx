@@ -69,7 +69,7 @@ export default function SignUpForm() {
           />
         </div>
         {errors.name ? (
-          <p id="name-error" className="mt-1.5 text-xs text-error">
+          <p id="name-error" role="alert" className="mt-1.5 text-xs text-error">
             {errors.name.message}
           </p>
         ) : null}
@@ -102,7 +102,7 @@ export default function SignUpForm() {
           />
         </div>
         {errors.email ? (
-          <p id="email-error" className="mt-1.5 text-xs text-error">
+          <p id="email-error" role="alert" className="mt-1.5 text-xs text-error">
             {errors.email.message}
           </p>
         ) : null}
@@ -149,7 +149,7 @@ export default function SignUpForm() {
           </button>
         </div>
         {errors.password ? (
-          <p id="password-error" className="mt-1.5 text-xs text-error">
+          <p id="password-error" role="alert" className="mt-1.5 text-xs text-error">
             {errors.password.message}
           </p>
         ) : null}

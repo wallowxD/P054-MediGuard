@@ -27,7 +27,7 @@ export default function FeatureCard({
           <Icon className="h-5 w-5" aria-hidden />
         </span>
         {unsupported ? (
-          <span className="shrink-0 rounded-full border border-border bg-surface px-2 py-0.5 text-[11px] font-medium text-foreground-muted">
+          <span className="shrink-0 rounded-full border border-border bg-surface px-2 py-0.5 text-[11px] font-medium text-foreground-secondary">
             Chưa hỗ trợ
           </span>
         ) : null}

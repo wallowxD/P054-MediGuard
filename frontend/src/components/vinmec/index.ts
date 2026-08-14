@@ -1,0 +1,13 @@
+export { default as VinmecAboutHero } from "./VinmecAboutHero";
+export { default as VinmecAboutPartners } from "./VinmecAboutPartners";
+export { default as VinmecAwards } from "./VinmecAwards";
+export { default as VinmecCapacity } from "./VinmecCapacity";
+export { default as VinmecCareValues } from "./VinmecCareValues";
+export { default as VinmecCertifications } from "./VinmecCertifications";
+export { default as VinmecFacilities } from "./VinmecFacilities";
+export { default as VinmecFooter } from "./VinmecFooter";
+export { default as VinmecHeader } from "./VinmecHeader";
+export { default as VinmecHero } from "./VinmecHero";
+export { default as VinmecMilestones } from "./VinmecMilestones";
+export { default as VinmecPartners } from "./VinmecPartners";
+export { default as VinmecWhyUs } from "./VinmecWhyUs";

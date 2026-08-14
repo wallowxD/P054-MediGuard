@@ -1,9 +1,11 @@
 "use client";
 
-import { History, Menu, Pill, X } from "lucide-react";
+import { Menu, Pill, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import Logo from "@/components/ui/Logo";
 import { ROUTES } from "@/constants/routes";
+import SidebarHistory from "./SidebarHistory";
 import SidebarNavList from "./SidebarNavList";
 import SidebarUserFooter from "./SidebarUserFooter";
 
@@ -57,10 +59,7 @@ export default function MobileTopbar() {
           href={ROUTES.DASHBOARD}
           className="flex items-center gap-2 font-heading text-base font-semibold text-foreground"
         >
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            <Pill className="h-3.5 w-3.5" aria-hidden />
-          </span>
-          MediGuard
+          <Logo className="h-7 w-auto" />
         </Link>
       </header>
 
@@ -84,7 +83,7 @@ export default function MobileTopbar() {
         }`}
       >
         <div className="flex h-14 items-center justify-between border-b border-border px-4">
-          <span className="font-heading text-base font-semibold text-foreground">MediGuard</span>
+          <Logo className="h-7 w-auto" />
           <button
             ref={closeButtonRef}
             type="button"
@@ -99,24 +98,7 @@ export default function MobileTopbar() {
         <div className="flex flex-1 flex-col justify-between overflow-y-auto px-3 py-4">
           <SidebarNavList onNavigate={close} />
 
-          <div className="mt-6">
-            <div className="flex items-center justify-between px-3">
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">
-                Lịch sử tra cứu
-              </h2>
-              <Link
-                href={ROUTES.HISTORY}
-                onClick={close}
-                className="rounded text-xs font-medium text-primary hover:text-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                Xem tất cả
-              </Link>
-            </div>
-            <div className="mt-2 flex flex-col items-center gap-2 rounded-lg border border-dashed border-border px-3 py-6 text-center">
-              <History className="h-5 w-5 text-foreground-muted" aria-hidden />
-              <p className="text-xs text-foreground-muted">Chưa có lượt tra cứu nào.</p>
-            </div>
-          </div>
+          <SidebarHistory onNavigate={close} />
         </div>
 
         <SidebarUserFooter onNavigate={close} />

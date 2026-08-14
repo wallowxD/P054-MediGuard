@@ -19,10 +19,10 @@ from medsafe.domain.pairing import MAX_DRUGS_PER_CHECK
 def build_catalog_conditions(letter: str | None, query: str | None) -> list[ColumnElement[bool]]:
     """Dựng điều kiện WHERE cho danh mục thuốc — dùng chung cho query đếm và query lấy trang.
 
-    Lọc tất định bằng LIKE, không dùng similarity: đây là thao tác duyệt danh mục, người
-    dùng phải thấy đúng những gì có trong bảng `drugs`.
+    Lọc tất định bằng LIKE, chỉ lấy bản ghi có version = 'v2': người dùng phải thấy
+    đúng những gì có trong bảng `drugs` v2.
     """
-    conditions: list[ColumnElement[bool]] = []
+    conditions: list[ColumnElement[bool]] = [Drug.version == "v2"]
 
     if letter == NON_ALPHA_LETTER:
         # `!~` là toán tử regex của PostgreSQL. Nhóm này chỉ có vài dòng nên việc index
@@ -78,11 +78,11 @@ class SqlDrugRepository:
         self._session = session
 
     async def list_catalog_pairs(self) -> list[tuple[UUID, str, str]]:
-        """Trả danh sách tuple (id, brand_name, ingredient_raw) của tất cả thuốc trong danh mục.
+        """Trả danh sách tuple (id, brand_name, ingredient_raw) của tất cả thuốc v2 trong danh mục.
 
         Phục vụ cho `domain/normalization.py` match_drug() và giúp API search gán drugId ổn định.
         """
-        stmt = select(Drug.id, Drug.brand_name, Drug.ingredient_raw)
+        stmt = select(Drug.id, Drug.brand_name, Drug.ingredient_raw).where(Drug.version == "v2")
         result = await self._session.execute(stmt)
         return [(row[0], row[1], row[2]) for row in result.all()]
 
@@ -115,25 +115,27 @@ class SqlDrugRepository:
         return list(result.scalars().all()), total
 
     async def count_by_first_letter(self) -> dict[str, int]:
-        """Đếm số thuốc theo ký tự đầu của tên đã bỏ dấu.
+        """Đếm số thuốc v2 theo ký tự đầu của tên đã bỏ dấu.
 
         Đếm trong PostgreSQL chứ không kéo 1500 dòng về rồi đếm bằng Python: thanh A–Z
         được gọi ở mỗi lần mở trang danh mục. Việc gộp ký tự thành nhóm A–Z là logic
         thuần nên nằm ở `domain/catalog.py`, không nằm trong SQL.
         """
         first_char = func.left(Drug.brand_name_unaccent, 1)
-        stmt = select(first_char, func.count()).group_by(first_char)
+        stmt = select(first_char, func.count()).where(Drug.version == "v2").group_by(first_char)
         result = await self._session.execute(stmt)
         return {row[0]: int(row[1]) for row in result.all()}
 
     async def get_by_id(self, drug_id: UUID) -> Drug | None:
-        return await self._session.get(Drug, drug_id)
+        stmt = select(Drug).where(Drug.id == drug_id, Drug.version == "v2")
+        result = await self._session.execute(stmt)
+        return result.scalar_one_or_none()
 
     async def get_by_ids(self, drug_ids: list[UUID]) -> list[Drug]:
         """Batch lookup danh sách thuốc theo IDs, giới hạn tối đa MAX_DRUGS_PER_CHECK (20)."""
         if not drug_ids:
             return []
         bounded_ids = drug_ids[:MAX_DRUGS_PER_CHECK]
-        stmt = select(Drug).where(Drug.id.in_(bounded_ids))
+        stmt = select(Drug).where(Drug.id.in_(bounded_ids), Drug.version == "v2")
         result = await self._session.execute(stmt)
         return list(result.scalars().all())

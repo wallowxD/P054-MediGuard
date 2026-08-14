@@ -55,6 +55,40 @@ class DrugLetterIndexResponse(CamelModel):
     total: int
 
 
+class DrugDetailResponse(CamelModel):
+    """Chi tiết một thuốc trong danh mục (`GET /api/v1/drugs/{drug_id}`).
+
+    Toàn bộ trường `summary_*`, `therapeutic_effect` và `special_notes` là đoạn TRÍCH
+    NGUYÊN VĂN từ tờ HDSD (xem `scripts/extract_v2_json.py`), không phải nội dung do model
+    tự viết. Vì vậy endpoint trả nguyên chuỗi đã lưu và không diễn giải lại — mục nào
+    nguồn không có thì là `None`, FE ẩn mục đó thay vì tự điền.
+
+    `leaflet_url` là đường dẫn tài liệu gốc cho mọi nội dung phía trên; thiếu nó thì
+    người dùng không truy vết được, nên FE phải nói rõ khi trường này rỗng.
+    """
+
+    id: str
+    brand_name: str
+    ingredient: str
+    dosage_form: str | None = None
+    route: str | None = None
+    manufacturer: str | None = None
+    leaflet_url: str | None = None
+
+    pharmacological_class: str | None = None
+    therapeutic_effect: str | None = None
+    # `None` = nguồn không nói rõ kê đơn hay OTC. Khác hẳn `False` là "biết chắc không cần
+    # đơn" — FE không được gộp hai trạng thái này thành một nhãn.
+    is_prescription: bool | None = None
+
+    summary_indications: str | None = None
+    summary_contraindications: str | None = None
+    summary_dosage: str | None = None
+    summary_precautions: str | None = None
+    summary_side_effects: str | None = None
+    special_notes: str | None = None
+
+
 class DrugListResponse(CamelModel):
     """Một trang của danh mục thuốc (`GET /api/v1/drugs`).
 

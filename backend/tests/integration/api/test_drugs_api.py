@@ -450,3 +450,117 @@ async def test_letters_on_empty_catalog():
             assert all(item["count"] == 0 for item in data["letters"])
     finally:
         app.dependency_overrides.pop(get_drug_repository, None)
+
+
+# ── GET /api/v1/drugs/{drug_id} — chi tiết một thuốc ──────────────────────────
+
+
+@pytest.fixture
+def fake_detail_catalog():
+    """Hai thuốc: một bản ghi v2 đầy đủ, một bản ghi chỉ có trường định danh."""
+    return [
+        Drug(
+            id=uuid.UUID("11111111-1111-1111-1111-111111111111"),
+            brand_name="Panadol Extra 500mg",
+            brand_name_unaccent="panadol extra 500mg",
+            ingredient_raw="Paracetamol, Caffeine",
+            canonical_ingredients=["paracetamol", "caffeine"],
+            dosage_form="Viên nén bao phim",
+            route="Uống",
+            manufacturer="GSK",
+            leaflet_url="https://example.test/panadol",
+            pharmacological_class="Thuốc giảm đau, hạ sốt",
+            therapeutic_effect="Paracetamol có tác dụng giảm đau và hạ sốt.",
+            is_prescription=False,
+            summary_indications="Điều trị các triệu chứng đau và sốt.",
+            summary_contraindications="Quá mẫn với paracetamol.",
+            summary_dosage="Người lớn: 1-2 viên mỗi 4-6 giờ.",
+            summary_precautions="Thận trọng ở bệnh nhân suy gan.",
+            summary_side_effects="Hiếm gặp: phát ban da.",
+            special_notes="Không dùng quá 4g paracetamol mỗi ngày.",
+        ),
+        Drug(
+            id=uuid.UUID("22222222-2222-2222-2222-222222222222"),
+            brand_name="Aspirin 500mg",
+            brand_name_unaccent="aspirin 500mg",
+            ingredient_raw="Aspirin",
+            canonical_ingredients=["aspirin"],
+            # Bản ghi cũ: mục nào nguồn không có thì lưu chuỗi rỗng, không phải NULL.
+            leaflet_url=None,
+            summary_indications="",
+            summary_dosage="   ",
+        ),
+    ]
+
+
+@pytest.fixture
+def detail_client(fake_detail_catalog):
+    fake_repo = FakeDrugRepository(fake_detail_catalog)
+    app.dependency_overrides[get_drug_repository] = lambda: fake_repo
+    yield
+    app.dependency_overrides.pop(get_drug_repository, None)
+
+
+@pytest.mark.asyncio
+async def test_get_drug_returns_full_v2_payload(detail_client):
+    """Bản ghi v2 đầy đủ trả nguyên văn mọi mục, không bị cắt hay diễn giải lại."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/v1/drugs/11111111-1111-1111-1111-111111111111")
+        assert response.status_code == 200
+        data = response.json()
+
+        assert data["brandName"] == "Panadol Extra 500mg"
+        assert data["ingredient"] == "Paracetamol, Caffeine"
+        assert data["dosageForm"] == "Viên nén bao phim"
+        assert data["route"] == "Uống"
+        assert data["manufacturer"] == "GSK"
+        assert data["leafletUrl"] == "https://example.test/panadol"
+        assert data["pharmacologicalClass"] == "Thuốc giảm đau, hạ sốt"
+        assert data["isPrescription"] is False
+        assert data["summaryIndications"] == "Điều trị các triệu chứng đau và sốt."
+        assert data["summaryContraindications"] == "Quá mẫn với paracetamol."
+        assert data["summaryDosage"] == "Người lớn: 1-2 viên mỗi 4-6 giờ."
+        assert data["summaryPrecautions"] == "Thận trọng ở bệnh nhân suy gan."
+        assert data["summarySideEffects"] == "Hiếm gặp: phát ban da."
+        assert data["specialNotes"] == "Không dùng quá 4g paracetamol mỗi ngày."
+
+
+@pytest.mark.asyncio
+async def test_get_drug_normalizes_blank_sections_to_null(detail_client):
+    """Chuỗi rỗng và chuỗi toàn khoảng trắng đều thành `null` — FE chỉ phải xử lý một trạng thái."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        data = (await ac.get("/api/v1/drugs/22222222-2222-2222-2222-222222222222")).json()
+
+        assert data["summaryIndications"] is None
+        assert data["summaryDosage"] is None
+        assert data["leafletUrl"] is None
+        assert data["isPrescription"] is None
+        assert data["brandName"] == "Aspirin 500mg"
+
+
+@pytest.mark.asyncio
+async def test_get_drug_unknown_id_returns_404(detail_client):
+    """ID hợp lệ nhưng không có trong danh mục -> 404, không phải payload rỗng."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get(f"/api/v1/drugs/{uuid.uuid4()}")
+        assert response.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_get_drug_malformed_id_returns_422(detail_client):
+    """`drug_id` không phải UUID -> 422 validation, không đi tới repository."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        assert (await ac.get("/api/v1/drugs/khong-phai-uuid")).status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_static_routes_still_win_over_detail_route(detail_client):
+    """`/letters` và `/search` không được bị route `/{drug_id}` nuốt mất."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        assert (await ac.get("/api/v1/drugs/letters")).status_code == 200
+        assert (await ac.get("/api/v1/drugs/search?q=panadol")).status_code == 200

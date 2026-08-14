@@ -45,7 +45,7 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 
 | Path | Trách nhiệm |
 |---|---|
-| `src/app/(public)/` | Landing, sign-in/sign-up và legal page |
+| `src/app/(public)/` | Trang chủ Vinmec, màn tính năng, sign-in/sign-up và legal page |
 | `src/app/(protected)/` | Dashboard, interaction lookup, settings cho user đã đăng nhập |
 | `src/app/(review)/` | Review queue cho role `PHARMACIST` dưới `/review` |
 | `src/proxy.ts` | Access gate thật chạy tại edge |
@@ -53,7 +53,8 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 | `src/services/` | HTTP function thuần, không React/hook |
 | `src/queries/` | Query key, React Query hook và invalidation |
 | `src/store/` | Chỉ client state như filter và drug basket |
-| `src/components/landing/` | Section của landing page công khai (`/`) — hero, nav, feature card, CTA, footer |
+| `src/components/landing/` | Section của màn tính năng (`/tinh-nang`) — hero, feature card, CTA. `LandingHeader`/`LandingFooter` trong thư mục này KHÔNG còn được render, xem ghi chú ở đầu `(public)/tinh-nang/page.tsx` |
+| `src/components/vinmec/` | Cổng Vinmec: header, footer, hero, các section của trang chủ (`/`) và của trang `Về Vinmec` (`/ve-vinmec`) |
 | `src/components/interactions/` | Warning card, severity badge, citation block |
 | `src/lib/api/types.gen.ts` | Generated type từ OpenAPI; không sửa tay |
 
@@ -79,13 +80,62 @@ Page/Component → queries/* → services/* → utils/request.ts → backend
 7. constants/routes.ts              → đăng ký route nếu public hoặc review
 ```
 
-## Hệ thống thị giác MediGuard (landing page)
+## Bản đồ route công khai
 
-Đây là nguồn sự thật cho toàn team về màu sắc và kiểu chữ của landing page công khai (`/`).
+| URL | Nội dung | File |
+|---|---|---|
+| `/` | Trang chủ Vinmec — cổng bệnh viện, nội dung tĩnh | `app/(public)/page.tsx` |
+| `/tinh-nang` | Màn tra cứu an toàn thuốc, vào từ mục "Tính năng" trên nav | `app/(public)/tinh-nang/page.tsx` |
+| `/ve-vinmec` | Trang "Về Vinmec" — tầm nhìn, C.A.R.E, năng lực, giải thưởng, cột mốc, đối tác | `app/(public)/ve-vinmec/page.tsx` |
+| `/privacy-policy`, `/terms-of-service` | Trang pháp lý | `app/(public)/…` |
+
+Hai trang đầu **từng ngược nhau** (`/` là màn tra cứu, `/vinmec` là cổng). Route `/vinmec`
+đã bị gỡ và nay trả 404 — xem `GONE_ROUTES` trong `constants/routes.ts`. Link cũ trỏ `/`
+giờ ra cổng bệnh viện chứ không còn ra màn tra cứu, kiểm lại trước khi copy link cũ.
+
+Người đã đăng nhập vẫn xem được `/`; `src/proxy.ts` cố ý không đá họ về dashboard nữa.
+
+### Nav chính chỉ có ba mục, không dropdown
+
+`VINMEC_NAV` (`components/vinmec/vinmec-content.ts`) đúng ba mục, mỗi mục một route thật:
+
+| Mục | Route |
+|---|---|
+| Trang chủ | `/` |
+| Về Vinmec | `/ve-vinmec` |
+| Tính năng | `/tinh-nang` |
+
+**Đây là quyết định cố ý, không phải bản dựng dở.** Nav từng chép đủ 7 nhóm của vinmec.com
+(Chuyên khoa, Hướng dẫn khách hàng, Phát triển bền vững, Chuyên trang sức khoẻ,
+Online.Vinmec…), phần lớn là dropdown trỏ `#` chết — trong buổi demo chúng chỉ dụ người xem
+bấm vào rồi không đi đâu cả. Toàn bộ cơ chế dropdown (desktop hover + accordion mobile) đã
+được gỡ khỏi `VinmecHeader`; `VinmecNavItem` nay chỉ còn `{ label, href }`.
+
+Muốn thêm mục thì mục đó **phải có route thật**. Đừng thêm lại link `#` vào nav. `DEAD_LINK`
+vẫn còn nhưng chỉ dành cho footer, icon mạng xã hội và nút "Xem thêm" ở dải chứng nhận.
+
+Trên mobile, khối Đăng nhập/Đăng ký nằm **ngoài** vòng lặp nav. Trước đây nó bám vào mục
+"Tính năng" bên trong `.map()`; giờ cả ba mục đều là route thật nên để nguyên chỗ cũ sẽ sinh
+ra ba khối đăng nhập chồng nhau.
+
+### `/ve-vinmec` gộp 9 trang của bản gốc
+
+Trên vinmec.com, "Về Vinmec" **không phải một trang** mà là nhóm menu 9 mục, mỗi mục một
+trang riêng. Bản mô phỏng gộp nội dung chính của ba trang đầu (`/tam-nhin-va-su-menh/`,
+`/thanh-tuu-va-giai-thuong/`, `/doi-tac/`) vào một route duy nhất. Chín mục con đó **không
+còn xuất hiện trên nav** kể từ khi nav rút còn ba mục — vào trang này bằng mục "Về Vinmec".
+
+Nội dung nằm trong `components/vinmec/vinmec-about-content.ts`, tách khỏi `vinmec-content.ts`
+vì khối lượng chữ lớn hơn hẳn phần còn lại của cổng. Số liệu là **chuỗi** giữ nguyên định
+dạng bản gốc (`"1.505"`, `"8.8 triệu"`) — không format lại bằng `Intl.NumberFormat`.
+
+## Hệ thống thị giác (màn tính năng)
+
+Đây là nguồn sự thật cho toàn team về màu sắc của màn tính năng (`/tinh-nang`).
 Phần implementation nằm ở `frontend/src/app/globals.css`; nếu đổi giá trị palette, cập nhật
 bảng này và token CSS trong cùng một pull request.
 
-### Bảng màu thương hiệu — landing page nền sáng
+### Bảng màu thương hiệu — màn tính năng nền sáng
 
 | Token | Hex | Dùng cho |
 |---|---|---|
@@ -100,27 +150,76 @@ bảng này và token CSS trong cùng một pull request.
 | `hero-tint` | `#EAF1FB` | Điểm bắt đầu gradient hero và vòng tròn icon |
 | `hero-tint-mid` | `#F0F5FF` | Điểm giữa gradient hero |
 | `hero-tint-soft` | `#F5F9FF` | Điểm kết gradient CTA và nền tông nhẹ |
-| `primary-blue` | `#4B7FC3` | Màu xanh tương tác duy nhất của landing page — CTA hero, CTA `CtaBand`, nav link đang active |
+| `primary-blue` | `#4B7FC3` | Màu xanh tương tác duy nhất của màn tính năng — CTA hero, CTA `CtaBand`, nav link đang active |
 | `coral` | `#F28C78` | Điểm nhấn minh hoạ ấm, chỉ dùng nhỏ (hiện chưa dùng, giữ chỗ dự phòng) |
 | `cta-accent` | `#4B7FC3` (= `primary-blue`) | CTA hero, CTA `CtaBand` và nav link active. Không dùng cho gì khác. |
 | `cta-accent-hover` | `color-mix(primary-blue 78%, black)` | Trạng thái hover cho `cta-accent` |
 
 ### Typography (kiểu chữ)
 
+**Toàn site dùng đúng MỘT font: Inter.** Tiêu đề, thân bài, nút, nav — tất cả cùng một
+font family. Không có font serif cho heading, không có display font riêng cho hero.
+
+Đây không phải lựa chọn thẩm mỹ tuỳ hứng mà là để khớp trang chủ Vinmec. CSS gốc của
+Vinmec (`/css/reset.css`) đặt:
+
+```css
+html,
+body {
+  font-family: "Inter", "roboto", Arial, Helvetica, sans-serif;
+}
+```
+
+và **không** khai báo font nào khác cho `h1`–`h6`. Giao diện của mình đứng cạnh cổng
+Vinmec trong cùng một luồng, nên lệch font là lộ ngay.
+
 | Dùng cho | Font | Áp dụng qua |
 |---|---|---|
-| Body text toàn site | Inter | `font-sans` (mặc định, hiếm khi phải khai báo tay) |
-| Heading toàn site **trừ** hero landing | Lora | `font-heading`, load một lần ở `app/layout.tsx` |
-| Riêng `<h1>` của hero landing | Roboto | xem bên dưới — **không** dùng `font-heading` |
+| Mọi text trong app | Inter | `font-sans` — mặc định, **hiếm khi phải khai báo tay** |
+| Tiêu đề | Inter | `font-heading` (xem lưu ý bên dưới) |
 
-Headline của hero là ngoại lệ duy nhất cho quy tắc "một font heading cho toàn site". Font này
-được load qua một instance `next/font/google` cục bộ trong `HeroSection.tsx` (`variable:
-"--font-hero-display"`), áp dụng bằng `style={{ fontFamily: "var(--font-hero-display)" }}`
-chỉ trên thẻ `<h1>`. Font này **không** đăng ký ở `app/layout.tsx` và không đụng tới
-`font-heading`, nên mọi heading khác trên site vẫn dùng Lora. Nếu cần thêm một display font
-riêng cho một section khác, hãy copy đúng pattern này (`variable` khai báo cục bộ trong
-component, `fontFamily` inline) thay vì đổi `font-heading` toàn cục — đổi biến toàn cục sẽ
-âm thầm restyle mọi trang khác.
+#### `font-heading` hiện bằng hệt `font-sans`
+
+`font-heading` vẫn tồn tại và vẫn dùng được, nhưng nó **không còn là một font khác**:
+
+```css
+/* globals.css */
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-body); /* ← cùng một font */
+}
+```
+
+Giữ lại utility này vì hai lý do: nó ghi lại ý định "đây là tiêu đề" ngay trong markup, và
+nếu sau này team muốn tiêu đề đổi font thì **chỉ sửa một dòng** thay vì đi sửa 14 file.
+Đừng nhìn thấy `font-heading` rồi tưởng đang có font tiêu đề riêng.
+
+#### Cân nặng (weight)
+
+Inter được nạp ở dạng **variable font**, có sẵn dải 100–900, đúng như Vinmec nạp
+(`family=Inter:wght@100..900`). Nghĩa là:
+
+- Cứ dùng thẳng `font-medium`, `font-semibold`, `font-bold`… không phải khai báo trước.
+- **Không** thêm mảng `weight` vào `Inter()` trong `app/layout.tsx`. Thêm vào là khoá lại
+  đúng vài weight đó, và mọi weight khác sẽ bị trình duyệt giả lập (faux bold) — chữ dày
+  bệt, xấu, mà không có lỗi nào báo.
+
+Thang weight đang dùng trong dự án: `font-medium` (500) cho nhãn/nav, `font-semibold` (600)
+cho tiêu đề và nút, `font-bold` (700) khi thật sự cần nhấn mạnh.
+
+#### Quy tắc bắt buộc
+
+- **Không** thêm font family thứ hai. Muốn phân cấp thị giác thì đổi **cỡ chữ, weight, màu**
+  — đừng đổi font.
+- **Không** khai báo `fontFamily` inline trong component. Trước đây `HeroSection.tsx` từng
+  làm vậy để dùng Roboto riêng cho `<h1>`; pattern đó đã bị gỡ, đừng dựng lại.
+- **Không** thêm instance `next/font/google` ở component. Font chỉ được đăng ký một chỗ duy
+  nhất: `src/app/layout.tsx`.
+- Cần một cỡ chữ mà Tailwind không có (ví dụ `clamp()` co giãn theo viewport) thì chỉ đặt
+  `fontSize` inline, giữ nguyên font family kế thừa.
+
+Muốn đổi font cho toàn site (kể cả quay về hai-font): sửa `interFont` trong
+`src/app/layout.tsx` và hai dòng `--font-*` trong `globals.css`. Đó là toàn bộ điểm chạm.
 
 ### Màu ngữ nghĩa (semantic colours)
 
@@ -185,27 +284,65 @@ chọn cố ý, khác với thanh sticky phẳng phần còn lại của app hay
   cho nav desktop.
 - Nav link active được đánh dấu bằng `border-b-2 border-[var(--cta-accent)]`, cùng màu với
   CTA hero — đây là nơi duy nhất khác được phép dùng `cta-accent`.
+- **Mục nav nào đang active do scroll spy quyết định, không hardcode.** `useSectionSpy`
+  (`components/landing/use-section-spy.ts`) dùng `IntersectionObserver` với vạch đọc
+  `-45% 0px -50% 0px`: section nào chiếm khoảng giữa viewport thì mục nav tương ứng sáng
+  underline và mang `aria-current="page"`. Nav desktop và drawer mobile đọc chung một
+  `activeId` nên không thể lệch nhau. Không thêm listener `scroll` để tính lại việc này —
+  observer đã đủ và rẻ hơn nhiều.
+- Mỗi mục nav phải có một section mang đúng `id` khai báo trong `LANDING_SECTIONS`
+  (`#trang-chu` là hero, `#lien-he` là `LandingFooter`). Thêm mục nav mà quên gắn `id` thì
+  link vẫn cuộn được nhưng underline không bao giờ sáng.
+- Bấm nav link sẽ `preventDefault` rồi tự cuộn (có bù `HEADER_OFFSET` và tôn trọng
+  `prefers-reduced-motion`) để active state đổi ngay thay vì nhảy qua từng section trung
+  gian trong lúc cuộn mượt. `href` vẫn là neo thật để link hoạt động khi JS chưa chạy.
 - **Nav đầy đủ (link giữa + action bên phải) chỉ hiện từ `lg:` (1024px), không phải `md:`
   (768px).** Đây là chủ đích, không phải thiếu sót: ở 768px không đủ chỗ cho logo, 5 link nav
   và action bên phải trên một dòng, chúng sẽ bị xuống dòng. Nếu thêm nav item mới, kiểm tra lại
   ở cả 768px và 1024px trước khi ship — đừng chỉ nhìn ở 1440px.
 
-### Căn giữa theo chiều dọc ở Hero — lưu ý khi chỉnh sửa
+### Chiều cao Hero — hero chiếm trọn viewport đầu tiên
 
-`lg:min-h-[clamp(620px,70vh,820px)]` và `lg:items-center` của hero nằm trên **cùng một**
-element (grid `.landing-wide-container` bên trong `HeroSection`), không tách ra giữa
-`<section>` và phần tử con. Đặt `min-height` ở `<section>` rồi `height: 100%` + `items-center`
-ở grid con nhìn tương đương nhưng không đáng tin cậy — việc resolve percentage-height dựa trên
-parent có `min-height` khá mong manh, kết quả là nội dung bị dồn lên trên với khoảng trống lệch
-phía dưới thay vì được căn giữa. Muốn chỉnh chiều cao hoặc cách căn giữa của hero, giữ cả hai
-thuộc tính trên cùng một element.
+Ở `lg` trở lên, hero cao đúng phần viewport còn lại dưới `LandingHeader`, để màn hình đầu
+tiên chỉ có nav và hero — section "Tính năng" không được ló ra đáy màn hình khi chưa cuộn.
+Logic nằm ở class `.landing-hero-viewport` trong `globals.css`, không phải utility trong JSX,
+vì cần hai dòng `min-height` (fallback `vh` rồi `dvh`) mà arbitrary value của Tailwind không
+diễn đạt được.
+
+```
+min-height: calc(100dvh - var(--landing-header-block));   /* --landing-header-block = 4rem + 2px */
+```
+
+Ba điều dễ làm sai khi chỉnh:
+
+- **Chỉ trừ `--landing-header-block`, không trừ thêm `--landing-header-offset`.** Header
+  chiếm trong luồng đúng chiều cao card (h-16 + 2 đường viền 1px); `top-3/top-4` chỉ là vị trí
+  sticky, ở scroll 0 nó đẩy card xuống và card đè lên padding trên của hero. Trừ thêm 1rem nữa
+  là chừa lại đúng 1rem cho mép "Tính năng" lộ ra — quay lại đúng lỗi ban đầu.
+- **`min-height`, không phải `height`.** Màn hình thấp thì hero phải dài ra được; đặt `height`
+  sẽ cắt mất headline/CTA/disclaimer.
+- **Chỉ áp từ `lg`.** Dưới `lg` hero cao theo nội dung; ép full-screen trên điện thoại chỉ tạo
+  overflow chứ không đẹp hơn.
+
+`min-height` và `lg:items-center` phải nằm trên **cùng một** element (grid
+`.landing-wide-container` bên trong `HeroSection`), không tách ra giữa `<section>` và phần tử
+con. Đặt `min-height` ở `<section>` rồi `height: 100%` + `items-center` ở grid con nhìn tương
+đương nhưng không đáng tin cậy — việc resolve percentage-height dựa trên parent có `min-height`
+khá mong manh, kết quả là nội dung bị dồn lên trên với khoảng trống lệch phía dưới thay vì được
+căn giữa.
 
 ### Ảnh minh hoạ Hero
 
-Ảnh viên nang của hero nằm ở `frontend/public/pill-render.png`, dùng thẻ `<img>` thường (không
-phải `next/image`) vì đây là asset trang trí, nền trong suốt, tràn ra ngoài nền chứ không phải
-ảnh nội dung cần crop/tối ưu. `yarn lint` sẽ cảnh báo việc này — cảnh báo đó là dự tính, không
-cần sửa.
+Ảnh viên nang của hero nằm ở `frontend/public/pill-render.png` (1448×1086), dùng thẻ `<img>`
+thường (không phải `next/image`) vì đây là asset trang trí, nền trong suốt, tràn ra ngoài nền
+chứ không phải ảnh nội dung cần crop/tối ưu. `yarn lint` sẽ cảnh báo việc này — cảnh báo đó là
+dự tính, không cần sửa.
+
+Ở `lg`, ảnh dùng `lg:w-auto lg:max-w-[min(100%,38rem)]` cộng `max-height` từ class
+`.landing-hero-figure` (chỗ trống thật còn lại sau header, phần sticky đè lên và `lg:py-12`).
+Chỉ đặt trần chứ không đặt `height`: với thẻ ảnh, trình duyệt tự co cả hai chiều theo đúng tỉ
+lệ gốc khi vướng `max-width`/`max-height`, nên ảnh nhỏ lại chứ không méo và không bị crop. Từ
+1366×768 trở lên trần này chưa chạm tới — nó chỉ có tác dụng trên laptop màn hình rất thấp.
 
 ### Quy tắc màu sắc và thị giác
 
@@ -217,7 +354,7 @@ cần sửa.
 - `cta-accent` chỉ dành cho CTA chính của hero, CTA của `CtaBand`, và nav link đang active.
   Không tái sử dụng cho chỗ khác. Đây là alias của `primary-blue`, không phải một tông màu
   thứ hai — giữ nguyên như vậy thay vì thêm một sắc xanh thứ ba vào palette.
-- Nhịp spacing dọc của landing page là `py-20 sm:py-24` (khoảng 80–96px) cho các section nội
+- Nhịp spacing dọc của màn tính năng là `py-20 sm:py-24` (khoảng 80–96px) cho các section nội
   dung đầy đủ (`FeaturesSection`, `HowItWorksSection`); `CtaBand` và `LandingFooter` chặt hơn vì
   là band, không phải content section. Ưu tiên tăng padding *bên trong* card/band thay vì tăng
   khoảng trống *giữa* các section — khi phân vân, trang nên đọc như "có padding", không phải
@@ -241,11 +378,26 @@ cần sửa.
   file này đã tồn tại, đối chiếu với `src/types/*.d.ts` (hiện đang viết tay) và xoá phần
   trùng lặp.
 - Dark mode, responsive và keyboard accessibility là acceptance requirement, đồng thời là
-  **tiêu chí chấm điểm**. Ngoại lệ duy nhất là landing page công khai — giao diện thương hiệu
+  **tiêu chí chấm điểm**. Ngoại lệ duy nhất là trang công khai — giao diện thương hiệu
   MediGuard của trang này chủ đích chỉ có chế độ sáng.
 - Severity phải có text/icon; không truyền đạt chỉ bằng màu.
 - Warning phải hiển thị quote, source và review status đầy đủ.
-- `pending` vẫn hiển thị ngay với nhãn chờ xác nhận chuyên môn; `rejected` không hiển thị.
+- `pending` vẫn hiển thị ngay, kèm `PendingReviewNotice` — không chỉ một nhãn text nhỏ.
+  `rejected` không hiển thị: `InteractionCard` và `InteractionTableRow` đều gọi
+  `isRejectedForPatient()` làm chốt chặn runtime, kể cả khi type đã loại `"rejected"`.
+- Nhãn của `interaction.management` là **"Nội dung trong tài liệu nguồn"**, không phải
+  "Xử trí". Đây là nội dung chép lại từ tờ HDSD, không phải hướng xử trí cho ca cụ thể;
+  wording mang tính chỉ định điều trị vi phạm nguyên tắc "không kết luận lâm sàng".
+- Text có nghĩa phải đạt WCAG AA 4.5:1. `--foreground-muted` đã đổi từ `#94a3b8` (2.56:1
+  trên nền trắng) sang `#64748b` ở light và `#9ca3af` ở dark; đừng làm nhạt lại. Nếu cần
+  text mờ hơn nữa trên nền `surface`, dùng `foreground-secondary` thay vì hạ token.
+- Vùng chạm của icon-only button tối thiểu 24×24 CSS px, ưu tiên 32–44px. Đặt kích thước
+  bằng `h-*/w-*` + flex centering, không dựa vào `p-0.5` quanh icon 12px.
+- Mọi layout có chrome cố định phải có `SkipLink`; `<main>` tương ứng mang
+  `id={MAIN_CONTENT_ID}` và `tabIndex={-1}`. Hiện có ở `(public)` và `(protected)`;
+  `(review)` chưa có.
+- `Modal` (`components/ui/Modal.tsx`) là nơi duy nhất cài focus trap, Escape, khoá scroll
+  nền và trả focus về trigger. Đừng viết overlay dialog riêng — thêm prop vào đây.
 - Giữ `output: "standalone"` trong `next.config.ts` vì Docker image phụ thuộc output này.
 - `NEXT_PUBLIC_*` được đóng vào bundle lúc build; Docker truyền qua `build.args`.
 - Application route không được chứa dấu chấm vì proxy matcher loại path có extension.
@@ -266,7 +418,7 @@ lý do dưới đây:
 | `useRef` cho store tạo một lần | `useState(makeStore)` | Tránh vi phạm React 19 refs rule |
 | Provider bọc `<html>` | Provider nằm trong `<body>` | Root layout cần `<html>/<body>` ở root |
 | Matcher liệt kê extension | Loại mọi path có extension | Không redirect sitemap, robots, manifest, PDF |
-| `/` redirect sign-in | `/` là landing page public | Guest phải xem được trang giới thiệu |
+| `/` redirect sign-in | `/` là trang chủ Vinmec công khai | Ai cũng xem được cổng bệnh viện, kể cả khách lẫn người đã đăng nhập |
 | `public/robots.txt` cố định | `src/app/robots.ts` | Sinh URL đúng theo deployment |
 
 Chi tiết quyết định tại [ADR 0007](../adrs/0007-frontend-structure-and-auth.md) và
@@ -274,6 +426,35 @@ Chi tiết quyết định tại [ADR 0007](../adrs/0007-frontend-structure-and-
 
 ## Trạng thái hiện tại
 
-Backend chưa có auth module và business router chưa được bật. Các service liên quan vẫn
-gọi `apiNotReady()`; khôi phục function body theo TODO khi backend sẵn sàng. Frontend test
+Backend auth đã hoạt động cho đăng ký, đăng nhập email/mật khẩu, Google OIDC, lấy hồ sơ và
+làm mới token. NextAuth giữ refresh token trong JWT cookie phía server, lưu hạn access token
+từ `expiresIn`, rồi gọi `POST /api/v1/auth/refresh` trước hạn 60 giây khi client lấy session;
+không đưa refresh token vào session trả về trình duyệt. Các API quên mật khẩu, đổi mật khẩu
+và MFA vẫn chưa có. Business router chỉ mở theo trạng thái liệt kê bên dưới. Frontend test
 framework chưa được chốt; không tự cài thêm trước khi có Jira decision/ADR phù hợp.
+
+### Màn hình nào đang thật sự dùng được
+
+| Màn | Trạng thái |
+|---|---|
+| `/drug-information` | Chạy thật — `/drugs`, `/drugs/letters`, `/drugs/search` đã có |
+| `/drug-information/[id]` | Chưa có endpoint chi tiết |
+| `/interactions`, `/interactions/drug-drug`, `/interactions/drug-food` | `FeatureUnavailable` |
+| `/interactions/drug-disease` | `FeatureUnavailable` — chờ VMEC-71 và VMEC-72 |
+| `/prescriptions/review` | `FeatureUnavailable` — chưa có upload/OCR |
+
+Ba màn tra cứu tương tác trước đây dựng đủ ô nhập nhưng nút tra cứu disabled vĩnh viễn.
+Với sản phẩm cảnh báo an toàn thuốc, một màn tra cứu không bao giờ trả kết quả rất dễ bị
+đọc thành "không có tương tác", nên chúng đã đổi sang `components/FeatureUnavailable.tsx`:
+nói thẳng là chưa khả dụng, liệt kê phần còn thiếu, và chỉ chứa link tới trang chạy thật.
+`PRIMARY_NAV_ITEMS` đánh dấu các mục này `unsupported: true` để sidebar và dashboard hiển
+thị badge "Chưa hỗ trợ" khớp với thực tế.
+
+Hệ quả: `DrugCatalogPicker`, `SelectedDrugList`, `BasketInputField`, `OcrCandidateList`,
+`OcrProcessingState`, `OcrFailureState`, `InteractionResultsPlaceholder` và Redux slice
+`drug-basket` hiện **không được mount ở đâu**. Giữ lại làm scaffold cho lúc backend mở —
+xem TODO(API) trong từng file — chứ không phải code chết cần xoá.
+
+`PrescriptionImageUpload` đã bỏ hoàn toàn `<input type="file">`, vùng kéo thả và preview:
+chọn được ảnh rồi thấy thumbnail khiến người dùng tin đơn thuốc đã được gửi lên và đang
+được AI đọc. Chỉ mở lại các affordance đó cùng lúc với endpoint upload + OCR thật.

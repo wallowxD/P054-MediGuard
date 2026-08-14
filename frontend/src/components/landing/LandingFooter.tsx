@@ -15,17 +15,18 @@ const SUPPORT_LINKS = [
   { href: "/privacy-policy", label: "Chính sách bảo mật" },
 ];
 
+// `id` của footer phải khớp LANDING_SECTIONS.CONTACT — mục nav "Liên hệ" neo tới đây.
 export default function LandingFooter() {
   return (
-    <footer id="lien-he" className="landing-footer-wash border-t border-border">
+    <footer
+      id={LANDING_SECTIONS.CONTACT.slice(1)}
+      className="landing-footer-wash scroll-mt-20 border-t border-border"
+    >
       <Reveal className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5 text-primary">
-              <Logo className="h-8 w-8" />
-              <span className="font-heading text-[15px] font-semibold text-foreground">
-                {SEO_CONFIG.brandName}
-              </span>
+              <Logo className="h-8 w-auto" />
             </div>
             <p className="mt-4 max-w-sm text-sm leading-7 text-foreground-secondary">
               Sản phẩm mô phỏng phục vụ học tập và demo, không thay thế tư vấn hoặc chỉ

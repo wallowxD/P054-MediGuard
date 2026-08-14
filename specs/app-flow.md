@@ -34,6 +34,11 @@ qua repository.
 
 ## Luồng thuốc – bệnh nền
 
+VMEC-40 hợp nhất luồng này vào `POST /api/v1/interactions/check`. Hồ sơ đã lưu chỉ tạo
+gợi ý; bệnh/tình trạng chỉ đi vào exact lookup sau khi người dùng xác nhận cho lượt hiện
+tại. Response được lưu thành snapshot để trang lịch sử không tra lại interaction hoặc
+gọi model.
+
 Bám theo [`demo-ui/interactions-disease.html`](../demo-ui/interactions-disease.html) đã
 được duyệt ngày 08/08/2026. Chi tiết ở
 [`specs/002-drug-disease-check/spec.md`](002-drug-disease-check/spec.md).
@@ -110,7 +115,9 @@ Pending không phải điều kiện chặn hiển thị; rejected evidence khô
 - Đối chiếu liều dùng: trong phạm vi theo [ADR 0018](../adrs/0018-dose-comparison-boundary.md)
   (chấp nhận 09/08/2026); chặn kỹ thuật còn lại là ingestion chưa trích ngưỡng liều dạng có
   cấu trúc từ mục *Liều và cách dùng*.
-- Prescription OCR: cần spec, privacy rule, contract và validation riêng.
+- Prescription image extraction: đã có [spec 005](005-prescription-image-extraction/spec.md) và
+  [ADR 0023](../adrs/0023-transient-prescription-image-extraction.md). Ảnh chỉ sống trong request,
+  Gemini trả candidate và người dùng phải xác nhận catalog ID; PDF vẫn ngoài phạm vi hiện tại.
 - Pharmacist mutation: cần authorization/evidence-version spec riêng.
 - Production VPS: chờ ADR topology triển khai được leader duyệt.
 

@@ -1,42 +1,10 @@
-import { Apple, Combine } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Clock3, Combine } from "lucide-react";
 import Link from "next/link";
+import SeverityBadge from "@/components/interactions/SeverityBadge";
 import { ROUTES } from "@/constants/routes";
 
-const KIND_ICON: Record<TInteractionKind, LucideIcon> = {
-  "drug-drug": Combine,
-  "drug-food": Apple,
-};
-
-const KIND_LABEL: Record<TInteractionKind, string> = {
-  "drug-drug": "Thuốc – thuốc",
-  "drug-food": "Thuốc – thực phẩm",
-};
-
-interface SearchHistoryItemProps {
-  item: IInteractionCheckSummaryItem;
-}
-
-/** Một dòng lịch sử tra cứu — dẫn tới `/interaction-checks/[id]` để xem chi tiết. */
-export default function SearchHistoryItem({ item }: SearchHistoryItemProps) {
-  const Icon = KIND_ICON[item.kind];
-  const names = [...item.drugNames, ...(item.foodNames ?? [])];
-
+export default function SearchHistoryItem({ item }: { item: IInteractionCheckSummaryItem }) {
   return (
-    <li>
-      <Link
-        href={`${ROUTES.INTERACTION_CHECKS}/${item.id}`}
-        className="flex items-start gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-hero-tint text-primary">
-          <Icon className="h-4 w-4" aria-hidden />
-        </span>
-        <div className="min-w-0 flex-1 space-y-1">
-          <p className="text-sm font-medium text-foreground">{KIND_LABEL[item.kind]}</p>
-          <p className="truncate text-sm text-foreground-secondary">{names.join(", ") || "—"}</p>
-          <p className="text-xs text-foreground-muted">{item.checkedAt}</p>
-        </div>
-      </Link>
-    </li>
+    <li><Link href={`${ROUTES.INTERACTION_CHECKS}/${item.id}`} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-hero-tint text-primary"><Combine className="h-4 w-4" /></span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><p className="font-medium text-foreground">{item.drugNames.join(" + ") || "Lượt tra cứu"}</p>{item.highestSeverity ? <SeverityBadge severity={item.highestSeverity} /> : null}</div>{item.diseaseNames.length ? <p className="mt-1 truncate text-sm text-foreground-secondary">Bệnh nền: {item.diseaseNames.join(", ")}</p> : null}<p className="mt-2 flex items-center gap-1 text-xs text-foreground-muted"><Clock3 className="h-3.5 w-3.5" />{new Date(item.checkedAt).toLocaleString("vi-VN")} · {item.resultCount} tương tác · {item.noteCount} lưu ý</p></div></Link></li>
   );
 }

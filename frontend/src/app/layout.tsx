@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Lora } from "next/font/google";
+import { Inter } from "next/font/google";
 import ToastProvider from "@/components/ToastProvider";
 import { SEO_CONFIG } from "@/config/seo-config";
 import StoreProvider from "@/store/StoreProvider";
@@ -7,18 +7,36 @@ import "./globals.css";
 import { NextAuthProvider } from "./lib/next.auth.provider";
 import { QueryProvider } from "./lib/query.provider";
 
-// Lora cho tiêu đề (`font-heading`) — serif editorial, vẫn phủ đủ dấu tiếng Việt.
-// Inter cho phần thân (`--font-sans` mặc định) — dễ đọc ở cỡ nhỏ, vẫn phủ đủ dấu.
-const headingFont = Lora({
+/**
+ * ★ MỘT font cho toàn site: Inter. Tiêu đề và thân bài dùng chung, không có font
+ *   serif cho heading và không có display font riêng cho hero.
+ *
+ * Đây là cách trang chủ Vinmec làm — CSS gốc của họ đặt
+ * `html, body { font-family: "Inter", ... }` và không khai báo font nào khác cho
+ * `h1…h6`. Muốn giao diện khớp Vinmec thì phải khớp cả điểm này.
+ *
+ * Không truyền `weight`: Inter được nạp ở dạng variable font nên có sẵn dải
+ * 100–900, đúng như Vinmec nạp (`family=Inter:wght@100..900`). Thêm một weight mới
+ * trong code không phải khai báo lại ở đây.
+ *
+ * `fallback` chép theo đúng thứ tự dự phòng của Vinmec, để lúc font chưa tải xong
+ * chữ không nhảy sang một font hệ thống khác hẳn.
+ *
+ * Chi tiết quy tắc dùng font: docs/frontend.md § Typography.
+ */
+const interFont = Inter({
   subsets: ["latin", "vietnamese"],
-  weight: ["500", "600", "700"],
-  variable: "--font-app",
-});
-
-const bodyFont = Inter({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600"],
+  display: "swap",
   variable: "--font-body",
+  fallback: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif",
+  ],
 });
 
 export const metadata: Metadata = {
@@ -44,7 +62,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${headingFont.variable} ${bodyFont.variable} h-full antialiased`}
+      className={`${interFont.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-background text-foreground">
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />

@@ -20,6 +20,13 @@ from medsafe.domain.auth import (
     InvalidTokenError,
     PasswordPolicyError,
 )
+from medsafe.domain.prescription_extraction import (
+    InvalidPrescriptionImageError,
+    PrescriptionExtractionError,
+    PrescriptionExtractionTimeoutError,
+    PrescriptionExtractionUnavailableError,
+    PrescriptionImageLimitError,
+)
 from medsafe.schemas.errors import ErrorResponse
 
 # Sai email và sai mật khẩu dùng chung 401 + chung message: phân biệt hai trường hợp này
@@ -57,4 +64,21 @@ def register_exception_handlers(app: FastAPI) -> None:
             # RFC 9110: 401 bắt buộc kèm WWW-Authenticate, thiếu header này một số HTTP
             # client sẽ không kích hoạt luồng refresh token.
             headers={"WWW-Authenticate": "Bearer"} if http_status == status.HTTP_401_UNAUTHORIZED else None,
+        )
+
+    @app.exception_handler(PrescriptionExtractionError)
+    async def handle_prescription_extraction_error(_: Request, exc: PrescriptionExtractionError) -> JSONResponse:
+        status_by_type: dict[type[PrescriptionExtractionError], int] = {
+            InvalidPrescriptionImageError: status.HTTP_400_BAD_REQUEST,
+            PrescriptionImageLimitError: status.HTTP_413_CONTENT_TOO_LARGE,
+            PrescriptionExtractionUnavailableError: status.HTTP_503_SERVICE_UNAVAILABLE,
+            PrescriptionExtractionTimeoutError: status.HTTP_504_GATEWAY_TIMEOUT,
+        }
+        http_status = next(
+            (value for error_type, value in status_by_type.items() if isinstance(exc, error_type)),
+            status.HTTP_400_BAD_REQUEST,
+        )
+        return JSONResponse(
+            status_code=http_status,
+            content=ErrorResponse(code=exc.code, message=exc.message).model_dump(by_alias=True),
         )

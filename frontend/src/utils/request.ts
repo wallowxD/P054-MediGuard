@@ -2,21 +2,13 @@
  * Tầng HTTP DUY NHẤT của app. Không tạo helper fetch riêng ở chỗ khác —
  * hai tầng HTTP song song là lỗi số 4 trong danh sách "lỗi cần tránh".
  *
- * Điểm quan trọng: chống refresh token song song + cooldown. Nhiều request cùng
- * dính 401 một lúc thì chỉ refresh ĐÚNG MỘT lần, các request còn lại chờ chung
- * một promise.
+ * JWT callback của NextAuth làm mới access token ở phía server mỗi khi `getSession()`
+ * thấy token sắp hết hạn. Refresh token không được đưa ra client session.
  */
 
-import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
+import axios, { type AxiosError } from "axios";
 import { getSession, signOut } from "next-auth/react";
 import { ROUTES } from "@/constants/routes";
-
-type RetriableConfig = InternalAxiosRequestConfig & { _retry?: boolean };
-
-let isRefreshing = false;
-let lastRefreshAttempt = 0;
-const REFRESH_COOLDOWN = 5000;
-let refreshPromise: Promise<boolean> | null = null;
 
 const clientRequest = axios.create({
   responseType: "json",
@@ -37,61 +29,15 @@ clientRequest.interceptors.request.use(async (config) => {
   return config;
 });
 
-/**
- * Gọi refresh token rồi cập nhật session.
- *
- * TODO(API): backend ĐÃ CÓ `POST /api/v1/auth/refresh` — mở khối dưới là chạy được.
- * Endpoint trả `{accessToken, refreshToken, expiresIn}`, không kèm `user`.
- * Hiện trả về false → interceptor sẽ signOut, đúng hành vi mong muốn khi hết hạn.
- */
-async function refreshTokenAndUpdateSession(): Promise<boolean> {
-  // const session = await getSession();
-  // if (!session?.refreshToken) return false;
-  // try {
-  //   const { data } = await axios.post<IRefreshTokenResponse>(
-  //     API_BASE_URL + API_ENDPOINTS.AUTH.REFRESH_TOKEN,
-  //     { refreshToken: session.refreshToken } satisfies IRefreshTokenRequest
-  //   );
-  //   await getSession(); // buộc NextAuth đọc lại JWT đã xoay vòng
-  //   return Boolean(data?.accessToken);
-  // } catch {
-  //   return false;
-  // }
-  return false;
-}
-
-// Response: 401 → refresh → retry
+// Response: token đã được refresh trước request; 401 còn lại là phiên không hợp lệ.
 clientRequest.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as RetriableConfig | undefined;
-
-    if (error.response?.status !== 401 || !originalRequest || originalRequest._retry) {
+    if (error.response?.status !== 401 || typeof window === "undefined") {
       return Promise.reject(error);
     }
-    originalRequest._retry = true;
-
-    // Vừa thử refresh xong mà lại 401 → token hỏng thật, đừng quay vòng
-    if (Date.now() - lastRefreshAttempt < REFRESH_COOLDOWN) {
-      return Promise.reject(error);
-    }
-
-    if (!isRefreshing) {
-      isRefreshing = true;
-      lastRefreshAttempt = Date.now();
-      refreshPromise = refreshTokenAndUpdateSession().finally(() => {
-        isRefreshing = false;
-        refreshPromise = null;
-      });
-    }
-
-    const ok = await refreshPromise;
-    if (!ok) {
-      await signOut({ redirect: true, callbackUrl: ROUTES.SIGNIN });
-      return Promise.reject(error);
-    }
-
-    return clientRequest(originalRequest);
+    await signOut({ redirect: true, callbackUrl: ROUTES.SIGNIN });
+    return Promise.reject(error);
   }
 );
 

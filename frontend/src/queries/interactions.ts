@@ -6,14 +6,24 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   checkInteractionsRequest,
+  addHealthConditionRequest,
+  addPatientDiseaseRequest,
+  clearInteractionChecksRequest,
+  deleteHealthConditionRequest,
+  deletePatientDiseaseRequest,
+  deleteInteractionCheckRequest,
+  extractPrescriptionRequest,
   getDrugDetailsRequest,
   getDrugLettersRequest,
   getInteractionCheckDetailsRequest,
   getInteractionChecksRequest,
+  getHealthProfileRequest,
   getInteractionDetailsRequest,
   getInteractionsRequest,
   listDrugsRequest,
+  searchDiseasesRequest,
   searchDrugsRequest,
+  updateHealthProfileRequest,
 } from "@/services/interactions";
 
 // ── Query Keys ───────────────────────────────────────────────────────────────
@@ -44,6 +54,9 @@ export const interactionCheckKeys = {
   details: () => [...interactionCheckKeys.all, "detail"] as const,
   detail: (id: string) => [...interactionCheckKeys.details(), id] as const,
 };
+
+export const healthKeys = { profile: ["health-profile"] as const };
+export const diseaseKeys = { search: (q: string) => ["diseases", q] as const };
 
 // ── Queries ──────────────────────────────────────────────────────────────────
 
@@ -107,12 +120,18 @@ export const useDrugLetters = (enabled: boolean = true) =>
     staleTime: 30 * 60 * 1000,
   });
 
-/** Chi tiết một thuốc cho `/drug-information/[id]` — chuẩn bị cho GET /api/v1/drugs/{id} */
+/**
+ * Chi tiết một thuốc cho `/drug-information/[id]` (`GET /api/v1/drugs/{id}`).
+ *
+ * Cache dài như danh mục: nội dung tờ HDSD của một thuốc không đổi giữa các lần xem, nên
+ * quay lại từ danh sách không cần gọi mạng lại.
+ */
 export const useDrugDetails = (id: string, enabled: boolean = true) =>
   useQuery({
     queryKey: drugKeys.detail(id),
     queryFn: () => getDrugDetailsRequest(id),
     enabled: enabled && !!id,
+    staleTime: 30 * 60 * 1000,
   });
 
 /** Danh sách lượt tra cứu cho `/history` — chuẩn bị cho GET /api/v1/interaction-checks */
@@ -131,6 +150,17 @@ export const useInteractionCheckDetail = (id: string, enabled: boolean = true) =
     enabled: enabled && !!id,
   });
 
+export const useDiseaseSearch = (query: string, enabled: boolean = true) =>
+  useQuery({
+    queryKey: diseaseKeys.search(query),
+    queryFn: () => searchDiseasesRequest(query),
+    enabled: enabled && query.trim().length > 0,
+    staleTime: 10 * 60 * 1000,
+  });
+
+export const useHealthProfile = () =>
+  useQuery({ queryKey: healthKeys.profile, queryFn: getHealthProfileRequest });
+
 // ── Mutations ────────────────────────────────────────────────────────────────
 
 /**
@@ -144,7 +174,66 @@ export const useCheckInteractions = () => {
   return useMutation({
     mutationFn: (data: IInteractionCheckRequest) => checkInteractionsRequest(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: interactionKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: interactionCheckKeys.lists() });
     },
   });
 };
+
+export const useUpdateHealthProfile = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateHealthProfileRequest,
+    onSuccess: (data) => queryClient.setQueryData(healthKeys.profile, data),
+  });
+};
+
+export const useAddHealthCondition = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: addHealthConditionRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: healthKeys.profile }),
+  });
+};
+
+export const useDeleteHealthCondition = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteHealthConditionRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: healthKeys.profile }),
+  });
+};
+
+export const useAddPatientDisease = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: addPatientDiseaseRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: healthKeys.profile }),
+  });
+};
+
+export const useDeletePatientDisease = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deletePatientDiseaseRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: healthKeys.profile }),
+  });
+};
+
+export const useDeleteInteractionCheck = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteInteractionCheckRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: interactionCheckKeys.all }),
+  });
+};
+
+export const useClearInteractionChecks = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: clearInteractionChecksRequest,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: interactionCheckKeys.all }),
+  });
+};
+
+export const useExtractPrescription = () =>
+  useMutation({ mutationFn: (images: File[]) => extractPrescriptionRequest(images) });

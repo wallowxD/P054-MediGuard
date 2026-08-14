@@ -10,6 +10,7 @@ dependencies = [
     "pydantic>=2.10.0",
     "pydantic-settings>=2.7.0",
     "python-dotenv>=1.0.0",
+    "python-multipart>=0.0.20",
     "pyyaml>=6.0.2",
     # Agent
     "langchain>=0.3.0",
@@ -71,3 +72,7 @@ indent-style = "space"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# rootdir là `backend/`, nên ".." là repo root. Cần thiết vì
+# tests/unit/domain/test_batch_ocr.py import từ package `scripts/` ở root; không có
+# dòng này thì `uv run pytest` fail ngay ở bước collect với ModuleNotFoundError.
+pythonpath = [".."]

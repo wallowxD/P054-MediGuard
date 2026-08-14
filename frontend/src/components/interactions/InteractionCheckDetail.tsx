@@ -4,71 +4,17 @@ import { AlertTriangle } from "lucide-react";
 import EmptyState from "@/components/EmptyState";
 import { TextSkeleton } from "@/components/ui/Skeleton";
 import { useInteractionCheckDetail } from "@/queries/interactions";
-import InteractionCard from "./InteractionCard";
-import InteractionCheckSummary from "./InteractionCheckSummary";
-import UnavailableInteractionList from "./UnavailableInteractionList";
+import { useDeleteInteractionCheck } from "@/queries/interactions";
+import { useRouter } from "next/navigation";
+import Button from "@/components/ui/Button";
+import { ROUTES } from "@/constants/routes";
+import UnifiedInteractionResults from "./UnifiedInteractionResults";
 
-interface InteractionCheckDetailProps {
-  id: string;
-}
-
-/**
- * Nội dung chính của `/interaction-checks/[id]` — kết quả tổng hợp của một lượt
- * tra cứu, có thể gồm nhiều cặp (khác `/interactions/[id]`, chi tiết một cặp).
- *
- * TODO(API): `useInteractionCheckDetail` gọi GET /api/v1/interaction-checks/{id};
- * hiện luôn reject vì backend chưa lưu lịch sử tra cứu (xem `services/interactions`).
- */
-export default function InteractionCheckDetail({ id }: InteractionCheckDetailProps) {
-  const { data, isLoading } = useInteractionCheckDetail(id);
-
-  if (isLoading) {
-    return (
-      <div className="rounded-xl border border-border bg-card p-4 sm:p-5" aria-hidden="true">
-        <TextSkeleton lines={5} />
-      </div>
-    );
-  }
-
-  if (!data) {
-    return (
-      <EmptyState
-        icon={<AlertTriangle className="h-10 w-10" aria-hidden />}
-        title="Chưa thể tải lượt tra cứu này"
-        description="Dữ liệu lịch sử sẽ khả dụng khi backend được kết nối."
-      />
-    );
-  }
-
-  return (
-    <div className="space-y-6">
-      <InteractionCheckSummary
-        resultCount={data.items.length}
-        unavailableCount={data.unavailable.length}
-      />
-
-      <section className="space-y-2">
-        <h2 className="text-sm font-semibold text-foreground">Thuốc đã xác nhận</h2>
-        <p className="text-sm text-foreground-secondary">
-          {data.drugs.map((d) => d.brandName).join(", ") || "—"}
-        </p>
-      </section>
-
-      {data.foods.length > 0 ? (
-        <section className="space-y-2">
-          <h2 className="text-sm font-semibold text-foreground">Thực phẩm</h2>
-          <p className="text-sm text-foreground-secondary">{data.foods.join(", ")}</p>
-        </section>
-      ) : null}
-
-      <section className="space-y-3">
-        <h2 className="text-sm font-semibold text-foreground">Kết quả có trích dẫn</h2>
-        {data.items.map((item) => (
-          <InteractionCard key={item.id} interaction={item} />
-        ))}
-      </section>
-
-      <UnavailableInteractionList items={data.unavailable} />
-    </div>
-  );
+export default function InteractionCheckDetail({ id }: { id: string }) {
+  const { data, isLoading, isError } = useInteractionCheckDetail(id);
+  const remove = useDeleteInteractionCheck();
+  const router = useRouter();
+  if (isLoading) return <div className="rounded-xl border border-border bg-card p-5"><TextSkeleton lines={8} /></div>;
+  if (isError || !data) return <EmptyState icon={<AlertTriangle className="h-10 w-10" />} title="Không thể tải lượt tra cứu này" description="Lượt tra cứu không tồn tại hoặc không thuộc tài khoản của bạn." />;
+  return <div className="space-y-6"><header className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs text-foreground-muted">{new Date(data.checkedAt).toLocaleString("vi-VN")}</p><h1 className="mt-1 text-2xl font-semibold text-foreground">{data.drugs.map((drug) => drug.brandName).join(" + ")}</h1>{data.diseases.length ? <p className="mt-2 text-sm text-foreground-secondary">Bệnh nền đã xác nhận: {data.diseases.map((disease) => disease.name).join(", ")}</p> : null}</div><Button variant="outline" size="sm" disabled={remove.isPending} onClick={() => { if (window.confirm("Xoá lượt tra cứu này?")) remove.mutate(id, { onSuccess: () => router.push(ROUTES.HISTORY) }); }}>Xoá lượt tra cứu</Button></header><UnifiedInteractionResults result={data} /></div>;
 }

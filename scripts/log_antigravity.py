@@ -1,67 +1,38 @@
 #!/usr/bin/env python3
+"""Collect exact user prompts from Antigravity lifecycle transcripts.
+
+Antigravity 2.0 exposes the active transcript path and workspace paths to
+project hooks.  This module supports that hook contract and also keeps a
+pre-push transcript sweep as a recovery path for conversations whose hook was
+temporarily disabled.
+
+The legacy Antigravity IDE stored an empty ``transcript.jsonl`` next to an
+opaque protobuf-backed SQLite conversation database.  Those empty files are
+ignored: generated task or walkthrough artifacts are not acceptable
+substitutes for the user's original prompt.
 """
-Antigravity IDE log scanner — extracts the exact user-typed prompts from
-local Antigravity conversation transcripts.
 
-Source of truth:
-    ~/.gemini/antigravity-ide/brain/<conv_id>/.system_generated/logs/transcript.jsonl
-    (with fallback to the legacy ~/.gemini/antigravity/brain/... layout)
+from __future__ import annotations
 
-Each transcript line is a JSON object. We emit one log entry per line where
-`type == "USER_INPUT"` AND `source == "USER_EXPLICIT"`. The text inside
-<USER_REQUEST>...</USER_REQUEST> is the exact prompt the student typed
-(auxiliary <ADDITIONAL_METADATA> and <USER_SETTINGS_CHANGE> blocks are
-stripped).
-
-Why not other sources we considered?
-  - ~/.gemini/antigravity-ide/conversations/<conv>.pb is encrypted.
-  - brain/<conv>/task.md / walkthrough.md are AI-generated artifacts, not the
-    user's prompt.
-  - ~/.gemini/tmp/<slug>/chats/session-*.json is the Gemini CLI, not the
-    Antigravity IDE.
-
-Conversation → repo mapping
----------------------------
-The brain folder has no .project_root file. We map a conv to the current repo
-by scanning its transcript for tool-call `Cwd` values. A conv counts as
-belonging to this repo when one of its Cwd values either equals, is an
-ancestor of, or is a descendant of the current repo root.
-
-Usage:
-  python scripts/log_antigravity.py --auto            # default: last 24h
-  python scripts/log_antigravity.py --hours 72
-  python scripts/log_antigravity.py --all             # every conv, no cutoff
-  python scripts/log_antigravity.py --conv-id <id>    # one conversation
-  python scripts/log_antigravity.py --dry-run         # preview only
-
-Env overrides:
-  ANTIGRAVITY_BRAIN_DIR  point at a different brain/ directory
-  AI_LOG_DIR             where session.jsonl is written (default: .ai-log)
-"""
 import argparse
 import json
 import os
 import re
 import subprocess
 import sys
-from datetime import datetime, timezone, timedelta
+from collections.abc import Iterator
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-
-# Fix Windows console encoding so VN diacritics in prompts print cleanly.
-if sys.platform == "win32":
-    try:
-        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
-    except Exception:
-        pass
+from typing import Any
 
 VN_TZ = timezone(timedelta(hours=7))
 GEMINI_HOME = Path.home() / ".gemini"
 
-# Antigravity has shipped under two folder names; prefer the newer IDE one.
+# Current documented locations first, followed by the legacy IDE location.
 BRAIN_CANDIDATES = (
-    GEMINI_HOME / "antigravity-ide" / "brain",
     GEMINI_HOME / "antigravity" / "brain",
+    GEMINI_HOME / "antigravity-cli" / "brain",
+    GEMINI_HOME / "antigravity-ide" / "brain",
 )
 
 USER_REQUEST_RE = re.compile(r"<USER_REQUEST>(.*?)</USER_REQUEST>", re.DOTALL)
@@ -73,333 +44,507 @@ AUX_BLOCK_RE = re.compile(
 )
 
 
-def git(cmd: str) -> str:
+def git(*args: str) -> str:
+    """Run a read-only Git query and return an empty string on failure."""
     try:
         return subprocess.check_output(
-            cmd.split(), shell=False, text=True, stderr=subprocess.DEVNULL
+            ["git", *args], text=True, stderr=subprocess.DEVNULL
         ).strip()
-    except Exception:
+    except (OSError, subprocess.SubprocessError):
         return ""
 
-
-# ---------------------------------------------------------------------------
-# Locating brain/
-# ---------------------------------------------------------------------------
 
 def get_brain_dirs() -> list[Path]:
-    """Brain directories to scan, newest layout first."""
-    env = os.environ.get("ANTIGRAVITY_BRAIN_DIR")
-    if env:
-        p = Path(env)
-        return [p] if p.exists() else []
-    return [p for p in BRAIN_CANDIDATES if p.exists()]
+    """Return existing Antigravity brain directories, newest layout first."""
+    configured = os.environ.get("ANTIGRAVITY_BRAIN_DIR")
+    if configured:
+        path = Path(configured).expanduser()
+        return [path] if path.exists() else []
+    return [path for path in BRAIN_CANDIDATES if path.exists()]
 
 
-# ---------------------------------------------------------------------------
-# Path normalization + repo gating
-# ---------------------------------------------------------------------------
-
-def _normalize(p: str) -> str:
-    """Lower-case + backslash form, no trailing separator."""
-    if not p:
-        return ""
-    return p.strip().lower().replace("/", "\\").rstrip("\\")
+def _normalize_path(value: str | Path) -> str:
+    """Normalize a path for case-insensitive ancestor/descendant checks."""
+    text = str(value).strip().strip('"').replace("/", "\\").rstrip("\\")
+    return text.casefold()
 
 
-def _unquote_arg(val):
-    """Antigravity stores tool args as JSON-encoded strings. Unwrap them."""
-    if not isinstance(val, str):
-        return val
-    val = val.strip()
-    if len(val) >= 2 and val[0] == '"' and val[-1] == '"':
-        try:
-            return json.loads(val)
-        except json.JSONDecodeError:
-            return val[1:-1]
-    return val
-
-
-def _conv_cwds(transcript: Path) -> set[str]:
-    """All Cwd values that appear in tool calls inside this transcript."""
-    cwds: set[str] = set()
-    try:
-        with open(transcript, encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    entry = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                for tc in (entry.get("tool_calls") or []):
-                    args = tc.get("args") or {}
-                    cwd = args.get("Cwd") or args.get("cwd")
-                    cwd = _unquote_arg(cwd)
-                    if isinstance(cwd, str):
-                        n = _normalize(cwd)
-                        if n:
-                            cwds.add(n)
-    except OSError:
-        pass
-    return cwds
-
-
-def _conv_matches_repo(cwds: set[str], repo_root_n: str) -> bool:
-    """True if any cwd is equal to, ancestor of, or descendant of the repo."""
-    if not repo_root_n or not cwds:
+def _paths_match_repo(paths: set[str], repo_root: str) -> bool:
+    """Return whether any supplied path belongs to the current repository."""
+    if not paths or not repo_root:
         return False
-    for cwd in cwds:
-        if cwd == repo_root_n:
+    for path in paths:
+        if path == repo_root:
             return True
-        if cwd.startswith(repo_root_n + "\\"):
-            return True
-        if repo_root_n.startswith(cwd + "\\"):
+        if path.startswith(repo_root + "\\"):
             return True
     return False
 
 
-# ---------------------------------------------------------------------------
-# Prompt extraction
-# ---------------------------------------------------------------------------
+def _unquote_arg(value: Any) -> Any:
+    """Unwrap JSON-encoded string arguments emitted by older transcripts."""
+    if not isinstance(value, str):
+        return value
+    stripped = value.strip()
+    if len(stripped) >= 2 and stripped[0] == '"' and stripped[-1] == '"':
+        try:
+            return json.loads(stripped)
+        except json.JSONDecodeError:
+            return stripped[1:-1]
+    return value
 
-def extract_user_prompt(content: str) -> str:
-    """Pull the text between <USER_REQUEST>...</USER_REQUEST>. Fall back to
-    stripping known auxiliary blocks if no wrapper is present."""
-    if not isinstance(content, str):
+
+def _text_from_value(value: Any) -> str:
+    """Extract text from common transcript message representations."""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, list):
+        return "\n".join(text for item in value if (text := _text_from_value(item)))
+    if isinstance(value, dict):
+        for key in ("text", "content", "prompt", "message", "userMessage"):
+            if key in value and (text := _text_from_value(value[key])):
+                return text
+    return ""
+
+
+def extract_user_prompt(content: Any) -> str:
+    """Extract the exact user request while removing tool-added metadata."""
+    text = _text_from_value(content)
+    if not text:
         return ""
-    m = USER_REQUEST_RE.search(content)
-    if m:
-        return m.group(1).strip()
-    cleaned = AUX_BLOCK_RE.sub("", content)
-    return cleaned.strip()
+    match = USER_REQUEST_RE.search(text)
+    if match:
+        return match.group(1).strip()
+    return AUX_BLOCK_RE.sub("", text).strip()
 
 
-# ---------------------------------------------------------------------------
-# Reading existing log to avoid duplicates
-# ---------------------------------------------------------------------------
+def _user_prompt_from_entry(entry: dict[str, Any]) -> str:
+    """Return a user prompt from documented and legacy transcript shapes."""
+    if entry.get("type") == "USER_INPUT":
+        source = entry.get("source")
+        if source in (None, "", "USER_EXPLICIT"):
+            return extract_user_prompt(entry.get("content", ""))
 
-def get_logged_entry_ids(log_file: Path) -> set[str]:
+    candidates = [entry]
+    for key in ("payload", "message", "data"):
+        nested = entry.get(key)
+        if isinstance(nested, dict):
+            candidates.append(nested)
+
+    for candidate in candidates:
+        role = str(candidate.get("role", "")).casefold()
+        event_type = str(candidate.get("type", "")).casefold()
+        is_user = role == "user" or event_type in {
+            "user",
+            "user_input",
+            "user_message",
+            "usermessage",
+        }
+        if not is_user:
+            continue
+        for key in ("prompt", "content", "text", "message", "userMessage"):
+            if key in candidate and (prompt := extract_user_prompt(candidate[key])):
+                return prompt
+    return ""
+
+
+def _paths_from_entry(entry: dict[str, Any]) -> set[str]:
+    """Collect workspace and tool CWD paths from one transcript entry."""
+    paths: set[str] = set()
+    candidates = [entry]
+    for key in ("payload", "data"):
+        nested = entry.get(key)
+        if isinstance(nested, dict):
+            candidates.append(nested)
+
+    for candidate in candidates:
+        for key in ("workspacePaths", "workspace_paths"):
+            values = candidate.get(key) or []
+            if isinstance(values, str):
+                values = [values]
+            for value in values:
+                if isinstance(value, str) and (normalized := _normalize_path(value)):
+                    paths.add(normalized)
+
+        tool_calls = candidate.get("tool_calls") or []
+        tool_call = candidate.get("toolCall")
+        if isinstance(tool_call, dict):
+            tool_calls = [*tool_calls, tool_call]
+        for call in tool_calls:
+            if not isinstance(call, dict):
+                continue
+            args = call.get("args") or {}
+            if not isinstance(args, dict):
+                continue
+            cwd = _unquote_arg(args.get("Cwd") or args.get("cwd"))
+            if isinstance(cwd, str) and (normalized := _normalize_path(cwd)):
+                paths.add(normalized)
+    return paths
+
+
+def _transcript_paths(transcript: Path) -> set[str]:
+    """Return all workspace paths recorded in a transcript."""
+    paths: set[str] = set()
+    try:
+        with transcript.open(encoding="utf-8") as file:
+            for line in file:
+                try:
+                    entry = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if isinstance(entry, dict):
+                    paths.update(_paths_from_entry(entry))
+    except OSError:
+        pass
+    return paths
+
+
+def _parse_timestamp(value: str) -> datetime | None:
+    """Parse an ISO timestamp and normalize naive values to UTC."""
+    if not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed
+
+
+def iter_transcript_user_inputs(
+    transcript: Path,
+    cutoff: datetime | None,
+    conversation_id: str,
+) -> Iterator[dict[str, Any]]:
+    """Yield exact user prompts from one Antigravity JSONL transcript."""
+    try:
+        with transcript.open(encoding="utf-8") as file:
+            for line_number, line in enumerate(file, start=1):
+                try:
+                    entry = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if not isinstance(entry, dict):
+                    continue
+                prompt = _user_prompt_from_entry(entry)
+                if len(prompt) < 2:
+                    continue
+
+                timestamp = str(
+                    entry.get("created_at")
+                    or entry.get("timestamp")
+                    or entry.get("createdAt")
+                    or ""
+                )
+                parsed_timestamp = _parse_timestamp(timestamp)
+                if cutoff and parsed_timestamp and parsed_timestamp < cutoff:
+                    continue
+
+                step_index = entry.get("step_index", entry.get("stepIdx", line_number))
+                yield {
+                    "conv_id": conversation_id,
+                    "step_index": step_index,
+                    "timestamp": timestamp,
+                    "text": prompt,
+                }
+    except OSError:
+        return
+
+
+def get_logged_entry_ids(log_dir: Path) -> set[str]:
+    """Read entry IDs from pending and archived log batches."""
     logged: set[str] = set()
-    if not log_file.exists():
-        return logged
-    with open(log_file, encoding="utf-8-sig") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                entry = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            eid = entry.get("entry_id", "")
-            if eid:
-                logged.add(eid)
-    return logged
-
-
-# ---------------------------------------------------------------------------
-# Iterating user inputs
-# ---------------------------------------------------------------------------
-
-def iter_user_inputs(brain_dirs: list[Path], cutoff: datetime | None,
-                     only_conv: str | None, repo_root_n: str):
-    """Yield user-input dicts from every matching conversation transcript."""
-    for brain in brain_dirs:
-        for conv_dir in sorted(brain.iterdir()):
-            if not conv_dir.is_dir():
-                continue
-            if only_conv and conv_dir.name != only_conv:
-                continue
-            transcript = (
-                conv_dir / ".system_generated" / "logs" / "transcript.jsonl"
-            )
-            if not transcript.exists() or transcript.stat().st_size == 0:
-                continue
-
-            cwds = _conv_cwds(transcript)
-            # If we have a repo root, skip convs that never touched it.
-            if repo_root_n and not _conv_matches_repo(cwds, repo_root_n):
-                continue
-
-            with open(transcript, encoding="utf-8") as f:
-                for line in f:
-                    line = line.strip()
-                    if not line:
-                        continue
+    candidates = list(log_dir.glob("session*.jsonl"))
+    candidates.extend((log_dir / "archive").glob("*.jsonl"))
+    for log_file in candidates:
+        try:
+            with log_file.open(encoding="utf-8-sig") as file:
+                for line in file:
                     try:
                         entry = json.loads(line)
                     except json.JSONDecodeError:
                         continue
-                    if (entry.get("type") != "USER_INPUT"
-                            or entry.get("source") != "USER_EXPLICIT"):
-                        continue
-
-                    ts = entry.get("created_at") or ""
-                    if cutoff and ts:
-                        try:
-                            ts_dt = datetime.fromisoformat(
-                                ts.replace("Z", "+00:00")
-                            )
-                            if ts_dt < cutoff:
-                                continue
-                        except ValueError:
-                            pass
-
-                    text = extract_user_prompt(entry.get("content", ""))
-                    if len(text) < 2:
-                        continue
-
-                    yield {
-                        "conv_id": conv_dir.name,
-                        "step_index": int(entry.get("step_index", 0)),
-                        "timestamp": ts,
-                        "text": text,
-                    }
+                    entry_id = entry.get("entry_id", "")
+                    if entry_id:
+                        logged.add(str(entry_id))
+        except OSError:
+            continue
+    return logged
 
 
-# ---------------------------------------------------------------------------
-# Emitting entries
-# ---------------------------------------------------------------------------
+def _repo_context() -> tuple[Path, str, str, str, str]:
+    """Return repository root, name, branch, commit, and student email."""
+    root_text = git("rev-parse", "--show-toplevel")
+    root = Path(root_text) if root_text else Path.cwd()
+    origin = git("remote", "get-url", "origin")
+    repo = origin.rstrip("/").split("/")[-1].removesuffix(".git")
+    return (
+        root,
+        repo or root.name,
+        git("rev-parse", "--abbrev-ref", "HEAD"),
+        git("rev-parse", "--short", "HEAD"),
+        git("config", "user.email")
+        or os.environ.get("USERNAME", os.environ.get("USER", "unknown")),
+    )
 
-def build_entry(msg: dict, repo: str, branch: str, commit: str,
-                student: str) -> dict:
-    ts = msg["timestamp"]
-    if ts.endswith("Z"):
-        try:
-            ts = (
-                datetime.fromisoformat(ts.replace("Z", "+00:00"))
-                .astimezone(VN_TZ)
-                .isoformat()
-            )
-        except ValueError:
-            pass
 
+def build_entry(
+    message: dict[str, Any],
+    repo: str,
+    branch: str,
+    commit: str,
+    student: str,
+    model: str = "gemini",
+) -> dict[str, Any]:
+    """Build one normalized Antigravity grading-log entry."""
+    timestamp = str(message["timestamp"])
+    parsed_timestamp = _parse_timestamp(timestamp)
+    if parsed_timestamp:
+        timestamp = parsed_timestamp.astimezone(VN_TZ).isoformat()
+    if not timestamp:
+        timestamp = datetime.now(VN_TZ).isoformat()
+
+    conversation_id = str(message["conv_id"])
+    step_index = str(message["step_index"])
     return {
-        "ts": ts or datetime.now(VN_TZ).isoformat(),
+        "ts": timestamp,
         "tool": "antigravity",
         "event": "UserPrompt",
-        "entry_id": f"antigravity-{msg['conv_id']}-{msg['step_index']:05d}",
-        "session_id": msg["conv_id"],
-        "model": "gemini",
+        "entry_id": f"antigravity-{conversation_id}-{step_index}",
+        "session_id": conversation_id,
+        "model": model or "gemini",
         "repo": repo,
         "branch": branch,
         "commit": commit,
         "student": student,
-        "prompt": msg["text"],
+        "prompt": message["text"],
         "response_summary": "",
     }
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Extract user prompts from Antigravity IDE transcripts"
-                    " into .ai-log/session.jsonl."
+def _append_entries(log_dir: Path, entries: list[dict[str, Any]]) -> None:
+    """Append entries atomically enough for short-lived local hooks."""
+    if not entries:
+        return
+    log_dir.mkdir(parents=True, exist_ok=True)
+    with (log_dir / "session.jsonl").open("a", encoding="utf-8") as file:
+        for entry in entries:
+            file.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+
+def _collect_transcript(
+    transcript: Path,
+    conversation_id: str,
+    cutoff: datetime | None,
+    logged_ids: set[str],
+    repo: str,
+    branch: str,
+    commit: str,
+    student: str,
+    model: str = "gemini",
+) -> list[dict[str, Any]]:
+    """Collect de-duplicated entries from one transcript."""
+    entries: list[dict[str, Any]] = []
+    for message in iter_transcript_user_inputs(transcript, cutoff, conversation_id):
+        entry = build_entry(message, repo, branch, commit, student, model)
+        if entry["entry_id"] in logged_ids:
+            continue
+        entries.append(entry)
+        logged_ids.add(entry["entry_id"])
+    return entries
+
+
+def _hook_response(payload: dict[str, Any]) -> dict[str, str]:
+    """Return the event-specific non-blocking hook response."""
+    if "terminationReason" in payload:
+        return {"decision": "stop"}
+    return {}
+
+
+def run_hook(payload: dict[str, Any], log_dir: Path) -> int:
+    """Collect the active Antigravity transcript from a lifecycle hook."""
+    root, repo, branch, commit, student = _repo_context()
+    repo_root = _normalize_path(root)
+    workspace_paths = {
+        _normalize_path(path)
+        for path in payload.get("workspacePaths", [])
+        if isinstance(path, str)
+    }
+    if workspace_paths and not _paths_match_repo(workspace_paths, repo_root):
+        print(json.dumps(_hook_response(payload)))
+        return 0
+
+    transcript_value = payload.get("transcriptPath") or payload.get("transcript_path")
+    if not isinstance(transcript_value, str):
+        print(json.dumps(_hook_response(payload)))
+        return 0
+    transcript = Path(transcript_value).expanduser()
+    conversation_id = str(
+        payload.get("conversationId")
+        or payload.get("conversation_id")
+        or transcript.parent.name
     )
-    parser.add_argument("--auto", action="store_true",
-                        help="Default mode: scan recent conversations.")
-    parser.add_argument("--hours", type=int, default=24,
-                        help="Window in hours when scanning (default: 24).")
-    parser.add_argument("--all", action="store_true",
-                        help="Ignore the time window; scan everything.")
-    parser.add_argument("--conv-id",
-                        help="Limit to a single conversation id.")
-    parser.add_argument("--no-repo-filter", action="store_true",
-                        help="Don't filter conversations by current repo.")
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Show what would be logged, don't write.")
-    # Legacy positional args from old log_manual.py callers.
+    logged_ids = get_logged_entry_ids(log_dir)
+    entries = _collect_transcript(
+        transcript,
+        conversation_id,
+        None,
+        logged_ids,
+        repo,
+        branch,
+        commit,
+        student,
+        str(payload.get("modelName") or payload.get("model") or "gemini"),
+    )
+    _append_entries(log_dir, entries)
+    if entries:
+        print(
+            f"[antigravity-log] Logged {len(entries)} prompt(s) from lifecycle hook.",
+            file=sys.stderr,
+        )
+    print(json.dumps(_hook_response(payload)))
+    return 0
+
+
+def run_sweep(
+    hours: int,
+    include_all: bool,
+    only_conversation: str | None,
+    no_repo_filter: bool,
+    dry_run: bool,
+    log_dir: Path,
+) -> int:
+    """Sweep persistent transcripts and append new repository prompts."""
+    brain_dirs = get_brain_dirs()
+    if not brain_dirs:
+        print(
+            "[antigravity-log] No Antigravity brain directory found "
+            f"(checked {', '.join(str(path) for path in BRAIN_CANDIDATES)}).",
+            file=sys.stderr,
+        )
+        return 0
+
+    root, repo, branch, commit, student = _repo_context()
+    repo_root = _normalize_path(root)
+    cutoff = None if include_all else datetime.now(VN_TZ) - timedelta(hours=hours)
+    logged_ids = get_logged_entry_ids(log_dir)
+    entries: list[dict[str, Any]] = []
+
+    for brain in brain_dirs:
+        for conversation_dir in sorted(brain.iterdir()):
+            if not conversation_dir.is_dir():
+                continue
+            if only_conversation and conversation_dir.name != only_conversation:
+                continue
+            transcript = (
+                conversation_dir / ".system_generated" / "logs" / "transcript.jsonl"
+            )
+            if not transcript.exists() or transcript.stat().st_size == 0:
+                continue
+            if not no_repo_filter:
+                paths = _transcript_paths(transcript)
+                if not _paths_match_repo(paths, repo_root):
+                    continue
+            entries.extend(
+                _collect_transcript(
+                    transcript,
+                    conversation_dir.name,
+                    cutoff,
+                    logged_ids,
+                    repo,
+                    branch,
+                    commit,
+                    student,
+                )
+            )
+
+    if not entries:
+        scope = "all" if include_all else f"{hours}h"
+        print(
+            f"[antigravity-log] No new prompts (repo={repo_root}, window={scope}).",
+            file=sys.stderr,
+        )
+        return 0
+
+    if dry_run:
+        print(f"[antigravity-log] DRY RUN: would log {len(entries)} prompt(s).")
+        return 0
+
+    _append_entries(log_dir, entries)
+    print(
+        f"[antigravity-log] Logged {len(entries)} prompt(s) from Antigravity.",
+        file=sys.stderr,
+    )
+    return 0
+
+
+def _legacy_log(summary: str, model: str, log_dir: Path) -> None:
+    """Preserve the deprecated manual mode for old local callers."""
+    root, repo, branch, commit, student = _repo_context()
+    del root
+    timestamp = datetime.now(VN_TZ)
+    entry = {
+        "ts": timestamp.isoformat(),
+        "tool": "antigravity",
+        "event": "TaskComplete",
+        "entry_id": f"antigravity-{timestamp.strftime('%Y%m%d-%H%M%S')}",
+        "model": model,
+        "repo": repo,
+        "branch": branch,
+        "commit": commit,
+        "student": student,
+        "prompt": summary[:1000],
+        "response_summary": f"[Antigravity] {summary[:500]}",
+    }
+    _append_entries(log_dir, [entry])
+    print(f"[antigravity-log] Logged manual: {summary[:80]}...", file=sys.stderr)
+
+
+def main() -> None:
+    """Run lifecycle-hook, transcript-sweep, or legacy manual mode."""
+    parser = argparse.ArgumentParser(
+        description="Extract exact user prompts from Antigravity transcripts."
+    )
+    parser.add_argument(
+        "--hook", action="store_true", help="Read hook JSON from stdin."
+    )
+    parser.add_argument(
+        "--auto", action="store_true", help="Scan recent conversations."
+    )
+    parser.add_argument("--hours", type=int, default=24, help="Recent scan window.")
+    parser.add_argument("--all", action="store_true", help="Ignore the scan window.")
+    parser.add_argument("--conv-id", help="Limit the sweep to one conversation.")
+    parser.add_argument("--no-repo-filter", action="store_true")
+    parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("summary", nargs="?", help=argparse.SUPPRESS)
     parser.add_argument("model", nargs="?", help=argparse.SUPPRESS)
     args = parser.parse_args()
 
-    # Legacy manual mode: `log_antigravity.py "my summary" gemini`
+    log_dir = Path(os.environ.get("AI_LOG_DIR", ".ai-log"))
+    if args.hook:
+        try:
+            payload = json.loads(
+                sys.stdin.buffer.read().decode("utf-8", errors="replace")
+            )
+        except json.JSONDecodeError:
+            payload = {}
+        raise SystemExit(run_hook(payload, log_dir))
+
     if args.summary and not (args.auto or args.conv_id or args.all):
-        _legacy_log(args.summary, args.model or "gemini")
+        _legacy_log(args.summary, args.model or "gemini", log_dir)
         return
 
-    brain_dirs = get_brain_dirs()
-    if not brain_dirs:
-        print("[antigravity-log] No Antigravity brain/ directory found "
-              f"(checked {', '.join(str(p) for p in BRAIN_CANDIDATES)}).",
-              file=sys.stderr)
-        sys.exit(0)
-
-    log_dir = Path(os.environ.get("AI_LOG_DIR", ".ai-log"))
-    log_dir.mkdir(exist_ok=True)
-    log_file = log_dir / "session.jsonl"
-    logged_ids = get_logged_entry_ids(log_file)
-
-    cutoff = None
-    if not args.all:
-        cutoff = datetime.now(tz=VN_TZ) - timedelta(hours=args.hours)
-
-    repo_root_n = "" if args.no_repo_filter else _normalize(str(Path.cwd()))
-
-    repo = git("git remote get-url origin").split("/")[-1].replace(".git", "")
-    branch = git("git rev-parse --abbrev-ref HEAD")
-    commit = git("git rev-parse --short HEAD")
-    student = git("git config user.email") or os.environ.get(
-        "USERNAME", os.environ.get("USER", "unknown"))
-
-    new_entries: list[dict] = []
-    for msg in iter_user_inputs(brain_dirs, cutoff, args.conv_id, repo_root_n):
-        entry = build_entry(msg, repo or Path.cwd().name, branch, commit,
-                            student)
-        if entry["entry_id"] in logged_ids:
-            continue
-        new_entries.append(entry)
-        logged_ids.add(entry["entry_id"])
-
-    if not new_entries:
-        scope = "all" if args.all else f"{args.hours}h"
-        repo_note = "any repo" if args.no_repo_filter else f"repo={repo_root_n or '(unknown)'}"
-        print(f"[antigravity-log] No new prompts ({repo_note}, window={scope}).",
-              file=sys.stderr)
-        sys.exit(0)
-
-    if args.dry_run:
-        print(f"\n[antigravity-log] DRY RUN — would log "
-              f"{len(new_entries)} entries:\n")
-        for e in new_entries:
-            preview = e["prompt"].replace("\n", " ")[:120]
-            print(f"  [{e['ts'][:19]}] {preview}")
-        sys.exit(0)
-
-    with open(log_file, "a", encoding="utf-8") as f:
-        for e in new_entries:
-            f.write(json.dumps(e, ensure_ascii=False) + "\n")
-
-    print(f"[antigravity-log] Logged {len(new_entries)} prompt(s) from "
-          f"Antigravity IDE.", file=sys.stderr)
-
-
-# ---------------------------------------------------------------------------
-# Legacy manual mode (kept for back-compat with log_manual.py callers and the
-# old .agents/rules instructions). New rules tell the AI not to call this.
-# ---------------------------------------------------------------------------
-
-def _legacy_log(summary: str, model: str) -> None:
-    ts = datetime.now(VN_TZ).isoformat()
-    entry = {
-        "ts": ts,
-        "tool": "antigravity",
-        "event": "TaskComplete",
-        "entry_id": f"antigravity-{datetime.now(VN_TZ).strftime('%Y%m%d-%H%M%S')}",
-        "model": model,
-        "repo": git("git remote get-url origin").split("/")[-1].replace(".git", ""),
-        "branch": git("git rev-parse --abbrev-ref HEAD"),
-        "commit": git("git rev-parse --short HEAD"),
-        "student": git("git config user.email") or os.environ.get(
-            "USERNAME", os.environ.get("USER", "unknown")),
-        "prompt": summary[:1000],
-        "response_summary": f"[Antigravity] {summary[:500]}",
-    }
-    log_dir = Path(os.environ.get("AI_LOG_DIR", ".ai-log"))
-    log_dir.mkdir(exist_ok=True)
-    with open(log_dir / "session.jsonl", "a", encoding="utf-8") as f:
-        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
-    print(f"[antigravity-log] Logged manual: {summary[:80]}...", file=sys.stderr)
+    raise SystemExit(
+        run_sweep(
+            args.hours,
+            args.all,
+            args.conv_id,
+            args.no_repo_filter,
+            args.dry_run,
+            log_dir,
+        )
+    )
 
 
 if __name__ == "__main__":

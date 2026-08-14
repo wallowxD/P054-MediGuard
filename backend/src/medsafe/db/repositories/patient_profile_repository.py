@@ -1,4 +1,4 @@
-"""Toàn bộ SQL liên quan tới `patient_profiles` và `patient_conditions`.
+"""Toàn bộ SQL liên quan tới hồ sơ sức khoẻ tự khai của người dùng.
 
 Protocol là ranh giới để tầng API không phụ thuộc SQLAlchemy; integration test override
 dependency bằng implementation in-memory nên chạy được mà không cần database thật.
@@ -18,10 +18,13 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import func
 
+from medsafe.db.models.disease import Disease
 from medsafe.db.models.patient import (
     SOURCE_PHARMACIST_CONFIRMED,
     SOURCE_SELF_REPORTED,
+    SPECIAL_CONDITION_CODES,
     PatientCondition,
+    PatientDisease,
     PatientProfile,
 )
 
@@ -56,6 +59,14 @@ class PatientProfileRepository(Protocol):
     async def delete_condition(self, user_id: UUID, condition_id: UUID) -> bool: ...
 
     async def delete_all_conditions(self, user_id: UUID) -> int: ...
+
+    async def list_diseases(self, user_id: UUID) -> list[tuple[PatientDisease, Disease]]: ...
+
+    async def add_disease(
+        self, user_id: UUID, disease_id: UUID, *, source: str = SOURCE_SELF_REPORTED
+    ) -> PatientDisease: ...
+
+    async def delete_disease(self, user_id: UUID, patient_disease_id: UUID) -> bool: ...
 
 
 class SqlPatientProfileRepository:
@@ -152,6 +163,7 @@ class SqlPatientProfileRepository:
 
         Không đụng tới tài khoản đăng nhập.
         """
+        await self._session.execute(delete(PatientDisease).where(PatientDisease.user_id == user_id))
         await self._session.execute(delete(PatientCondition).where(PatientCondition.user_id == user_id))
         await self._session.execute(delete(PatientProfile).where(PatientProfile.user_id == user_id))
         await self._session.commit()
@@ -169,7 +181,10 @@ class SqlPatientProfileRepository:
     async def list_conditions(self, user_id: UUID) -> list[PatientCondition]:
         result = await self._session.execute(
             select(PatientCondition)
-            .where(PatientCondition.user_id == user_id)
+            .where(
+                PatientCondition.user_id == user_id,
+                PatientCondition.condition_code.in_(SPECIAL_CONDITION_CODES),
+            )
             .order_by(PatientCondition.created_at, PatientCondition.condition_code)
         )
         return list(result.scalars().all())
@@ -229,3 +244,48 @@ class SqlPatientProfileRepository:
         result = await self._session.execute(delete(PatientCondition).where(PatientCondition.user_id == user_id))
         await self._session.commit()
         return int(result.rowcount or 0)
+
+    async def list_diseases(self, user_id: UUID) -> list[tuple[PatientDisease, Disease]]:
+        """Liệt kê bệnh đã lưu, kể cả khi catalog về sau bị ẩn khỏi autocomplete."""
+        result = await self._session.execute(
+            select(PatientDisease, Disease)
+            .join(Disease, Disease.id == PatientDisease.disease_id)
+            .where(PatientDisease.user_id == user_id)
+            .order_by(Disease.name_unaccent, PatientDisease.created_at)
+        )
+        return [(association, disease) for association, disease in result.all()]
+
+    async def add_disease(
+        self, user_id: UUID, disease_id: UUID, *, source: str = SOURCE_SELF_REPORTED
+    ) -> PatientDisease:
+        """Lưu stable disease ID; idempotent và không hạ cấp xác nhận của dược sĩ."""
+        stmt = (
+            insert(PatientDisease)
+            .values(user_id=user_id, disease_id=disease_id, source=source)
+            .on_conflict_do_update(
+                constraint="uq_patient_diseases_user_disease",
+                set_={
+                    "source": case(
+                        (PatientDisease.source == SOURCE_PHARMACIST_CONFIRMED, SOURCE_PHARMACIST_CONFIRMED),
+                        else_=source,
+                    )
+                },
+            )
+            .returning(PatientDisease)
+        )
+        result = await self._session.execute(stmt)
+        association = result.scalar_one()
+        await self._session.commit()
+        await self._session.refresh(association)
+        return association
+
+    async def delete_disease(self, user_id: UUID, patient_disease_id: UUID) -> bool:
+        """Xoá theo cả association ID và owner để không thể xoá bệnh của user khác."""
+        result = await self._session.execute(
+            delete(PatientDisease).where(
+                PatientDisease.id == patient_disease_id,
+                PatientDisease.user_id == user_id,
+            )
+        )
+        await self._session.commit()
+        return bool(result.rowcount)

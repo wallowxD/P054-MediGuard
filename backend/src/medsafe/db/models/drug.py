@@ -44,6 +44,18 @@ class Drug(Base):
     insurance_payment_pct: Mapped[str | None] = mapped_column(Text)
     indication_limits: Mapped[str | None] = mapped_column(Text)
 
+    # Trường v2: Phân loại và Tóm tắt cho UI
+    pharmacological_class: Mapped[str | None] = mapped_column(Text)
+    therapeutic_effect: Mapped[str | None] = mapped_column(Text)
+    is_prescription: Mapped[bool | None] = mapped_column(default=False)
+
+    summary_indications: Mapped[str | None] = mapped_column(Text)
+    summary_contraindications: Mapped[str | None] = mapped_column(Text)
+    summary_dosage: Mapped[str | None] = mapped_column(Text)
+    summary_precautions: Mapped[str | None] = mapped_column(Text)
+    summary_side_effects: Mapped[str | None] = mapped_column(Text)
+    special_notes: Mapped[str | None] = mapped_column(Text)
+
     # Nội dung trích từ tờ HDSD, giữ nguyên văn.
     indications: Mapped[str | None] = mapped_column(Text)
     contraindications: Mapped[str | None] = mapped_column(Text)
@@ -52,6 +64,8 @@ class Drug(Base):
     side_effects: Mapped[str | None] = mapped_column(Text)
     notes: Mapped[str | None] = mapped_column(Text)
 
+    version: Mapped[str | None] = mapped_column(Text, default="v2", server_default="v2")
+
     created_at: Mapped[datetime | None] = mapped_column(postgresql.TIMESTAMP(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime | None] = mapped_column(postgresql.TIMESTAMP(timezone=True), server_default=func.now())
 
@@ -59,6 +73,7 @@ class Drug(Base):
         Index("idx_drugs_brand_unaccent", "brand_name_unaccent"),
         # GIN cho toán tử mảng (`canonical_ingredients @> ARRAY[...]`); btree không dùng được.
         Index("idx_drugs_canonical_ingredients", "canonical_ingredients", postgresql_using="gin"),
+        Index("idx_drugs_version", "version"),
     )
 
     def __repr__(self) -> str:

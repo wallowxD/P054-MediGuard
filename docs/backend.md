@@ -96,7 +96,8 @@ embedding space. Warning đó có thể có nguồn thật nhưng ghi sai cặp 
 ## Nhà cung cấp dịch vụ và dữ liệu
 
 - Prescription OCR đi qua Gemini adapter và chỉ tạo candidate chưa tin cậy. Sau OCR vẫn
-  phải catalog match và user xác nhận stable ID.
+  phải catalog match và user xác nhận stable ID. Ảnh đơn do patient tải lên được re-encode
+  trong RAM để bỏ metadata rồi huỷ sau request; không lưu ảnh, filename hoặc model output.
 - Leaflet OCR chạy offline qua Qwen adapter với endpoint/model đọc từ config.
 - Supabase PostgreSQL sở hữu catalog, exact pair, citation, immutable evidence version và
   review state.

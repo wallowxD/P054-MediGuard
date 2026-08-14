@@ -10,7 +10,7 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from medsafe.db.models.disease import Disease
+from medsafe.db.models.disease import DISEASE_VERSION_V2, Disease
 from medsafe.domain.normalization import normalize_disease_name
 
 
@@ -23,6 +23,8 @@ class DiseaseCatalogRepository(Protocol):
 
     async def get_by_id(self, disease_id: UUID) -> Disease | None: ...
 
+    async def get_by_ids(self, disease_ids: list[UUID]) -> list[Disease]: ...
+
     async def find_by_names(self, names: list[str]) -> list[Disease]: ...
 
 
@@ -34,7 +36,9 @@ class SqlDiseaseCatalogRepository:
 
     async def list_active(self) -> list[Disease]:
         result = await self._session.execute(
-            select(Disease).where(Disease.is_active.is_(True)).order_by(Disease.name_unaccent)
+            select(Disease)
+            .where(Disease.is_active.is_(True), Disease.version == DISEASE_VERSION_V2)
+            .order_by(Disease.name_unaccent)
         )
         return list(result.scalars().all())
 
@@ -53,14 +57,37 @@ class SqlDiseaseCatalogRepository:
 
         result = await self._session.execute(
             select(Disease)
-            .where(Disease.is_active.is_(True), Disease.name_unaccent.contains(needle, autoescape=True))
+            .where(
+                Disease.is_active.is_(True),
+                Disease.version == DISEASE_VERSION_V2,
+                Disease.name_unaccent.contains(needle, autoescape=True),
+            )
             .order_by(Disease.name_unaccent)
             .limit(limit)
         )
         return list(result.scalars().all())
 
     async def get_by_id(self, disease_id: UUID) -> Disease | None:
-        return await self._session.get(Disease, disease_id)
+        result = await self._session.execute(
+            select(Disease).where(
+                Disease.id == disease_id,
+                Disease.is_active.is_(True),
+                Disease.version == DISEASE_VERSION_V2,
+            )
+        )
+        return result.scalar_one_or_none()
+
+    async def get_by_ids(self, disease_ids: list[UUID]) -> list[Disease]:
+        if not disease_ids:
+            return []
+        result = await self._session.execute(
+            select(Disease).where(
+                Disease.id.in_(disease_ids),
+                Disease.is_active.is_(True),
+                Disease.version == DISEASE_VERSION_V2,
+            )
+        )
+        return list(result.scalars().all())
 
     async def find_by_names(self, names: list[str]) -> list[Disease]:
         """Khớp CHÍNH XÁC danh sách tên bệnh của một lượt tra cứu với danh mục.
@@ -75,6 +102,10 @@ class SqlDiseaseCatalogRepository:
             return []
 
         result = await self._session.execute(
-            select(Disease).where(Disease.is_active.is_(True), Disease.name_unaccent.in_(needles))
+            select(Disease).where(
+                Disease.is_active.is_(True),
+                Disease.version == DISEASE_VERSION_V2,
+                Disease.name_unaccent.in_(needles),
+            )
         )
         return list(result.scalars().all())

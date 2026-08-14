@@ -4,7 +4,6 @@ const REASON_LABEL: Record<TUnavailableReason, string> = {
   "missing-record": "Chưa có bản ghi tương tác cho cặp này",
   "missing-citation": "Có bản ghi nhưng thiếu trích dẫn nguồn hợp lệ",
   "source-unavailable": "Nguồn tài liệu hiện chưa khả dụng",
-  "below-threshold": "Kết quả tra cứu chưa đạt ngưỡng tin cậy",
 };
 
 interface UnavailableInteractionListProps {

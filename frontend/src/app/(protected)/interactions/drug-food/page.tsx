@@ -1,26 +1,14 @@
-"use client";
+import FeatureUnavailable from "@/components/FeatureUnavailable";
 
-import { Apple, Trash2 } from "lucide-react";
-import { DrugCatalogPicker, SelectedDrugList } from "@/components/drugs";
-import { BasketInputField, InteractionResultsPlaceholder } from "@/components/interactions";
-import { PrescriptionImageUpload } from "@/components/prescription";
-import Button from "@/components/ui/Button";
-import { addFood, clearBasket, removeDrug, removeFood } from "@/store/reducers/drug-basket";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectBasketDrugs, selectBasketFoods } from "@/store/selectors";
-
-// TODO(API): ráp useCheckInteractions() (src/queries/interactions.ts) khi backend mở
-// POST /api/v1/interactions/check cho kind "drug-food". Giỏ thuốc/thực phẩm chỉ là
-// client state — kết quả tra cứu thật KHÔNG được lưu vào Redux (xem docs/frontend.md).
-// DrugCatalogPicker chưa có cách xác nhận thuốc thật nên danh sách thuốc luôn rỗng và
-// nút tra cứu luôn disabled — đúng trạng thái hiện tại. Thực phẩm vẫn nhập text tự do
-// vì không có bảng danh mục tương ứng.
+/**
+ * Cùng lý do với `/interactions/drug-drug`: giỏ thuốc chưa xác nhận được thuốc thật
+ * và `POST /api/v1/interactions/check` chưa tồn tại, nên không dựng form tra cứu
+ * chỉ để nút luôn disabled. Xem ghi chú đầy đủ ở trang thuốc–thuốc.
+ *
+ * TODO(API): khôi phục luồng đầy đủ (DrugCatalogPicker + BasketInputField +
+ * useCheckInteractions cho kind "drug-food") khi backend mở scoped retrieval.
+ */
 export default function DrugFoodInteractionsPage() {
-  const dispatch = useAppDispatch();
-  const drugs = useAppSelector(selectBasketDrugs);
-  const foods = useAppSelector(selectBasketFoods);
-  const canCheck = drugs.length >= 1 && foods.length >= 1;
-
   return (
     <div className="space-y-6">
       <header className="space-y-1">
@@ -31,59 +19,15 @@ export default function DrugFoodInteractionsPage() {
         </p>
       </header>
 
-      <PrescriptionImageUpload />
-
-      <div className="space-y-5 rounded-xl border border-border bg-card p-4 sm:p-5">
-        <DrugCatalogPicker label="Chọn thuốc từ danh mục bệnh viện" />
-
-        <SelectedDrugList
-          label="Thuốc đã chọn"
-          drugs={drugs}
-          onRemove={(id) => dispatch(removeDrug(id))}
-          emptyHint="Chưa có thuốc nào được xác nhận từ danh mục bệnh viện."
-        />
-
-        <BasketInputField
-          label="Thực phẩm cần đối chiếu"
-          placeholder="Nhập tên thực phẩm rồi bấm Thêm…"
-          emptyHint="Chưa có thực phẩm nào được thêm."
-          items={foods.map((f) => ({ id: f, label: f }))}
-          onAdd={(food) => dispatch(addFood(food))}
-          onRemove={(food) => dispatch(removeFood(food))}
-        />
-
-        {drugs.length > 0 || foods.length > 0 ? (
-          <button
-            type="button"
-            onClick={() => dispatch(clearBasket())}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-foreground-muted hover:text-error"
-          >
-            <Trash2 className="h-3.5 w-3.5" aria-hidden />
-            Xoá toàn bộ danh sách
-          </button>
-        ) : null}
-
-        <div className="space-y-1.5">
-          <Button variant="solid" size="sm" disabled={!canCheck}>
-            <Apple className="h-4 w-4" aria-hidden />
-            Tra cứu tương tác
-          </Button>
-          {!canCheck ? (
-            <p className="text-xs text-foreground-muted">
-              Cần ít nhất một thuốc đã xác nhận từ danh mục bệnh viện và một thực phẩm để tra
-              cứu.
-            </p>
-          ) : null}
-        </div>
-      </div>
-
-      <section aria-label="Kết quả tra cứu" className="space-y-3">
-        <h2 className="text-sm font-semibold text-foreground">Kết quả</h2>
-        <InteractionResultsPlaceholder
-          title="Chưa đủ dữ liệu để tra cứu"
-          description="Thêm ít nhất một thuốc đã xác nhận và một thực phẩm để tra cứu."
-        />
-      </section>
+      <FeatureUnavailable
+        title="Tra cứu thuốc – thực phẩm đang được phát triển, chưa khả dụng"
+        description="Bạn chưa thể hoàn tất một lượt tra cứu tương tác thuốc–thực phẩm. Danh mục thuốc của bệnh viện đã tra cứu được, nhưng các bước còn lại của luồng chưa sẵn sàng nên màn hình này chưa mở."
+        missing={[
+          "Bước xác nhận thuốc từ danh mục vào danh sách tra cứu",
+          "Dịch vụ tìm đoạn nói về thực phẩm trong tờ hướng dẫn sử dụng của thuốc đã chọn",
+          "Tải ảnh đơn thuốc để nhận diện tên thuốc tự động",
+        ]}
+      />
     </div>
   );
 }

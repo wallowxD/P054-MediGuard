@@ -9,13 +9,13 @@ interface SidebarNavListProps {
   onNavigate?: () => void;
 }
 
-/** Danh sách 5 mục điều hướng chính — dùng chung cho AppSidebar (desktop) và drawer của MobileTopbar */
+/** Danh sách điều hướng chính — dùng chung cho AppSidebar và drawer mobile. */
 export default function SidebarNavList({ onNavigate }: SidebarNavListProps) {
   const pathname = usePathname();
 
   return (
     <nav aria-label="Điều hướng chính" className="flex flex-col gap-1">
-      {PRIMARY_NAV_ITEMS.map(({ href, label, Icon, unsupported }) => {
+      {PRIMARY_NAV_ITEMS.map(({ href, label, Icon }) => {
         const active = isNavItemActive(pathname, href);
         return (
           <Link
@@ -31,11 +31,6 @@ export default function SidebarNavList({ onNavigate }: SidebarNavListProps) {
           >
             <Icon className="h-4 w-4 shrink-0" aria-hidden />
             <span className="flex-1">{label}</span>
-            {unsupported ? (
-              <span className="shrink-0 rounded-full border border-border bg-card px-1.5 py-0.5 text-[10px] font-medium text-foreground-muted">
-                Chưa hỗ trợ
-              </span>
-            ) : null}
           </Link>
         );
       })}

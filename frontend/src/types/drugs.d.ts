@@ -107,10 +107,38 @@ declare global {
     total: number;
   }
 
-  // ── GET /api/v1/drugs/{id} — backend chưa mở ───────────────────────────────
+  // ── GET /api/v1/drugs/{id} ─────────────────────────────────────────────────
 
-  /** Chi tiết một thuốc cho `/drug-information/[id]` — bắt buộc có citation mới được hiển thị */
-  interface IDrugInformationDetail extends IDrugItem {
-    citations: ICitation[];
+  /**
+   * Chi tiết một thuốc cho `/drug-information/[id]`.
+   *
+   * Mọi trường mô tả là đoạn TRÍCH NGUYÊN VĂN từ tờ HDSD, backend chỉ đọc lại chứ không
+   * sinh nội dung. Trường nào `null` nghĩa là nguồn không có mục đó — UI phải ẩn hẳn mục,
+   * không được thay bằng câu chữ tự viết (luật số 1 của dự án).
+   *
+   * `isPrescription` có ba trạng thái: `true` kê đơn, `false` không kê đơn,
+   * `null`/`undefined` là nguồn không nói rõ — đừng gộp `null` vào `false`.
+   */
+  interface IDrugInformationDetail {
+    id: string;
+    brandName: string;
+    ingredient: string;
+    /**
+     * Link tờ HDSD gốc. Khai lại thay vì `extends IDrugItem` vì backend trả `null` khi
+     * thuốc chưa có tài liệu, còn `IDrugItem.leafletUrl` chỉ nhận `string | undefined`.
+     */
+    leafletUrl?: string | null;
+    dosageForm?: string | null;
+    route?: string | null;
+    manufacturer?: string | null;
+    pharmacologicalClass?: string | null;
+    therapeuticEffect?: string | null;
+    isPrescription?: boolean | null;
+    summaryIndications?: string | null;
+    summaryContraindications?: string | null;
+    summaryDosage?: string | null;
+    summaryPrecautions?: string | null;
+    summarySideEffects?: string | null;
+    specialNotes?: string | null;
   }
 }

@@ -2,6 +2,7 @@ import { FileCheck2, ShieldCheck, UserRoundCheck } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import Logo from "@/components/ui/Logo";
+import { MAIN_CONTENT_ID } from "@/components/ui/SkipLink";
 import { ROUTES } from "@/constants/routes";
 
 type AuthShellProps = {
@@ -26,7 +27,11 @@ const TRUST_POINTS = [
 
 export default function AuthShell({ eyebrow, title, description, children }: AuthShellProps) {
   return (
-    <main className="grid min-h-[100dvh] bg-background lg:grid-cols-[minmax(0,0.9fr)_minmax(30rem,1.1fr)]">
+    <main
+      id={MAIN_CONTENT_ID}
+      tabIndex={-1}
+      className="grid min-h-[100dvh] bg-background lg:grid-cols-[minmax(0,0.9fr)_minmax(30rem,1.1fr)]"
+    >
       <aside className="relative hidden overflow-hidden bg-hero-tint px-10 py-12 lg:flex lg:flex-col lg:justify-between xl:px-16 xl:py-16">
         <div
           aria-hidden
@@ -35,11 +40,10 @@ export default function AuthShell({ eyebrow, title, description, children }: Aut
 
         <Link
           href={ROUTES.HOME}
-          aria-label="Quay về trang chủ MediGuard"
+          aria-label="Quay về trang chủ Vinmec"
           className="relative inline-flex w-fit items-center gap-3 rounded-full text-primary transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-hero-tint"
         >
-          <Logo className="h-10 w-10" />
-          <span className="text-lg font-semibold tracking-tight">MediGuard</span>
+          <Logo className="h-11 w-auto" />
         </Link>
 
         <div className="relative max-w-xl py-16">
@@ -73,7 +77,7 @@ export default function AuthShell({ eyebrow, title, description, children }: Aut
         </div>
 
         <p className="relative max-w-md text-xs leading-5 text-foreground-muted">
-          Thông tin trên MediGuard chỉ mang tính tham khảo và không thay thế đánh giá của
+          Thông tin trên Vinmec chỉ mang tính tham khảo và không thay thế đánh giá của
           bác sĩ hoặc dược sĩ.
         </p>
       </aside>
@@ -82,11 +86,10 @@ export default function AuthShell({ eyebrow, title, description, children }: Aut
         <div className="w-full max-w-md">
           <Link
             href={ROUTES.HOME}
-            aria-label="Quay về trang chủ MediGuard"
+            aria-label="Quay về trang chủ Vinmec"
             className="mb-10 inline-flex items-center gap-3 text-primary transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 lg:hidden"
           >
-            <Logo className="h-10 w-10" />
-            <span className="text-lg font-semibold tracking-tight">MediGuard</span>
+            <Logo className="h-11 w-auto" />
           </Link>
 
           <div className="rounded-[2rem] bg-surface p-1.5 shadow-2xl shadow-primary/10">

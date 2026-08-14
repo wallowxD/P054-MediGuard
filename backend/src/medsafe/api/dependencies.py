@@ -14,8 +14,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from medsafe.config import Settings, get_auth_config, get_settings
 from medsafe.db.models.user import User
+from medsafe.db.repositories.disease_catalog_repository import DiseaseCatalogRepository, SqlDiseaseCatalogRepository
 from medsafe.db.repositories.drug_repository import DrugRepository, SqlDrugRepository
 from medsafe.db.repositories.oauth_identity_repository import OAuthIdentityRepository, SqlOAuthIdentityRepository
+from medsafe.db.repositories.patient_profile_repository import PatientProfileRepository, SqlPatientProfileRepository
 from medsafe.db.repositories.user_repository import SqlUserRepository, UserRepository
 from medsafe.db.session import get_session
 from medsafe.domain.auth import ACCESS_TOKEN_TYPE, InactiveAccountError, InvalidTokenError, decode_token
@@ -48,6 +50,20 @@ def get_drug_repository(session: SessionDep) -> DrugRepository:
 
 
 DrugRepositoryDep = Annotated[DrugRepository, Depends(get_drug_repository)]
+
+
+def get_disease_catalog_repository(session: SessionDep) -> DiseaseCatalogRepository:
+    return SqlDiseaseCatalogRepository(session)
+
+
+DiseaseCatalogRepositoryDep = Annotated[DiseaseCatalogRepository, Depends(get_disease_catalog_repository)]
+
+
+def get_patient_profile_repository(session: SessionDep) -> PatientProfileRepository:
+    return SqlPatientProfileRepository(session)
+
+
+PatientProfileRepositoryDep = Annotated[PatientProfileRepository, Depends(get_patient_profile_repository)]
 
 
 async def get_current_user(
