@@ -8,13 +8,39 @@
 
 import axios from "axios";
 import type { NextAuthOptions } from "next-auth";
+import type { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { ROUTES } from "@/constants/routes";
-import { loginRequest } from "@/services/auth";
-import { loginWithGoogleRequest } from "@/services/auth";
+import {
+  loginRequest,
+  loginWithGoogleRequest,
+  refreshTokenRequest,
+} from "@/services/auth";
 
-// import { loginRequest } from "@/services/auth";
-// import { transformApiResponse } from "@/queries/utils";
+// Làm mới trước hạn một phút để token không hết hạn giữa lúc lấy session và gửi API.
+const ACCESS_TOKEN_REFRESH_BUFFER_MS = 60_000;
+
+const refreshAccessToken = async (token: JWT): Promise<JWT> => {
+  if (!token.refreshToken) {
+    return { ...token, error: "RefreshAccessTokenError" };
+  }
+
+  try {
+    const refreshed = await refreshTokenRequest({
+      refreshToken: token.refreshToken,
+    });
+
+    return {
+      ...token,
+      accessToken: refreshed.accessToken,
+      refreshToken: refreshed.refreshToken,
+      accessTokenExpires: Date.now() + refreshed.expiresIn * 1000,
+      error: undefined,
+    };
+  } catch {
+    return { ...token, error: "RefreshAccessTokenError" };
+  }
+};
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
@@ -29,7 +55,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const { accessToken, refreshToken, user } = await loginRequest({
+        const { accessToken, refreshToken, expiresIn, user } = await loginRequest({
           email: credentials.email,
           password: credentials.password,
         });
@@ -41,6 +67,7 @@ export const authOptions: NextAuthOptions = {
           roles: user.roles,
           accessToken,
           refreshToken,
+          expiresIn,
         };
       },
     }),
@@ -67,6 +94,7 @@ export const authOptions: NextAuthOptions = {
             roles: res.user.roles,
             accessToken: res.accessToken,
             refreshToken: res.refreshToken,
+            expiresIn: res.expiresIn,
           };
         } catch (error) {
           // Ném lại message gốc (vd. "Google ID token không hợp lệ") để UI hiển thị đúng
@@ -86,19 +114,31 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
+        token.accessTokenExpires = Date.now() + user.expiresIn * 1000;
         token.user = {
           id: user.id,
           email: user.email ?? "",
           name: user.name ?? "",
           roles: user.roles ?? [], // ⬅ bắt buộc, middleware đọc chỗ này
         };
+        token.error = undefined;
+        return token;
       }
-      return token;
+
+      if (
+        token.accessToken &&
+        token.accessTokenExpires &&
+        Date.now() < token.accessTokenExpires - ACCESS_TOKEN_REFRESH_BUFFER_MS
+      ) {
+        return token;
+      }
+
+      // Session cũ chưa có accessTokenExpires cũng đi qua đây một lần để được nâng cấp.
+      return refreshAccessToken(token);
     },
 
     async session({ session, token }) {
       session.accessToken = token.accessToken as string;
-      session.refreshToken = token.refreshToken;
       session.user = token.user as IAuthUser;
       session.error = token.error;
       return session;
