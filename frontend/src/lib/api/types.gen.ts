@@ -113,6 +113,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/chat/message": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Chat Message
+         * @description Xử lý hội thoại chat AI gắn với context tra cứu tương tác.
+         */
+        post: operations["chat_message_api_v1_chat_message_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/drugs": {
         parameters: {
             query?: never;
@@ -174,6 +194,30 @@ export interface paths {
          *     autocomplete chứ không phải nút submit.
          */
         get: operations["search_drugs_api_v1_drugs_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/drugs/{drug_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Drug
+         * @description Chi tiết một thuốc cho trang tra cứu thông tin thuốc.
+         *
+         *     Chỉ đọc lại nội dung đã lưu trong bảng `drugs` — mọi trường mô tả đều là đoạn trích
+         *     nguyên văn từ tờ HDSD. Route không tóm tắt, không suy luận và không ghép thông tin từ
+         *     thuốc khác: đây là endpoint đọc, không phải endpoint sinh nội dung.
+         */
+        get: operations["get_drug_api_v1_drugs__drug_id__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -439,6 +483,65 @@ export interface components {
              */
             images: string[];
         };
+        /** ChatContextSummary */
+        ChatContextSummary: {
+            /** Checkid */
+            checkId?: string | null;
+            /** Drugs */
+            drugs?: string[];
+            /** Diseases */
+            diseases?: string[];
+            /** Severitycounts */
+            severityCounts?: {
+                [key: string]: number;
+            };
+            /** Highlightwarning */
+            highlightWarning?: string | null;
+            /** Itemssummary */
+            itemsSummary?: {
+                [key: string]: unknown;
+            }[];
+            /** Notessummary */
+            notesSummary?: {
+                [key: string]: unknown;
+            }[];
+            /** Unavailablesummary */
+            unavailableSummary?: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** ChatMessage */
+        ChatMessage: {
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "user" | "assistant" | "system";
+            /** Content */
+            content: string;
+            /** Createdat */
+            createdAt?: string | null;
+        };
+        /** ChatRequest */
+        ChatRequest: {
+            /**
+             * Action
+             * @default chat
+             * @enum {string}
+             */
+            action: "initial" | "chat";
+            context: components["schemas"]["ChatContextSummary"];
+            /** Messages */
+            messages?: components["schemas"]["ChatMessage"][];
+            /** Userquery */
+            userQuery?: string | null;
+        };
+        /** ChatResponse */
+        ChatResponse: {
+            reply: components["schemas"]["ChatMessage"];
+            /** Quicksuggestions */
+            quickSuggestions?: string[];
+        };
         /** Citation */
         Citation: {
             /** Evidenceid */
@@ -494,6 +597,52 @@ export interface components {
             ingredient: string;
             /** Confidence */
             confidence: number;
+        };
+        /**
+         * DrugDetailResponse
+         * @description Chi tiết một thuốc trong danh mục (`GET /api/v1/drugs/{drug_id}`).
+         *
+         *     Toàn bộ trường `summary_*`, `therapeutic_effect` và `special_notes` là đoạn TRÍCH
+         *     NGUYÊN VĂN từ tờ HDSD (xem `scripts/extract_v2_json.py`), không phải nội dung do model
+         *     tự viết. Vì vậy endpoint trả nguyên chuỗi đã lưu và không diễn giải lại — mục nào
+         *     nguồn không có thì là `None`, FE ẩn mục đó thay vì tự điền.
+         *
+         *     `leaflet_url` là đường dẫn tài liệu gốc cho mọi nội dung phía trên; thiếu nó thì
+         *     người dùng không truy vết được, nên FE phải nói rõ khi trường này rỗng.
+         */
+        DrugDetailResponse: {
+            /** Id */
+            id: string;
+            /** Brandname */
+            brandName: string;
+            /** Ingredient */
+            ingredient: string;
+            /** Dosageform */
+            dosageForm?: string | null;
+            /** Route */
+            route?: string | null;
+            /** Manufacturer */
+            manufacturer?: string | null;
+            /** Leafleturl */
+            leafletUrl?: string | null;
+            /** Pharmacologicalclass */
+            pharmacologicalClass?: string | null;
+            /** Therapeuticeffect */
+            therapeuticEffect?: string | null;
+            /** Isprescription */
+            isPrescription?: boolean | null;
+            /** Summaryindications */
+            summaryIndications?: string | null;
+            /** Summarycontraindications */
+            summaryContraindications?: string | null;
+            /** Summarydosage */
+            summaryDosage?: string | null;
+            /** Summaryprecautions */
+            summaryPrecautions?: string | null;
+            /** Summarysideeffects */
+            summarySideEffects?: string | null;
+            /** Specialnotes */
+            specialNotes?: string | null;
         };
         /**
          * DrugLetterCount
@@ -1264,6 +1413,39 @@ export interface operations {
             };
         };
     };
+    chat_message_api_v1_chat_message_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChatRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_drugs_api_v1_drugs_get: {
         parameters: {
             query?: {
@@ -1343,6 +1525,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DrugSearchResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_drug_api_v1_drugs__drug_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                drug_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DrugDetailResponse"];
                 };
             };
             /** @description Validation Error */

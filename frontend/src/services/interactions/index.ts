@@ -4,9 +4,8 @@
  * luôn đi qua `src/queries/interactions.ts`.
  *
  * Trạng thái backend (xem `backend/src/medsafe/api/routes.py`):
- * - ĐÃ CHẠY THẬT: `/drugs`, `/drugs/letters`, `/drugs/search` (VMEC-29).
- * - CHƯA CÓ: `/interactions/*`, `/drugs/{id}`, `/interaction-checks/*` — thân hàm vẫn
- *   comment lại và trả `apiNotReady()`.
+ * - ĐÃ CHẠY THẬT: `/drugs`, `/drugs/letters`, `/drugs/search` (VMEC-29), `/drugs/{id}`.
+ * - CHƯA CÓ: `/interactions/*` — thân hàm vẫn comment lại và trả `apiNotReady()`.
  */
 
 import axios from "axios";
@@ -110,16 +109,21 @@ export const getDrugLettersRequest = async (): Promise<IDrugLetterIndexResponse>
   }
 };
 
+/** `GET /api/v1/drugs/{id}` — chi tiết một thuốc, nội dung trích nguyên văn từ tờ HDSD. */
 export const getDrugDetailsRequest = async (id: string): Promise<IDrugInformationDetail> => {
-  // try {
-  //   const apiUrl = API_BASE_URL + API_ENDPOINTS.DRUGS.GET_DETAILS(id);
-  //   const retrieved = await clientRequest.get(apiUrl);
-  //   return retrieved?.data;
-  // } catch (error: unknown) {
-  //   const message = error instanceof Error ? error.message : "Đã có lỗi xảy ra";
-  //   throw new Error(message);
-  // }
-  return apiNotReady(API_ENDPOINTS.DRUGS.GET_DETAILS(id));
+  try {
+    const response = await clientRequest.get<IDrugInformationDetail>(
+      API_BASE_URL + API_ENDPOINTS.DRUGS.GET_DETAILS(id)
+    );
+    return response.data;
+  } catch (error: unknown) {
+    // 404 có nghĩa riêng: thuốc không nằm trong danh mục bệnh viện, khác với lỗi mạng.
+    // Gộp chung sẽ khiến người dùng thử lại mãi một ID vốn không tồn tại.
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      throw new Error("Không tìm thấy thuốc này trong danh mục bệnh viện.");
+    }
+    throw apiError(error, "Không thể tải thông tin thuốc. Vui lòng thử lại.");
+  }
 };
 
 export const getInteractionChecksRequest = async (): Promise<IInteractionCheckSummaryItem[]> => {

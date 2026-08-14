@@ -6,8 +6,9 @@ Hai cách vào danh mục, khác nhau ở cơ chế khớp:
 """
 
 from math import ceil
+from uuid import UUID
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query
 
 from medsafe.api.dependencies import DrugRepositoryDep
 from medsafe.config import get_catalog_config
@@ -15,6 +16,7 @@ from medsafe.domain.catalog import NON_ALPHA_LETTER, build_letter_index
 from medsafe.domain.normalization import search_catalog
 from medsafe.schemas.drug import (
     DrugCandidate,
+    DrugDetailResponse,
     DrugLetterCount,
     DrugLetterIndexResponse,
     DrugListItem,
@@ -27,6 +29,20 @@ router = APIRouter()
 _catalog_config = get_catalog_config()
 # `letter` nhận A–Z (không phân biệt hoa thường) hoặc "other" cho tên bắt đầu bằng số/ký tự.
 _LETTER_PATTERN = rf"^([A-Za-z]|{NON_ALPHA_LETTER})$"
+
+
+def _blank_to_none(value: str | None) -> str | None:
+    """Chuẩn hoá "mục này nguồn không có" về đúng MỘT giá trị: `None`.
+
+    Bước bóc tách ghi chuỗi rỗng khi tờ HDSD không có mục tương ứng
+    (`scripts/extract_v2_json.py`), còn các bản ghi cũ để `NULL`. Nếu không gom lại,
+    frontend phải tự đoán và dễ render một khối tiêu đề rỗng — trông như hệ thống đang
+    giấu nội dung chứ không phải nguồn không có.
+    """
+    if value is None:
+        return None
+    stripped = value.strip()
+    return stripped or None
 
 
 @router.get("", response_model=DrugListResponse)
@@ -143,4 +159,38 @@ async def search_drugs(
         query=trimmed_query,
         candidates=candidates,
         requires_confirmation=requires_confirmation,
+    )
+
+
+# ⚠️ Route động này phải nằm SAU `/letters` và `/search`, nếu không hai đường dẫn tĩnh đó
+# bị bắt như một `drug_id` và trả 422.
+@router.get("/{drug_id}", response_model=DrugDetailResponse)
+async def get_drug(drug_id: UUID, drug_repository: DrugRepositoryDep) -> DrugDetailResponse:
+    """Chi tiết một thuốc cho trang tra cứu thông tin thuốc.
+
+    Chỉ đọc lại nội dung đã lưu trong bảng `drugs` — mọi trường mô tả đều là đoạn trích
+    nguyên văn từ tờ HDSD. Route không tóm tắt, không suy luận và không ghép thông tin từ
+    thuốc khác: đây là endpoint đọc, không phải endpoint sinh nội dung.
+    """
+    drug = await drug_repository.get_by_id(drug_id)
+    if drug is None:
+        raise HTTPException(status_code=404, detail="Không tìm thấy thuốc trong danh mục.")
+
+    return DrugDetailResponse(
+        id=str(drug.id),
+        brand_name=drug.brand_name,
+        ingredient=drug.ingredient_raw,
+        dosage_form=_blank_to_none(drug.dosage_form),
+        route=_blank_to_none(drug.route),
+        manufacturer=_blank_to_none(drug.manufacturer),
+        leaflet_url=_blank_to_none(drug.leaflet_url),
+        pharmacological_class=_blank_to_none(drug.pharmacological_class),
+        therapeutic_effect=_blank_to_none(drug.therapeutic_effect),
+        is_prescription=drug.is_prescription,
+        summary_indications=_blank_to_none(drug.summary_indications),
+        summary_contraindications=_blank_to_none(drug.summary_contraindications),
+        summary_dosage=_blank_to_none(drug.summary_dosage),
+        summary_precautions=_blank_to_none(drug.summary_precautions),
+        summary_side_effects=_blank_to_none(drug.summary_side_effects),
+        special_notes=_blank_to_none(drug.special_notes),
     )

@@ -3,8 +3,8 @@ import Link from "next/link";
 import DrugInformationDetail from "@/components/drugs/DrugInformationDetail";
 import { ROUTES } from "@/constants/routes";
 
-// TODO(API): trang chỉ truyền `id` xuống DrugInformationDetail — ráp GET
-// /api/v1/drugs/{id} tại useDrugDetails() (src/queries/interactions.ts).
+// Trang chỉ truyền `id` xuống DrugInformationDetail; dữ liệu do useDrugDetails() lấy từ
+// GET /api/v1/drugs/{id} phía client.
 export default async function DrugInformationDetailPage({
   params,
 }: {
