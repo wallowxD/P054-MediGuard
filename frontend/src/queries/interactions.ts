@@ -120,12 +120,18 @@ export const useDrugLetters = (enabled: boolean = true) =>
     staleTime: 30 * 60 * 1000,
   });
 
-/** Chi tiết một thuốc cho `/drug-information/[id]` — chuẩn bị cho GET /api/v1/drugs/{id} */
+/**
+ * Chi tiết một thuốc cho `/drug-information/[id]` (`GET /api/v1/drugs/{id}`).
+ *
+ * Cache dài như danh mục: nội dung tờ HDSD của một thuốc không đổi giữa các lần xem, nên
+ * quay lại từ danh sách không cần gọi mạng lại.
+ */
 export const useDrugDetails = (id: string, enabled: boolean = true) =>
   useQuery({
     queryKey: drugKeys.detail(id),
     queryFn: () => getDrugDetailsRequest(id),
     enabled: enabled && !!id,
+    staleTime: 30 * 60 * 1000,
   });
 
 /** Danh sách lượt tra cứu cho `/history` — chuẩn bị cho GET /api/v1/interaction-checks */

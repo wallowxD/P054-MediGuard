@@ -88,7 +88,6 @@ export default function DrugCatalogBrowser() {
 
   const activeQuery = isSearching ? searchQuery : listQuery;
   const isLoading = activeQuery.isLoading || (isSearching && isTyping);
-  const total = isSearching ? rows.length : (list?.total ?? 0);
   const isCapped = isSearching && rows.length === SEARCH_LIMIT;
 
   const errorMessage = activeQuery.isError
@@ -96,17 +95,6 @@ export default function DrugCatalogBrowser() {
       ? activeQuery.error.message
       : "Không thể tải danh mục thuốc."
     : null;
-
-  const resultLabel = () => {
-    if (isLoading) return "Đang tải…";
-    if (isSearching) {
-      return isCapped
-        ? `Hiển thị ${SEARCH_LIMIT} kết quả phù hợp nhất cho “${searchTerm}”`
-        : `${total} kết quả cho “${searchTerm}”`;
-    }
-    const suffix = list && list.totalPages > 1 ? ` · trang ${list.page}/${list.totalPages}` : "";
-    return `${total.toLocaleString("vi-VN")} kết quả${suffix}`;
-  };
 
   return (
     <div className="space-y-6">
@@ -124,14 +112,7 @@ export default function DrugCatalogBrowser() {
       </section>
 
       <section className="space-y-4 rounded-xl border border-border bg-card p-4 sm:p-6">
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold text-foreground">Danh sách thuốc</h2>
-          <p className="text-sm text-foreground-secondary">
-            {lettersQuery.data
-              ? `${lettersQuery.data.total.toLocaleString("vi-VN")} thuốc trong danh mục bệnh viện.`
-              : "Đang tải danh mục bệnh viện…"}
-          </p>
-        </div>
+        <h2 className="text-lg font-semibold text-foreground">Danh sách thuốc</h2>
 
         {/* Nút bật/tắt chỉ xuất hiện khi đang tìm kiếm — lúc duyệt bình thường thanh chữ
             cái là cách điều hướng chính nên không cho phép giấu nó đi. */}
@@ -181,10 +162,6 @@ export default function DrugCatalogBrowser() {
           </p>
         ) : (
           <>
-            <p className="text-sm text-foreground-secondary" role="status" aria-live="polite">
-              {resultLabel()}
-            </p>
-
             <DrugCatalogList
               items={rows}
               isLoading={isLoading}
