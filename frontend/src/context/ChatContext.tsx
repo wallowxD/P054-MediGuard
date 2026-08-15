@@ -49,9 +49,15 @@ export function convertResponseToContextSummary(result: IInteractionCheckRespons
 interface IChatContext {
   isOpen: boolean;
   contextSummary: IChatContextSummary | null;
+  /** Kết quả tra cứu đang hiển thị trên trang, để nút bác sĩ mở chat trong một lần bấm */
+  activeResult: IInteractionCheckResponse | null;
+  /** Tăng sau mỗi lượt tra cứu mới; dùng làm `key` để phát lại hiệu ứng nhắc của nút bác sĩ */
+  resultVersion: number;
   messages: IChatMessage[];
   quickSuggestions: string[];
   isLoading: boolean;
+  registerResult: (result: IInteractionCheckResponse) => void;
+  openChat: () => void;
   openChatWithResult: (result: IInteractionCheckResponse) => void;
   closeChat: () => void;
   toggleChat: () => void;
@@ -64,6 +70,8 @@ const ChatContext = createContext<IChatContext | undefined>(undefined);
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contextSummary, setContextSummary] = useState<IChatContextSummary | null>(null);
+  const [activeResult, setActiveResult] = useState<IInteractionCheckResponse | null>(null);
+  const [resultVersion, setResultVersion] = useState(0);
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [quickSuggestions, setQuickSuggestions] = useState<string[]>([]);
   const sendMutation = useSendChatMessage();
@@ -102,6 +110,21 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     },
     [contextSummary, messages.length, sendMutation]
   );
+
+  // Trang kết quả chỉ *đăng ký* context, không tự mở chat và không gọi API lời chào.
+  // Nút bác sĩ nổi mới là nơi mở chat, nên người dùng chỉ cần một lần bấm.
+  const registerResult = useCallback((result: IInteractionCheckResponse) => {
+    setActiveResult(result);
+    setResultVersion((version) => version + 1);
+  }, []);
+
+  const openChat = useCallback(() => {
+    if (activeResult) {
+      openChatWithResult(activeResult);
+      return;
+    }
+    setIsOpen(true);
+  }, [activeResult, openChatWithResult]);
 
   const closeChat = useCallback(() => setIsOpen(false), []);
   const toggleChat = useCallback(() => setIsOpen((prev) => !prev), []);
@@ -150,9 +173,13 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       value={{
         isOpen,
         contextSummary,
+        activeResult,
+        resultVersion,
         messages,
         quickSuggestions,
         isLoading: sendMutation.isPending,
+        registerResult,
+        openChat,
         openChatWithResult,
         closeChat,
         toggleChat,

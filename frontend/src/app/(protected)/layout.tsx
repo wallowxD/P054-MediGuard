@@ -7,7 +7,7 @@ import { BottomNav } from "@/components/navigation/BottomNav";
 import MobileTopbar from "@/components/navigation/MobileTopbar";
 import SkipLink, { MAIN_CONTENT_ID } from "@/components/ui/SkipLink";
 
-import { ChatSidebar } from "@/components/chat";
+import { ChatFab, ChatSidebar } from "@/components/chat";
 import { ChatProvider } from "@/context/ChatContext";
 
 // Middleware lo phần auth — vào được đây nghĩa là đã đăng nhập.
@@ -32,6 +32,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
           </Suspense>
         </main>
         <BottomNav />
+        <ChatFab />
         <ChatSidebar />
       </div>
     </ChatProvider>
