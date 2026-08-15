@@ -7,10 +7,12 @@ import { PRIMARY_NAV_ITEMS, isNavItemActive } from "./nav-items";
 interface SidebarNavListProps {
   /** Gọi khi người dùng bấm một link — dùng để đóng drawer trên mobile */
   onNavigate?: () => void;
+  /** Sidebar desktop đang thu gọn: chỉ hiện icon, nhãn giữ lại cho screen reader */
+  collapsed?: boolean;
 }
 
 /** Danh sách điều hướng chính — dùng chung cho AppSidebar và drawer mobile. */
-export default function SidebarNavList({ onNavigate }: SidebarNavListProps) {
+export default function SidebarNavList({ onNavigate, collapsed = false }: SidebarNavListProps) {
   const pathname = usePathname();
 
   return (
@@ -23,14 +25,18 @@ export default function SidebarNavList({ onNavigate }: SidebarNavListProps) {
             href={href}
             onClick={onNavigate}
             aria-current={active ? "page" : undefined}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+            title={collapsed ? label : undefined}
+            className={`flex items-center rounded-lg py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+              collapsed ? "justify-center px-0" : "gap-3 px-3"
+            } ${
               active
                 ? "bg-surface text-primary"
                 : "text-foreground-secondary hover:bg-surface hover:text-foreground"
             }`}
           >
             <Icon className="h-4 w-4 shrink-0" aria-hidden />
-            <span className="flex-1">{label}</span>
+            {/* Khi thu gọn, nhãn vẫn nằm trong DOM để link có accessible name. */}
+            <span className={collapsed ? "sr-only" : "flex-1"}>{label}</span>
           </Link>
         );
       })}

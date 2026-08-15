@@ -9,6 +9,8 @@ import { useInteractionChecks } from "@/queries/interactions";
 interface SidebarHistoryProps {
   /** Đóng drawer mobile sau khi người dùng chọn một lượt tra cứu. */
   onNavigate?: () => void;
+  /** Sidebar desktop đang thu gọn: thay danh sách bằng một lối vào `/history`. */
+  collapsed?: boolean;
 }
 
 const formatCheckedAt = (value: string): string =>
@@ -19,10 +21,28 @@ const formatCheckedAt = (value: string): string =>
   });
 
 /** Ba lượt gần nhất, dùng cùng query/cache với trang `/history`. */
-export default function SidebarHistory({ onNavigate }: SidebarHistoryProps) {
+export default function SidebarHistory({ onNavigate, collapsed = false }: SidebarHistoryProps) {
   const { data, isLoading, isError } = useInteractionChecks();
   const titleId = useId();
   const recentItems = data?.slice(0, 3) ?? [];
+
+  // Dải icon 4rem không đủ chỗ đọc tên thuốc; giữ lại một lối vào `/history` để chức năng
+  // không biến mất khi thu gọn.
+  if (collapsed) {
+    return (
+      <div className="mt-6 flex justify-center">
+        <Link
+          href={ROUTES.HISTORY}
+          onClick={onNavigate}
+          title="Lịch sử tra cứu"
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-foreground-secondary transition-colors hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <History className="h-4 w-4" aria-hidden />
+          <span className="sr-only">Lịch sử tra cứu</span>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <section className="mt-6" aria-labelledby={titleId}>
