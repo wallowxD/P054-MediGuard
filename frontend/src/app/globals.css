@@ -487,3 +487,95 @@ body {
     padding-inline: 0;
   }
 }
+
+/* Mỗi lần bong bóng của nút bác sĩ đổi nội dung (ba chấm ↔ câu mời hỏi) thì `key` đổi
+   theo, component remount và animation này chạy lại — không cần transition thủ công. */
+.chat-fab-bubble {
+  animation: chat-fab-bubble-in 0.35s ease both;
+}
+
+@keyframes chat-fab-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Vòng sóng quanh nút bác sĩ: chỉ đập vài nhịp rồi tắt hẳn (base opacity 0, animation
+   không fill) để không có vật thể động vĩnh viễn ở góc màn hình. */
+.chat-fab-ping {
+  opacity: 0;
+  animation: chat-fab-ping 1.4s cubic-bezier(0, 0, 0.2, 1) 5;
+}
+
+@keyframes chat-fab-ping {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+/* Bong bóng "đang nghĩ" trên đầu bác sĩ: bồng bềnh + ba chấm chạy liên tục, kể cả khi
+   người dùng chưa tương tác, để nút trông như đang chờ được hỏi. */
+.chat-fab-think,
+.chat-fab-think-tail {
+  animation: chat-fab-float 3.2s ease-in-out infinite;
+}
+
+.chat-fab-think-tail {
+  animation-delay: 0.12s;
+}
+
+@keyframes chat-fab-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.chat-fab-dot {
+  animation: chat-fab-dot 1.3s ease-in-out infinite;
+}
+
+.chat-fab-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.chat-fab-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@keyframes chat-fab-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-fab-bubble,
+  .chat-fab-ping,
+  .chat-fab-think,
+  .chat-fab-think-tail,
+  .chat-fab-dot {
+    animation: none;
+  }
+}
