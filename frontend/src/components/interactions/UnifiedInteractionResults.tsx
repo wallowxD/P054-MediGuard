@@ -1,9 +1,11 @@
-import { AlertCircle, Brain, CheckCircle2, ChevronDown, Info, Sparkles, Utensils, Wheat } from "lucide-react";
+"use client";
+
+import { AlertCircle, Brain, CheckCircle2, ChevronDown, Info, Utensils, Wheat } from "lucide-react";
+import { useEffect } from "react";
 import CitationBlock from "./CitationBlock";
 import ReviewStatusTag from "./ReviewStatusTag";
 import SeverityBadge from "./SeverityBadge";
 import { useChat } from "@/context/ChatContext";
-import Button from "@/components/ui/Button";
 
 const BAR_CLASS: Record<TSeverity, string> = {
   contraindicated: "bg-severity-contraindicated",
@@ -30,33 +32,15 @@ function Detail({ item }: { item: IInteractionItem }) {
 }
 
 export default function UnifiedInteractionResults({ result }: { result: IInteractionCheckResponse }) {
-  const { openChatWithResult } = useChat();
+  const { registerResult } = useChat();
+  // Chỉ nạp context cho trợ lý; người dùng mở chat bằng nút bác sĩ ở góc phải màn hình.
+  useEffect(() => registerResult(result), [result, registerResult]);
   const highlight = result.items.find((item) => item.id === result.highlightId);
   const diseaseItems = result.items.filter((item) => item.kind === "drug-disease");
   const foodNotes = result.notes.filter((item) => item.kind === "drug-food");
   const supplementNotes = result.notes.filter((item) => item.kind === "drug-supplement");
   return (
     <section className="space-y-6" aria-live="polite">
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-primary/20 bg-hero-tint-soft p-4 shadow-xs">
-        <div>
-          <h3 className="text-base font-bold text-foreground sm:text-lg flex items-center gap-2">
-            <Brain className="h-5 w-5 text-primary" />
-            Trợ lý AI phân tích lượt tra cứu
-          </h3>
-          <p className="text-xs sm:text-sm text-foreground-secondary mt-0.5">
-            Gửi toàn bộ ngữ cảnh tra cứu này cho AI để được giải thích chi tiết hoặc hỏi đáp thắc mắc.
-          </p>
-        </div>
-        <Button
-          size="md"
-          onClick={() => openChatWithResult(result)}
-          className="flex items-center gap-2 font-semibold shadow-md transition-all hover:scale-[1.02]"
-        >
-          <Sparkles className="h-4 w-4" />
-          Hỏi thêm AI
-        </Button>
-      </div>
-
       {result.historyStatus === "not-saved" ? <div className="flex gap-2 rounded-xl border border-warning/40 bg-warning/10 p-3 text-sm text-foreground-secondary"><Info className="h-5 w-5 shrink-0 text-warning" />Kết quả vẫn dùng được nhưng chưa lưu vào lịch sử. Hãy lưu hoặc chụp lại thông tin cần thiết.</div> : null}
       <div className="grid overflow-hidden rounded-xl sm:grid-cols-5" aria-label="Thang mức độ nghiêm trọng">
         {result.severityScale.map((item) => <div key={item.severity} className={`${BAR_CLASS[item.severity]} flex min-h-12 items-center justify-center gap-2 px-2 py-2 text-center text-xs font-semibold text-white`}><AlertCircle className="h-4 w-4" aria-hidden />{item.label} ({item.resultCount})</div>)}

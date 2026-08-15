@@ -1,42 +1,19 @@
 "use client";
 
-import { Brain, ChevronRight, MessageSquare, ShieldAlert, X } from "lucide-react";
+import { MessageSquare, ShieldAlert, X } from "lucide-react";
 import { useChat } from "@/context/ChatContext";
 import ChatMessageInput from "./ChatMessageInput";
 import ChatMessageList from "./ChatMessageList";
+import DoctorAvatar from "./DoctorAvatar";
 
+// Panel chat. Cửa mở panel là `ChatFab` (nút bác sĩ nổi góc phải) — ở đây cố tình
+// không có thêm nút toggle nào để chỉ còn một lối vào duy nhất.
 export default function ChatSidebar() {
-  const {
-    isOpen,
-    contextSummary,
-    messages,
-    quickSuggestions,
-    isLoading,
-    closeChat,
-    toggleChat,
-    sendMessage,
-  } = useChat();
+  const { isOpen, contextSummary, messages, quickSuggestions, isLoading, closeChat, sendMessage } =
+    useChat();
 
   return (
     <>
-      {/* Floating Toggle Button (visible when closed and context exists) */}
-      {!isOpen && contextSummary ? (
-        <button
-          onClick={toggleChat}
-          className="fixed right-0 top-1/2 z-40 flex -translate-y-1/2 items-center gap-2 rounded-l-2xl border border-r-0 border-primary/30 bg-card p-3 shadow-xl transition-transform hover:-translate-x-1 focus-visible:outline-none"
-          title="Mở AI Trợ lý Tra cứu"
-        >
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-hero-tint text-primary">
-            <Brain className="h-5 w-5" />
-            <span className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60 opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
-            </span>
-          </div>
-          <span className="hidden text-xs font-semibold text-foreground sm:inline">Hỏi AI</span>
-        </button>
-      ) : null}
-
       {/* Backdrop for mobile */}
       {isOpen ? (
         <div
@@ -55,9 +32,7 @@ export default function ChatSidebar() {
         {/* Header */}
         <header className="flex shrink-0 items-center justify-between border-b border-border bg-hero-tint-soft p-4 sm:px-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-hero-tint text-primary shadow-xs">
-              <Brain className="h-5 w-5" />
-            </div>
+            <DoctorAvatar className="h-11 w-11 shrink-0 border border-primary/20 bg-hero-tint shadow-xs" />
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="font-heading text-base font-bold text-foreground">Trợ lý Tra cứu AI</h2>
@@ -78,22 +53,14 @@ export default function ChatSidebar() {
             </div>
           </div>
 
-          <div className="flex items-center gap-1">
-            <button
-              onClick={closeChat}
-              className="rounded-lg p-2 text-foreground-muted hover:bg-background hover:text-foreground"
-              title="Ẩn Sidebar"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-            <button
-              onClick={closeChat}
-              className="rounded-lg p-2 text-foreground-muted hover:bg-background hover:text-foreground"
-              title="Đóng Chat"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+          <button
+            onClick={closeChat}
+            className="rounded-lg p-2 text-foreground-muted hover:bg-background hover:text-foreground"
+            title="Đóng chat"
+            aria-label="Đóng chat"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </header>
 
         {/* Safety Disclaimer Banner */}
