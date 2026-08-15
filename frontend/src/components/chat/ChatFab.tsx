@@ -6,9 +6,9 @@ import { useChat } from "@/context/ChatContext";
 import DoctorAvatar from "./DoctorAvatar";
 
 const IDLE_MESSAGES = [
-  "Bạn có thể hỏi tôi về thuốc đang tra cứu",
+  "Chưa tra cứu gì cũng hỏi tôi được nhé",
+  "Tôi hướng dẫn bạn dùng hệ thống",
   "Tôi trả lời kèm trích dẫn từ tờ HDSD",
-  "Thuốc này nên tránh ăn uống gì?",
   "Có thắc mắc gì cứ bấm vào tôi nhé",
 ];
 
@@ -18,15 +18,22 @@ const RESULT_MESSAGES = [
   "Tôi trả lời kèm trích dẫn từ tờ HDSD",
 ];
 
+const DRUG_MESSAGES = [
+  "Cần tôi giải thích tờ HDSD này?",
+  "Hỏi tôi thuốc này chống chỉ định với ai",
+  "Tôi trích nguyên văn từ tài liệu gốc",
+];
+
 const THINKING_MS = 3500;
 const MESSAGE_MS = 11000;
 
 export default function ChatFab() {
-  const { isOpen, activeResult, resultVersion, openChat } = useChat();
+  const { isOpen, activeDrug, activeResult, resultVersion, openChat } = useChat();
 
   const [step, setStep] = useState(0);
   const isThinking = step % 2 === 0;
-  const messages = activeResult ? RESULT_MESSAGES : IDLE_MESSAGES;
+  // Cùng thứ tự ưu tiên ngữ cảnh với `openChat()` — lời mời phải khớp thứ sẽ mở ra.
+  const messages = activeDrug ? DRUG_MESSAGES : activeResult ? RESULT_MESSAGES : IDLE_MESSAGES;
   const message = messages[Math.floor(step / 2) % messages.length];
 
   useEffect(() => {
@@ -68,8 +75,8 @@ export default function ChatFab() {
       <button
         type="button"
         onClick={openChat}
-        aria-label="Mở trợ lý AI tra cứu"
-        title="Hỏi trợ lý AI về lượt tra cứu"
+        aria-label="Mở trợ lý An toàn Thuốc AI"
+        title="Hỏi trợ lý An toàn Thuốc AI"
         className="group pointer-events-auto relative flex h-20 w-20 shrink-0 items-center justify-center rounded-full liquid-glass-bar shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 lg:h-22 lg:w-22"
       >
         {activeResult ? (
