@@ -23,18 +23,13 @@ import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import {
   AUTH_ROUTES,
+  dashboardForRoles,
   GONE_ROUTES,
   PUBLIC_ROUTES,
   REVIEW_PREFIX,
   ROLES,
   ROUTES,
 } from "@/constants/routes";
-
-const dashboardForRoles = (roles: string[] | undefined): string | null => {
-  if (roles?.includes(ROLES.PHARMACIST)) return ROUTES.REVIEW;
-  if (roles?.includes(ROLES.PATIENT)) return ROUTES.DASHBOARD;
-  return null;
-};
 
 const isPathWithin = (pathname: string, prefix: string): boolean =>
   pathname === prefix || pathname.startsWith(`${prefix}/`);
