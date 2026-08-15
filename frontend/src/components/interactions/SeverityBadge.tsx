@@ -7,11 +7,11 @@ const SEVERITY_LABEL: Record<TSeverity, string> = {
 };
 
 const SEVERITY_DOT: Record<TSeverity, string> = {
-  contraindicated: "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]",
-  major: "bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.6)]",
-  moderate: "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]",
-  minor: "bg-sky-500 shadow-[0_0_8px_rgba(14,165,233,0.6)]",
-  unknown: "bg-slate-400 shadow-[0_0_8px_rgba(148,163,184,0.6)]",
+  contraindicated: "bg-red-500",
+  major: "bg-orange-500",
+  moderate: "bg-amber-500",
+  minor: "bg-sky-500",
+  unknown: "bg-slate-400",
 };
 
 const SEVERITY_STYLE: Record<TSeverity, string> = {
@@ -30,7 +30,7 @@ const SEVERITY_STYLE: Record<TSeverity, string> = {
 export default function SeverityBadge({ severity }: { severity: TSeverity }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold backdrop-blur-md transition-all ${SEVERITY_STYLE[severity]}`}
+      className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg border px-3 py-1.5 text-xs font-semibold ${SEVERITY_STYLE[severity]}`}
     >
       <span className={`h-1.5 w-1.5 rounded-full ${SEVERITY_DOT[severity]}`} aria-hidden />
       <span>{SEVERITY_LABEL[severity]}</span>

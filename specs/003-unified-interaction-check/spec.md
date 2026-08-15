@@ -46,6 +46,27 @@ có trích dẫn. Thông tin hồ sơ đã lưu không tự động trở thành
   interaction.
 - Upload ảnh gọi Gemini 3.5 Flash-Lite theo đặc tả 005; output chỉ là candidate cần chỉnh sửa và xác nhận
   stable catalog ID trước khi tham gia lượt tra cứu.
+- Màn tra cứu ưu tiên luồng `Chọn thuốc` rồi `Thêm bệnh nền` nếu có. Tóm tắt số thuốc,
+  số bệnh và action tra cứu phải xuất hiện cạnh vùng nhập trên desktop, ngay sau vùng nhập
+  trên mobile; không đặt action ở cuối khối OCR dài.
+- `Nhập tên thuốc` và `Ảnh đơn thuốc` là hai phương thức nhập ngang hàng trong cùng
+  workspace. Người dùng chuyển qua lại bằng tab mà không làm mất ảnh hoặc kết quả OCR
+  đang xác nhận; OCR không được đặt trong cột tóm tắt hẹp hoặc dưới action tra cứu.
+- Màn kết quả phải ưu tiên kết luận có giới hạn và cảnh báo có bằng chứng trước các nội
+  dung bổ sung. Không dùng màu xanh hoặc câu chữ khiến trạng thái không tìm thấy dữ liệu
+  bị hiểu là xác nhận an toàn. Không render dải thang màu tổng hợp cạnh tranh với kết luận;
+  mức độ được đặt trực tiếp trên từng cảnh báo. Nhóm thực phẩm, đồ uống hoặc TPCN không có
+  dữ liệu phải được ẩn thay vì tạo cột rỗng. Một cảnh báo nổi
+  bật không được lặp lại trong danh sách chi tiết và citation mặc định ở trạng thái thu gọn.
+  Cảnh báo nổi bật tách thuốc và đối tượng tương tác thành hai vùng có nhãn, không nối mọi
+  dữ liệu thành một tiêu đề dài. Mỗi mục chỉ hiển thị tên, mức độ và tóm tắt ở lớp đầu;
+  cơ chế, hướng xử trí và citation nằm chung trong disclosure `Hướng dẫn và tài liệu nguồn`.
+  Khi mở, citation hiển thị trực tiếp cạnh hướng dẫn, không tạo accordion lồng nhau. Trạng
+  thái `pending` dùng metadata ngắn `Dược sĩ đang duyệt` trong disclosure nguồn, không đặt
+  dưới badge mức độ và không dùng chip dài làm cạnh tranh với nội dung cảnh báo.
+- Hồ sơ sức khoẻ là thông tin hỗ trợ nên mặc định hiển thị dạng thu gọn, có nhãn và nút
+  mở rõ ràng. Tình trạng mang thai hoặc cho con bú vẫn phải cho phép chủ động áp dụng vào
+  lượt hiện tại mà không tự thêm từ hồ sơ đã lưu.
 - Điều hướng bệnh nhân chỉ hiển thị một mục `Tra cứu tương tác thuốc` cho màn tổng hợp;
   không tách thuốc–thực phẩm hoặc thuốc–bệnh nền thành mục sidebar riêng.
 - Sidebar chỉ hiển thị một mục điều hướng `Lịch sử tra cứu`; không tải hoặc hiển thị các
@@ -80,3 +101,10 @@ có trích dẫn. Thông tin hồ sơ đã lưu không tự động trở thành
    lưu dưới exact alias `tenofovir disoproxil fumarat` hoặc `tenofovir`, không mở rộng sang hoạt chất khác.
 10. `felodipine + Nước ép bưởi` tồn tại ở cả hai bảng interaction chỉ hiển thị một note, vẫn giữ nội dung,
     severity, trạng thái review và PDF nguồn hợp lệ.
+11. Ở trạng thái ban đầu, người dùng nhìn thấy cả hai phương thức `Nhập tên thuốc` và
+    `Ảnh đơn thuốc`, hướng dẫn điều kiện đủ và action tra cứu mà không cần mở form hồ sơ.
+    Bố cục chuyển thành một cột theo đúng thứ tự thao tác trên mobile; vùng OCR dùng toàn
+    bộ chiều rộng workspace khi được chọn.
+12. Ở màn kết quả, trạng thái không có primary item phải nói rõ giới hạn của dữ liệu và
+    không được trình bày như xác nhận an toàn. Chỉ nhóm note có nội dung được render; note
+    đơn lẻ dùng toàn bộ chiều rộng đọc, không bị ép vào một trong ba cột cố định.

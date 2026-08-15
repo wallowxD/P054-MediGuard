@@ -5,6 +5,7 @@ import {
   Camera,
   Check,
   CheckCircle2,
+  ChevronDown,
   ImageOff,
   LoaderCircle,
   Search,
@@ -51,6 +52,7 @@ interface IEditableDisease {
 }
 
 interface PrescriptionImageUploadProps {
+  embedded?: boolean;
   disabled?: boolean;
   disabledDescription?: string;
   selectedDrugIds?: string[];
@@ -93,7 +95,7 @@ function DrugReviewRow({
     : row.initialCandidates;
 
   return (
-    <li className="space-y-3 rounded-2xl liquid-glass-subtle p-3.5">
+    <li className="space-y-3 rounded-xl border border-border/70 bg-surface/25 p-3.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-xs text-foreground-muted">Đọc từ ảnh: <span className="font-semibold text-foreground">“{row.rawText}”</span></p>
         {row.uncertain ? (
@@ -110,7 +112,7 @@ function DrugReviewRow({
             onChange={(event) =>
               onChange({ ...row, name: event.target.value, selected: null, manuallyEdited: true })
             }
-            className="w-full rounded-xl liquid-glass-input px-3 py-2 text-xs text-foreground outline-none"
+            className="min-h-10 w-full rounded-lg border border-border bg-input px-3 py-2 text-xs text-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/15"
           />
         </label>
         <label className="space-y-1 text-[11px] font-medium text-foreground-secondary">
@@ -121,7 +123,7 @@ function DrugReviewRow({
               onChange({ ...row, ingredient: event.target.value, selected: null, manuallyEdited: true })
             }
             placeholder="Chưa đọc được từ ảnh"
-            className="w-full rounded-xl liquid-glass-input px-3 py-2 text-xs text-foreground outline-none"
+            className="min-h-10 w-full rounded-lg border border-border bg-input px-3 py-2 text-xs text-foreground outline-none transition-colors placeholder:text-foreground-muted focus:border-primary focus:ring-2 focus:ring-primary/15"
           />
         </label>
       </div>
@@ -155,10 +157,10 @@ function DrugReviewRow({
                     selected: { id, brandName: candidate.brandName, ingredient: candidate.ingredient },
                   })
                 }
-                className={`flex items-start gap-2 rounded-xl p-2.5 text-left transition-all ${
+                className={`flex items-start gap-2 rounded-lg border p-2.5 text-left transition-colors ${
                   selected
-                    ? "liquid-glass border-primary/40 shadow-sm ring-1 ring-primary/20"
-                    : "liquid-glass-subtle hover:bg-surface/80"
+                    ? "border-primary/35 bg-primary/10 ring-1 ring-primary/15"
+                    : "border-border/70 bg-background-elevated hover:border-primary/25 hover:bg-surface/40"
                 }`}
               >
                 <span
@@ -195,7 +197,7 @@ function DiseaseReviewRow({
     : row.initialCandidates;
 
   return (
-    <li className="space-y-3 rounded-2xl liquid-glass-subtle p-3.5">
+    <li className="space-y-3 rounded-xl border border-border/70 bg-surface/25 p-3.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-xs text-foreground-muted">Đọc từ ảnh: <span className="font-semibold text-foreground">“{row.rawText}”</span></p>
         {row.uncertain ? (
@@ -211,7 +213,7 @@ function DiseaseReviewRow({
           onChange={(event) =>
             onChange({ ...row, name: event.target.value, selected: null, manuallyEdited: true })
           }
-          className="w-full rounded-xl liquid-glass-input px-3 py-2 text-xs text-foreground outline-none"
+          className="min-h-10 w-full rounded-lg border border-border bg-input px-3 py-2 text-xs text-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/15"
         />
       </label>
       <div className="space-y-1.5 pt-1">
@@ -247,10 +249,10 @@ function DiseaseReviewRow({
                     selected: { id, name: candidate.name },
                   })
                 }
-                className={`flex items-center gap-2 rounded-xl p-2.5 text-left text-xs font-semibold transition-all ${
+                className={`flex items-center gap-2 rounded-lg border p-2.5 text-left text-xs font-semibold transition-colors ${
                   selected
-                    ? "liquid-glass border-primary/40 shadow-sm ring-1 ring-primary/20 text-foreground"
-                    : "liquid-glass-subtle hover:bg-surface/80 text-foreground-secondary"
+                    ? "border-primary/35 bg-primary/10 text-foreground ring-1 ring-primary/15"
+                    : "border-border/70 bg-background-elevated text-foreground-secondary hover:border-primary/25 hover:bg-surface/40"
                 }`}
               >
                 <span
@@ -271,6 +273,7 @@ function DiseaseReviewRow({
 }
 
 export default function PrescriptionImageUpload({
+  embedded = false,
   disabled = false,
   disabledDescription,
   selectedDrugIds = [],
@@ -282,6 +285,7 @@ export default function PrescriptionImageUpload({
   const imagesRef = useRef<ISelectedImage[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [expanded, setExpanded] = useState(embedded);
   const [drugs, setDrugs] = useState<IEditableDrug[]>([]);
   const [diseases, setDiseases] = useState<IEditableDisease[]>([]);
   const [applied, setApplied] = useState(false);
@@ -405,204 +409,312 @@ export default function PrescriptionImageUpload({
     setApplied(true);
   };
 
+  const panelId = `${inputId}-panel`;
+
   return (
-    <div className="space-y-4 rounded-3xl liquid-glass p-5 sm:p-6">
-      <div className="space-y-1">
-        <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary">
-          <Camera className="h-3.5 w-3.5" />
-          <span>Nhận diện OCR Thông minh</span>
-        </div>
-        <h2 className="font-heading text-sm font-bold text-foreground">Nhập từ ảnh đơn thuốc</h2>
-        <p className="text-xs leading-relaxed text-foreground-secondary">
-          AI nhận diện tên thuốc, hoạt chất và chẩn đoán ghi trên đơn để hỗ trợ nhập nhanh.
-        </p>
-      </div>
-
-      <div
-        onDragOver={(event) => {
-          event.preventDefault();
-          if (!disabled) setIsDragging(true);
-        }}
-        onDragLeave={() => setIsDragging(false)}
-        onDrop={(event) => {
-          event.preventDefault();
-          setIsDragging(false);
-          if (!disabled && event.dataTransfer.files.length > 0) addFiles(event.dataTransfer.files);
-        }}
-        aria-disabled={disabled}
-        className={`flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-6 text-center transition-all ${
-          disabled
-            ? "border-border/60 bg-surface/30 opacity-60"
-            : isDragging
-              ? "border-primary bg-primary/5 scale-[1.01]"
-              : "border-border/80 liquid-glass-subtle hover:border-primary/40"
-        }`}
-      >
-        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-xs">
-          <Upload className="h-6 w-6" aria-hidden />
-        </span>
-        <div className="space-y-1">
-          <p className="text-xs sm:text-sm font-semibold text-foreground">Kéo thả ảnh đơn thuốc vào đây</p>
-          <p className="text-[11px] text-foreground-muted">Tối đa 5 ảnh JPG, PNG hoặc WEBP • 10 MB/ảnh</p>
-        </div>
-        <input
-          ref={inputRef}
-          id={inputId}
-          type="file"
-          multiple
-          accept={[...ACCEPTED_TYPES, ...ACCEPTED_EXTENSIONS].join(",")}
-          onChange={(event) => {
-            if (event.target.files?.length) addFiles(event.target.files);
-            event.target.value = "";
-          }}
-          disabled={disabled}
-          aria-describedby={errors.length > 0 ? errorId : undefined}
-          className="sr-only"
-        />
-        <Button
+    <section
+      className={
+        embedded
+          ? ""
+          : "overflow-hidden rounded-2xl border border-border/80 bg-background-elevated"
+      }
+      aria-label={embedded ? "Nhập thuốc từ ảnh đơn thuốc" : undefined}
+    >
+      {embedded ? null : (
+        <button
           type="button"
-          variant="glass"
-          size="sm"
-          onClick={() => inputRef.current?.click()}
-          disabled={disabled}
+          onClick={() => setExpanded((current) => !current)}
+          aria-expanded={expanded}
+          aria-controls={panelId}
+          className="flex w-full items-center gap-3 p-4 text-left transition-colors hover:bg-surface/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
         >
-          <Upload className="h-4 w-4" aria-hidden />
-          <span>Chọn tệp ảnh</span>
-        </Button>
-        {disabled && disabledDescription ? <p className="text-xs text-foreground-muted">{disabledDescription}</p> : null}
-      </div>
-
-      {errors.length > 0 ? (
-        <div id={errorId} role="alert" className="space-y-1 rounded-2xl border border-error/30 bg-error/10 p-3">
-          {errors.map((message) => (
-            <p key={message} className="flex items-start gap-1.5 text-xs text-error">
-              <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
-              {message}
-            </p>
-          ))}
-        </div>
-      ) : null}
-
-      {images.length === 0 ? (
-        <div className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-border/80 p-4 text-xs text-foreground-muted">
-          <ImageOff className="h-4 w-4" aria-hidden /> Chưa có ảnh nào được chọn.
-        </div>
-      ) : (
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold text-foreground-secondary">Đã chọn {images.length}/{MAX_IMAGES} ảnh</p>
-            <button
-              type="button"
-              onClick={clearAll}
-              disabled={extraction.isPending}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-foreground-muted hover:text-error transition-colors disabled:opacity-50"
-            >
-              <Trash2 className="h-3.5 w-3.5" /> Xoá tất cả
-            </button>
-          </div>
-          <ul className="grid gap-2 sm:grid-cols-2">
-            {images.map((image) => (
-              <li key={image.id} className="flex items-center gap-3 rounded-2xl liquid-glass-subtle p-2">
-                {/* eslint-disable-next-line @next/next/no-img-element -- blob URL cục bộ */}
-                <img src={image.previewUrl} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs font-semibold text-foreground">{image.file.name}</p>
-                  <p className="text-[10px] text-foreground-muted">{formatFileSize(image.file.size)}</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => removeImage(image.id)}
-                  disabled={extraction.isPending}
-                  aria-label={`Xoá ${image.file.name}`}
-                  className="flex h-7 w-7 items-center justify-center rounded-full text-foreground-muted hover:bg-surface hover:text-error transition-colors disabled:opacity-50"
-                >
-                  <X className="h-3.5 w-3.5" />
-                </button>
-              </li>
-            ))}
-          </ul>
-          <Button variant="solid" size="md" className="w-full" onClick={extract} disabled={extraction.isPending}>
-            {extraction.isPending ? (
-              <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden />
-            ) : (
-              <Sparkles className="h-4 w-4" aria-hidden />
-            )}
-            {extraction.isPending ? "AI đang đọc đơn thuốc…" : "Bắt đầu nhận diện OCR"}
-          </Button>
-        </div>
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <Camera className="h-4.5 w-4.5" strokeWidth={1.8} aria-hidden />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-semibold text-foreground">
+              Nhập từ ảnh đơn thuốc
+            </span>
+            <span className="mt-0.5 block text-[11px] leading-4 text-foreground-muted">
+              OCR hỗ trợ nhập nhanh từ ảnh
+            </span>
+          </span>
+          <ChevronDown
+            className={`h-4 w-4 shrink-0 text-foreground-muted transition-transform ${
+              expanded ? "rotate-180" : ""
+            }`}
+            aria-hidden
+          />
+        </button>
       )}
 
-      {extraction.isError ? (
-        <div role="alert" className="rounded-2xl border border-error/30 bg-error/5 p-3 text-xs leading-relaxed text-foreground-secondary">
-          <p className="font-semibold text-error">Không thể đọc ảnh</p>
-          <p>{extraction.error instanceof Error ? extraction.error.message : "Vui lòng thử lại."}</p>
-        </div>
-      ) : null}
+      {expanded ? (
+        <div
+          id={panelId}
+          className={embedded ? "space-y-4" : "space-y-4 border-t border-border/70 p-4"}
+        >
+          {embedded ? null : (
+            <p className="text-xs leading-5 text-foreground-secondary">
+              Hệ thống đọc tên thuốc và chẩn đoán trên ảnh. Bạn cần xác nhận lại từng mục
+              trước khi tra cứu.
+            </p>
+          )}
 
-      {extraction.isPending ? (
-        <div role="status" aria-live="polite" className="rounded-2xl liquid-glass-strong p-4">
-          <div className="flex items-start gap-3">
-            <LoaderCircle className="mt-0.5 h-5 w-5 shrink-0 animate-spin text-primary" aria-hidden />
-            <div>
-              <p className="text-xs font-bold text-foreground">AI đang xử lý hình ảnh</p>
-              <p className="mt-0.5 text-[11px] text-foreground-secondary">Đang bóc tách và đối chiếu danh mục thuốc chuẩn.</p>
+          <div
+            onDragOver={(event) => {
+              event.preventDefault();
+              if (!disabled) setIsDragging(true);
+            }}
+            onDragLeave={() => setIsDragging(false)}
+            onDrop={(event) => {
+              event.preventDefault();
+              setIsDragging(false);
+              if (!disabled && event.dataTransfer.files.length > 0) {
+                addFiles(event.dataTransfer.files);
+              }
+            }}
+            aria-disabled={disabled}
+            className={`flex flex-col items-center gap-3 rounded-xl border border-dashed p-6 text-center transition-all sm:p-8 ${
+              disabled
+                ? "border-border/60 bg-surface/30 opacity-60"
+                : isDragging
+                  ? "scale-[1.01] border-primary bg-primary/5"
+                  : "border-border bg-surface/20 hover:border-primary/40"
+            }`}
+          >
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <Upload className="h-5 w-5" aria-hidden />
+            </span>
+            <div className="space-y-1">
+              <p className="text-sm font-semibold text-foreground">Kéo thả ảnh đơn thuốc vào đây</p>
+              <p className="text-[11px] leading-4 text-foreground-muted">
+                Tối đa 5 ảnh. JPG, PNG hoặc WEBP. Mỗi ảnh tối đa 10 MB.
+              </p>
             </div>
+            <input
+              ref={inputRef}
+              id={inputId}
+              type="file"
+              multiple
+              accept={[...ACCEPTED_TYPES, ...ACCEPTED_EXTENSIONS].join(",")}
+              onChange={(event) => {
+                if (event.target.files?.length) addFiles(event.target.files);
+                event.target.value = "";
+              }}
+              disabled={disabled}
+              aria-describedby={errors.length > 0 ? errorId : undefined}
+              className="sr-only"
+            />
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => inputRef.current?.click()}
+              disabled={disabled}
+            >
+              <Upload className="h-4 w-4" aria-hidden />
+              <span>Chọn ảnh</span>
+            </Button>
+            {disabled && disabledDescription ? (
+              <p className="text-xs text-foreground-muted">{disabledDescription}</p>
+            ) : null}
           </div>
-        </div>
-      ) : null}
 
-      {extraction.isSuccess ? (
-        <div className="space-y-4 border-t border-border/60 pt-4">
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">Xác nhận kết quả OCR</h3>
-            <p className="mt-0.5 text-[11px] text-foreground-muted">Chọn đúng thuốc và bệnh bên dưới để đưa vào giỏ tra cứu.</p>
-          </div>
-
-          {drugs.length > 0 ? (
-            <section className="space-y-2">
-              <h4 className="text-[11px] font-bold text-primary uppercase tracking-wider">Thuốc nhận diện ({drugs.length})</h4>
-              <ul className="space-y-2.5">
-                {drugs.map((row) => (
-                  <DrugReviewRow
-                    key={row.id}
-                    row={row}
-                    onChange={(next) => setDrugs((current) => current.map((item) => (item.id === next.id ? next : item)))}
-                  />
-                ))}
-              </ul>
-            </section>
-          ) : null}
-
-          {diseases.length > 0 ? (
-            <section className="space-y-2">
-              <h4 className="text-[11px] font-bold text-rose-500 uppercase tracking-wider">Bệnh nhận diện ({diseases.length})</h4>
-              <ul className="space-y-2.5">
-                {diseases.map((row) => (
-                  <DiseaseReviewRow
-                    key={row.id}
-                    row={row}
-                    onChange={(next) => setDiseases((current) => current.map((item) => (item.id === next.id ? next : item)))}
-                  />
-                ))}
-              </ul>
-            </section>
-          ) : null}
-
-          {drugs.length + diseases.length > 0 ? (
-            <div className="space-y-2 pt-2">
-              <Button variant="solid" size="md" className="w-full" onClick={apply} disabled={confirmedCount === 0}>
-                <CheckCircle2 className="h-4 w-4" aria-hidden />
-                <span>Thêm {confirmedCount} mục đã xác nhận vào giỏ</span>
-              </Button>
-              {applied ? (
-                <p role="status" className="flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                  <CheckCircle2 className="h-4 w-4" /> Đã cập nhật vào lượt tra cứu hiện tại.
+          {errors.length > 0 ? (
+            <div
+              id={errorId}
+              role="alert"
+              className="space-y-1 rounded-xl border border-error/30 bg-error/10 p-3"
+            >
+              {errors.map((message) => (
+                <p key={message} className="flex items-start gap-1.5 text-xs text-error">
+                  <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
+                  {message}
                 </p>
+              ))}
+            </div>
+          ) : null}
+
+          {images.length === 0 ? (
+            <div className="flex items-center justify-center gap-2 rounded-xl bg-surface/25 p-3 text-xs text-foreground-muted">
+              <ImageOff className="h-4 w-4" aria-hidden /> Chưa có ảnh nào được chọn.
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-xs font-semibold text-foreground-secondary">
+                  Đã chọn {images.length}/{MAX_IMAGES} ảnh
+                </p>
+                <button
+                  type="button"
+                  onClick={clearAll}
+                  disabled={extraction.isPending}
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-foreground-muted transition-colors hover:text-error disabled:opacity-50"
+                >
+                  <Trash2 className="h-3.5 w-3.5" /> Xóa tất cả
+                </button>
+              </div>
+              <ul className={`grid gap-2 ${embedded ? "sm:grid-cols-2" : ""}`}>
+                {images.map((image) => (
+                  <li
+                    key={image.id}
+                    className="flex items-center gap-3 rounded-xl border border-border/70 bg-surface/25 p-2"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element -- blob URL cục bộ */}
+                    <img
+                      src={image.previewUrl}
+                      alt=""
+                      className="h-12 w-12 shrink-0 rounded-lg object-cover"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-xs font-semibold text-foreground">
+                        {image.file.name}
+                      </p>
+                      <p className="text-[10px] text-foreground-muted">
+                        {formatFileSize(image.file.size)}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removeImage(image.id)}
+                      disabled={extraction.isPending}
+                      aria-label={`Xóa ${image.file.name}`}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-foreground-muted transition-colors hover:bg-error/10 hover:text-error disabled:opacity-50"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <Button
+                variant="solid"
+                size="md"
+                className="w-full"
+                onClick={extract}
+                disabled={extraction.isPending}
+              >
+                {extraction.isPending ? (
+                  <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden />
+                ) : (
+                  <Sparkles className="h-4 w-4" aria-hidden />
+                )}
+                {extraction.isPending ? "Đang đọc đơn thuốc..." : "Nhận diện nội dung"}
+              </Button>
+            </div>
+          )}
+
+          {extraction.isError ? (
+            <div
+              role="alert"
+              className="rounded-xl border border-error/30 bg-error/5 p-3 text-xs leading-5 text-foreground-secondary"
+            >
+              <p className="font-semibold text-error">Không thể đọc ảnh</p>
+              <p>
+                {extraction.error instanceof Error
+                  ? extraction.error.message
+                  : "Vui lòng thử lại."}
+              </p>
+            </div>
+          ) : null}
+
+          {extraction.isPending ? (
+            <div
+              role="status"
+              aria-live="polite"
+              className="rounded-xl border border-border/70 bg-surface/30 p-4"
+            >
+              <div className="flex items-start gap-3">
+                <LoaderCircle
+                  className="mt-0.5 h-5 w-5 shrink-0 animate-spin text-primary"
+                  aria-hidden
+                />
+                <div>
+                  <p className="text-xs font-semibold text-foreground">Đang xử lý hình ảnh</p>
+                  <p className="mt-0.5 text-[11px] leading-4 text-foreground-secondary">
+                    Hệ thống đang bóc tách và đối chiếu với danh mục thuốc chuẩn.
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {extraction.isSuccess ? (
+            <div className="space-y-4 border-t border-border/70 pt-4">
+              <div>
+                <h3 className="text-sm font-semibold text-foreground">Xác nhận kết quả nhận diện</h3>
+                <p className="mt-0.5 text-[11px] leading-4 text-foreground-muted">
+                  Chọn đúng thuốc và bệnh trước khi thêm vào lần tra cứu.
+                </p>
+              </div>
+
+              {drugs.length > 0 ? (
+                <section className="space-y-2">
+                  <h4 className="text-xs font-semibold text-primary">
+                    Thuốc nhận diện ({drugs.length})
+                  </h4>
+                  <ul className="space-y-2.5">
+                    {drugs.map((row) => (
+                      <DrugReviewRow
+                        key={row.id}
+                        row={row}
+                        onChange={(next) =>
+                          setDrugs((current) =>
+                            current.map((item) => (item.id === next.id ? next : item))
+                          )
+                        }
+                      />
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+
+              {diseases.length > 0 ? (
+                <section className="space-y-2">
+                  <h4 className="text-xs font-semibold text-primary">
+                    Bệnh nhận diện ({diseases.length})
+                  </h4>
+                  <ul className="space-y-2.5">
+                    {diseases.map((row) => (
+                      <DiseaseReviewRow
+                        key={row.id}
+                        row={row}
+                        onChange={(next) =>
+                          setDiseases((current) =>
+                            current.map((item) => (item.id === next.id ? next : item))
+                          )
+                        }
+                      />
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+
+              {drugs.length + diseases.length > 0 ? (
+                <div className="space-y-2 pt-2">
+                  <Button
+                    variant="solid"
+                    size="md"
+                    className="w-full"
+                    onClick={apply}
+                    disabled={confirmedCount === 0}
+                  >
+                    <CheckCircle2 className="h-4 w-4" aria-hidden />
+                    <span>Thêm {confirmedCount} mục đã xác nhận</span>
+                  </Button>
+                  {applied ? (
+                    <p
+                      role="status"
+                      className="flex items-center justify-center gap-1.5 text-xs font-semibold text-success"
+                    >
+                      <CheckCircle2 className="h-4 w-4" /> Đã cập nhật lần tra cứu.
+                    </p>
+                  ) : null}
+                </div>
               ) : null}
             </div>
           ) : null}
         </div>
       ) : null}
-    </div>
+    </section>
   );
 }

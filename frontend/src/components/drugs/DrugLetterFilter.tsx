@@ -25,24 +25,24 @@ export default function DrugLetterFilter({
 }: DrugLetterFilterProps) {
   if (isLoading) {
     return (
-      <div className="flex flex-wrap gap-1.5" aria-hidden>
+      <div className="flex flex-wrap gap-2" aria-hidden>
         {Array.from({ length: 27 }).map((_, i) => (
-          <Skeleton key={i} className="h-8 w-8 rounded-full" />
+          <Skeleton key={i} className="h-9 w-9 rounded-lg" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Lọc theo chữ cái">
+    <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Lọc theo chữ cái">
       <button
         type="button"
         onClick={() => onSelect(null)}
         aria-pressed={selected === null}
-        className={`h-8 rounded-full px-3.5 text-xs font-semibold transition-all ${
+        className={`min-h-9 rounded-lg border px-3.5 text-xs font-semibold transition-[background-color,border-color,color,box-shadow,transform] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
           selected === null
-            ? "bg-primary text-white shadow-sm"
-            : "liquid-glass-pill text-foreground-secondary hover:text-foreground"
+            ? "border-primary bg-primary text-primary-foreground shadow-[0_6px_16px_rgba(0,102,204,0.16)]"
+            : "border-border bg-background-elevated text-foreground-secondary hover:border-primary/25 hover:bg-primary/5 hover:text-primary"
         }`}
       >
         Tất cả
@@ -61,12 +61,12 @@ export default function DrugLetterFilter({
             aria-pressed={isSelected}
             aria-label={describe(letter, count)}
             title={describe(letter, count)}
-            className={`h-8 min-w-8 rounded-full px-2 text-xs font-semibold transition-all ${
+            className={`h-9 min-w-9 rounded-lg border px-2 text-xs font-semibold transition-[background-color,border-color,color,box-shadow,transform] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               isEmpty
-                ? "cursor-not-allowed text-foreground-muted opacity-30"
+                ? "cursor-not-allowed border-transparent bg-surface/30 text-foreground-muted opacity-35"
                 : isSelected
-                  ? "bg-primary text-white shadow-sm"
-                  : "liquid-glass-pill text-foreground-secondary hover:text-foreground hover:scale-105"
+                  ? "border-primary bg-primary text-primary-foreground shadow-[0_6px_16px_rgba(0,102,204,0.16)]"
+                  : "border-border bg-background-elevated text-foreground-secondary hover:border-primary/25 hover:bg-primary/5 hover:text-primary"
             }`}
           >
             {labelFor(letter)}

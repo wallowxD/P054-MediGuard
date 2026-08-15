@@ -1,4 +1,4 @@
-import { ArrowLeft } from "lucide-react";
+import { ChevronLeft, Pill } from "lucide-react";
 import Link from "next/link";
 import DrugInformationDetail from "@/components/drugs/DrugInformationDetail";
 import { ROUTES } from "@/constants/routes";
@@ -13,13 +13,24 @@ export default async function DrugInformationDetailPage({
   const { id } = await params;
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-6xl space-y-5 sm:space-y-6">
       <Link
         href={ROUTES.DRUG_INFORMATION}
-        className="inline-flex items-center gap-1.5 text-sm text-foreground-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        aria-label="Quay lại danh mục thuốc"
+        className="group inline-flex min-h-14 items-center gap-3 rounded-2xl py-1 pr-4 text-left transition-[background-color,color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-background-elevated/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.99]"
       >
-        <ArrowLeft className="h-4 w-4" aria-hidden />
-        Quay lại tìm thuốc
+        <ChevronLeft
+          className="h-5 w-5 shrink-0 text-foreground-muted transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-0.5 group-hover:text-primary"
+          strokeWidth={1.8}
+          aria-hidden
+        />
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/10">
+          <Pill className="h-5 w-5" strokeWidth={1.8} aria-hidden />
+        </span>
+        <span className="min-w-0">
+          <span className="block text-sm font-semibold text-foreground">Danh mục thuốc</span>
+          <span className="mt-0.5 block text-xs text-foreground-muted">Quay lại tra cứu</span>
+        </span>
       </Link>
 
       <DrugInformationDetail id={id} />
