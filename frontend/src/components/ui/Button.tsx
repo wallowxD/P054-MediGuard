@@ -1,23 +1,26 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-type ButtonVariant = "solid" | "outline" | "ghost" | "accent";
+type ButtonVariant = "solid" | "glass" | "outline" | "ghost" | "accent";
 type ButtonSize = "sm" | "md" | "lg";
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   solid:
-    "landing-primary-shadow bg-primary text-primary-foreground hover:-translate-y-0.5 hover:bg-primary-hover active:translate-y-0 active:scale-[0.98]",
-  outline: "border border-border text-foreground hover:border-primary hover:text-primary",
-  ghost: "text-foreground-secondary hover:text-primary",
-  // Reserved for the hero CTA only — see docs/frontend.md's cta-accent rule.
+    "bg-gradient-to-b from-[#0077ed] to-[#0066cc] text-white shadow-[0_4px_14px_rgba(0,102,204,0.35),inset_0_1px_1px_rgba(255,255,255,0.4)] hover:brightness-105 hover:shadow-[0_6px_20px_rgba(0,102,204,0.45)] active:scale-[0.98] border border-white/20",
+  glass:
+    "liquid-glass-button text-foreground hover:text-primary active:scale-[0.98]",
+  outline:
+    "border border-border/80 bg-background/50 backdrop-blur-md text-foreground hover:border-primary hover:text-primary hover:bg-surface active:scale-[0.98]",
+  ghost:
+    "text-foreground-secondary hover:text-foreground hover:bg-surface/80 active:scale-[0.98]",
   accent:
-    "landing-cta-shadow bg-[var(--cta-accent)] text-white hover:-translate-y-0.5 hover:bg-[var(--cta-accent-hover)] active:translate-y-0 active:scale-[0.98]",
+    "bg-gradient-to-b from-[#10b981] to-[#059669] text-white shadow-[0_4px_14px_rgba(16,185,129,0.35),inset_0_1px_1px_rgba(255,255,255,0.4)] hover:brightness-105 hover:shadow-[0_6px_20px_rgba(16,185,129,0.45)] active:scale-[0.98] border border-white/20",
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {
-  sm: "px-4 py-2 text-sm font-medium",
-  md: "px-6 py-3 text-sm font-semibold",
-  lg: "px-8 py-4 text-base font-semibold",
+  sm: "px-3.5 py-1.5 text-xs font-medium",
+  md: "px-5 py-2.5 text-sm font-semibold",
+  lg: "px-7 py-3.5 text-base font-semibold",
 };
 
 type ButtonProps = {
@@ -28,7 +31,7 @@ type ButtonProps = {
   children: ReactNode;
 } & Omit<ComponentPropsWithoutRef<"button">, "className">;
 
-/** Nút dùng chung cho toàn bộ landing page — render <Link> nếu có `href`, ngược lại <button>. */
+/** Nút Liquid Glass phong cách Apple Tech-Health — render <Link> nếu có `href`, ngược lại <button>. */
 export default function Button({
   variant = "solid",
   size = "md",
@@ -37,7 +40,7 @@ export default function Button({
   children,
   ...rest
 }: ButtonProps) {
-  const classes = `inline-flex items-center justify-center gap-2 rounded-full transition-[color,background-color,border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none disabled:hover:translate-y-0 ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`;
+  const classes = `inline-flex items-center justify-center gap-2 rounded-full font-sans transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 disabled:shadow-none ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`;
 
   if (href) {
     return (

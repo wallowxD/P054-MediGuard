@@ -9,13 +9,6 @@ import SidebarNavList from "./SidebarNavList";
 import SidebarUserFooter from "./SidebarUserFooter";
 import { useSidebarCollapsed } from "./use-sidebar-collapsed";
 
-/**
- * Sidebar trái cố định — chỉ hiển thị từ `lg:` trở lên, thay cho AppHeader cũ.
- *
- * Thu gọn được về dải icon: trạng thái nằm trong `useSidebarCollapsed()` nên giữ nguyên
- * khi chuyển route và persist qua refresh. Mobile/tablet vẫn dùng drawer của
- * `MobileTopbar`, không chịu ảnh hưởng của trạng thái này.
- */
 export default function AppSidebar() {
   const { collapsed, toggle } = useSidebarCollapsed();
   const toggleLabel = collapsed ? "Mở rộng thanh điều hướng" : "Thu gọn thanh điều hướng";
@@ -23,26 +16,24 @@ export default function AppSidebar() {
   return (
     <aside
       id="app-sidebar"
-      className={`fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-border bg-background-elevated transition-[width] duration-200 ease-out lg:flex ${
-        collapsed ? "w-16" : "w-64"
+      className={`fixed inset-y-0 left-0 z-30 hidden flex-col liquid-glass-bar border-r border-border/80 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:flex ${
+        collapsed ? "w-20" : "w-72"
       }`}
     >
-      {/* Logo và nút thu gọn nằm chung một hàng. Khi thu gọn, dải 4rem không đủ chỗ cho cả
-          hai nên chỉ giữ lại nút — logo là link tới dashboard, mà mục "Trang chủ" ngay dưới
-          đã dẫn tới đúng chỗ đó. */}
+      {/* Header with Logo & Toggle */}
       <div
-        className={`flex h-16 shrink-0 items-center border-b border-border ${
-          collapsed ? "justify-center px-2" : "justify-between gap-2 px-4"
+        className={`flex h-16 shrink-0 items-center border-b border-border/60 ${
+          collapsed ? "justify-between px-3" : "justify-between gap-2 px-5"
         }`}
       >
-        {collapsed ? null : (
-          <Link
-            href={ROUTES.DASHBOARD}
-            className="flex min-w-0 items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <Logo className="h-11 w-auto" />
-          </Link>
-        )}
+        <Link
+          href={ROUTES.HOME}
+          title="Trang chủ Vinmec"
+          aria-label="Vinmec — về trang chủ"
+          className="flex min-w-0 items-center transition-opacity hover:opacity-85"
+        >
+          <Logo className={collapsed ? "h-7 w-auto" : "h-9 w-auto"} />
+        </Link>
 
         <button
           type="button"
@@ -51,7 +42,7 @@ export default function AppSidebar() {
           aria-expanded={!collapsed}
           aria-controls="app-sidebar"
           title={toggleLabel}
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-foreground-secondary transition-colors hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full liquid-glass-pill text-foreground-secondary hover:text-foreground"
         >
           {collapsed ? (
             <PanelLeftOpen className="h-4 w-4" aria-hidden />
@@ -61,7 +52,7 @@ export default function AppSidebar() {
         </button>
       </div>
 
-      <div className="flex flex-1 flex-col justify-between overflow-y-auto overflow-x-hidden px-3 py-4">
+      <div className="flex flex-1 flex-col justify-between overflow-y-auto overflow-x-hidden px-3 py-5">
         <SidebarNavList collapsed={collapsed} />
 
         <SidebarHistory collapsed={collapsed} />

@@ -1,28 +1,31 @@
 import Image from "next/image";
 import { VINMEC_PARTNERS } from "./vinmec-content";
 
-/** "Đối tác của chúng tôi" — tiêu đề căn giữa, gạch chân căn giữa theo bản gốc. */
 export default function VinmecPartners() {
   return (
-    <section className="bg-white pb-15 pt-6">
-      <div className="vinmec-container">
-        <h2 className="vinmec-title vinmec-title-centered text-[var(--vm-text)]">
-          Đối tác của chúng tôi
-        </h2>
-
-        <ul className="mt-8 grid grid-cols-1 items-center justify-items-center gap-8 sm:grid-cols-3">
-          {VINMEC_PARTNERS.map((partner) => (
-            <li key={partner.src}>
-              <Image
-                src={partner.src}
-                alt={partner.alt}
-                width={220}
-                height={80}
-                className="h-14 w-auto object-contain"
-              />
-            </li>
-          ))}
-        </ul>
+    <section className="py-12 sm:py-16" aria-label="Đối tác y tế toàn cầu">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="rounded-3xl liquid-glass-subtle p-6 sm:p-8">
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-foreground-muted mb-6">
+            Hợp tác chuyên môn với các đại học & tổ chức y tế hàng đầu thế giới
+          </p>
+          <div className="flex flex-wrap items-center justify-around gap-8">
+            {VINMEC_PARTNERS.map((partner) => (
+              <div
+                key={partner.src}
+                className="grayscale opacity-75 transition-all duration-300 hover:grayscale-0 hover:opacity-100 hover:scale-105"
+              >
+                <Image
+                  src={partner.src}
+                  alt={partner.alt}
+                  width={180}
+                  height={60}
+                  className="h-10 w-auto object-contain sm:h-12"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

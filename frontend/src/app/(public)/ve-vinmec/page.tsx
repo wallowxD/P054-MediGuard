@@ -29,8 +29,9 @@ import { buildPublicMetadata } from "@/utils/metadata-utils";
  * ★ Dùng chung `VinmecHeader`/`VinmecFooter` với trang chủ và màn tính năng để ba
  *   màn trông như một website duy nhất.
  *
- * ★ `vinmec-theme` phải bọc ở đây: mọi biến `--vm-*` sống trong class này, thiếu nó
- *   thì các section mất sạch màu mà không có lỗi nào báo.
+ * ★ `vinmec-theme` bọc ở đây để lấy `--vm-body-width` và font. Bản thân các biến
+ *   `--vm-*` nay sống trong `:root` (globals.css) nên `/tinh-nang` không cần lớp bọc
+ *   này vẫn đúng màu.
  */
 export const metadata: Metadata = buildPublicMetadata(
   "Về Vinmec — Tầm nhìn, sứ mệnh và thành tựu",

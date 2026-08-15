@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, BookOpen } from "lucide-react";
+import { AlertTriangle, BookOpen, Pill, Sparkles } from "lucide-react";
 import EmptyState from "@/components/EmptyState";
 import Badge from "@/components/ui/Badge";
 import { useDrugDetails } from "@/queries/interactions";
@@ -11,16 +11,6 @@ interface DrugInformationDetailProps {
   id: string;
 }
 
-/**
- * Nội dung chính của `/drug-information/[id]`, đọc từ `GET /api/v1/drugs/{id}`.
- *
- * Mọi mục bên dưới là đoạn TRÍCH NGUYÊN VĂN từ tờ HDSD do backend đọc lại từ bảng `drugs`;
- * component không tóm tắt, không đổi từ ngữ và không tự điền chỗ trống. Mục nào backend trả
- * `null` thì ẩn hẳn — viết "không có chống chỉ định" cho một thuốc mà nguồn chỉ đơn giản là
- * thiếu mục đó chính là bịa nội dung (luật số 1 của dự án).
- */
-
-/** Thứ tự đọc theo tờ HDSD: dùng thuốc → giới hạn → cách dùng → rủi ro. */
 const SECTIONS = [
   { key: "summaryIndications", label: "Chỉ định" },
   { key: "summaryContraindications", label: "Chống chỉ định" },
@@ -34,20 +24,18 @@ function InfoRow({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
 
   return (
-    <div>
-      <dt className="text-xs text-foreground-muted">{label}</dt>
-      <dd className="mt-0.5 text-sm text-foreground">{value}</dd>
+    <div className="rounded-2xl liquid-glass-subtle p-3">
+      <dt className="text-[11px] font-semibold text-foreground-muted uppercase tracking-wider">{label}</dt>
+      <dd className="mt-1 text-xs font-bold text-foreground">{value}</dd>
     </div>
   );
 }
 
 function LeafletSection({ label, content }: { label: string; content: string }) {
   return (
-    <section className="rounded-xl border border-border bg-card p-4 sm:p-5">
-      <h2 className="text-sm font-semibold text-foreground">{label}</h2>
-      {/* whitespace-pre-line: nội dung là đoạn nguyên văn, bước bóc tách giữ lại gạch đầu
-          dòng và ngắt dòng thật của tờ HDSD. Gộp thành một khối sẽ làm mất cấu trúc đó. */}
-      <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-foreground-secondary">
+    <section className="rounded-3xl liquid-glass p-5 sm:p-6 space-y-2.5">
+      <h2 className="font-heading text-xs font-bold uppercase tracking-wider text-primary">{label}</h2>
+      <p className="whitespace-pre-line text-xs sm:text-sm leading-relaxed text-foreground-secondary">
         {content}
       </p>
     </section>
@@ -63,7 +51,7 @@ export default function DrugInformationDetail({ id }: DrugInformationDetailProps
     return (
       <div className="space-y-6">
         <EmptyState
-          icon={<AlertTriangle className="h-10 w-10" aria-hidden />}
+          icon={<AlertTriangle className="h-10 w-10 text-error" aria-hidden />}
           title="Chưa thể tải thông tin thuốc"
           description={
             error instanceof Error ? error.message : "Không thể tải thông tin thuốc. Vui lòng thử lại."
@@ -85,25 +73,29 @@ export default function DrugInformationDetail({ id }: DrugInformationDetailProps
 
   return (
     <div className="space-y-6">
-      <header className="space-y-2">
-        <h1 className="text-xl font-semibold text-foreground">{data.brandName}</h1>
-        <p className="whitespace-pre-line text-sm text-foreground-secondary">{data.ingredient}</p>
+      {/* Main Header */}
+      <header className="rounded-3xl liquid-glass p-6 sm:p-8 space-y-3">
+        <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary">
+          <Pill className="h-4 w-4" />
+          <span>Dược thư chính thức</span>
+        </div>
+        <h1 className="font-heading text-2xl font-bold text-foreground sm:text-3xl">{data.brandName}</h1>
+        <p className="whitespace-pre-line text-xs sm:text-sm text-foreground-secondary">{data.ingredient}</p>
 
-        {/* `isPrescription` có ba trạng thái; `null`/`undefined` là nguồn không nói rõ nên
-            không gắn nhãn nào, khác hẳn với việc khẳng định thuốc không cần đơn. */}
         {hasLabels ? (
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 pt-1">
             {data.pharmacologicalClass ? (
-              <Badge tone="neutral">{data.pharmacologicalClass}</Badge>
+              <Badge tone="glass">{data.pharmacologicalClass}</Badge>
             ) : null}
-            {data.isPrescription === true ? <Badge tone="warning">Thuốc kê đơn</Badge> : null}
-            {data.isPrescription === false ? <Badge tone="success">Không kê đơn</Badge> : null}
+            {data.isPrescription === true ? <Badge tone="warning">Thuốc kê đơn (Rx)</Badge> : null}
+            {data.isPrescription === false ? <Badge tone="success">Không kê đơn (OTC)</Badge> : null}
           </div>
         ) : null}
       </header>
 
+      {/* Identity Stats Grid */}
       {identity.length > 0 ? (
-        <dl className="grid gap-3 rounded-xl border border-border bg-card p-4 sm:grid-cols-3 sm:p-5">
+        <dl className="grid gap-3 sm:grid-cols-3">
           <InfoRow label="Dạng bào chế" value={data.dosageForm} />
           <InfoRow label="Đường dùng" value={data.route} />
           <InfoRow label="Nhà sản xuất" value={data.manufacturer} />
@@ -111,7 +103,7 @@ export default function DrugInformationDetail({ id }: DrugInformationDetailProps
       ) : null}
 
       {data.therapeuticEffect ? (
-        <LeafletSection label="Tác dụng" content={data.therapeuticEffect} />
+        <LeafletSection label="Tác dụng điều trị" content={data.therapeuticEffect} />
       ) : null}
 
       {sections.length > 0 ? (
@@ -122,13 +114,13 @@ export default function DrugInformationDetail({ id }: DrugInformationDetailProps
         </div>
       ) : (
         <EmptyState
-          icon={<BookOpen className="h-10 w-10" aria-hidden />}
+          icon={<BookOpen className="h-10 w-10 text-foreground-muted" aria-hidden />}
           title="Chưa có nội dung trích dẫn cho thuốc này"
-          description="Danh mục đã có thuốc này nhưng chưa bóc tách được nội dung từ tờ hướng dẫn sử dụng. Hệ thống không suy đoán thay cho tài liệu gốc."
+          description="Danh mục đã có thuốc này nhưng chưa bóc tách được nội dung từ tờ hướng dẫn sử dụng gốc."
         />
       )}
 
-      <DrugSourcePanel leafletUrl={data.leafletUrl ?? undefined} />
+      <DrugSourcePanel leafletUrl={data.leafletUrl ?? undefined} drugName={data.brandName} />
     </div>
   );
 }

@@ -16,7 +16,7 @@ type SignInFormValues = {
 };
 
 const INPUT_CLASSES =
-  "w-full rounded-2xl border border-border bg-input py-3 pl-11 pr-4 text-sm text-foreground outline-none transition-[border-color,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] placeholder:text-foreground-muted focus:border-primary focus:ring-4 focus:ring-primary/10";
+  "w-full rounded-2xl liquid-glass-input py-3 pl-11 pr-4 text-xs sm:text-sm text-foreground outline-none transition-all placeholder:text-foreground-muted focus:border-primary focus:ring-2 focus:ring-primary/20";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,12 +55,12 @@ export default function SignInForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
       <div>
-        <label htmlFor="email" className="text-sm font-medium text-foreground">
+        <label htmlFor="email" className="text-xs font-semibold text-foreground">
           Email
         </label>
-        <div className="relative mt-2">
+        <div className="relative mt-1.5">
           <Mail
             className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground-muted"
             aria-hidden
@@ -69,7 +69,7 @@ export default function SignInForm() {
             id="email"
             type="email"
             autoComplete="email"
-            placeholder="Nhập email"
+            placeholder="Nhập email tài khoản"
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "email-error" : undefined}
             {...register("email", {
@@ -82,20 +82,18 @@ export default function SignInForm() {
             className={INPUT_CLASSES}
           />
         </div>
-        {/* role="alert" để screen reader đọc ngay lỗi vừa xuất hiện; không có nó thì
-            người dùng chỉ nghe lỗi khi tình cờ Tab lại vào đúng ô đó. */}
         {errors.email ? (
-          <p id="email-error" role="alert" className="mt-1.5 text-xs text-error">
+          <p id="email-error" role="alert" className="mt-1 text-xs text-error">
             {errors.email.message}
           </p>
         ) : null}
       </div>
 
       <div>
-        <label htmlFor="password" className="text-sm font-medium text-foreground">
+        <label htmlFor="password" className="text-xs font-semibold text-foreground">
           Mật khẩu
         </label>
-        <div className="relative mt-2">
+        <div className="relative mt-1.5">
           <LockKeyhole
             className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground-muted"
             aria-hidden
@@ -104,7 +102,7 @@ export default function SignInForm() {
             id="password"
             type={showPassword ? "text" : "password"}
             autoComplete="current-password"
-            placeholder="Nhập mật khẩu"
+            placeholder="Nhập mật khẩu của bạn"
             aria-invalid={Boolean(errors.password)}
             aria-describedby={errors.password ? "password-error" : undefined}
             {...register("password", {
@@ -117,37 +115,34 @@ export default function SignInForm() {
             type="button"
             onClick={() => setShowPassword((visible) => !visible)}
             aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
-            aria-pressed={showPassword}
-            className="absolute right-2.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-foreground-muted transition-colors duration-300 hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="absolute right-2.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-foreground-muted hover:bg-surface hover:text-foreground transition-colors"
           >
-            {showPassword ? (
-              <EyeOff className="h-4 w-4" aria-hidden />
-            ) : (
-              <Eye className="h-4 w-4" aria-hidden />
-            )}
+            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
         </div>
         {errors.password ? (
-          <p id="password-error" role="alert" className="mt-1.5 text-xs text-error">
+          <p id="password-error" role="alert" className="mt-1 text-xs text-error">
             {errors.password.message}
           </p>
         ) : null}
       </div>
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
-      </Button>
+      <div className="pt-2">
+        <Button type="submit" variant="solid" size="md" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
+        </Button>
+      </div>
 
-      <div className="flex items-center gap-3" aria-hidden>
-        <span className="h-px flex-1 bg-border" />
-        <span className="text-xs text-foreground-muted">hoặc tiếp tục với</span>
-        <span className="h-px flex-1 bg-border" />
+      <div className="flex items-center gap-3 py-1" aria-hidden>
+        <span className="h-px flex-1 bg-border/60" />
+        <span className="text-[11px] text-foreground-muted">hoặc</span>
+        <span className="h-px flex-1 bg-border/60" />
       </div>
 
       <GoogleSignInButton label="Đăng nhập bằng Google" />
 
-      <Button href={ROUTES.SIGNUP} variant="ghost" className="w-full text-center">
-        Chưa có tài khoản? Đăng ký
+      <Button href={ROUTES.SIGNUP} variant="ghost" size="sm" className="w-full text-center">
+        Chưa có tài khoản? Đăng ký ngay
       </Button>
     </form>
   );

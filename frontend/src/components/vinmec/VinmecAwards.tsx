@@ -1,48 +1,45 @@
 import Image from "next/image";
 import { VINMEC_AWARDS } from "./vinmec-about-content";
 
-/**
- * "Giải thưởng & Chứng nhận" — mỗi giải một thẻ: logo bên trái, nội dung bên phải.
- *
- * Logo là ảnh nhận diện của tổ chức cấp chứng nhận nên `alt` để rỗng và
- * `aria-hidden` — tên tổ chức đã nằm ngay trong `<h3>` bên cạnh, đọc lại là thừa.
- */
 export default function VinmecAwards() {
   return (
-    <section className="py-12 lg:py-16">
-      <div className="vinmec-container">
-        <h2 className="vinmec-title text-[var(--vm-text)]">Giải thưởng & Chứng nhận</h2>
-        <p className="mb-8 max-w-3xl text-[15px] leading-relaxed text-[var(--vm-text)]">
-          Tại Vinmec, chúng tôi nỗ lực hướng tới sự xuất sắc bằng cách cung cấp dịch vụ chăm sóc
-          đẳng cấp thế giới, tiên phong trong nghiên cứu và đổi mới. Vinmec đã được ghi nhận cho
-          những nỗ lực theo đuổi chất lượng quốc tế và sự an toàn cao nhất cho mọi bệnh nhân.
-        </p>
+    <section className="py-12 sm:py-16" aria-label="Giải thưởng và Chứng nhận">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mb-10 max-w-2xl space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Uy tín quốc tế</p>
+          <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Giải thưởng & Chứng nhận
+          </h2>
+          <p className="text-sm text-foreground-secondary">
+            Ghi nhận từ các tổ chức y tế uy tín thế giới cho nỗ lực theo đuổi sự an toàn cao nhất cho người bệnh.
+          </p>
+        </div>
 
         <ul className="grid gap-6 lg:grid-cols-2">
           {VINMEC_AWARDS.map((award) => (
             <li
               key={award.name}
-              className="flex h-full gap-5 rounded-md border border-[var(--vm-border)] p-5"
+              className="flex gap-5 rounded-3xl liquid-glass p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl liquid-glass-subtle p-2">
                 <Image
                   src={award.logo}
                   alt=""
                   aria-hidden="true"
-                  width={160}
-                  height={160}
+                  width={120}
+                  height={120}
                   className="h-full w-full object-contain"
                 />
               </div>
 
-              <div>
-                <h3 className="mb-1 text-base font-semibold leading-snug text-[var(--vm-title-blue)]">
+              <div className="min-w-0 flex-1">
+                <h3 className="mb-1 font-heading text-base font-bold text-foreground">
                   {award.name}
                 </h3>
-                <p className="mb-2 text-[13px] italic leading-snug text-[var(--vm-text-muted)]">
+                <p className="mb-2 text-xs font-medium text-primary">
                   {award.subtitle}
                 </p>
-                <p className="text-sm leading-relaxed text-[var(--vm-text)]">{award.desc}</p>
+                <p className="text-xs leading-relaxed text-foreground-secondary">{award.desc}</p>
               </div>
             </li>
           ))}

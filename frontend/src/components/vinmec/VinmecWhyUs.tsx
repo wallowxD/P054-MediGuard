@@ -1,47 +1,43 @@
+import { Award, BrainCircuit, HeartHandshake, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import { VINMEC_WHY_US } from "./vinmec-content";
 
-/**
- * "Tại sao nên chọn Vinmec?" — ảnh điều dưỡng bên trái, lưới 2×2 lý do bên phải.
- *
- * Ảnh dùng lại `/images/women.png` đã có sẵn trong repo (chính là ảnh Vinmec dùng
- * ở khu vực này), không tải thêm bản trùng.
- */
+const FEATURE_ICONS = [HeartHandshake, ShieldCheck, BrainCircuit, Award];
+
 export default function VinmecWhyUs() {
   return (
-    <section className="bg-[var(--vm-gray-bg)] py-10 lg:pb-16">
-      <div className="vinmec-container">
-        <h2 className="vinmec-title text-[var(--vm-text)]">Tại sao nên chọn Vinmec?</h2>
+    <section className="py-14 sm:py-20" aria-label="Giá trị vượt trội của Vinmec">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Giá trị vượt trội</p>
+          <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Tại sao nên chọn Hệ thống Vinmec?
+          </h2>
+          <p className="text-sm text-foreground-secondary sm:text-base">
+            Tiên phong chuẩn mực quốc tế kết hợp trí tuệ nhân tạo y khoa để mang đến sự an toàn và hiệu quả cao nhất.
+          </p>
+        </div>
 
-        <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-4">
-          <div className="hidden justify-center lg:col-span-5 lg:flex">
-            <Image
-              src="/images/women.png"
-              alt="Điều dưỡng Vinmec"
-              width={567}
-              height={765}
-              className="h-auto w-full max-w-[420px] object-contain"
-            />
-          </div>
-
-          <ul className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:col-span-7 lg:pl-12">
-            {VINMEC_WHY_US.map((item) => (
-              <li key={item.title}>
-                <Image
-                  src={item.icon}
-                  alt=""
-                  aria-hidden="true"
-                  width={60}
-                  height={60}
-                  className="mb-4 h-[60px] w-[60px] object-contain"
-                />
-                <h3 className="mb-2.5 text-xl leading-tight text-[var(--vm-title-blue)]">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {VINMEC_WHY_US.map((item, idx) => {
+            const Icon = FEATURE_ICONS[idx % FEATURE_ICONS.length];
+            return (
+              <div
+                key={item.title}
+                className="group relative rounded-3xl liquid-glass p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 className="font-heading text-lg font-bold text-foreground mb-2">
                   {item.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-[var(--vm-text)]">{item.desc}</p>
-              </li>
-            ))}
-          </ul>
+                <p className="text-xs leading-relaxed text-foreground-secondary">
+                  {item.desc}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
