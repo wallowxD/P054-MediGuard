@@ -1,8 +1,10 @@
 "use client";
 
 import { AlertTriangle, BookOpen, Pill, Sparkles } from "lucide-react";
+import { useEffect } from "react";
 import EmptyState from "@/components/EmptyState";
 import Badge from "@/components/ui/Badge";
+import { useChat } from "@/context/ChatContext";
 import { useDrugDetails } from "@/queries/interactions";
 import DrugInformationSkeleton from "./DrugInformationSkeleton";
 import DrugSourcePanel from "./DrugSourcePanel";
@@ -44,6 +46,31 @@ function LeafletSection({ label, content }: { label: string; content: string }) 
 
 export default function DrugInformationDetail({ id }: DrugInformationDetailProps) {
   const { data, isLoading, isError, error } = useDrugDetails(id);
+  const { registerDrugContext } = useChat();
+
+  // Nạp tờ HDSD đang mở làm ngữ cảnh cho trợ lý AI: đúng những đoạn nguyên văn hiển thị
+  // trên trang này, không nguồn nào khác. Rời trang thì gỡ đăng ký, nếu không trợ lý sẽ
+  // còn bám tờ HDSD cũ ở màn hình khác.
+  useEffect(() => {
+    if (!data) return;
+
+    const leafletSections: Record<string, string> = {};
+    if (data.therapeuticEffect) leafletSections["Tác dụng điều trị"] = data.therapeuticEffect;
+    for (const section of SECTIONS) {
+      const content = data[section.key];
+      if (content) leafletSections[section.label] = content;
+    }
+
+    registerDrugContext({
+      drugId: data.id,
+      brandName: data.brandName,
+      ingredient: data.ingredient,
+      leafletUrl: data.leafletUrl,
+      sections: leafletSections,
+    });
+
+    return () => registerDrugContext(null);
+  }, [data, registerDrugContext]);
 
   if (isLoading) return <DrugInformationSkeleton />;
 

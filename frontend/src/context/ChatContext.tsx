@@ -46,17 +46,61 @@ export function convertResponseToContextSummary(result: IInteractionCheckRespons
   };
 }
 
+/**
+ * Phiên chat hiện tại. Trợ lý mở được ở MỌI trang, nên phiên phải nói rõ nó đang đứng
+ * trên ngữ cảnh nào — backend chọn prompt và nguồn được phép trích theo đúng scope này.
+ */
+export type TChatSession =
+  | { scope: "interaction"; summary: IChatContextSummary }
+  | { scope: "drug"; drug: IChatDrugContext }
+  | { scope: "general" };
+
+const GENERAL_SESSION: TChatSession = { scope: "general" };
+
+/** Khoá so sánh phiên: đổi khoá = đổi ngữ cảnh = phải bắt đầu hội thoại mới. */
+function sessionKey(session: TChatSession): string {
+  if (session.scope === "interaction") {
+    return `interaction:${session.summary.checkId ?? ""}:${session.summary.drugs.join(",")}`;
+  }
+  if (session.scope === "drug") return `drug:${session.drug.drugId}`;
+  return "general";
+}
+
+/** Ngữ cảnh gửi kèm mỗi request — chỉ một trong hai trường có giá trị. */
+function sessionPayload(session: TChatSession): Pick<IChatRequest, "context" | "drugContext"> {
+  return {
+    context: session.scope === "interaction" ? session.summary : null,
+    drugContext: session.scope === "drug" ? session.drug : null,
+  };
+}
+
+/** Câu chào dự phòng khi API lời chào lỗi — không để panel trống trơn. */
+function fallbackGreeting(session: TChatSession): string {
+  if (session.scope === "interaction") {
+    return `Xin chào! Tôi thấy bạn đang tra cứu tương tác cho **${session.summary.drugs.join(", ")}**.\n\nHệ thống đã ghi nhận các dữ liệu an toàn. Bạn cần tôi giải thích thêm gì không?`;
+  }
+  if (session.scope === "drug") {
+    return `Xin chào! Bạn đang xem tờ hướng dẫn sử dụng của **${session.drug.brandName}**.\n\nTôi có thể trích lại nội dung trong tài liệu này để giải thích cho bạn. Bạn muốn hỏi mục nào?`;
+  }
+  return "Xin chào! Tôi là trợ lý An toàn Thuốc. Màn hình này chưa có dữ liệu tra cứu, nhưng tôi có thể hướng dẫn bạn dùng hệ thống hoặc giải thích các thuật ngữ trong kết quả tra cứu.";
+}
+
 interface IChatContext {
   isOpen: boolean;
-  contextSummary: IChatContextSummary | null;
+  /** Ngữ cảnh của hội thoại đang diễn ra trong panel */
+  session: TChatSession;
   /** Kết quả tra cứu đang hiển thị trên trang, để nút bác sĩ mở chat trong một lần bấm */
   activeResult: IInteractionCheckResponse | null;
+  /** Tờ HDSD trang hiện tại đang mở, nếu có */
+  activeDrug: IChatDrugContext | null;
   /** Tăng sau mỗi lượt tra cứu mới; dùng làm `key` để phát lại hiệu ứng nhắc của nút bác sĩ */
   resultVersion: number;
   messages: IChatMessage[];
   quickSuggestions: string[];
   isLoading: boolean;
   registerResult: (result: IInteractionCheckResponse) => void;
+  /** Trang thuốc gọi khi mount, gọi lại với `null` khi rời trang */
+  registerDrugContext: (drug: IChatDrugContext | null) => void;
   openChat: () => void;
   openChatWithResult: (result: IInteractionCheckResponse) => void;
   closeChat: () => void;
@@ -69,46 +113,45 @@ const ChatContext = createContext<IChatContext | undefined>(undefined);
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [contextSummary, setContextSummary] = useState<IChatContextSummary | null>(null);
+  const [session, setSession] = useState<TChatSession>(GENERAL_SESSION);
   const [activeResult, setActiveResult] = useState<IInteractionCheckResponse | null>(null);
+  const [activeDrug, setActiveDrug] = useState<IChatDrugContext | null>(null);
   const [resultVersion, setResultVersion] = useState(0);
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [quickSuggestions, setQuickSuggestions] = useState<string[]>([]);
   const sendMutation = useSendChatMessage();
+  const { mutate: sendChat, mutateAsync: sendChatAsync } = sendMutation;
 
-  const openChatWithResult = useCallback(
-    (result: IInteractionCheckResponse) => {
-      const newSummary = convertResponseToContextSummary(result);
-      const isSameContext =
-        contextSummary?.checkId === newSummary.checkId &&
-        contextSummary?.drugs.join(",") === newSummary.drugs.join(",");
-
+  /**
+   * Mở panel trên một ngữ cảnh. Giữ nguyên hội thoại nếu vẫn đúng ngữ cảnh cũ; đổi ngữ
+   * cảnh thì bắt đầu lại và xin câu chào mở đầu tương ứng.
+   */
+  const startSession = useCallback(
+    (next: TChatSession) => {
       setIsOpen(true);
-      if (!isSameContext || messages.length === 0) {
-        setContextSummary(newSummary);
-        setMessages([]);
-        setQuickSuggestions([]);
+      // Đúng ngữ cảnh cũ thì giữ nguyên hội thoại. `isPending` chặn trường hợp bấm mở
+      // hai lần lúc lời chào chưa về — nếu không sẽ gọi API lời chào thêm một lần nữa.
+      const isSameSession = sessionKey(next) === sessionKey(session);
+      if (isSameSession && (messages.length > 0 || sendMutation.isPending)) return;
 
-        // Gọi API tạo câu chào mở đầu nhận context
-        sendMutation.mutate(
-          { action: "initial", context: newSummary },
-          {
-            onSuccess: (data) => {
-              setMessages([data.reply]);
-              setQuickSuggestions(data.quickSuggestions);
-            },
-            onError: () => {
-              const fallbackGreeting: IChatMessage = {
-                role: "assistant",
-                content: `Xin chào! Tôi thấy bạn đang tra cứu tương tác cho **${newSummary.drugs.join(", ")}**.\n\nHệ thống đã ghi nhận các dữ liệu an toàn. Bạn cần tôi giải thích thêm gì không?`,
-              };
-              setMessages([fallbackGreeting]);
-            },
-          }
-        );
-      }
+      setSession(next);
+      setMessages([]);
+      setQuickSuggestions([]);
+
+      sendChat(
+        { action: "initial", ...sessionPayload(next) },
+        {
+          onSuccess: (data) => {
+            setMessages([data.reply]);
+            setQuickSuggestions(data.quickSuggestions);
+          },
+          onError: () => {
+            setMessages([{ role: "assistant", content: fallbackGreeting(next) }]);
+          },
+        }
+      );
     },
-    [contextSummary, messages.length, sendMutation]
+    [messages.length, sendChat, sendMutation.isPending, session]
   );
 
   // Trang kết quả chỉ *đăng ký* context, không tự mở chat và không gọi API lời chào.
@@ -118,20 +161,40 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     setResultVersion((version) => version + 1);
   }, []);
 
+  const registerDrugContext = useCallback((drug: IChatDrugContext | null) => {
+    setActiveDrug(drug);
+  }, []);
+
+  /**
+   * Thứ tự ưu tiên: tờ HDSD của trang hiện tại > lượt tra cứu gần nhất > không ngữ cảnh.
+   * Đang đọc leaflet mà trợ lý lại bám lượt tra cứu cũ ở trang khác là sai trực giác;
+   * ngược lại, rời trang thuốc rồi thì lượt tra cứu gần nhất vẫn là thứ đáng hỏi nhất.
+   */
   const openChat = useCallback(() => {
-    if (activeResult) {
-      openChatWithResult(activeResult);
+    if (activeDrug) {
+      startSession({ scope: "drug", drug: activeDrug });
       return;
     }
-    setIsOpen(true);
-  }, [activeResult, openChatWithResult]);
+    if (activeResult) {
+      startSession({ scope: "interaction", summary: convertResponseToContextSummary(activeResult) });
+      return;
+    }
+    startSession(GENERAL_SESSION);
+  }, [activeDrug, activeResult, startSession]);
+
+  const openChatWithResult = useCallback(
+    (result: IInteractionCheckResponse) => {
+      startSession({ scope: "interaction", summary: convertResponseToContextSummary(result) });
+    },
+    [startSession]
+  );
 
   const closeChat = useCallback(() => setIsOpen(false), []);
   const toggleChat = useCallback(() => setIsOpen((prev) => !prev), []);
 
   const sendMessage = useCallback(
     async (content: string) => {
-      if (!content.trim() || !contextSummary) return;
+      if (!content.trim()) return;
 
       const userMsg: IChatMessage = {
         role: "user",
@@ -143,15 +206,15 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       setMessages(nextMessages);
 
       try {
-        const data = await sendMutation.mutateAsync({
+        const data = await sendChatAsync({
           action: "chat",
-          context: contextSummary,
+          ...sessionPayload(session),
           messages: nextMessages,
           userQuery: content.trim(),
         });
         setMessages((prev) => [...prev, data.reply]);
         setQuickSuggestions(data.quickSuggestions);
-      } catch (err) {
+      } catch {
         const errorMsg: IChatMessage = {
           role: "assistant",
           content: "Rất tiếc, đã xảy ra lỗi khi xử lý câu hỏi. Vui lòng thử lại sau.",
@@ -160,7 +223,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
         setMessages((prev) => [...prev, errorMsg]);
       }
     },
-    [contextSummary, messages, sendMutation]
+    [messages, sendChatAsync, session]
   );
 
   const clearChat = useCallback(() => {
@@ -172,13 +235,15 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     <ChatContext.Provider
       value={{
         isOpen,
-        contextSummary,
+        session,
         activeResult,
+        activeDrug,
         resultVersion,
         messages,
         quickSuggestions,
         isLoading: sendMutation.isPending,
         registerResult,
+        registerDrugContext,
         openChat,
         openChatWithResult,
         closeChat,

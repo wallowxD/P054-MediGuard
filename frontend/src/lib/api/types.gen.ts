@@ -510,6 +510,28 @@ export interface components {
                 [key: string]: unknown;
             }[];
         };
+        /**
+         * ChatDrugContext
+         * @description Ngữ cảnh khi người dùng đang mở trang thông tin của MỘT thuốc.
+         *
+         *     `sections` là các đoạn NGUYÊN VĂN của tờ HDSD đang hiển thị trên trang (nhãn mục ->
+         *     nội dung), lấy thẳng từ `DrugDetailResponse`. Chatbot chỉ được trả lời trong phạm vi
+         *     các đoạn này; câu hỏi vượt ra ngoài phải trả về "chưa có dữ liệu" thay vì suy đoán.
+         */
+        ChatDrugContext: {
+            /** Drugid */
+            drugId: string;
+            /** Brandname */
+            brandName: string;
+            /** Ingredient */
+            ingredient?: string | null;
+            /** Leafleturl */
+            leafletUrl?: string | null;
+            /** Sections */
+            sections?: {
+                [key: string]: string;
+            };
+        };
         /** ChatMessage */
         ChatMessage: {
             /**
@@ -522,7 +544,14 @@ export interface components {
             /** Createdat */
             createdAt?: string | null;
         };
-        /** ChatRequest */
+        /**
+         * ChatRequest
+         * @description Một lượt chat, kèm ngữ cảnh của màn hình người dùng đang đứng.
+         *
+         *     Cả hai trường ngữ cảnh đều optional: chatbot mở được ở MỌI trang, kể cả khi chưa tra
+         *     cứu gì. Thiếu ngữ cảnh không có nghĩa là được tự do suy đoán — service chọn prompt
+         *     theo scope, và scope `general` cấm phát biểu bất kỳ dữ kiện thuốc nào.
+         */
         ChatRequest: {
             /**
              * Action
@@ -530,7 +559,8 @@ export interface components {
              * @enum {string}
              */
             action: "initial" | "chat";
-            context: components["schemas"]["ChatContextSummary"];
+            context?: components["schemas"]["ChatContextSummary"] | null;
+            drugContext?: components["schemas"]["ChatDrugContext"] | null;
             /** Messages */
             messages?: components["schemas"]["ChatMessage"][];
             /** Userquery */

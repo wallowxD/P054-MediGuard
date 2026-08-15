@@ -1,13 +1,24 @@
 "use client";
 
-import { MessageSquare, ShieldAlert, Sparkles, X } from "lucide-react";
+import { ShieldAlert, Sparkles, X } from "lucide-react";
+import type { TChatSession } from "@/context/ChatContext";
 import { useChat } from "@/context/ChatContext";
 import ChatMessageInput from "./ChatMessageInput";
 import ChatMessageList from "./ChatMessageList";
 import DoctorAvatar from "./DoctorAvatar";
 
+/** Dòng phụ dưới tên trợ lý: cho biết trợ lý đang bám ngữ cảnh nào của trang. */
+function sessionLabel(session: TChatSession): string {
+  if (session.scope === "interaction") {
+    const { drugs, diseases } = session.summary;
+    return diseases.length ? `${drugs.join(", ")} • ${diseases.join(", ")}` : drugs.join(", ");
+  }
+  if (session.scope === "drug") return `Tờ HDSD · ${session.drug.brandName}`;
+  return "Sẵn sàng giải đáp thắc mắc";
+}
+
 export default function ChatSidebar() {
-  const { isOpen, contextSummary, messages, quickSuggestions, isLoading, closeChat, sendMessage } =
+  const { isOpen, session, messages, quickSuggestions, isLoading, closeChat, sendMessage } =
     useChat();
 
   return (
@@ -39,16 +50,13 @@ export default function ChatSidebar() {
                   Live
                 </span>
               </div>
-              {contextSummary?.drugs.length ? (
-                <p className="max-w-[240px] truncate text-xs text-foreground-secondary sm:max-w-[280px]">
-                  {contextSummary.drugs.join(", ")}
-                  {contextSummary.diseases.length
-                    ? ` • ${contextSummary.diseases.join(", ")}`
-                    : ""}
-                </p>
-              ) : (
-                <p className="text-xs text-foreground-muted">Sẵn sàng giải đáp thắc mắc</p>
-              )}
+              <p
+                className={`max-w-[240px] truncate text-xs sm:max-w-[280px] ${
+                  session.scope === "general" ? "text-foreground-muted" : "text-foreground-secondary"
+                }`}
+              >
+                {sessionLabel(session)}
+              </p>
             </div>
           </div>
 
@@ -68,8 +76,8 @@ export default function ChatSidebar() {
           <span>Thông tin trích dẫn từ tờ HDSD, không thay thế chỉ định của bác sĩ.</span>
         </div>
 
-        {/* Chat Messages Body */}
-        {contextSummary ? (
+        {/* Chat Messages Body — panel mở được ở mọi trang, kể cả khi chưa tra cứu gì */}
+        {messages.length > 0 || isLoading ? (
           <ChatMessageList messages={messages} isLoading={isLoading} />
         ) : (
           <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
@@ -78,19 +86,14 @@ export default function ChatSidebar() {
             </div>
             <p className="font-heading text-sm font-bold text-foreground">Trợ lý AI sẵn sàng</p>
             <p className="mt-1 text-xs text-foreground-muted max-w-xs">
-              Thực hiện tra cứu tương tác thuốc trên màn hình chính để nạp ngữ cảnh vào trợ lý.
+              Bạn cứ đặt câu hỏi. Về một thuốc cụ thể, mở trang thông tin thuốc đó để tôi trích
+              được tờ HDSD.
             </p>
           </div>
         )}
 
         {/* Input Bar */}
-        {contextSummary ? (
-          <ChatMessageInput
-            suggestions={quickSuggestions}
-            onSend={sendMessage}
-            disabled={isLoading}
-          />
-        ) : null}
+        <ChatMessageInput suggestions={quickSuggestions} onSend={sendMessage} disabled={isLoading} />
       </aside>
     </>
   );
