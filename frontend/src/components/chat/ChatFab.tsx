@@ -44,31 +44,30 @@ export default function ChatFab() {
 
   return (
     <div
-      className={`pointer-events-none fixed bottom-20 right-4 z-40 flex flex-col items-end transition-all duration-300 lg:bottom-6 lg:right-6 ${
-        isOpen ? "translate-y-4 opacity-0" : "translate-y-0 opacity-100"
+      className={`pointer-events-none fixed right-4 top-1/2 z-40 h-20 w-20 -translate-y-1/2 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:right-5 lg:right-6 lg:h-22 lg:w-22 ${
+        isOpen ? "translate-x-5 opacity-0" : "translate-x-0 opacity-100"
       }`}
     >
       {/* Speech Bubble */}
-      <div aria-hidden className="relative mb-4 mr-2">
-        <div className="chat-fab-think">
-          <div
-            key={step}
-            className="chat-fab-bubble max-w-56 rounded-3xl liquid-glass px-4 py-2.5 text-xs font-semibold leading-relaxed text-foreground shadow-2xl"
-          >
-            {isThinking ? (
-              <span className="flex items-center gap-1.5 py-1">
-                <span className="chat-fab-dot h-1.5 w-1.5 rounded-full bg-primary" />
-                <span className="chat-fab-dot h-1.5 w-1.5 rounded-full bg-primary" />
-                <span className="chat-fab-dot h-1.5 w-1.5 rounded-full bg-primary" />
-              </span>
-            ) : (
-              message
-            )}
+      <div aria-hidden className="absolute bottom-full right-2 mb-4">
+        <div className="chat-fab-think relative">
+          <div className="chat-fab-bubble flex min-h-14 w-56 items-center rounded-3xl liquid-glass px-4 py-2.5 text-xs font-semibold leading-relaxed text-foreground shadow-2xl">
+            <div key={step} className="chat-fab-content w-full">
+              {isThinking ? (
+                <span className="flex items-center gap-1.5 py-1">
+                  <span className="chat-fab-dot h-1.5 w-1.5 rounded-full bg-primary" />
+                  <span className="chat-fab-dot h-1.5 w-1.5 rounded-full bg-primary" />
+                  <span className="chat-fab-dot h-1.5 w-1.5 rounded-full bg-primary" />
+                </span>
+              ) : (
+                message
+              )}
+            </div>
           </div>
-        </div>
 
-        <span className="chat-fab-think-tail absolute right-4 top-full mt-1.5 h-2 w-2 rounded-full liquid-glass shadow-sm" />
-        <span className="chat-fab-think-tail absolute right-7 top-full mt-3 h-1.5 w-1.5 rounded-full liquid-glass shadow-sm" />
+          <span className="chat-fab-think-tail absolute right-4 top-full mt-1.5 h-2 w-2 rounded-full liquid-glass shadow-sm" />
+          <span className="chat-fab-think-tail absolute right-7 top-full mt-3 h-1.5 w-1.5 rounded-full liquid-glass shadow-sm" />
+        </div>
       </div>
 
       {/* Floating Apple Intelligence Trigger Button */}
@@ -77,7 +76,7 @@ export default function ChatFab() {
         onClick={openChat}
         aria-label="Mở trợ lý An toàn Thuốc AI"
         title="Hỏi trợ lý An toàn Thuốc AI"
-        className="group pointer-events-auto relative flex h-20 w-20 shrink-0 items-center justify-center rounded-full liquid-glass-bar shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 lg:h-22 lg:w-22"
+        className="group pointer-events-auto relative flex h-full w-full shrink-0 items-center justify-center rounded-full liquid-glass-bar shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95"
       >
         {activeResult ? (
           <span

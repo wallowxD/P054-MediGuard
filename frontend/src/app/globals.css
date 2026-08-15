@@ -741,8 +741,8 @@ body {
 
 /* Chat FAB Animations */
 
-/* Mỗi lần bong bóng của nút bác sĩ đổi nội dung (ba chấm ↔ câu mời hỏi) thì `key` đổi
-   theo, component remount và animation này chạy lại — không cần transition thủ công. */
+/* Bong bóng chỉ xuất hiện một lần. Nội dung bên trong tự chuyển trạng thái để khung và
+   avatar không bị thay đổi vị trí khi ba chấm đổi thành câu mời hỏi. */
 .chat-fab-bubble {
   animation: chat-fab-bubble-in 0.35s ease both;
 }
@@ -755,6 +755,21 @@ body {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+.chat-fab-content {
+  animation: chat-fab-content-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes chat-fab-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -819,6 +834,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .chat-fab-bubble,
+  .chat-fab-content,
   .chat-fab-ping,
   .chat-fab-think,
   .chat-fab-think-tail,
