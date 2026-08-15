@@ -302,6 +302,45 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
+/*
+ * ★ Dùng bởi `Button variant="glass"` và nút phụ trong VinmecHero.
+ *
+ * Class này từng được gọi ở hai chỗ nhưng KHÔNG hề tồn tại trong CSS. Tailwind bỏ
+ * qua class lạ mà không báo gì, nên hai nút đó render ra chữ trần không nền, không
+ * viền — nhìn như link chứ không như nút. Đừng xoá khối này.
+ */
+.liquid-glass-button {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 4px 16px rgba(0, 50, 120, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.liquid-glass-button:hover {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 6px 20px rgba(0, 50, 120, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.dark .liquid-glass-button {
+  background: rgba(30, 41, 59, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.dark .liquid-glass-button:hover {
+  background: rgba(51, 65, 85, 0.7);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
 .liquid-glass-input {
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(16px);
@@ -403,10 +442,18 @@ body {
    ========================================================================== */
 
 /*
- * Cổng công khai cố tình chỉ có một chế độ sáng, kể cả khi hệ điều hành hoặc nút
- * toggle đang để dark: đây là bản mô phỏng vinmec.com và trang gốc không có dark
- * mode. Khai báo lại token ở đây ghi đè `.dark` cho riêng nhánh này, nên vài class
- * `dark:` còn sót trong component Vinmec cũng chỉ resolve ra giá trị sáng.
+ * ★ `.landing-theme` là BẢNG MÀU SÁNG của cổng công khai, không phải khoá cứng chế độ sáng.
+ *
+ * Trước đây khối này cố tình ghi đè `.dark` để ép trang công khai luôn sáng. Cách đó
+ * hỏng ngay từ đầu và hỏng theo kiểu khó thấy: nó chỉ ghi đè TOKEN MÀU, trong khi các
+ * class kính (`.dark .liquid-glass*` bên trên) khớp theo tổ tiên `.dark` trên thẻ
+ * <html> nên vẫn nhảy sang nền tối. Kết quả là header, thẻ và thanh dịch vụ có nền
+ * xanh đen còn chữ vẫn là `#0f172a` của bảng sáng — chữ tối trên nền tối, không đọc
+ * được, trên cả ba trang `/`, `/tinh-nang`, `/ve-vinmec`.
+ *
+ * Nay cổng công khai theo đúng chế độ mà người dùng chọn: khối này giữ giá trị sáng,
+ * `.dark .landing-theme` ngay bên dưới cung cấp giá trị tối. Thêm token mới ở đây thì
+ * phải thêm cặp tối tương ứng, nếu không nó sẽ rơi lại giá trị sáng khi bật dark.
  */
 .landing-theme {
   --background: #eef2f8;
@@ -453,6 +500,50 @@ body {
   isolation: isolate;
 }
 
+/*
+ * Bảng màu tối của cổng công khai.
+ *
+ * Độ đặc hiệu `.dark .landing-theme` (0,2,0) cao hơn `.landing-theme` (0,1,0) nên
+ * khối này thắng bất kể thứ tự khai báo. Giá trị bám sát `.dark` gốc nhưng nền đẩy
+ * sâu hơn một chút: nền công khai gần như phủ kín màn hình bằng lớp kính, cần nhiều
+ * tương phản hơn khu app để viền và specular highlight còn đọc được.
+ */
+.dark .landing-theme {
+  --background: #060a12;
+  --background-elevated: #0d1524;
+  --surface: rgba(51, 65, 85, 0.45);
+  --card: rgba(15, 23, 42, 0.72);
+
+  --foreground: #f1f5f9;
+  --foreground-secondary: #c7d2e0;
+  --foreground-muted: #93a3b8;
+
+  /* `#0066cc` của bảng sáng chỉ đạt ~2.1:1 trên nền tối này — dưới cả ngưỡng 3:1 cho
+     thành phần phi văn bản. Bậc sáng hơn đạt ~7:1. */
+  --primary: #58b6ff;
+  --primary-hover: #8ccdff;
+  --primary-foreground: #04121f;
+
+  --hero-tint: rgba(56, 189, 248, 0.14);
+  --hero-tint-soft: rgba(56, 189, 248, 0.06);
+
+  --border: rgba(148, 163, 184, 0.22);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --input: rgba(15, 23, 42, 0.75);
+  --ring: #58b6ff;
+
+  --vm-blue: #58b6ff;
+  --vm-menu-blue: #58b6ff;
+  --vm-title-blue: #9ad3ff;
+  --vm-green: #34d399;
+  --vm-gray-bg: #0d1524;
+  --vm-text: #f1f5f9;
+  --vm-text-muted: #93a3b8;
+  --vm-text-faint: #64748b;
+  --vm-border: rgba(148, 163, 184, 0.22);
+  --vm-border-soft: rgba(148, 163, 184, 0.14);
+}
+
 .landing-theme p {
   text-wrap: pretty;
 }
@@ -497,6 +588,41 @@ body {
     radial-gradient(52% 42% at 88% 14%, rgba(16, 185, 129, 0.1) 0%, transparent 64%),
     radial-gradient(70% 50% at 50% 100%, rgba(14, 165, 233, 0.08) 0%, transparent 60%),
     var(--background);
+}
+
+/*
+ * Cùng bố cục ánh sáng ở chế độ tối, nhưng đảo vai trò: nền sáng cần vệt màu NHẠT để
+ * không chói, nền tối cần vệt màu ĐẬM hơn để không biến thành một mảng đen phẳng.
+ * Dùng lại đúng ba toạ độ radial của bản sáng nên lúc chuyển theme, vùng sáng không
+ * nhảy chỗ.
+ */
+.dark .landing-theme::before {
+  background:
+    radial-gradient(62% 50% at 16% 4%, rgba(56, 189, 248, 0.16) 0%, transparent 62%),
+    radial-gradient(52% 42% at 88% 14%, rgba(16, 185, 129, 0.12) 0%, transparent 64%),
+    radial-gradient(70% 50% at 50% 100%, rgba(14, 165, 233, 0.1) 0%, transparent 60%),
+    var(--background);
+}
+
+/* ==========================================================================
+   Logo của bên thứ ba trên nền tối
+   ==========================================================================
+
+   Logo đối tác và badge pháp lý là PNG/WebP nền trong suốt với mực sẫm (đã kiểm:
+   partner-*.webp, partner-*.png, badge-dmca.png đều `hasAlpha: yes`). Trên nền tối
+   chúng biến mất hoàn toàn — không phải mờ đi, mà là không còn nhìn thấy gì.
+
+   Không được xử lý bằng `invert`: bộ nhận diện của bên thứ ba không được đổi màu.
+   Cách đúng là trả lại cho chúng nền sáng mà chúng được thiết kế để đứng lên.
+
+   ★ Phải đặt SAU các class `.dark .liquid-glass*`: hai bên cùng độ đặc hiệu (0,2,0)
+   nên thứ tự khai báo mới là thứ quyết định ai thắng.
+   ========================================================================== */
+
+.dark .logo-plate {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 /* Dải chuyển từ nền hero xuống nền trang, dùng ở chân LandingFooter. */

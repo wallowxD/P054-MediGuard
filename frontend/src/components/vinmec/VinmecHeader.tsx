@@ -1,11 +1,12 @@
 "use client";
 
+import ThemeToggle from "@/components/navigation/ThemeToggle";
+import { ROUTES } from "@/constants/routes";
 import { Menu, Sparkles, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ROUTES } from "@/constants/routes";
 import { VINMEC_NAV } from "./vinmec-content";
 
 export default function VinmecHeader() {
@@ -22,12 +23,16 @@ export default function VinmecHeader() {
           className="flex shrink-0 items-center transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           <Image
-            src="/images/vinmec/logo.svg"
+            src="/images/vinmec/logo.png"
             alt="Vinmec Healthcare System"
             width={120}
             height={70}
             priority
-            className="h-9 w-auto sm:h-10"
+            // Chữ "VINMEC" trong logo là `#286BA6` — trên thanh kính tối chỉ đạt ~3.5:1,
+            // đọc được nhưng xỉn hẳn so với phần còn lại của header. Không chỉnh màu logo
+            // bằng filter vì sẽ kéo con chim vàng thành vàng chanh; trả nền sáng cho nó
+            // thay vì đổi màu nhận diện.
+            className="logo-plate h-9 w-auto rounded-xl px-2 py-1 sm:h-10"
           />
         </Link>
 
@@ -60,6 +65,13 @@ export default function VinmecHeader() {
 
         {/* Action Controls */}
         <div className="flex items-center gap-2.5">
+          {/*
+            Nút sáng/tối đứng trước cụm CTA và dùng chung hình tròn với nút menu mobile
+            ngay dưới. Đây là điều khiển toàn site: nó ghi `medsafe-theme` vào
+            localStorage nên lựa chọn ở cổng công khai theo người dùng vào tới khu app.
+          */}
+          <ThemeToggle className="flex h-9 w-9 items-center justify-center rounded-full border border-border/70 bg-surface/50 text-foreground-secondary hover:bg-surface hover:text-foreground" />
+
           <Link
             href={ROUTES.SIGNIN}
             className="hidden rounded-full px-3.5 py-1.5 text-xs font-medium text-foreground-secondary transition-colors hover:text-foreground md:block"
@@ -82,7 +94,11 @@ export default function VinmecHeader() {
             aria-label={mobileOpen ? "Đóng menu" : "Mở menu"}
             className="flex h-9 w-9 items-center justify-center rounded-full border border-border/70 bg-surface/50 text-foreground transition-colors hover:bg-surface lg:hidden"
           >
-            {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {mobileOpen ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
           </button>
         </div>
       </div>

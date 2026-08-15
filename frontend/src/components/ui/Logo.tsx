@@ -12,10 +12,14 @@ import Image from "next/image";
  * ★ Logo nằm ngang (tỉ lệ 128×80), không phải hình vuông như mark cũ. Nơi gọi phải
  *   truyền chiều cao kèm `w-auto` (ví dụ `h-10 w-auto`); ép `h-10 w-10` sẽ bóp méo chữ.
  */
-export default function Logo({ className = "h-8 w-auto" }: { className?: string }) {
+export default function Logo({
+  className = "h-8 w-auto",
+}: {
+  className?: string;
+}) {
   return (
     <Image
-      src="/images/vinmec/logo.svg"
+      src="/images/vinmec/logo.png"
       alt="Vinmec Healthcare System"
       width={128}
       height={80}

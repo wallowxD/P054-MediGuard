@@ -44,7 +44,7 @@ export default function VinmecCertifications() {
                 {VINMEC_CERTIFICATIONS.map((cert) => (
                   <div
                     key={cert.src}
-                    className="flex aspect-square items-center justify-center rounded-2xl liquid-glass-subtle p-3 transition-transform duration-300 hover:scale-105"
+                    className="logo-plate flex aspect-square items-center justify-center rounded-2xl liquid-glass-subtle p-3 transition-transform duration-300 hover:scale-105"
                   >
                     <Image
                       src={cert.src}

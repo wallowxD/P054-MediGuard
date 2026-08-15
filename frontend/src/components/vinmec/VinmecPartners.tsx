@@ -13,7 +13,9 @@ export default function VinmecPartners() {
             {VINMEC_PARTNERS.map((partner) => (
               <div
                 key={partner.src}
-                className="grayscale opacity-75 transition-all duration-300 hover:grayscale-0 hover:opacity-100 hover:scale-105"
+                // `logo-plate`: logo đối tác là ảnh nền trong suốt mực sẫm, trên nền tối
+                // sẽ biến mất hẳn. Class này trả lại nền sáng cho riêng chế độ tối.
+                className="logo-plate rounded-2xl border border-transparent px-3 py-2 grayscale opacity-75 transition-all duration-300 hover:grayscale-0 hover:opacity-100 hover:scale-105"
               >
                 <Image
                   src={partner.src}

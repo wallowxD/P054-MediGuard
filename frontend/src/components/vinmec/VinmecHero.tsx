@@ -67,7 +67,9 @@ export default function VinmecHero() {
 
             <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl lg:leading-[1.12]">
               Chuẩn mực y tế quốc tế.{" "}
-              <span className="bg-gradient-to-r from-[#0066cc] via-[#0284c7] to-[#10b981] bg-clip-text text-transparent">
+              {/* Gradient phải có bậc riêng cho nền tối: `#0066cc` là màu tính cho nền
+                  sáng, đặt lên nền tối thì nửa đầu dòng chữ chìm hẳn. */}
+              <span className="bg-gradient-to-r from-[#0066cc] via-[#0284c7] to-[#10b981] bg-clip-text text-transparent dark:from-[#58b6ff] dark:via-[#7dd3fc] dark:to-[#34d399]">
                 An toàn tối đa
               </span>{" "}
               cho từng phác đồ.
