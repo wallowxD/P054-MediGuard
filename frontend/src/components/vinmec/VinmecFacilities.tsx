@@ -89,6 +89,7 @@ export default function VinmecFacilities() {
                       src={facility.thumb}
                       alt={facility.name}
                       fill
+                      sizes="64px"
                       className="object-cover"
                     />
                   </div>

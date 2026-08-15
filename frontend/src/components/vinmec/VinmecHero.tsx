@@ -39,11 +39,22 @@ export default function VinmecHero() {
     return () => window.clearInterval(timer);
   }, []);
 
+  // Khoảng hở dưới header phải khớp với `/ve-vinmec` (VinmecAboutHero) — hai trang dùng
+  // chung header, lệch nhau thì lúc chuyển trang nội dung nhảy lên xuống. Sửa một chỗ thì
+  // sửa cả hai.
+  //
+  // Con số này KHÔNG bằng `/tinh-nang`: hero ở đó là grid `items-center` có cột phải cao
+  // 620px (canvas viên thuốc 3D), nên cột chữ bị đẩy xuống giữa và tự có khoảng hở lớn.
+  // Ở đây cột trái mới là cột cao nhất nên nó bám sát padding — muốn rộng bằng thì phải
+  // cộng thẳng vào padding, không có cách nào lấy lại bằng layout.
   return (
-    <section aria-label="Vinmec Smart Health Hero" className="relative overflow-hidden pt-4 pb-12 sm:pt-6 sm:pb-16">
-      {/* Ambient background glow */}
-      <div className="pointer-events-none absolute -top-24 left-1/2 h-[500px] w-full max-w-7xl -translate-x-1/2 rounded-full bg-gradient-to-tr from-primary/10 via-emerald-500/10 to-sky-400/10 blur-3xl" />
-
+    <section aria-label="Vinmec Smart Health Hero" className="relative overflow-hidden pt-10 pb-12 sm:pt-24 sm:pb-16">
+      {/*
+        ★ Ánh sáng nền nằm ở `.landing-theme::before` (globals.css), không đặt ở đây.
+        Section có `overflow-hidden` nên mọi lớp blur đặt trong nó sẽ bị cắt phẳng tại
+        mép section, tạo đường kẻ ngang ngay dưới header — xem ghi chú dài hơn trong
+        `landing/HeroSection.tsx`.
+      */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Main Hero Bento Frame */}
         <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">

@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, Menu, Search, Sparkles, X } from "lucide-react";
+import { Menu, Sparkles, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -60,29 +60,6 @@ export default function VinmecHeader() {
 
         {/* Action Controls */}
         <div className="flex items-center gap-2.5">
-          {/* Quick Search Glass Pill */}
-          <div className="relative hidden w-44 xl:block">
-            <Search
-              className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-foreground-muted"
-              aria-hidden
-            />
-            <input
-              type="text"
-              placeholder="Tra cứu thuốc..."
-              aria-label="Tìm kiếm thuốc và tài liệu y tế"
-              className="w-full rounded-full border border-border/70 bg-surface/50 py-1.5 pl-8 pr-3 text-xs text-foreground placeholder:text-foreground-muted backdrop-blur-sm transition-all focus:border-primary focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
-
-          <button
-            type="button"
-            aria-label="Đặt lịch hẹn"
-            title="Đặt lịch khám y tế"
-            className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/70 bg-surface/50 text-foreground-secondary backdrop-blur-sm transition-all hover:bg-surface hover:text-primary md:flex"
-          >
-            <CalendarDays className="h-4 w-4" aria-hidden />
-          </button>
-
           <Link
             href={ROUTES.SIGNIN}
             className="hidden rounded-full px-3.5 py-1.5 text-xs font-medium text-foreground-secondary transition-colors hover:text-foreground md:block"

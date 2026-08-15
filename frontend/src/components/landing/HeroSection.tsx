@@ -17,10 +17,18 @@ export default function HeroSection() {
       className="relative overflow-hidden pt-8 pb-16 sm:pt-14 sm:pb-24"
       aria-label="Giới thiệu Trợ lý An toàn Thuốc Vinmec"
     >
-      {/* Ambient background light orbs */}
-      <div className="pointer-events-none absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/15 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 bottom-10 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
+      {/*
+        ★ KHÔNG đặt orb `absolute … blur-3xl` vào section này.
 
+        Section có `overflow-hidden`, nên `blur` bị cắt phẳng đúng tại mép section —
+        tạo một đường kẻ ngang sắc lẹm ngay dưới header và một mảng màu lệch hẳn so
+        với vùng phía trên. Blur chỉ toả mượt theo phương không bị cắt, nên hiện
+        tượng nhìn như "hai khoảng màu" chứ không như lỗi kỹ thuật, rất dễ bỏ sót.
+
+        Ánh sáng nền của toàn bộ trang công khai do `.landing-theme::before` trong
+        globals.css đảm nhiệm: nó `position: fixed` ở cấp trang nên trải liên tục qua
+        header và mọi section, không mép nào cắt được.
+      */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           {/* Left Text Zone with Apple-Style Fade-Up Entrance */}

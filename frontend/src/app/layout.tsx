@@ -63,8 +63,22 @@ export default function RootLayout({
     <html
       lang="vi"
       className={`${interFont.variable} h-full antialiased`}
+      // `THEME_INIT_SCRIPT` thêm class `light`/`dark` vào chính thẻ <html> này
+      // trước khi React hydrate, nên className trong DOM luôn khác className mà
+      // server render ra. Đây là lệch cố ý, không phải bug: nếu để server render
+      // sẵn class theo theme thì phải biết localStorage lúc SSR, điều không thể.
+      // Cờ này chỉ tắt cảnh báo cho riêng thẻ <html>, con của nó vẫn được đối chiếu.
+      suppressHydrationWarning
     >
-      <body className="min-h-full bg-background text-foreground">
+      {/*
+        Extension trình duyệt hay chèn attribute vào <body> trước khi React hydrate:
+        ColorZilla thêm `cz-shortcut-listen`, Grammarly thêm `data-gr-ext-installed`.
+        Máy nào cài thì máy đó thấy overlay lỗi hydration, dù code hoàn toàn đúng.
+        Tắt cảnh báo ở đây an toàn vì <body> chỉ có className tĩnh, không có attribute
+        nào phụ thuộc dữ liệu để mà lệch thật. Nếu sau này cần gắn attribute động vào
+        <body>, phải bỏ cờ này ra, không thì lệch thật cũng bị giấu luôn.
+      */}
+      <body className="min-h-full bg-background text-foreground" suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <StoreProvider>
           <QueryProvider>

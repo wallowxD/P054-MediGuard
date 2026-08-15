@@ -1,26 +1,12 @@
-import { ChevronRight, Heart, Sparkles, Target } from "lucide-react";
+import { Heart, Sparkles, Target } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { ROUTES } from "@/constants/routes";
 import { VINMEC_ABOUT_INTRO, VINMEC_MISSION, VINMEC_VISION } from "./vinmec-about-content";
 
 export default function VinmecAboutHero() {
+  // `pt-10 sm:pt-24` phải khớp với hero của `/` — xem ghi chú trong VinmecHero.tsx.
   return (
-    <section className="pt-4 pb-12 sm:pt-6 sm:pb-16" aria-label="Về Vinmec">
+    <section className="pt-10 pb-12 sm:pt-24 sm:pb-16" aria-label="Về Vinmec">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        {/* Breadcrumb */}
-        <nav aria-label="Đường dẫn" className="mb-6">
-          <ol className="flex items-center gap-1.5 text-xs text-foreground-muted">
-            <li>
-              <Link href={ROUTES.HOME} className="transition-colors hover:text-primary">
-                Trang chủ
-              </Link>
-            </li>
-            <li aria-hidden><ChevronRight className="h-3 w-3 opacity-60" /></li>
-            <li><span aria-current="page" className="font-semibold text-foreground">Về Vinmec</span></li>
-          </ol>
-        </nav>
-
         {/* Hero Headline */}
         <div className="mb-10 max-w-3xl space-y-3">
           <div className="inline-flex items-center gap-2 rounded-full liquid-glass-pill px-3.5 py-1 text-xs font-semibold text-primary">

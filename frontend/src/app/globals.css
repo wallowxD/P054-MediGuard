@@ -8,10 +8,19 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f8fafc;
+  /* ★ Nền KHÔNG được là trắng hoặc gần trắng.
+     Toàn bộ hệ thống glass ở dưới (`.liquid-glass*`) là các lớp trắng bán trong
+     suốt. Đặt chúng lên nền trắng thì thẻ, viền và specular highlight biến mất
+     hoàn toàn — màn hình chỉ còn một mảng trắng phẳng chói mắt. Glass cần một nền
+     có sắc độ để nổi lên.
+     #eef2f8 ≈ 93% luminance (so với 98% của #f8fafc): vẫn là giao diện sáng, nhưng
+     đủ tối để card trắng và viền kính đọc được. */
+  --background: #eef2f8;
   --background-elevated: #ffffff;
-  --surface: rgba(241, 245, 249, 0.7);
-  --card: rgba(255, 255, 255, 0.8);
+  /* Dùng cho dải section xen kẽ. Phải đậm hơn --background, nếu không `bg-surface`
+     ở 45 chỗ trong code sẽ không nhìn thấy gì. */
+  --surface: rgba(203, 213, 225, 0.42);
+  --card: rgba(255, 255, 255, 0.82);
 
   --foreground: #0f172a;
   --foreground-secondary: #334155;
@@ -49,7 +58,7 @@
   --vm-title-blue: #004d99;
   --vm-green: #10b981;
   --vm-green-line: #10b981;
-  --vm-gray-bg: #f8fafc;
+  --vm-gray-bg: #e7edf6;
   --vm-text: #1e293b;
   --vm-text-muted: #64748b;
   --vm-text-faint: #94a3b8;
@@ -103,6 +112,92 @@
   --vm-text-faint: #64748b;
   --vm-border: rgba(51, 65, 85, 0.6);
   --vm-border-soft: rgba(30, 41, 59, 0.6);
+}
+
+/* ==========================================================================
+   ★ Cầu nối token → utility class của Tailwind v4
+   ==========================================================================
+
+   Tailwind v4 KHÔNG tự đọc biến trong `:root`. Chỉ những biến khai báo trong
+   `@theme` mới sinh ra utility. Không có khối này thì `bg-background`,
+   `text-foreground`, `bg-primary`, `bg-surface`, `text-foreground-muted`,
+   `font-heading`… đều là class không tồn tại: trình duyệt bỏ qua, trang mất sạch
+   màu nền lẫn màu chữ và trả về mặc định trắng–đen của user agent.
+
+   Mọi token thêm vào `:root`/`.dark` bên trên phải được ánh xạ xuống đây, nếu
+   không nó chỉ dùng được qua arbitrary value `[var(--x)]`.
+   ========================================================================== */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-elevated: var(--background-elevated);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-hero-tint: var(--hero-tint);
+  --color-hero-tint-soft: var(--hero-tint-soft);
+
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --color-border: var(--border);
+  --color-border-glass: var(--border-glass);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-severity-contraindicated: var(--severity-contraindicated);
+  --color-severity-major: var(--severity-major);
+  --color-severity-moderate: var(--severity-moderate);
+  --color-severity-minor: var(--severity-minor);
+  --color-severity-unknown: var(--severity-unknown);
+
+  --color-vm-blue: var(--vm-blue);
+  --color-vm-menu-blue: var(--vm-menu-blue);
+  --color-vm-title-blue: var(--vm-title-blue);
+  --color-vm-green: var(--vm-green);
+  --color-vm-gray-bg: var(--vm-gray-bg);
+  --color-vm-text: var(--vm-text);
+  --color-vm-text-muted: var(--vm-text-muted);
+  --color-vm-text-faint: var(--vm-text-faint);
+  --color-vm-border: var(--vm-border);
+  --color-vm-border-soft: var(--vm-border-soft);
+
+  --font-sans: var(--font-body);
+  /* ★ Trỏ về CÙNG một font với `font-sans`: toàn site dùng Inter, kể cả tiêu đề —
+     đúng như trang chủ Vinmec (xem docs/frontend.md § Typography).
+
+     Vẫn giữ utility `font-heading` thay vì xoá khỏi các file đang dùng: nó ghi lại
+     ý định "đây là tiêu đề", và nếu sau này team muốn tiêu đề dùng font khác thì
+     chỉ sửa đúng dòng này. */
+  --font-heading: var(--font-body);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/*
+ * Trình duyệt tự cuộn phần tử vừa nhận focus vào khung nhìn, nhưng nó không biết
+ * MobileTopbar dính trên đỉnh và BottomNav dính dưới đáy. Không có scroll-margin,
+ * phần tử đang focus có thể nằm gọn dưới một trong hai thanh đó — người dùng bàn
+ * phím mất dấu hoàn toàn. Chỉ áp dưới `lg` vì từ `lg` trở lên hai thanh này ẩn.
+ */
+@media (max-width: 1023px) {
+  :where(a, button, input, select, textarea, summary, [tabindex]) {
+    scroll-margin-top: 4.5rem;
+    scroll-margin-bottom: 5.5rem;
+  }
 }
 
 /* ==========================================================================
@@ -300,6 +395,135 @@
 }
 
 /* ==========================================================================
+   Theme wrapper cho các trang công khai
+   ==========================================================================
+
+   `(public)/layout.tsx` bọc `.landing-theme`, còn `/` và `/ve-vinmec` bọc thêm
+   `.vinmec-theme`. Hai class này phải TỒN TẠI, nếu không lớp bọc chỉ là div rỗng.
+   ========================================================================== */
+
+/*
+ * Cổng công khai cố tình chỉ có một chế độ sáng, kể cả khi hệ điều hành hoặc nút
+ * toggle đang để dark: đây là bản mô phỏng vinmec.com và trang gốc không có dark
+ * mode. Khai báo lại token ở đây ghi đè `.dark` cho riêng nhánh này, nên vài class
+ * `dark:` còn sót trong component Vinmec cũng chỉ resolve ra giá trị sáng.
+ */
+.landing-theme {
+  --background: #eef2f8;
+  --background-elevated: #ffffff;
+  --surface: rgba(203, 213, 225, 0.42);
+  --card: rgba(255, 255, 255, 0.82);
+
+  --foreground: #0f172a;
+  --foreground-secondary: #334155;
+  --foreground-muted: #64748b;
+
+  --primary: #0066cc;
+  --primary-hover: #0052a3;
+  --primary-foreground: #ffffff;
+
+  --hero-tint: #dfeafb;
+  --hero-tint-soft: #eaf1fc;
+
+  --border: rgba(203, 213, 225, 0.85);
+  --border-glass: rgba(255, 255, 255, 0.6);
+  --input: rgba(255, 255, 255, 0.9);
+  --ring: #0066cc;
+
+  --vm-blue: #0066cc;
+  --vm-menu-blue: #0066cc;
+  --vm-title-blue: #004d99;
+  --vm-green: #10b981;
+  --vm-gray-bg: #e7edf6;
+  --vm-text: #1e293b;
+  --vm-text-muted: #64748b;
+  --vm-text-faint: #94a3b8;
+  --vm-border: rgba(203, 213, 225, 0.85);
+  --vm-border-soft: rgba(226, 232, 240, 0.9);
+
+  background: var(--background);
+  color: var(--foreground);
+  scroll-behavior: smooth;
+  /* ★ Bắt buộc, đừng xoá. `::before` bên dưới là lớp nền của trang và nằm ở
+     `z-index: -1`. Thứ tự vẽ trong CSS quy định phần tử z-index âm chỉ được vẽ ĐÈ
+     LÊN nền của phần tử tạo ra stacking context chứa nó — không phải nền của mọi tổ
+     tiên. Không có `isolation`, `.landing-theme` không tạo stacking context, `::before`
+     rơi lên tận stacking context gốc và bị chính `background` opaque ngay dòng trên
+     che kín: gradient biến mất hoàn toàn mà không có lỗi nào báo. */
+  isolation: isolate;
+}
+
+.landing-theme p {
+  text-wrap: pretty;
+}
+
+.vinmec-theme {
+  /* `--max-body` của Vinmec. Container hẹp hơn phần còn lại của app là ĐÚNG bản gốc. */
+  --vm-body-width: 1110px;
+
+  color: var(--vm-text);
+  /* Trùng font với phần còn lại của site (Inter). Khai báo lại ở đây là thừa nhưng
+     cố ý: khối này gom mọi thứ "trông giống Vinmec" vào một chỗ. */
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * ★ Nền chuyển sắc cho toàn bộ trang công khai.
+ *
+ * Không có nó, các section chỉ nằm trên một mảng #eef2f8 phẳng — đỡ chói hơn trắng
+ * nhưng vẫn đơn điệu suốt vài nghìn pixel cuộn. Gradient này cho mắt một điểm tựa
+ * và cho lớp kính thứ gì đó để khúc xạ.
+ *
+ * ★ Đây là chỗ DUY NHẤT được đặt ánh sáng nền cho trang công khai.
+ *
+ * Trước đây mỗi section tự gắn một orb `absolute … blur-3xl`. Vì section nào cũng có
+ * `overflow-hidden`, blur bị cắt phẳng đúng tại mép section: mắt thấy một đường kẻ
+ * ngang và hai mảng màu khác nhau ngay dưới header. Đặt ở cấp trang với `fixed` thì
+ * không có mép nào cắt được — nền liền một dải qua header và mọi section.
+ *
+ * `fixed`: gradient neo theo viewport nên đứng yên khi cuộn — mọi section đều nhìn
+ * thấy cùng một trường sáng, và không có mép nào để cắt.
+ * `z-index: -1`: dưới toàn bộ nội dung, trên nền phẳng của `.landing-theme`. Chỉ đúng
+ * nhờ `isolation: isolate` khai báo ở trên.
+ */
+.landing-theme::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(62% 50% at 16% 4%, rgba(0, 102, 204, 0.14) 0%, transparent 62%),
+    radial-gradient(52% 42% at 88% 14%, rgba(16, 185, 129, 0.1) 0%, transparent 64%),
+    radial-gradient(70% 50% at 50% 100%, rgba(14, 165, 233, 0.08) 0%, transparent 60%),
+    var(--background);
+}
+
+/* Dải chuyển từ nền hero xuống nền trang, dùng ở chân LandingFooter. */
+.landing-footer-wash {
+  background: linear-gradient(180deg, var(--hero-tint-soft) 0%, var(--background) 9rem);
+}
+
+.landing-wide-container {
+  margin-inline: auto;
+  max-width: 72rem;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .landing-wide-container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-wide-container {
+    max-width: min(1600px, calc(100vw - 96px));
+    padding-inline: 0;
+  }
+}
+
+/* ==========================================================================
    Entrance & Scroll Reveal Animation Utilities
    ========================================================================== */
 
@@ -357,6 +581,24 @@
 .delay-700 { animation-delay: 700ms; }
 
 /* Chat FAB Animations */
+
+/* Mỗi lần bong bóng của nút bác sĩ đổi nội dung (ba chấm ↔ câu mời hỏi) thì `key` đổi
+   theo, component remount và animation này chạy lại — không cần transition thủ công. */
+.chat-fab-bubble {
+  animation: chat-fab-bubble-in 0.35s ease both;
+}
+
+@keyframes chat-fab-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .chat-fab-ping {
   animation: chat-fab-ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
@@ -405,5 +647,33 @@
   30% {
     opacity: 1;
     transform: translateY(-3px);
+  }
+}
+
+/* ==========================================================================
+   Reduced motion
+   ==========================================================================
+   Người bật "giảm chuyển động" ở hệ điều hành không được nhận vật thể động vĩnh
+   viễn. Reveal khi cuộn vẫn hiện nội dung (opacity/transform về trạng thái cuối),
+   chỉ bỏ phần chuyển động.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-fab-bubble,
+  .chat-fab-ping,
+  .chat-fab-think,
+  .chat-fab-think-tail,
+  .chat-fab-dot,
+  .ambient-blob-1,
+  .ambient-blob-2,
+  .ambient-blob-3 {
+    animation: none;
+  }
+
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-soft-pop {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
   }
 }

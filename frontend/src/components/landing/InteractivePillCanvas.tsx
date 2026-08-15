@@ -22,7 +22,8 @@ export default function InteractivePillCanvas({ className = "" }: { className?: 
       0.1,
       1000
     );
-    // Adjusted camera distance for a much larger, heroic pill appearance
+    // Khoảng cách thật được `fitCameraToPill()` tính lại bên dưới, sau khi đã biết
+    // kích thước viên thuốc. Giá trị này chỉ để camera có vị trí hợp lệ lúc khởi tạo.
     camera.position.set(0, 0, 5.0);
 
     const renderer = new THREE.WebGLRenderer({
@@ -65,6 +66,36 @@ export default function InteractivePillCanvas({ className = "" }: { className?: 
     const cylinderHeight = 1.45;
     const radialSegments = 64;
 
+    // Biên độ bay lên xuống của hiệu ứng lơ lửng. Dùng chung cho cả vòng lặp
+    // animation lẫn phép tính khung hình ngay bên dưới, để hai chỗ không lệch nhau.
+    const floatAmplitude = 0.18;
+
+    /**
+     * Đẩy camera ra đủ xa để viên thuốc luôn nằm trọn trong khung, không bị cắt vòm
+     * trên hoặc vòm dưới.
+     *
+     * Viên thuốc xoay tự do quanh cả ba trục — `rotation.y` quay liên tục theo thời
+     * gian, `rotation.x` phụ thuộc vị trí chuột và độ cuộn trang — nên không thể
+     * canh khung theo chiều cao hình chiếu ở một tư thế cụ thể. Phải dùng khối cầu
+     * bao viên thuốc: bán kính bằng nửa thân trụ cộng bán kính vòm, cộng biên độ lơ
+     * lửng. Khoảng cách để một khối cầu bán kính R tiếp xúc đúng mép frustum là
+     * `R / sin(fov/2)`; tính cho cả chiều dọc và chiều ngang rồi lấy giá trị lớn hơn,
+     * vì khung chứa trên mobile cao hơn rộng nên chiều ngang mới là chiều bó hẹp.
+     */
+    const boundingRadius = cylinderHeight * 0.5 + radius + floatAmplitude;
+    const fitCameraToPill = () => {
+      const verticalFov = THREE.MathUtils.degToRad(camera.fov);
+      const horizontalFov = 2 * Math.atan(Math.tan(verticalFov * 0.5) * camera.aspect);
+      const distance = Math.max(
+        boundingRadius / Math.sin(verticalFov * 0.5),
+        boundingRadius / Math.sin(horizontalFov * 0.5)
+      );
+      // Chừa thêm một dải mép mỏng để viền sáng quanh viên thuốc không chạm cạnh canvas.
+      camera.position.z = distance * 1.06;
+      camera.updateProjectionMatrix();
+    };
+    fitCameraToPill();
+
     // Materials
     // Blue Glass Material (Top half) - Deep Sapphire Liquid Glass
     const blueGlassMaterial = new THREE.MeshPhysicalMaterial({
@@ -97,15 +128,6 @@ export default function InteractivePillCanvas({ className = "" }: { className?: 
       clearcoatRoughness: 0.08,
     });
 
-    // Gold/Cyan Accent Ring Material
-    const ringMaterial = new THREE.MeshStandardMaterial({
-      color: new THREE.Color("#38bdf8"),
-      metalness: 0.85,
-      roughness: 0.15,
-      emissive: new THREE.Color("#0284c7"),
-      emissiveIntensity: 0.45,
-    });
-
     // Top Cap (Dome + Top half cylinder)
     const topCapGeo = new THREE.SphereGeometry(
       radius,
@@ -120,11 +142,17 @@ export default function InteractivePillCanvas({ className = "" }: { className?: 
     topCapMesh.position.y = cylinderHeight * 0.5;
     pillGroup.add(topCapMesh);
 
+    // `openEnded: true` — bỏ hai nắp đĩa phẳng mà CylinderGeometry mặc định sinh ra ở
+    // hai đầu. Vỏ viên thuốc là kính `transmission` nên nhìn xuyên được vào trong; để
+    // nguyên nắp thì hai cái đĩa nằm chắn ngang lòng viên thuốc, hiện lên thành vệt
+    // ellipse mờ cắt ngang vòm và làm viên thuốc trông như bị chia tầng.
     const topCylinderGeo = new THREE.CylinderGeometry(
       radius,
       radius,
       cylinderHeight * 0.5,
-      radialSegments
+      radialSegments,
+      1,
+      true
     );
     const topCylinderMesh = new THREE.Mesh(topCylinderGeo, blueGlassMaterial);
     topCylinderMesh.position.y = cylinderHeight * 0.25;
@@ -148,17 +176,21 @@ export default function InteractivePillCanvas({ className = "" }: { className?: 
       radius,
       radius,
       cylinderHeight * 0.5,
-      radialSegments
+      radialSegments,
+      1,
+      true
     );
     const bottomCylinderMesh = new THREE.Mesh(bottomCylinderGeo, whiteGlassMaterial);
     bottomCylinderMesh.position.y = -cylinderHeight * 0.25;
     pillGroup.add(bottomCylinderMesh);
 
-    // Middle separator ring
-    const ringGeo = new THREE.TorusGeometry(radius + 0.025, 0.045, 20, 80);
-    ringGeo.rotateX(Math.PI / 2);
-    const ringMesh = new THREE.Mesh(ringGeo, ringMaterial);
-    pillGroup.add(ringMesh);
+    // Không có vòng nẹp ở giữa. Bốn khối trên đều dùng chung bán kính `radius`, và
+    // vòm cầu tiếp tuyến với thân trụ ngay tại đường xích đạo, nên bề mặt viên thuốc
+    // liền mạch ở mọi hướng nhìn. Bất kỳ khối nào đặt ở eo với bán kính lớn hơn
+    // `radius` đều nhô lên khỏi bề mặt và trông như một sợi dây chun bọc quanh — kể cả
+    // khi chỉ nhô vài phần trăm, vì nó bắt sáng viền và bị lớp kính khúc xạ thành một
+    // vệt ellipse mờ bên trong vòm. Ranh giới xanh/trắng tại y = 0 đã đủ đánh dấu chỗ
+    // hai nửa nang thuốc khớp vào nhau.
 
     // Internal floating micro-spheres (Active Medicine Particles)
     const particleCount = 38;
@@ -234,7 +266,9 @@ export default function InteractivePillCanvas({ className = "" }: { className?: 
       const width = container.clientWidth;
       const height = container.clientHeight;
       camera.aspect = width / height;
-      camera.updateProjectionMatrix();
+      // Khung đổi tỉ lệ thì khoảng cách vừa khung cũng đổi theo, nhất là khi bố cục
+      // chuyển từ hai cột sang một cột. `fitCameraToPill` tự gọi updateProjectionMatrix.
+      fitCameraToPill();
       renderer.setSize(width, height);
     };
     const resizeObserver = new ResizeObserver(onResize);
@@ -244,15 +278,17 @@ export default function InteractivePillCanvas({ className = "" }: { className?: 
 
     // Animation Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const timer = new THREE.Timer();
+    timer.connect(document);
 
-    const animate = () => {
+    const animate = (timestamp?: number) => {
       animationFrameId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
+      timer.update(timestamp);
+      const elapsedTime = timer.getElapsed();
 
       if (!prefersReducedMotion) {
         // Floating sine levitation
-        pillGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.18;
+        pillGroup.position.y = Math.sin(elapsedTime * 1.5) * floatAmplitude;
 
         // Smooth mouse rotation blend
         targetRotX = 0.32 - mouseY * 0.45 + scrollY * 0.0012;
@@ -278,6 +314,7 @@ export default function InteractivePillCanvas({ className = "" }: { className?: 
     // Cleanup
     return () => {
       cancelAnimationFrame(animationFrameId);
+      timer.dispose();
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("scroll", onScroll);
       resizeObserver.disconnect();
@@ -290,11 +327,9 @@ export default function InteractivePillCanvas({ className = "" }: { className?: 
       topCylinderGeo.dispose();
       bottomCapGeo.dispose();
       bottomCylinderGeo.dispose();
-      ringGeo.dispose();
       particleGeo.dispose();
       blueGlassMaterial.dispose();
       whiteGlassMaterial.dispose();
-      ringMaterial.dispose();
       renderer.dispose();
     };
   }, []);
