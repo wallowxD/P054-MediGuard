@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import { Brain, User } from "lucide-react";
 
 function formatMarkdown(text: string) {
-  // Simple markdown renderer for bold, lists, and line breaks
   const paragraphs = text.split("\n\n");
   return paragraphs.map((paragraph, pIdx) => {
     const lines = paragraph.split("\n");
@@ -14,7 +13,6 @@ function formatMarkdown(text: string) {
           const isBullet = line.trim().startsWith("- ") || line.trim().startsWith("* ");
           const cleanLine = isBullet ? line.trim().substring(2) : line;
 
-          // Replace **bold** with <strong>
           const parts = cleanLine.split(/(\*\*.*?\*\*)/g);
           const renderedLine = parts.map((part, i) => {
             if (part.startsWith("**") && part.endsWith("**")) {
@@ -72,23 +70,23 @@ export default function ChatMessageList({
             }`}
           >
             <div
-              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl font-semibold text-xs ${
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl text-xs font-semibold shadow-xs ${
                 isAssistant
-                  ? "bg-hero-tint border border-primary/20 text-primary"
-                  : "bg-primary text-primary-foreground"
+                  ? "bg-primary/10 text-primary"
+                  : "bg-gradient-to-tr from-primary to-sky-400 text-white"
               }`}
             >
               {isAssistant ? <Brain className="h-4 w-4" /> : <User className="h-4 w-4" />}
             </div>
 
             <div
-              className={`max-w-[85%] rounded-2xl p-4 text-sm shadow-sm ${
+              className={`max-w-[85%] rounded-3xl p-4 text-xs sm:text-sm leading-relaxed shadow-sm ${
                 isAssistant
-                  ? "border border-border bg-card text-foreground-secondary"
-                  : "bg-primary text-primary-foreground"
+                  ? "liquid-glass text-foreground-secondary"
+                  : "bg-primary text-white"
               }`}
             >
-              {isAssistant ? formatMarkdown(msg.content) : <p className="leading-relaxed">{msg.content}</p>}
+              {isAssistant ? formatMarkdown(msg.content) : <p>{msg.content}</p>}
             </div>
           </div>
         );
@@ -96,14 +94,14 @@ export default function ChatMessageList({
 
       {isLoading ? (
         <div className="flex items-start gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-hero-tint text-primary">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <Brain className="h-4 w-4 animate-pulse" />
           </div>
-          <div className="flex items-center gap-1.5 rounded-2xl border border-border bg-card px-4 py-3 text-sm text-foreground-muted">
+          <div className="flex items-center gap-2 rounded-3xl liquid-glass px-4 py-3 text-xs text-foreground-muted shadow-sm">
             <span className="h-2 w-2 animate-bounce rounded-full bg-primary [animation-delay:-0.3s]" />
             <span className="h-2 w-2 animate-bounce rounded-full bg-primary [animation-delay:-0.15s]" />
             <span className="h-2 w-2 animate-bounce rounded-full bg-primary" />
-            <span className="ml-1 text-xs italic">AI đang đọc dữ liệu & phản hồi...</span>
+            <span className="ml-1 italic">AI đang đọc tài liệu và phản hồi…</span>
           </div>
         </div>
       ) : null}

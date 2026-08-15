@@ -1,41 +1,40 @@
-import Image from "next/image";
-import { BookOpen, PillBottle, ShieldAlert } from "lucide-react";
+"use client";
+
+import { ArrowRight, BookOpen, Layers, PillBottle, ShieldAlert, Sparkles, Utensils } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { LANDING_SECTIONS, ROUTES } from "@/constants/routes";
 import Reveal from "./Reveal";
-import SectionHeading from "./SectionHeading";
 
-const PRIMARY_FEATURE = {
-  Icon: PillBottle,
-  image: "/images/landing/drug-interaction.jpg",
-  imageAlt: "Minh họa kiểm tra tương tác giữa hai loại thuốc",
-  title: "Tra tương tác thuốc",
-  description:
-    "Nhập tên thuốc hoặc tải ảnh đơn thuốc → nhận danh sách các cặp thuốc có tương tác, kèm nguồn trích dẫn để đối chiếu.",
-  cta: "Kiểm tra tương tác",
-  href: ROUTES.INTERACTIONS,
-};
-
-const SECONDARY_FEATURES = [
+const FEATURES = [
+  {
+    Icon: PillBottle,
+    title: "Tra cứu tương tác tổng hợp",
+    description:
+      "Đối chiếu thuốc–thuốc, thuốc–bệnh nền và thuốc–thực phẩm trong cùng một lượt tra cứu. Nhận cảnh báo tức thì kèm trích dẫn nguyên văn tờ HDSD.",
+    cta: "Thử tra cứu ngay",
+    href: ROUTES.INTERACTIONS_DRUG_DRUG,
+    badge: "Lâm sàng",
+    delay: "none" as const,
+  },
   {
     Icon: BookOpen,
-    image: "/images/landing/medication-leaflet.jpg",
-    imageAlt: "Minh họa đọc và đối chiếu tờ hướng dẫn sử dụng thuốc",
-    title: "Tra thông tin thuốc",
+    title: "Dược thư thông tin thuốc",
     description:
-      "Nhập tên thuốc → xem hướng dẫn sử dụng, liều dùng, chống chỉ định và tác dụng phụ theo tờ HDSD.",
-    cta: "Tra thông tin thuốc",
-    href: ROUTES.SIGNIN,
+      "Tra cứu danh mục thuốc bệnh viện theo bảng chữ cái A–Z hoặc tên biệt dược. Xem chi tiết chỉ định, liều dùng, chống chỉ định và tác dụng phụ chính thống.",
+    cta: "Xem dược thư",
+    href: ROUTES.DRUG_INFORMATION,
+    badge: "Chính thức",
+    delay: "short" as const,
   },
   {
     Icon: ShieldAlert,
-    image: "/images/landing/safety-warning.jpg",
-    imageAlt: "Minh họa cảnh báo an toàn khi sử dụng thuốc",
-    title: "Cảnh báo an toàn",
+    title: "Cảnh báo an toàn có nguồn",
     description:
-      "Xem kết quả tra cứu → nhận cảnh báo rõ ràng, kèm nguồn trích dẫn và hướng dẫn nên làm gì tiếp theo.",
-    cta: "Tìm hiểu cảnh báo",
+      "Phân cấp mức độ nguy cơ rõ ràng (Chống chỉ định, Nghiêm trọng, Trung bình, Nhẹ) kèm đối chiếu exact key từ cơ sở dữ liệu chuyên môn.",
+    cta: "Tìm hiểu an toàn",
     href: ROUTES.SIGNIN,
+    badge: "Xác thực",
+    delay: "medium" as const,
   },
 ];
 
@@ -43,78 +42,56 @@ export default function FeaturesSection() {
   return (
     <section
       id={LANDING_SECTIONS.FEATURES.slice(1)}
-      className="scroll-mt-20 border-t border-border bg-background-elevated py-20 sm:py-24"
+      className="py-16 sm:py-24 relative overflow-hidden"
+      aria-label="Tính năng chính"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Reveal>
-          <SectionHeading
-            title="Ba chức năng chính"
-            subtitle="Thiết kế cho bệnh nhân, đồng thời hỗ trợ dược sĩ đối chiếu nguồn."
-          />
+          <div className="mb-14 text-center max-w-2xl mx-auto space-y-2.5">
+            <div className="inline-flex items-center gap-1.5 rounded-full liquid-glass-pill px-3 py-1 text-xs font-semibold text-primary">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Năng lực cốt lõi</span>
+            </div>
+            <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Các công cụ hỗ trợ an toàn dùng thuốc
+            </h2>
+            <p className="text-sm text-foreground-secondary sm:text-base">
+              Thiết kế tối giản, trực quan cho người bệnh và đầy đủ bằng chứng y khoa cho chuyên gia.
+            </p>
+          </div>
         </Reveal>
 
-        <div className="mt-14 space-y-8">
-          <Reveal>
-            <article className="landing-feature-card group flex flex-col overflow-hidden rounded-2xl border border-border bg-card md:flex-row">
-              <div className="relative aspect-[16/9] overflow-hidden bg-hero-tint-soft md:aspect-auto md:w-2/5">
-                <Image
-                  src={PRIMARY_FEATURE.image}
-                  alt={PRIMARY_FEATURE.imageAlt}
-                  fill
-                  sizes="(min-width: 768px) 40vw, 100vw"
-                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
-                />
-              </div>
-              <div className="flex flex-1 flex-col justify-center p-7 sm:p-9">
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-hero-tint text-primary">
-                  <PRIMARY_FEATURE.Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden />
-                </span>
-                <h3 className="font-heading mt-5 text-2xl font-semibold text-foreground">
-                  {PRIMARY_FEATURE.title}
-                </h3>
-                <p className="mt-3 max-w-xl text-base leading-relaxed text-foreground-secondary">
-                  {PRIMARY_FEATURE.description}
-                </p>
-                <div className="mt-6">
-                  <Button href={PRIMARY_FEATURE.href} variant="solid">
-                    {PRIMARY_FEATURE.cta}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map((feat) => (
+            <Reveal key={feat.title} delay={feat.delay}>
+              <div className="group relative flex flex-col justify-between h-full rounded-3xl liquid-glass p-7 sm:p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
+                      <feat.Icon className="h-6 w-6" />
+                    </div>
+                    <span className="rounded-full liquid-glass-pill px-2.5 py-0.5 text-[10px] font-semibold text-primary">
+                      {feat.badge}
+                    </span>
+                  </div>
+
+                  <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                    {feat.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm leading-relaxed text-foreground-secondary">
+                    {feat.description}
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-5 border-t border-border/60">
+                  <Button href={feat.href} variant="glass" size="sm" className="w-full justify-between">
+                    <span>{feat.cta}</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </Button>
                 </div>
               </div>
-            </article>
-          </Reveal>
-
-          <div className="grid gap-8 sm:grid-cols-2">
-            {SECONDARY_FEATURES.map(({ Icon, image, imageAlt, title, description, cta, href }, index) => (
-              <Reveal key={title} delay={index === 0 ? "short" : "medium"}>
-                <article className="landing-feature-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-[box-shadow,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5">
-                  <div className="relative aspect-[16/10] overflow-hidden bg-hero-tint-soft">
-                    <Image
-                      src={image}
-                      alt={imageAlt}
-                      fill
-                      sizes="(min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-7 sm:p-8">
-                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-hero-tint text-primary">
-                      <Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden />
-                    </span>
-                    <h3 className="font-heading mt-5 text-2xl font-semibold text-foreground">{title}</h3>
-                    <p className="mt-3 text-base leading-relaxed text-foreground-secondary">
-                      {description}
-                    </p>
-                    <div className="mt-6">
-                      <Button href={href} variant="solid">
-                        {cta}
-                      </Button>
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

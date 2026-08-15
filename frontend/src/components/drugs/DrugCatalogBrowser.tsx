@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, ChevronDown, ChevronUp } from "lucide-react";
+import { AlertTriangle, ChevronDown, ChevronUp, Pill, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import PaginationControls from "@/components/PaginationControls";
 import { CATALOG_PAGE_SIZE } from "@/constants/catalog";
@@ -9,29 +9,14 @@ import DrugCatalogList from "./DrugCatalogList";
 import DrugCatalogSearchBar from "./DrugCatalogSearchBar";
 import DrugLetterFilter from "./DrugLetterFilter";
 
-const DEBOUNCE_MS = 400;
-/** Trần của `limit` ở `GET /api/v1/drugs/search`, xem `backend/src/medsafe/api/v1/drugs.py`. */
+const DEBOUNCE_MS = 350;
 const SEARCH_LIMIT = 20;
 
-/**
- * Phần tương tác của trang "Tra cứu thuốc". Có ĐÚNG HAI chế độ loại trừ nhau:
- *
- * - **Duyệt** (ô tìm kiếm rỗng): `GET /drugs` — lọc theo chữ cái, phân trang đầy đủ.
- * - **Tìm kiếm** (có từ khoá): `GET /drugs/search` — xếp hạng theo tên biệt dược.
- *
- * Hai endpoint chứ không phải một, vì `q` của `/drugs` là khớp chuỗi con thô: gõ "H" sẽ
- * trả về mọi thuốc có chữ "h" ở bất kỳ đâu. `/drugs/search` xếp tiền tố tên biệt dược lên
- * đầu nên gõ "H" ra đúng thuốc vần H — đúng thứ người dùng chờ đợi ở một ô tìm tên thuốc.
- *
- * Đổi lại, kết quả tìm kiếm bị chặn ở 20 dòng và không phân trang; component nói rõ điều
- * đó ra màn hình thay vì im lặng cắt bớt.
- */
 export default function DrugCatalogBrowser() {
   const [inputValue, setInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [letter, setLetter] = useState<string | null>(null);
   const [page, setPage] = useState(1);
-  // Chỉ có ý nghĩa khi đang tìm kiếm: người dùng đã bấm "Hiện" để lấy lại thanh chữ cái.
   const [alphabetRevealed, setAlphabetRevealed] = useState(false);
 
   useEffect(() => {
@@ -52,143 +37,143 @@ export default function DrugCatalogBrowser() {
 
   const changeInput = (value: string) => {
     setInputValue(value);
-    // Gõ tìm kiếm thì bỏ vần đang chọn: hai bộ lọc cùng lúc sẽ khiến người dùng không
-    // biết danh sách đang theo cái nào.
     setLetter(null);
     setPage(1);
     setAlphabetRevealed(false);
   };
 
-  const clearSearch = () => {
+  const clearInput = () => {
     setInputValue("");
-    // Xoá luôn `searchTerm` thay vì chờ debounce: nếu chờ, thanh chữ cái còn ẩn thêm
-    // 400ms sau khi ô nhập đã trống, nhìn như bị treo.
     setSearchTerm("");
     setPage(1);
     setAlphabetRevealed(false);
   };
 
-  /** Bấm một chữ cái LUÔN thắng ô tìm kiếm — xoá từ khoá rồi lọc theo vần. */
-  const selectLetter = (next: string | null) => {
+  const selectLetter = (nextLetter: string | null) => {
+    setLetter(nextLetter);
+    setPage(1);
     setInputValue("");
     setSearchTerm("");
-    setLetter(next);
-    setPage(1);
     setAlphabetRevealed(false);
   };
-
-  const list = listQuery.data;
-  const rows: IDrugCatalogRow[] = isSearching
-    ? (searchQuery.data?.candidates ?? []).map((candidate) => ({
-        id: candidate.drugId,
-        brandName: candidate.brandName,
-        ingredient: candidate.ingredient,
-      }))
-    : (list?.items ?? []);
 
   const activeQuery = isSearching ? searchQuery : listQuery;
-  const isLoading = activeQuery.isLoading || (isSearching && isTyping);
-  const isCapped = isSearching && rows.length === SEARCH_LIMIT;
+  const rawItems = isSearching
+    ? searchQuery.data?.candidates.map((c) => ({
+        id: c.drugId,
+        brandName: c.brandName,
+        ingredient: c.ingredient,
+        atcCode: null,
+        registrationNumber: null,
+      })) ?? []
+    : listQuery.data?.items ?? [];
 
-  const errorMessage = activeQuery.isError
-    ? activeQuery.error instanceof Error
-      ? activeQuery.error.message
-      : "Không thể tải danh mục thuốc."
-    : null;
+  const total = isSearching
+    ? searchQuery.data?.candidates.length ?? 0
+    : listQuery.data?.total ?? 0;
+
+  const totalPages = isSearching ? 1 : Math.ceil(total / CATALOG_PAGE_SIZE);
 
   return (
     <div className="space-y-6">
-      <section className="rounded-xl border border-border bg-card p-4 sm:p-6">
+      {/* Search & Letter Filter Container */}
+      <section className="rounded-3xl liquid-glass p-5 sm:p-7 shadow-lg space-y-6">
         <DrugCatalogSearchBar
           value={inputValue}
           onChange={changeInput}
-          onClear={clearSearch}
+          onClear={clearInput}
           status={
-            isSearching
-              ? "Đang lọc danh sách bên dưới theo từ khoá này."
-              : "Gõ từ một ký tự để tìm theo tên biệt dược hoặc hoạt chất."
+            isTyping
+              ? "Đang cập nhật kết quả…"
+              : isSearching
+                ? `Tìm thấy ${total} thuốc khớp “${searchTerm}”.`
+                : undefined
           }
         />
-      </section>
 
-      <section className="space-y-4 rounded-xl border border-border bg-card p-4 sm:p-6">
-        <h2 className="text-lg font-semibold text-foreground">Danh sách thuốc</h2>
-
-        {/* Nút bật/tắt chỉ xuất hiện khi đang tìm kiếm — lúc duyệt bình thường thanh chữ
-            cái là cách điều hướng chính nên không cho phép giấu nó đi. */}
-        {isSearching ? (
-          <button
-            type="button"
-            onClick={() => setAlphabetRevealed((shown) => !shown)}
-            aria-expanded={showAlphabet}
-            aria-controls="danh-sach-chu-cai"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-foreground-secondary transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            {showAlphabet ? (
-              <>
-                Ẩn <ChevronUp className="h-4 w-4" aria-hidden />
-              </>
-            ) : (
-              <>
-                Hiện <ChevronDown className="h-4 w-4" aria-hidden />
-              </>
-            )}
-          </button>
-        ) : null}
-
-        <div id="danh-sach-chu-cai" hidden={!showAlphabet}>
-          {lettersQuery.isError ? (
-            <p role="alert" className="flex items-center gap-2 text-sm text-error">
-              <AlertTriangle className="h-4 w-4 shrink-0" aria-hidden />
-              {lettersQuery.error instanceof Error
-                ? lettersQuery.error.message
-                : "Không thể tải chỉ mục chữ cái."}
-            </p>
-          ) : (
+        {/* Alphabet Filter Bar */}
+        {showAlphabet ? (
+          <div className="space-y-2 border-t border-border/60 pt-4">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-foreground-secondary">
+                Lọc theo bảng chữ cái A–Z
+              </span>
+              {isSearching ? (
+                <button
+                  type="button"
+                  onClick={() => setAlphabetRevealed(false)}
+                  className="flex items-center gap-1 text-xs text-primary hover:opacity-80"
+                >
+                  <span>Thu gọn bảng chữ cái</span>
+                  <ChevronUp className="h-3.5 w-3.5" />
+                </button>
+              ) : null}
+            </div>
             <DrugLetterFilter
               letters={lettersQuery.data?.letters ?? []}
-              // Đang tìm kiếm thì không nút nào sáng — danh sách do ô tìm kiếm điều khiển.
               selected={isSearching ? undefined : letter}
               onSelect={selectLetter}
               isLoading={lettersQuery.isLoading}
             />
-          )}
+          </div>
+        ) : isSearching ? (
+          <div className="border-t border-border/60 pt-3">
+            <button
+              type="button"
+              onClick={() => setAlphabetRevealed(true)}
+              className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:opacity-80"
+            >
+              <ChevronDown className="h-4 w-4" />
+              <span>Hiện bảng chữ cái A–Z</span>
+            </button>
+          </div>
+        ) : null}
+      </section>
+
+      {/* Catalog List View */}
+      <section className="rounded-3xl liquid-glass p-5 sm:p-7 shadow-lg space-y-4">
+        <div className="flex items-center justify-between px-1">
+          <div className="flex items-center gap-2">
+            <Pill className="h-4.5 w-4.5 text-primary" />
+            <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-foreground">
+              {isSearching
+                ? `Kết quả tìm kiếm (${total})`
+                : letter
+                  ? `Danh mục thuốc vần ${letter} (${total})`
+                  : `Tất cả thuốc (${total})`}
+            </h2>
+          </div>
         </div>
 
-        {errorMessage ? (
-          <p role="alert" className="flex items-center gap-2 text-sm text-error">
-            <AlertTriangle className="h-4 w-4 shrink-0" aria-hidden />
-            {errorMessage}
-          </p>
+        {activeQuery.isError ? (
+          <div role="alert" className="flex items-start gap-3 rounded-2xl border border-error/30 bg-error/5 p-4 text-xs text-foreground-secondary">
+            <AlertTriangle className="h-5 w-5 shrink-0 text-error" />
+            <div>
+              <p className="font-bold text-foreground">Không thể tải danh mục thuốc</p>
+              <p className="mt-0.5">{activeQuery.error instanceof Error ? activeQuery.error.message : "Vui lòng thử lại."}</p>
+            </div>
+          </div>
         ) : (
-          <>
-            <DrugCatalogList
-              items={rows}
-              isLoading={isLoading}
-              isFetching={activeQuery.isFetching}
-              emptyTitle={isSearching ? "Không tìm thấy thuốc nào" : "Không có thuốc nào khớp"}
-              emptyDescription={
-                isSearching
-                  ? `Danh mục bệnh viện không có thuốc nào khớp “${searchTerm}”. Kiểm tra lại chính tả — hệ thống không suy đoán thuốc gần giống.`
-                  : "Vần này chưa có thuốc nào trong danh mục bệnh viện."
-              }
-            />
-
-            {isSearching ? (
-              isCapped ? (
-                <p className="text-xs text-foreground-muted">
-                  Còn thuốc khác khớp từ khoá này. Gõ thêm ký tự để thu hẹp kết quả.
-                </p>
-              ) : null
-            ) : (
-              <PaginationControls
-                page={list?.page ?? 1}
-                totalPages={list?.totalPages ?? 0}
-                onPageChange={setPage}
-              />
-            )}
-          </>
+          <DrugCatalogList
+            items={rawItems}
+            isLoading={activeQuery.isLoading || isTyping}
+            emptyDescription={
+              isSearching
+                ? `Không tìm thấy thuốc nào khớp “${searchTerm}”.`
+                : "Không có thuốc nào trong mục này."
+            }
+          />
         )}
+
+        {!isSearching && totalPages > 1 ? (
+          <div className="pt-4 border-t border-border/60 flex justify-center">
+            <PaginationControls
+              page={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+            />
+          </div>
+        ) : null}
       </section>
     </div>
   );

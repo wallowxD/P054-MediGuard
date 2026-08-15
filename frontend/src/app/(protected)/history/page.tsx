@@ -1,6 +1,6 @@
 "use client";
 
-import { History } from "lucide-react";
+import { History, Sparkles, Trash2 } from "lucide-react";
 import { HistoryLoadError, SearchHistoryList } from "@/components/history";
 import EmptyState from "@/components/EmptyState";
 import { TextSkeleton } from "@/components/ui/Skeleton";
@@ -14,34 +14,56 @@ export default function HistoryPage() {
   const items = data ?? [];
 
   return (
-    <div className="space-y-6">
-      <header className="flex flex-wrap items-start justify-between gap-3">
-        <div className="space-y-1"><h1 className="text-xl font-semibold text-foreground">Lịch sử tra cứu</h1>
-        <p className="text-sm text-foreground-secondary">
-          Các lượt tra cứu đã lưu của tài khoản này, mới nhất trước.
-        </p></div>
-        {items.length ? <Button variant="outline" size="sm" disabled={clear.isPending} onClick={() => { if (window.confirm("Xoá toàn bộ lịch sử tra cứu của bạn?")) clear.mutate(); }}>Xoá tất cả</Button> : null}
+    <div className="mx-auto max-w-5xl space-y-6">
+      <header className="flex flex-wrap items-center justify-between gap-4 rounded-3xl liquid-glass p-6">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary">
+            <History className="h-3.5 w-3.5" />
+            <span>Lịch sử tra cứu tài khoản</span>
+          </div>
+          <h1 className="font-heading text-xl font-bold text-foreground sm:text-2xl">Lịch sử tra cứu</h1>
+          <p className="text-xs text-foreground-secondary">
+            Các lượt tra cứu tương tác thuốc và bệnh nền đã thực hiện, sắp xếp theo thời gian mới nhất.
+          </p>
+        </div>
+        {items.length ? (
+          <Button
+            variant="glass"
+            size="sm"
+            disabled={clear.isPending}
+            onClick={() => {
+              if (window.confirm("Bạn có chắc chắn muốn xoá toàn bộ lịch sử tra cứu không?")) {
+                clear.mutate();
+              }
+            }}
+          >
+            <Trash2 className="h-3.5 w-3.5 text-error" />
+            <span>{clear.isPending ? "Đang xoá…" : "Xoá tất cả"}</span>
+          </Button>
+        ) : null}
       </header>
 
       {isLoading ? (
-        <div className="rounded-xl border border-border bg-card p-4 sm:p-5" aria-hidden="true">
-          <TextSkeleton lines={4} />
+        <div className="rounded-3xl liquid-glass p-6" aria-hidden="true">
+          <TextSkeleton lines={5} />
         </div>
       ) : isError ? (
         <HistoryLoadError onRetry={() => void refetch()} isRetrying={isFetching} />
       ) : items.length > 0 ? (
         <SearchHistoryList items={items} />
       ) : (
-        <EmptyState
-          icon={<History className="h-10 w-10" aria-hidden />}
-          title="Chưa có lượt tra cứu nào"
-          description="Mỗi lượt tra cứu tương tác sẽ được lưu lại tại đây."
-          action={
-            <Button href={ROUTES.INTERACTIONS_DRUG_DRUG} variant="solid" size="sm">
-              Bắt đầu tra cứu
-            </Button>
-          }
-        />
+        <div className="rounded-3xl liquid-glass p-10 text-center">
+          <EmptyState
+            icon={<History className="h-10 w-10 text-foreground-muted" aria-hidden />}
+            title="Chưa có lượt tra cứu nào"
+            description="Mỗi khi bạn thực hiện tra cứu tương tác thuốc, kết quả sẽ được lưu trữ an toàn tại đây."
+            action={
+              <Button href={ROUTES.INTERACTIONS_DRUG_DRUG} variant="solid" size="sm">
+                Bắt đầu tra cứu ngay
+              </Button>
+            }
+          />
+        </div>
       )}
     </div>
   );

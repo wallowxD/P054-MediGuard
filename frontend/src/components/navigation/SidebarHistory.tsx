@@ -7,9 +7,7 @@ import { ROUTES } from "@/constants/routes";
 import { useInteractionChecks } from "@/queries/interactions";
 
 interface SidebarHistoryProps {
-  /** Đóng drawer mobile sau khi người dùng chọn một lượt tra cứu. */
   onNavigate?: () => void;
-  /** Sidebar desktop đang thu gọn: thay danh sách bằng một lối vào `/history`. */
   collapsed?: boolean;
 }
 
@@ -17,17 +15,13 @@ const formatCheckedAt = (value: string): string =>
   new Date(value).toLocaleDateString("vi-VN", {
     day: "2-digit",
     month: "2-digit",
-    year: "2-digit",
   });
 
-/** Ba lượt gần nhất, dùng cùng query/cache với trang `/history`. */
 export default function SidebarHistory({ onNavigate, collapsed = false }: SidebarHistoryProps) {
   const { data, isLoading, isError } = useInteractionChecks();
   const titleId = useId();
   const recentItems = data?.slice(0, 3) ?? [];
 
-  // Dải icon 4rem không đủ chỗ đọc tên thuốc; giữ lại một lối vào `/history` để chức năng
-  // không biến mất khi thu gọn.
   if (collapsed) {
     return (
       <div className="mt-6 flex justify-center">
@@ -35,9 +29,9 @@ export default function SidebarHistory({ onNavigate, collapsed = false }: Sideba
           href={ROUTES.HISTORY}
           onClick={onNavigate}
           title="Lịch sử tra cứu"
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-foreground-secondary transition-colors hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl liquid-glass-pill text-foreground-secondary hover:text-primary transition-all"
         >
-          <History className="h-4 w-4" aria-hidden />
+          <History className="h-4.5 w-4.5" aria-hidden />
           <span className="sr-only">Lịch sử tra cứu</span>
         </Link>
       </div>
@@ -46,53 +40,53 @@ export default function SidebarHistory({ onNavigate, collapsed = false }: Sideba
 
   return (
     <section className="mt-6" aria-labelledby={titleId}>
-      <div className="flex items-center justify-between px-3">
+      <div className="flex items-center justify-between px-2 mb-2">
         <h2
           id={titleId}
-          className="text-xs font-semibold uppercase tracking-wide text-foreground-muted"
+          className="text-[11px] font-bold uppercase tracking-wider text-foreground-muted"
         >
           Lịch sử tra cứu
         </h2>
         <Link
           href={ROUTES.HISTORY}
           onClick={onNavigate}
-          className="rounded text-xs font-medium text-primary transition-colors hover:text-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="text-[11px] font-semibold text-primary transition-colors hover:opacity-80"
         >
           Xem tất cả
         </Link>
       </div>
 
       {isLoading ? (
-        <div className="mt-2 space-y-1.5" aria-label="Đang tải lịch sử tra cứu">
+        <div className="space-y-1.5">
           {[0, 1, 2].map((item) => (
-            <div key={item} className="h-14 animate-pulse rounded-lg bg-surface" />
+            <div key={item} className="h-12 animate-pulse rounded-2xl bg-surface/60" />
           ))}
         </div>
       ) : isError ? (
-        <div className="mt-2 rounded-lg border border-error/20 bg-error/5 px-3 py-3">
-          <p className="text-xs leading-5 text-foreground-secondary">
-            Chưa thể tải lịch sử. Bạn vẫn có thể mở trang xem tất cả.
+        <div className="rounded-2xl border border-error/20 bg-error/5 p-3">
+          <p className="text-[11px] text-foreground-secondary">
+            Chưa thể tải lịch sử.
           </p>
         </div>
       ) : recentItems.length > 0 ? (
-        <ul className="mt-2 space-y-1">
+        <ul className="space-y-1.5">
           {recentItems.map((item) => (
             <li key={item.id}>
               <Link
                 href={`${ROUTES.INTERACTION_CHECKS}/${item.id}`}
                 onClick={onNavigate}
-                className="group flex items-start gap-2.5 rounded-lg px-3 py-2.5 transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="group flex items-center gap-2.5 rounded-2xl p-2.5 transition-all duration-200 hover:bg-surface/80"
               >
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-hero-tint text-primary">
-                  <Combine className="h-3.5 w-3.5" aria-hidden />
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Combine className="h-3.5 w-3.5" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-xs font-medium text-foreground">
-                    {item.drugNames.join(" + ") || "Lượt tra cứu tương tác"}
+                  <span className="block truncate text-xs font-semibold text-foreground group-hover:text-primary">
+                    {item.drugNames.join(" + ") || "Lượt tra cứu"}
                   </span>
-                  <span className="mt-1 flex items-center gap-1 text-[11px] text-foreground-muted">
-                    <Clock3 className="h-3 w-3" aria-hidden />
-                    {formatCheckedAt(item.checkedAt)} · {item.resultCount} kết quả
+                  <span className="flex items-center gap-1 text-[10px] text-foreground-muted">
+                    <Clock3 className="h-3 w-3" />
+                    {formatCheckedAt(item.checkedAt)} • {item.resultCount} kết quả
                   </span>
                 </span>
               </Link>
@@ -100,9 +94,9 @@ export default function SidebarHistory({ onNavigate, collapsed = false }: Sideba
           ))}
         </ul>
       ) : (
-        <div className="mt-2 flex items-center gap-2 rounded-lg border border-dashed border-border px-3 py-4">
-          <History className="h-4 w-4 shrink-0 text-foreground-muted" aria-hidden />
-          <p className="text-xs leading-5 text-foreground-muted">Chưa có lượt tra cứu nào.</p>
+        <div className="flex items-center gap-2 rounded-2xl border border-dashed border-border/80 p-3">
+          <History className="h-3.5 w-3.5 text-foreground-muted" />
+          <p className="text-[11px] text-foreground-muted">Chưa có lượt tra cứu nào.</p>
         </div>
       )}
     </section>

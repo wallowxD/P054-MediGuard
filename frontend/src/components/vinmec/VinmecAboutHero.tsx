@@ -1,74 +1,62 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Heart, Sparkles, Target } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import { VINMEC_ABOUT_INTRO, VINMEC_MISSION, VINMEC_VISION } from "./vinmec-about-content";
 
-/**
- * Mở đầu trang "Về Vinmec": breadcrumb → tiêu đề → giới thiệu chung → tầm nhìn và
- * sứ mệnh.
- *
- * ★ Breadcrumb theo đúng bản gốc là ba cấp "Trang chủ › Về Vinmec › Tầm nhìn và sứ
- *   mệnh". Bản mô phỏng gộp ba trang thành một nên chỉ còn hai cấp — cấp thứ ba
- *   không tồn tại thì không dựng ra cho giống, vì bấm vào sẽ chẳng dẫn đi đâu.
- *
- * ★ Chỉ "Trang chủ" là link thật; "Về Vinmec" là trang hiện tại nên render thành
- *   `<span aria-current="page">`, không phải link tự trỏ về chính nó.
- */
 export default function VinmecAboutHero() {
   return (
-    <section className="pb-12 pt-6">
-      <div className="vinmec-container">
-        <nav aria-label="Đường dẫn" className="mb-8">
-          <ol className="flex flex-wrap items-center gap-1 text-[13px] text-[var(--vm-text-muted)]">
+    <section className="pt-4 pb-12 sm:pt-6 sm:pb-16" aria-label="Về Vinmec">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        {/* Breadcrumb */}
+        <nav aria-label="Đường dẫn" className="mb-6">
+          <ol className="flex items-center gap-1.5 text-xs text-foreground-muted">
             <li>
-              <Link
-                href={ROUTES.HOME}
-                className="transition-colors hover:text-[var(--vm-menu-blue)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vm-menu-blue)] focus-visible:ring-offset-2"
-              >
+              <Link href={ROUTES.HOME} className="transition-colors hover:text-primary">
                 Trang chủ
               </Link>
             </li>
-            <li aria-hidden="true" className="flex items-center">
-              <ChevronRight className="h-3.5 w-3.5 opacity-60" />
-            </li>
-            <li>
-              <span aria-current="page" className="text-[var(--vm-text)]">
-                Về Vinmec
-              </span>
-            </li>
+            <li aria-hidden><ChevronRight className="h-3 w-3 opacity-60" /></li>
+            <li><span aria-current="page" className="font-semibold text-foreground">Về Vinmec</span></li>
           </ol>
         </nav>
 
-        <h1 className="vinmec-title text-[var(--vm-text)]">Về Vinmec</h1>
+        {/* Hero Headline */}
+        <div className="mb-10 max-w-3xl space-y-3">
+          <div className="inline-flex items-center gap-2 rounded-full liquid-glass-pill px-3.5 py-1 text-xs font-semibold text-primary">
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>Tầm nhìn & Sứ mệnh</span>
+          </div>
+          <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
+            Kiến tạo chuẩn mực y tế hàn lâm và an toàn người bệnh
+          </h1>
+          <p className="text-sm leading-relaxed text-foreground-secondary sm:text-base">
+            {VINMEC_ABOUT_INTRO}
+          </p>
+        </div>
 
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
-          <div className="lg:col-span-7">
-            <h2 className="mb-3 text-xl leading-tight text-[var(--vm-title-blue)]">
-              Giới thiệu chung
-            </h2>
-            <p className="mb-8 text-[15px] leading-relaxed text-[var(--vm-text)]">
-              {VINMEC_ABOUT_INTRO}
-            </p>
-
-            <h2 className="mb-3 text-xl leading-tight text-[var(--vm-title-blue)]">Tầm nhìn</h2>
-            <p className="mb-8 text-[15px] leading-relaxed text-[var(--vm-text)]">{VINMEC_VISION}</p>
-
-            <h2 className="mb-3 text-xl leading-tight text-[var(--vm-title-blue)]">Sứ mệnh</h2>
-            {/* Câu sứ mệnh là khẩu hiệu, bản gốc để cỡ lớn hơn phần thân bài. */}
-            <p className="border-l-4 border-[var(--vm-green-line)] pl-4 text-lg font-medium leading-relaxed text-[var(--vm-text)]">
-              {VINMEC_MISSION}
+        {/* Vision & Mission Bento Cards */}
+        <div className="grid gap-6 lg:grid-cols-12">
+          {/* Vision Card */}
+          <div className="lg:col-span-6 rounded-3xl liquid-glass p-6 sm:p-8 space-y-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <Target className="h-6 w-6" />
+            </div>
+            <h2 className="font-heading text-xl font-bold text-foreground">Tầm nhìn</h2>
+            <p className="text-sm leading-relaxed text-foreground-secondary">
+              {VINMEC_VISION}
             </p>
           </div>
 
-          <div className="lg:col-span-5">
-            <Image
-              src="/images/vinmec/about-vision.png"
-              alt="Tầm nhìn và sứ mệnh của Hệ thống Y tế Vinmec"
-              width={924}
-              height={525}
-              className="h-auto w-full rounded-md object-cover"
-            />
+          {/* Mission Card */}
+          <div className="lg:col-span-6 rounded-3xl liquid-glass p-6 sm:p-8 space-y-4 border-l-4 border-l-primary">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+              <Heart className="h-6 w-6" />
+            </div>
+            <h2 className="font-heading text-xl font-bold text-foreground">Sứ mệnh</h2>
+            <p className="text-base font-semibold leading-relaxed text-foreground">
+              {VINMEC_MISSION}
+            </p>
           </div>
         </div>
       </div>

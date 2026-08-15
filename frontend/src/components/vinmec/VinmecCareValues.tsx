@@ -1,34 +1,37 @@
 import { VINMEC_CARE_VALUES } from "./vinmec-about-content";
 
-/**
- * "Giá trị cốt lõi – C.A.R.E": bốn thẻ, mỗi thẻ mở đầu bằng chữ cái viết tắt phóng to.
- *
- * Chữ cái là trang trí lặp lại nội dung đã có trong `title` ("C" ↔ "Creativity"),
- * nên gắn `aria-hidden` — trình đọc màn hình đọc tiêu đề là đủ, không cần nghe
- * "C, Creativity – Sáng tạo".
- */
 export default function VinmecCareValues() {
   return (
-    <section className="bg-[var(--vm-gray-bg)] py-12 lg:py-16">
-      <div className="vinmec-container">
-        <h2 className="vinmec-title text-[var(--vm-text)]">Giá trị cốt lõi – C.A.R.E</h2>
+    <section className="py-12 sm:py-16" aria-label="Giá trị cốt lõi C.A.R.E">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mb-10 text-center max-w-2xl mx-auto space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Giá trị cốt lõi</p>
+          <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Bộ giá trị văn hóa C.A.R.E
+          </h2>
+          <p className="text-sm text-foreground-secondary">
+            Kim chỉ nam cho mọi hành động và quyết định chuyên môn tại Vinmec.
+          </p>
+        </div>
 
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {VINMEC_CARE_VALUES.map((value) => (
             <li
               key={value.letter}
-              className="flex h-full flex-col rounded-md bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
+              className="group relative flex flex-col rounded-3xl liquid-glass p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <span
                 aria-hidden="true"
-                className="mb-3 text-5xl font-semibold leading-none text-[var(--vm-green)]"
+                className="mb-3 font-heading text-5xl font-black text-primary/40 transition-colors group-hover:text-primary"
               >
                 {value.letter}
               </span>
-              <h3 className="mb-2.5 text-base font-semibold leading-snug text-[var(--vm-title-blue)]">
+              <h3 className="mb-2 font-heading text-base font-bold text-foreground">
                 {value.title}
               </h3>
-              <p className="text-sm leading-relaxed text-[var(--vm-text)]">{value.desc}</p>
+              <p className="text-xs leading-relaxed text-foreground-secondary">
+                {value.desc}
+              </p>
             </li>
           ))}
         </ul>

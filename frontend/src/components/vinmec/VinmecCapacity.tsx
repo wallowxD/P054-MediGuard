@@ -1,30 +1,29 @@
 import { VINMEC_CAPACITY_STATS } from "./vinmec-about-content";
 
-/**
- * "Năng lực Hệ thống" — dải xanh đặc với 10 con số.
- *
- * ★ Số hiển thị là CHUỖI lấy nguyên dạng bản gốc ("1.505", "8.8 triệu"), không phải
- *   number được format lại. Đừng đổi sang `Intl.NumberFormat`: dấu chấm ngăn nghìn
- *   kiểu Việt và chữ "triệu" viết thành lời sẽ bị chuẩn hoá mất.
- *
- * Dùng `<dl>` vì đây đúng là cặp giá trị–nhãn. `<dt>` là nhãn còn `<dd>` là giá trị,
- * nhưng thứ tự HIỂN THỊ ngược lại (số trên, nhãn dưới) nên đảo bằng `flex-col-reverse`
- * thay vì viết sai thứ tự thẻ.
- */
 export default function VinmecCapacity() {
   return (
-    <section className="bg-[var(--vm-blue)] py-12 text-white lg:py-16">
-      <div className="vinmec-container">
-        <h2 className="vinmec-title vinmec-title-on-blue">Năng lực Hệ thống</h2>
+    <section className="py-12 sm:py-16" aria-label="Năng lực hệ thống">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="rounded-3xl liquid-glass p-8 sm:p-12">
+          <div className="mb-10 text-center max-w-2xl mx-auto space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Quy mô & Năng lực</p>
+            <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Năng lực phục vụ lâm sàng toàn diện
+            </h2>
+          </div>
 
-        <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
-          {VINMEC_CAPACITY_STATS.map((stat) => (
-            <div key={stat.label} className="flex flex-col-reverse gap-1.5">
-              <dt className="text-[13px] leading-snug text-white/85">{stat.label}</dt>
-              <dd className="text-3xl font-semibold leading-none">{stat.value}</dd>
-            </div>
-          ))}
-        </dl>
+          <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            {VINMEC_CAPACITY_STATS.map((stat) => (
+              <div
+                key={stat.label}
+                className="flex flex-col-reverse justify-between rounded-2xl liquid-glass-subtle p-4 transition-transform duration-300 hover:scale-105"
+              >
+                <dt className="mt-2 text-xs leading-snug text-foreground-secondary">{stat.label}</dt>
+                <dd className="font-heading text-2xl font-bold text-primary sm:text-3xl">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );
