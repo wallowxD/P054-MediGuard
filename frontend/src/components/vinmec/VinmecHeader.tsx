@@ -20,19 +20,15 @@ export default function VinmecHeader() {
         <Link
           href={ROUTES.HOME}
           aria-label="Vinmec — về trang chủ"
-          className="flex shrink-0 items-center transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className="group flex shrink-0 items-center rounded-lg transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <Image
-            src="/images/vinmec/logo.png"
+            src="/images/vinmec/logo-vinmec-system.png"
             alt="Vinmec Healthcare System"
-            width={120}
-            height={70}
+            width={456}
+            height={282}
             priority
-            // Chữ "VINMEC" trong logo là `#286BA6` — trên thanh kính tối chỉ đạt ~3.5:1,
-            // đọc được nhưng xỉn hẳn so với phần còn lại của header. Không chỉnh màu logo
-            // bằng filter vì sẽ kéo con chim vàng thành vàng chanh; trả nền sáng cho nó
-            // thay vì đổi màu nhận diện.
-            className="logo-plate h-9 w-auto rounded-xl px-2 py-1 sm:h-10"
+            className="vinmec-brand-logo h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-12 lg:h-14"
           />
         </Link>
 

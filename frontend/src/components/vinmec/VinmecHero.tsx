@@ -1,23 +1,14 @@
-"use client";
-
 import {
   ArrowRight,
   CalendarCheck,
-  CheckCircle2,
-  FileSearch,
   Phone,
-  Pill,
-  ShieldCheck,
   Sparkles,
   UserRound,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { ROUTES } from "@/constants/routes";
-import { VINMEC_BANNERS, VINMEC_QUICK_SERVICES } from "./vinmec-content";
-
-const SLIDE_MS = 7000;
+import { VINMEC_QUICK_SERVICES } from "./vinmec-content";
 
 const ICONS = {
   phone: Phone,
@@ -26,27 +17,13 @@ const ICONS = {
 } as const;
 
 export default function VinmecHero() {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-
-    const timer = window.setInterval(
-      () => setActive((current) => (current + 1) % VINMEC_BANNERS.length),
-      SLIDE_MS
-    );
-    return () => window.clearInterval(timer);
-  }, []);
-
   // Khoảng hở dưới header phải khớp với `/ve-vinmec` (VinmecAboutHero) — hai trang dùng
   // chung header, lệch nhau thì lúc chuyển trang nội dung nhảy lên xuống. Sửa một chỗ thì
   // sửa cả hai.
   //
-  // Con số này KHÔNG bằng `/tinh-nang`: hero ở đó là grid `items-center` có cột phải cao
-  // 620px (canvas viên thuốc 3D), nên cột chữ bị đẩy xuống giữa và tự có khoảng hở lớn.
-  // Ở đây cột trái mới là cột cao nhất nên nó bám sát padding — muốn rộng bằng thì phải
-  // cộng thẳng vào padding, không có cách nào lấy lại bằng layout.
+  // Con số này KHÔNG bằng `/tinh-nang`: hero ở đó dành hẳn 620px cho canvas WebGL của
+  // viên thuốc. Trang chủ dùng ảnh chữ thập nhẹ hơn và còn có dải dịch vụ phía dưới,
+  // nên giữ nhịp dọc riêng thay vì ép hai hero cao bằng nhau.
   return (
     <section aria-label="Vinmec Smart Health Hero" className="relative overflow-hidden pt-10 pb-12 sm:pt-24 sm:pb-16">
       {/*
@@ -115,62 +92,25 @@ export default function VinmecHero() {
             </div>
           </div>
 
-          {/* Right Floating Visual Showcase (Apple Glass Mockup) */}
+          {/* Right Floating Medical Cross — cùng ngôn ngữ vật thể 3D với viên thuốc. */}
           <div className="relative lg:col-span-5">
-            <div className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden rounded-3xl liquid-glass p-2">
-              {/* Slider image background */}
-              <div className="relative h-full w-full overflow-hidden rounded-2xl bg-surface">
-                {VINMEC_BANNERS.map((banner, index) => (
-                  <Image
-                    key={banner.src}
-                    src={banner.src}
-                    alt={banner.alt}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 550px"
-                    priority={index === 0}
-                    aria-hidden={index !== active}
-                    className={`object-cover transition-opacity duration-1000 ${
-                      index === active ? "opacity-100 scale-100" : "opacity-0 scale-105"
-                    }`}
-                  />
-                ))}
-
-                {/* Dark gradient wash */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-
-                {/* Floating Glass AI Live Widget */}
-                <div className="absolute bottom-3 left-3 right-3 rounded-2xl liquid-glass-strong p-3.5 backdrop-blur-xl">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2.5">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                        <Pill className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-foreground">Trợ lý An toàn Thuốc Vinmec</p>
-                        <p className="text-[11px] text-foreground-muted">Đối chiếu tương tác đa tầng theo thời gian thực</p>
-                      </div>
-                    </div>
-                    <span className="flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-                      <CheckCircle2 className="h-3 w-3" /> JCI Verified
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Slider Dots */}
-              <div className="absolute top-4 right-4 flex gap-1.5 rounded-full liquid-glass-pill px-2.5 py-1">
-                {VINMEC_BANNERS.map((banner, index) => (
-                  <button
-                    key={banner.src}
-                    type="button"
-                    onClick={() => setActive(index)}
-                    aria-label={`Xem slide ${index + 1}`}
-                    className={`h-1.5 rounded-full transition-all ${
-                      index === active ? "w-5 bg-primary" : "w-1.5 bg-foreground/30 hover:bg-foreground/50"
-                    }`}
-                  />
-                ))}
-              </div>
+            <div
+              className="relative flex min-h-[24rem] items-center justify-center sm:min-h-[30rem] lg:min-h-[34rem]"
+              aria-label="Minh hoạ chữ thập y tế 3D"
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-500/20 blur-3xl sm:h-96 sm:w-96 dark:bg-red-500/15"
+              />
+              <Image
+                src="/medical-cross-render.png"
+                alt="Chữ thập y tế màu đỏ dạng 3D"
+                width={1254}
+                height={1254}
+                priority
+                sizes="(max-width: 1024px) 88vw, 520px"
+                className="vinmec-medical-cross relative z-10 h-auto w-[88%] max-w-[32rem] select-none object-contain"
+              />
             </div>
           </div>
         </div>

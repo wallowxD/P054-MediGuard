@@ -625,6 +625,20 @@ body {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
+/*
+ * Logo thương hiệu chính đã có nền trong suốt nên không dùng `logo-plate` như logo
+ * đối tác. Giữ cạnh ảnh sắc nét: viền sáng kiểu halo làm chữ nhỏ bị nhoè. Dark mode
+ * chỉ nâng sáng và giảm nhẹ độ bão hoà để màu xanh đọc được trên nền navy. Class
+ * dùng chung cho header công khai, sidebar dashboard, mobile drawer và màn auth.
+ */
+.vinmec-brand-logo {
+  filter: none;
+}
+
+.dark .vinmec-brand-logo {
+  filter: brightness(1.4) saturate(0.88);
+}
+
 /* Dải chuyển từ nền hero xuống nền trang, dùng ở chân LandingFooter. */
 .landing-footer-wash {
   background: linear-gradient(180deg, var(--hero-tint-soft) 0%, var(--background) 9rem);
@@ -684,6 +698,15 @@ body {
   }
 }
 
+@keyframes medical-cross-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-1deg);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) rotate(1deg);
+  }
+}
+
 .animate-fade-up {
   animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -694,6 +717,16 @@ body {
 
 .animate-soft-pop {
   animation: soft-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.vinmec-medical-cross {
+  animation: medical-cross-float 5s ease-in-out infinite;
+  filter: drop-shadow(0 24px 30px rgba(127, 29, 29, 0.2));
+  will-change: transform;
+}
+
+.dark .vinmec-medical-cross {
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.42));
 }
 
 /* Stagger delays */
@@ -790,6 +823,7 @@ body {
   .chat-fab-think,
   .chat-fab-think-tail,
   .chat-fab-dot,
+  .vinmec-medical-cross,
   .ambient-blob-1,
   .ambient-blob-2,
   .ambient-blob-3 {

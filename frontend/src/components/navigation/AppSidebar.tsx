@@ -23,16 +23,18 @@ export default function AppSidebar() {
       {/* Header with Logo & Toggle */}
       <div
         className={`flex h-16 shrink-0 items-center border-b border-border/60 ${
-          collapsed ? "justify-between px-3" : "justify-between gap-2 px-5"
+          collapsed ? "justify-center px-3" : "justify-between gap-3 px-5"
         }`}
       >
         <Link
           href={ROUTES.HOME}
           title="Trang chủ Vinmec"
           aria-label="Vinmec — về trang chủ"
-          className="flex min-w-0 items-center transition-opacity hover:opacity-85"
+          className={`min-w-0 items-center rounded-lg transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+            collapsed ? "hidden" : "flex"
+          }`}
         >
-          <Logo className={collapsed ? "h-7 w-auto" : "h-9 w-auto"} />
+          <Logo className="h-11 w-auto" />
         </Link>
 
         <button

@@ -45,23 +45,7 @@ export const VINMEC_NAV: readonly VinmecNavItem[] = [
 
 export const VINMEC_TOPBAR_LINKS = ["Tìm bác sĩ", "Chăm sóc khách hàng"] as const;
 
-/** Banner hero — ảnh tải về từ chính trang chủ Vinmec. */
-export const VINMEC_BANNERS = [
-  {
-    src: "/images/vinmec/hero-timmach.webp",
-    alt: "Đón chào microsite đầu tiên của chuyên khoa Tim mạch tại Hệ thống Y tế Vinmec",
-  },
-  {
-    src: "/images/vinmec/hero-thaisan.webp",
-    alt: "Chương trình chăm sóc thai sản tại Hệ thống Y tế Vinmec",
-  },
-  {
-    src: "/images/vinmec/hero-nhi.webp",
-    alt: "Chương trình chăm sóc sức khoẻ Nhi tại Hệ thống Y tế Vinmec",
-  },
-] as const;
-
-/** Ba ô dịch vụ nổi trên đáy banner. `icon` là tên icon của lucide-react. */
+/** Ba ô dịch vụ ở cuối hero. `icon` là tên icon của lucide-react. */
 export const VINMEC_QUICK_SERVICES = [
   {
     icon: "phone",
