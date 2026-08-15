@@ -49,12 +49,19 @@ export const metadata: Metadata = {
 // Thứ tự provider: Store → Query → NextAuth.
 // NextAuth trong cùng vì `utils/request.ts` gọi getSession() trong interceptor,
 // mà interceptor đó được React Query kích hoạt.
-// Đọc lựa chọn theme đã lưu trước khi React hydrate để tránh nháy màu sai lúc tải
-// trang. Không có lựa chọn thì để CSS media query (`:root:not(.light)` trong
-// globals.css) tự quyết theo system preference — script chỉ cần thêm class khi có
-// lựa chọn tường minh. Landing page dùng `.landing-theme` để ép sáng, không đọc
-// class này nên không bị ảnh hưởng.
-const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("medsafe-theme");if(t==="dark"){document.documentElement.classList.add("dark");}else if(t==="light"){document.documentElement.classList.add("light");}}catch(e){}})();`;
+// Đọc lựa chọn theme đã lưu trước khi React hydrate để tránh nháy màu sai lúc tải trang.
+//
+// ★ Script này phải TỰ giải quyết system preference, không được ủy thác cho CSS.
+//   Ghi chú cũ ở đây nói "không có lựa chọn thì để media query `:root:not(.light)`
+//   trong globals.css tự quyết" — media query đó chưa từng tồn tại. Hệ quả: máy để
+//   dark ở cấp hệ điều hành mà chưa bấm nút vẫn nhận giao diện sáng, trong khi
+//   `ThemeToggle.readTheme()` lại đọc ra "dark" và hiện icon mặt trời. Nút và trang
+//   nói hai chuyện khác nhau, bấm một lần đầu không đổi được gì.
+//
+//   Chốt `.dark` ngay tại đây là cách duy nhất giữ hai bên khớp nhau, vì Tailwind
+//   variant `dark:` cũng chỉ khớp theo class `.dark` (xem `@custom-variant` đầu
+//   globals.css) chứ không theo `prefers-color-scheme`.
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("medsafe-theme");var d=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.add(d?"dark":"light");}catch(e){}})();`;
 
 export default function RootLayout({
   children,

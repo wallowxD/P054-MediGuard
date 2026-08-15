@@ -1,51 +1,37 @@
-import { BookOpen, ExternalLink } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import DrugLeafletViewer from "./DrugLeafletViewer";
 
 interface DrugSourcePanelProps {
   /** Có khi đang ở trang chi tiết một thuốc cụ thể và leaflet đã sẵn sàng */
   leafletUrl?: string;
-  sourceLabel?: string;
   /** Tên thuốc, chỉ để đặt tiêu đề cho khung xem tài liệu */
   drugName?: string;
 }
 
 /**
- * Panel giải thích nguồn thông tin thuốc — dùng ở cả màn tìm kiếm (`leafletUrl`
- * chưa có, chỉ giải thích quy tắc) và màn chi tiết (`leafletUrl` có, kèm khung xem
- * tài liệu gốc nhúng thẳng vào trang). Nội dung không có trích dẫn nguyên văn sẽ
- * không được hiển thị.
+ * Ở màn tìm kiếm, panel giải thích quy tắc nguồn. Khi đã có một `leafletUrl` cụ thể,
+ * chỉ hiển thị tài liệu gốc để tránh lặp lại thông tin ngay phía trên khung nhúng.
  */
-export default function DrugSourcePanel({ leafletUrl, sourceLabel, drugName }: DrugSourcePanelProps) {
+export default function DrugSourcePanel({ leafletUrl, drugName }: DrugSourcePanelProps) {
+  if (leafletUrl) {
+    return <DrugLeafletViewer leafletUrl={leafletUrl} drugName={drugName} />;
+  }
+
   return (
-    <div className="space-y-4">
-      <div className="rounded-xl border border-border bg-card p-4">
-        <div className="flex items-start gap-3">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-hero-tint text-primary">
-            <BookOpen className="h-4 w-4" aria-hidden />
-          </span>
-          <div className="space-y-1">
-            <h2 className="text-sm font-semibold text-foreground">Nguồn thông tin</h2>
-            <p className="text-sm leading-relaxed text-foreground-secondary">
-              {leafletUrl
-                ? "Nội dung trên trích dẫn nguyên văn từ tờ hướng dẫn sử dụng (HDSD) do bệnh viện cung cấp. Toàn văn tài liệu gốc được hiển thị ngay bên dưới."
-                : "Kết quả tra cứu, khi sẵn sàng, sẽ trích dẫn nguyên văn từ tờ hướng dẫn sử dụng (HDSD) do bệnh viện cung cấp, kèm đường dẫn tới tài liệu gốc. Nội dung không có trích dẫn sẽ được báo \"chưa có dữ liệu\" thay vì suy đoán."}
-            </p>
-            {leafletUrl ? (
-              <a
-                href={leafletUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                {sourceLabel ?? "Xem tài liệu gốc"}
-                <ExternalLink className="h-3.5 w-3.5" aria-hidden />
-              </a>
-            ) : null}
-          </div>
+    <div className="rounded-2xl border border-primary/10 bg-primary/[0.035] p-5 sm:p-6">
+      <div className="flex items-start gap-3">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <BookOpen className="h-4.5 w-4.5" strokeWidth={1.8} aria-hidden />
+        </span>
+        <div className="space-y-1.5">
+          <h2 className="text-sm font-semibold text-foreground">Nguồn thông tin được kiểm chứng</h2>
+          <p className="max-w-4xl text-xs leading-5 text-foreground-secondary sm:text-sm sm:leading-6">
+            Kết quả tra cứu, khi sẵn sàng, sẽ trích dẫn nguyên văn từ tờ hướng dẫn sử dụng
+            (HDSD) do bệnh viện cung cấp, kèm đường dẫn tới tài liệu gốc. Nội dung không có trích
+            dẫn sẽ được báo &quot;chưa có dữ liệu&quot; thay vì suy đoán.
+          </p>
         </div>
       </div>
-
-      {leafletUrl ? <DrugLeafletViewer leafletUrl={leafletUrl} drugName={drugName} /> : null}
     </div>
   );
 }

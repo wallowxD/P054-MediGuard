@@ -40,7 +40,8 @@ export default function HeroSection() {
 
             <h1 className="animate-fade-up delay-100 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl lg:leading-[1.12]">
               Hiểu rõ hơn về thuốc <br />
-              <span className="bg-gradient-to-r from-[#0066cc] via-[#0284c7] to-[#10b981] bg-clip-text text-transparent">
+              {/* Bậc màu tối đi kèm — xem ghi chú cùng gradient này trong VinmecHero. */}
+              <span className="bg-gradient-to-r from-[#0066cc] via-[#0284c7] to-[#10b981] bg-clip-text text-transparent dark:from-[#58b6ff] dark:via-[#7dd3fc] dark:to-[#34d399]">
                 bạn đang sử dụng
               </span>
             </h1>

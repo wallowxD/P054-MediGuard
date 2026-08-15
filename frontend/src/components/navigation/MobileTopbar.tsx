@@ -104,7 +104,7 @@ export default function MobileTopbar() {
           </button>
         </div>
 
-        <div className="flex flex-1 flex-col justify-between overflow-y-auto px-3 py-4">
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-4">
           <SidebarNavList onNavigate={close} />
           <SidebarHistory onNavigate={close} />
         </div>

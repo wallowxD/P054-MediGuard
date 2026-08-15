@@ -21,7 +21,8 @@ export default function VinmecAwards() {
               key={award.name}
               className="flex gap-5 rounded-3xl liquid-glass p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl liquid-glass-subtle p-2">
+              {/* Ba logo giải thưởng là PNG nền trong suốt — cần `logo-plate` cho chế độ tối. */}
+              <div className="logo-plate flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl liquid-glass-subtle p-2">
                 <Image
                   src={award.logo}
                   alt=""

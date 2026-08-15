@@ -17,7 +17,9 @@ export default function VinmecAboutPartners() {
             {VINMEC_ABOUT_PARTNERS.map((partner) => (
               <li
                 key={partner.src}
-                className="flex h-20 w-full items-center justify-center rounded-2xl liquid-glass-subtle p-3 grayscale opacity-80 transition-all duration-300 hover:grayscale-0 hover:opacity-100 hover:scale-105"
+                // `logo-plate` phải đứng sau `liquid-glass-subtle` về thứ tự CSS để thắng
+                // nền kính tối — xem ghi chú ở globals.css.
+                className="logo-plate flex h-20 w-full items-center justify-center rounded-2xl liquid-glass-subtle p-3 grayscale opacity-80 transition-all duration-300 hover:grayscale-0 hover:opacity-100 hover:scale-105"
               >
                 <Image
                   src={partner.src}
