@@ -120,7 +120,7 @@ export default function DrugInformationDetail({ id }: DrugInformationDetailProps
         />
       )}
 
-      <DrugSourcePanel leafletUrl={data.leafletUrl ?? undefined} />
+      <DrugSourcePanel leafletUrl={data.leafletUrl ?? undefined} drugName={data.brandName} />
     </div>
   );
 }

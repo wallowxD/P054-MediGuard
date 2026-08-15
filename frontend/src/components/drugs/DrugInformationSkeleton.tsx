@@ -15,6 +15,9 @@ export default function DrugInformationSkeleton() {
       </div>
 
       <Skeleton className="h-24 w-full" />
+
+      {/* Khung xem tờ HDSD nhúng — giữ chỗ để trang không nhảy khi iframe vào */}
+      <Skeleton className="h-[70vh] min-h-[420px] w-full rounded-2xl" />
     </div>
   );
 }
