@@ -48,11 +48,11 @@ có trích dẫn. Thông tin hồ sơ đã lưu không tự động trở thành
   stable catalog ID trước khi tham gia lượt tra cứu.
 - Điều hướng bệnh nhân chỉ hiển thị một mục `Tra cứu tương tác thuốc` cho màn tổng hợp;
   không tách thuốc–thực phẩm hoặc thuốc–bệnh nền thành mục sidebar riêng.
-- Sidebar hiển thị tối đa ba snapshot gần nhất từ cùng nguồn dữ liệu với `/history`; trạng
-  thái rỗng chỉ xuất hiện khi tài khoản thực sự chưa có lịch sử.
-- Toàn bộ hàng người dùng ở chân sidebar mở trang hồ sơ cá nhân. Theme, đăng xuất, thông
-  tin tài khoản và form chỉnh sửa hồ sơ sức khoẻ nằm trong trang này, không tách thành các
-  icon action ở sidebar.
+- Sidebar chỉ hiển thị một mục điều hướng `Lịch sử tra cứu`; không tải hoặc hiển thị các
+  snapshot gần nhất. Danh sách đầy đủ chỉ xuất hiện tại `/history`.
+- Nhóm hệ thống ở chân sidebar có action riêng cho `Cài đặt`, chuyển dark mode và `Đăng xuất`.
+  Hàng người dùng chỉ hiển thị danh tính; thông tin tài khoản và form chỉnh sửa hồ sơ sức
+  khoẻ vẫn nằm trong trang `/settings`.
 - Trang hồ sơ hiển thị `Mang thai` và `Cho con bú` dưới dạng checkbox. Các bệnh nền khác
   được tìm bằng cùng autocomplete canonical với màn tra cứu và lưu nhiều giá trị qua
   bảng nối `patient_diseases`; dữ liệu đã lưu chỉ gợi ý, không tự đi vào request tra cứu.
@@ -71,8 +71,9 @@ có trích dẫn. Thông tin hồ sơ đã lưu không tự động trở thành
 4. Citation thiếu quote hoặc nguồn xác định không được render thành cảnh báo.
 5. Lỗi lưu lịch sử trả `checkId: null`, `historyStatus: not-saved` nhưng giữ nguyên kết quả.
 6. UI dùng được bằng bàn phím, responsive, dark mode; quote không line-clamp.
-7. Sidebar không còn mục thuốc–thực phẩm/thuốc–bệnh nền riêng, hiển thị lịch sử thật và
-   chỉ dùng một target hồ sơ ở chân sidebar.
+7. Sidebar không còn mục thuốc–thực phẩm/thuốc–bệnh nền riêng; chỉ có một target mở
+   `/history`, một target mở `/settings`, action dark mode và action đăng xuất. Sidebar
+   không tải hoặc hiển thị snapshot gần nhất; hàng người dùng chỉ hiển thị danh tính.
 8. Chọn `Suy giảm chức năng thận` với `KETOPROXIN` phải trả bản ghi `Suy thận nặng` có severity
    `contraindicated`, quote và PDF nguồn; tiêu đề không được rút gọn thành bệnh thận chung.
 9. UUID thuốc `TENOFOVIR` có canonical ingredient `tenofovir disoproxil fumarate` vẫn phải tìm được bản ghi

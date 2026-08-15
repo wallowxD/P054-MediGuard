@@ -52,9 +52,11 @@ function getServerSnapshot(): TTheme {
 export default function ThemeToggle({
   showLabel = false,
   className = "",
+  variant = "button",
 }: {
   showLabel?: boolean;
   className?: string;
+  variant?: "button" | "switch";
 }) {
   const theme = useSyncExternalStore(subscribe, readTheme, getServerSnapshot);
   const isDark = theme === "dark";
@@ -82,8 +84,34 @@ export default function ThemeToggle({
       aria-pressed={isDark}
       className={`shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${shape}`}
     >
-      {isDark ? <Sun className="h-4 w-4" aria-hidden /> : <Moon className="h-4 w-4" aria-hidden />}
-      {showLabel ? <span>{isDark ? "Dùng giao diện sáng" : "Dùng giao diện tối"}</span> : null}
+      {variant === "switch" ? (
+        showLabel ? (
+          <Moon className="h-5 w-5" aria-hidden />
+        ) : null
+      ) : isDark ? (
+        <Sun className="h-4 w-4" aria-hidden />
+      ) : (
+        <Moon className="h-4 w-4" aria-hidden />
+      )}
+      {showLabel ? (
+        <span className="min-w-0 flex-1 text-left">
+          {variant === "switch" ? "Giao diện tối" : isDark ? "Dùng giao diện sáng" : "Dùng giao diện tối"}
+        </span>
+      ) : null}
+      {variant === "switch" ? (
+        <span
+          aria-hidden
+          className={`relative h-5 w-9 shrink-0 rounded-full border transition-colors ${
+            isDark ? "border-primary bg-primary" : "border-border bg-surface"
+          }`}
+        >
+          <span
+            className={`absolute left-0.5 top-0.5 h-3.5 w-3.5 rounded-full bg-white shadow-sm transition-transform ${
+              isDark ? "translate-x-4" : "translate-x-0"
+            }`}
+          />
+        </span>
+      ) : null}
     </button>
   );
 }
