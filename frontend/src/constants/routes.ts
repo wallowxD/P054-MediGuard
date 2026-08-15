@@ -97,3 +97,10 @@ export const ROUTES = {
   REVIEW: "/review",
   REVIEW_QUEUE: "/review/queue",
 } as const;
+
+/** Route mặc định sau đăng nhập, dùng chung cho proxy và các auth page server-side. */
+export const dashboardForRoles = (roles: string[] | undefined): string | null => {
+  if (roles?.includes(ROLES.PHARMACIST)) return ROUTES.REVIEW;
+  if (roles?.includes(ROLES.PATIENT)) return ROUTES.DASHBOARD;
+  return null;
+};
