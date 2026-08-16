@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Button from "@/components/ui/Button";
 import { ROUTES } from "@/constants/routes";
 import { useRegister } from "@/queries/auth";
-import GoogleSignInButton from "./GoogleSignInButton";
+// import GoogleSignInButton from "./GoogleSignInButton";
 
 type SignUpFormValues = {
   name: string;
@@ -156,6 +156,7 @@ export default function SignUpForm() {
         </Button>
       </div>
 
+      {/* Tạm ẩn đăng ký Google khi chưa cấu hình OAuth
       <div className="flex items-center gap-3 py-1" aria-hidden>
         <span className="h-px flex-1 bg-border/60" />
         <span className="text-[11px] text-foreground-muted">hoặc</span>
@@ -163,6 +164,7 @@ export default function SignUpForm() {
       </div>
 
       <GoogleSignInButton label="Đăng ký bằng Google" />
+      */}
 
       <Button href={ROUTES.SIGNIN} variant="ghost" size="sm" className="w-full text-center">
         Đã có tài khoản? Đăng nhập
