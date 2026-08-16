@@ -4,16 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BOTTOM_NAV_ITEMS, isNavItemActive } from "./nav-items";
 
-/** Điều hướng nhanh trên mobile — chỉ giữ các mục cốt lõi, danh sách đầy đủ nằm ở drawer của MobileTopbar */
 export function BottomNav() {
   const pathname = usePathname();
 
   return (
     <nav
       aria-label="Điều hướng nhanh"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background-elevated lg:hidden"
+      className="fixed inset-x-4 bottom-3 z-40 mx-auto max-w-md rounded-full liquid-glass-bar p-1.5 shadow-2xl lg:hidden"
     >
-      <ul className="mx-auto flex max-w-md">
+      <ul className="flex items-center justify-around">
         {BOTTOM_NAV_ITEMS.map(({ href, shortLabel, Icon }) => {
           const active = isNavItemActive(pathname, href);
           return (
@@ -21,12 +20,14 @@ export function BottomNav() {
               <Link
                 href={href}
                 aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-1 py-2 text-center text-[11px] leading-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset ${
-                  active ? "text-primary" : "text-foreground-muted"
+                className={`flex flex-col items-center justify-center gap-1 rounded-full py-1.5 text-center text-[10px] font-semibold transition-all ${
+                  active
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-foreground-secondary hover:text-foreground"
                 }`}
               >
-                <Icon className="h-5 w-5" aria-hidden />
-                {shortLabel}
+                <Icon className="h-4 w-4" aria-hidden />
+                <span>{shortLabel}</span>
               </Link>
             </li>
           );

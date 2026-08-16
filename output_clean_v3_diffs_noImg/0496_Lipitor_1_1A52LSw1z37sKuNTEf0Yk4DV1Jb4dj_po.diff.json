@@ -1,0 +1,26 @@
+[
+  {
+    "line": 77,
+    "corrected": "Tránh sử dụng artorvastatin đồng thời với telaprevir, hoặc kết hợp giữa tipranavir/ritonavir. Các tương tác thuốc dược động học dẫn đến kết quả là làm tăng nồng độ atorvastatin trong tuần hoàn đã được nhận thấy với các chất ức chế men protease HIV (lopinavir phối hợp với ritonavir, saquinavir phối hợp với ritonavir, darunavir phối hợp với ritonavir, fosamprenavir, fosamprenavir phối hợp với ritonavir, nelfinavir), chất ức chế men protease virus Viêm gan C (boceprevir), clarithromycin và itraconazole. Cần cẩn trọng khi chỉ định đồng thời với atorvastatin và khuyến cáo nên có đánh giá lâm sàng phù hợp để đảm bảo áp dụng liều atorvastatin thấp nhất cần thiết. *(xem phần **8 Cảnh báo đặc biệt và thận trọng đặc biệt khi sử dụng - Ảnh hưởng trên Cơ xương** và phần **9 Tương tác với các thuốc khác và các dạng khác của tương tác**)*. <!-- NEED_REVIEW: Từ 'artorvastatin' cần kiểm tra lại chính tả -->"
+  },
+  {
+    "line": 106,
+    "corrected": "nhạy cảm đau, yếu cơ không giải thích được, đặc biệt là có kèm theo mệt mỏi hay sốt. Nên ngừng điều trị với atorvastatin nếu xuất hiện CPK tăng đáng kể hoặc khi có chẩn đoán hay nghi ngờ có bệnh cơ. Nguy cơ của bệnh cơ trong quá trình điều trị với các thuốc thuộc nhóm này (Statin) sẽ tăng lên khi dùng đồng thời với cyclosporin, dẫn chất acid fibric, erythromycin, niacin, các thuốc kháng nấm nhóm azole, colchicine, telaprevir, boceprevir hoặc phối hợp giữa tipranavir/ritonavir. Nhiều thuốc trong số các thuốc trên ức chế chuyển hóa tại cytochrome P450 3A4 và/hoặc quá trình vận chuyển thuốc. CYP 3A4 là isozyme đầu tiên của gan được biết có tham gia chuyển hóa sinh học atorvastatin. Các bác sĩ khi xem xét việc điều trị phối hợp giữa atorvastatin và các dẫn chất acid fibric, gemfibrozil, erythromycin, các thuốc ức chế miễn dịch, các thuốc kháng nấm nhóm azole, hay sử dụng thuốc hạ lipid máu Niacin liều cao (>1g/ngày), colchicin cần cân nhắc thận trọng các lợi ích và rủi ro có thể có và cần theo dõi chặt chẽ các bệnh nhân về các dấu hiệu và triệu chứng của đau cơ, nhạy cảm đau hay yếu cơ, đặc biệt là trong những tháng đầu của đợt điều trị và trong bất kỳ giai đoạn điều chỉnh liều tăng lên nào của cả hai thuốc. Do vậy, cần phải cân nhắc liều khởi đầu và liều duy trì thấp hơn khi chỉ định đồng thời atorvastatin với các thuốc đề cập ở trên. Ngừng tạm thời atorvastatin có thể thích hợp trong khi dùng acid fusidic (xem phần **9 Tương tác với các thuốc khác và các dạng khác của tương tác**). Trong các tình huống này, có thể cân nhắc việc xác định định kỳ creatine phosphokinase (CPK), nhưng không có đảm bảo chắc chắn rằng việc theo dõi như vậy sẽ giúp ngăn ngừa được bệnh cơ trầm trọng. Atorvastatin có thể gây tăng creatine phosphokinase (xem phần **12 Các tác dụng không mong muốn**)."
+  },
+  {
+    "line": 127,
+    "corrected": "**Các thuốc ức chế vận chuyển:** Atorvastatin và các chất chuyển hóa của atorvastatin là cơ chất của chất vận chuyển OATP1B1. Các thuốc ức chế OATP1B1(ví dụ cyclosporine) có thể làm tăng sinh khả dụng của atorvastatin. Chỉ định đồng thời atorvastatin 10 mg và cyclosporine 5,2 mg/kg/ngày sẽ làm tăng tác dụng của atorvastatin gấp 7,7 lần (xem **phần 6 Liều dùng và cách dùng – Dùng phối hợp với các thuốc khác**) <!-- NEED_REVIEW: Liều cyclosporine 5,2 mg/kg/ngày là bất thường, thường dùng đơn vị mg/kg cho ghép tạng với liều khác -->"
+  },
+  {
+    "line": 172,
+    "corrected": "Việc sử dụng đồng thời các thuốc hạ lipid máu nhóm statin với các thuốc điều trị HIV và viêm gan siêu vi C (HCV) có thể làm tăng nguy cơ gây tổn thương cơ, nghiêm trọng nhất là tiêu cơ vân, thận hư dẫn đến suy thận và có thể gây tử vong. <!-- NEED_REVIEW: Thuật ngữ 'thận hư dẫn đến suy thận' cần xem xét lại tính chính xác y khoa -->"
+  },
+  {
+    "line": 344,
+    "corrected": "Trong nghiên cứu giảm các tiêu chí bằng cách hạ tích cực lipid (IDEAL) điều trị bằng atorvastatin với liều 80 mg/ngày so với điều trị bằng simvastatin 20-40 mg/ngày trên 8888 bệnh nhân tới 80 tuổi có tiền sử bệnh mạch vành để đánh giá nếu có thể giảm được nguy cơ tim mạch. Bệnh nhân chủ yếu là nam giới (81%), da trắng (99%), có tuổi trung bình là 61,7 tuổi và LDL-C trung bình là 121,5 mg/dL ngẫu nhiên; 76% đã trị liệu bằng statin. Trong thử nghiệm tiến cứu, phân nhóm ngẫu nhiên, mở và đánh giá biến cố mù (PROBE), bệnh nhân được theo dõi trong khoảng thời gian trung bình 4,8 năm. Nồng độ trung bình của LDL-C, TC, TG, cholesterol HDL và không HDL ở tuần thứ 12 lần lượt là 78, 145, 115, 45 và 100 mg/dL trong suốt quá trình điều trị bằng atorvastatin 80 mg, và lần lượt là 105, 179, 142, 47 và 132 mg/dL trong suốt quá trình điều trị bằng simvastatin 20-40 mg. <!-- NEED_REVIEW: Cụm từ '121,5 mg/dL ngẫu nhiên' có vẻ sai cấu trúc cú pháp -->"
+  },
+  {
+    "line": 404,
+    "corrected": "<sup>#</sup>Cyclosporin 5,2 mg/kg/ngày, liều ổn định | 10 mg/ngày x 28 ngày | ↑ 7,7 lần | ↑ 9,7 lần | <!-- NEED_REVIEW: Liều cyclosporine 5,2 mg/kg/ngày cần kiểm tra lại -->"
+  }
+]

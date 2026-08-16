@@ -1,0 +1,10 @@
+[
+  {
+    "line": 58,
+    "corrected": "| **Phản ứng bất lợi từ các thử nghiệm lâm sàng**<br><br>**LƯU HÀNH**<br><br>Ngoài các phản ứng không mong muốn ghi nhận trong các thử nghiệm lâm sàng, các phản ứng không mong muốn dưới đây đã được báo cáo trong quá trình lưu hành.<br><br>~~Rối loạn hệ thống máu và bạch huyết: Rối loạn đông máu~~<br>~~Rối loạn trao đổi chất và dinh dưỡng: Tăng kali huyết, giảm kali huyết, nhiễm toan chuyển hóa.~~<br>~~Rối loạn thần kinh: Co giật~~<br>~~Rối loạn thị giác: Vàng mắt~~<br>~~Rối loạn tim mạch: Ngừng tim, xoắn đỉnh, suy thất, giảm động, rung nhĩ.~~<br>~~Rối loạn vận mạch: Cao huyết áp ác tính, xuất huyết, hạ huyết áp, sốc.~~<br>~~Rối loạn hô hấp, lồng ngực và trung thất: Ngừng thở, suy hô hấp, co thắt phế quản, ho ra máu.~~<br>~~Rối loạn tiêu hóa: Viêm tụy cấp tính, đau bụng~~<br>~~Rối loạn gan mật: Suy gan, hoại tử gan, viêm gan, tiểu tế bào gan, ứ mật, vàng da, chức năng gan bất thường, rối loạn gan~~ <!-- NEED_REVIEW: Thuật ngữ 'tiểu tế bào gan' có thể là lỗi dịch thuật hoặc OCR từ 'viêm gan tế bào gan' / hepatocellular injury -->"
+  },
+  {
+    "line": 59,
+    "corrected": "~~Rối loạn da và mô dưới da: Mày đay, ban đỏ~~<br>~~Rối loạn cơ xương, mô liên kết, và xương: Tiêu cơ vân.~~<br>~~Rối loạn chung và tại nơi điều trị: Tăng thân nhiệt ác tính, suy nhược, mệt mỏi.~~ | **Tác dụng không mong muốn từ các thử nghiệm lâm sàng**<br><br>**Tác dụng không mong muốn trong quá trình lưu hành**<br><br>Ngoài các phản ứng không mong muốn ghi nhận trong các thử nghiệm lâm sàng, các phản ứng không mong muốn dưới đây đã được báo cáo trong quá trình lưu hành.<br><br><table><tr><th>Hệ cơ quan (SOC)</th><th>Hệ thống hậu loại MedDRA</th><th>Tần suất</th></tr><tr><td>Nhiễm trùng</td><td>Viêm hầu họng</td><td>Phổ biến</td></tr><tr><td>Rối loạn hệ thống máu và bạch huyết</td><td>Rối loạn <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

@@ -9,17 +9,17 @@ Usage:
 import argparse
 import json
 import logging
-from pathlib import Path
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+
 from tqdm import tqdm
 
 # Add backend/src to sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
 from medsafe.ocr.pdf_renderer import PDFRenderer
-
 
 logging.basicConfig(
     level=logging.INFO,

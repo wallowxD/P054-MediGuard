@@ -1,0 +1,10 @@
+[
+  {
+    "line": 96,
+    "corrected": "*Metformin: Meformin có thể làm giảm hấp thu mecobalamin. Tác động này có thể đảo ngược khi bổ sung calcium đường uống.* <!-- NEED_REVIEW: Lỗi chính tả 'Meformin', cần chuẩn hóa thành 'Metformin' -->"
+  },
+  {
+    "line": 98,
+    "corrected": "*Nitrous oxide (N₂O): Hít phải thuốc gây mê nitrous oxid (không phải NO) có thể dẫn đến suy chức năng. Nitrious oxid tạo phức hợp với cobalt của mecobalamin, một cofactor tổng hợp methiomin, kết quả làm bất hoạt enzym.* <!-- NEED_REVIEW: Sai chính tả 'Nitrious oxid', 'methiomin' (methionine) -->"
+  }
+]

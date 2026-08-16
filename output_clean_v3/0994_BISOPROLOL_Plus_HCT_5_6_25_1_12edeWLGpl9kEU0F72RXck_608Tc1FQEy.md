@@ -1,0 +1,267 @@
+<!-- metadata: model=gemini-3.6-flash, provider=vertexai -->
+
+$\text{R}_\text{x}$ Thuốc bán theo đơn
+Viên nén bao phim
+
+# BISOPROLOL Plus HCT 5/6.25
+
+**THÀNH PHẦN**
+- Bisoprolol fumarate ................................................................................... 5,00mg
+- Hydrochlorothiazide ................................................................................ 6,25mg
+- Tá dược vừa đủ ........................................................................................... 1 viên
+*(Anhydrous calcium hydrogen phosphate, Microcrystalline cellulose, Pregelatinized starch, Colloidal silicon dioxide, Magnesium stearate, Hypromellose 606, Polyethylene glycol 6000, Red ferric oxide, Yellow ferric oxide, Titan dioxide, Talc).*
+
+**DẠNG BÀO CHẾ:** Viên nén bao phim.
+
+**DƯỢC LÝ & CƠ CHẾ TÁC DỤNG**
+***Bisoprolol fumarate (B) kết hợp Hydrochlorothiazide (HCT)**
+Bisoprolol fumarate (B) và Hydrochlorothiazide (HCT) đã được sử dụng riêng lẻ hoặc kết hợp để điều trị tăng huyết áp. Tác dụng hạ huyết áp của các hoạt chất này là hiệp lực; HCT 6,25mg làm tăng đáng kể tác dụng hạ huyết áp của bisoprolol fumarate. Tỷ lệ hạ kali máu của kết hợp bisoprolol fumarate và HCT 6,25mg (B/H) thấp hơn đáng kể so với HCT 25mg. Trong các thử nghiệm lâm sàng của bisoprolol fumarate và hydrochlorothiazide, mức trung bình thay đổi hàm lượng kali trong huyết thanh ở bệnh nhân được điều trị với kết hợp bisoprolol fumarate và hydrochlorothiazide 2,5mg/6,25mg-5mg/6,25mg -10mg/6,25 mg hoặc giả dược ít hơn ± 0,1 mEq/L. Mức trung bình thay đổi hàm lượng kali trong huyết thanh của các bệnh nhân được điều trị với bất kỳ liều bisoprolol kết hợp với HCT 25mg làm thay đổi từ -0,1 đến -0,3 mEq /L. Bisoprolol fumarate là một thuốc chẹn chọn lọc beta, (cardioselective) không có tính ổn định màng đáng kể hoặc không có tác dụng giống thần kinh giao cảm nội tại trong phạm vi liều điều trị. Ở liều cao (20mg), bisoprolol fumarate cũng ức chế thụ thể beta, (b2) nằm ở hệ cơ phế quản và mạch máu. Để giữ được tính chọn lọc tương đối, điều quan trọng là sử dụng liều thấp nhất có hiệu quả. Hydrochlorothiazide là một thuốc lợi tiểu nhóm benzothiadiazine. Thiazide ảnh hưởng đến cơ chế ống thận của tái hấp thu chất điện giải và làm tăng bài tiết natri và chloride với lượng gần tương đương nhau. Tình trạng natri niệu (natriuresis) sẽ gây ra mất kali thứ cấp.
+
+***Bisoprolol:** Bisoprolol là một thuốc chẹn chọn lọc beta, (b1) nhưng không có tính chất ổn định màng và không có tác dụng giống thần kinh giao cảm nội tại khi dùng trong phạm vi liều điều trị. Với liều thấp, bisoprolol ức chế chọn lọc đáp ứng với kích thích adrenalin bằng cách cạnh tranh chẹn thụ thể b1 adrenalin của tim, nhưng ít tác dụng trên thụ thể beta, (b2) adrenalin của cơ trơn phế quản và thành mạch. Với liều cao (thí dụ 20 mg hoặc hơn), tính chất chọn lọc của bisoprolol trên thụ thể b1 thường giảm xuống và thuốc sẽ cạnh tranh ức chế cả hai thụ thể b1 và b2. Bisoprolol được dùng để điều trị tăng huyết áp. Hiệu quả của bisoprolol tương đương với các thuốc chẹn beta khác. Cơ chế tác dụng hạ huyết áp của bisoprolol có thể gồm những yếu tố sau: Giảm lưu lượng tim, ức chế thận giải phóng renin và giảm tác động của thần kinh giao cảm đi từ các trung tâm vận mạch ở não. Nhưng tác dụng nổi bật nhất của bisoprolol là làm giảm tần số tim, cả lúc nghỉ lẫn lúc gắng sức. Bisoprolol làm giảm lưu lượng của tim lúc nghỉ và khi gắng sức, kèm theo ít thay đổi về thể tích máu tống ra trong mỗi nhát bóp tim, và chỉ làm tăng ít áp lực nhĩ phải hoặc áp lực mao mạch phổi ít lúc nghỉ và lúc gắng sức. Trừ khi có chống chỉ định hoặc người bệnh không dung nạp được, thuốc chẹn beta đã được dùng phối hợp với các thuốc ức chế men chuyển, lợi tiểu và glycosid trợ tim để điều trị suy tim do loạn chức năng thất trái, để làm giảm suy tim tiến triển. Tác dụng tốt của các thuốc chẹn beta trong điều trị suy tim mạn sung huyết được cho chủ yếu là do ức chế các tác động của hệ thần kinh giao cảm. Dùng thuốc chẹn beta lâu dài, cũng như các thuốc ức chế men chuyển đổi, có thể làm giảm các triệu chứng suy tim và cải thiện tình trạng lâm sàng của người bị suy tim mạn. Các tác dụng tốt này đã được chứng minh ở người đang dùng một thuốc ức chế men chuyển, cho thấy ức chế phối hợp hệ thống renin-angiotensin và hệ thần kinh giao cảm là các tác dụng cộng.
+Trong thử nghiệm lâm sàng có kiểm soát, bisoprolol fumarate được sử dụng như một liều duy nhất mỗi ngày đã chứng minh là một hoạt chất hạ huyết áp có hiệu quả khi sử dụng một mình hoặc dùng đồng thời với thuốc lợi tiểu thiazide.
+Cơ chế tác dụng hạ huyết áp của bisoprolol fumarate chưa được thiết lập hoàn toàn. Các yếu tố có thể tham gia bao gồm :
+1. Giảm cung lượng tim,
+2. Ức chế sự phóng thích renin của thận,
+3. Giảm tác động của thần kinh giao cảm đi từ các trung tâm vận mạch ở não.
+Tính chọn lọc beta, của bisoprolol fumarate đã được chứng minh ở cả nghiên cứu động vật và người. Không có tác dụng ở liều điều trị trên thụ thể beta,-adrenergic được quan sát thấy. Nghiên cứu chức năng phổi đã được thực hiện ở người tình nguyện khỏe mạnh, bệnh nhân hen và bệnh nhân bị bệnh phổi tắc nghẽn mãn tính (COPD). Liều dùng của bisoprolol fumarate dao động từ 5mg đến 60mg, atenolol 50mg-200mg, metoprolol từ 100mg đến 200 mg và propranolol 40mg-80 mg khi so sánh chúng với nhau. Nghiên cứu điện sinh hoá ở người đã chứng minh rằng bisoprolol fumarate làm giảm đáng kể nhịp tim, tăng thời gian phục hồi nút xoang, kéo dài thời gian nghỉ của nút nhĩ thất AV (atrioventricular) và với sự kích thích tâm nhĩ nhanh, kéo dài thời gian truyền nút nhĩ thất.
+
+***Hydrochlorothiazide:** Hydrochlorothiazide và các thuốc lợi tiểu thiazide làm tăng bài tiết natri chloride và nước kèm theo do cơ chế ức chế tái hấp thu các ion natri và chloride ở ống lượn xa. Sự bài tiết các chất điện giải khác cũng tăng đặc biệt là kali và magnesi, còn calci thì giảm. Hydrochlorothiazide cũng làm giảm hoạt tính men anhydrase carbonic nên làm tăng bài tiết bicarbonate nhưng tác dụng này thường nhỏ so với tác dụng bài tiết Cl⁻ và không làm thay đổi đáng kể pH nước tiểu. Các thiazide có tác dụng lợi tiểu mức độ vừa phải, vì khoảng 90% ion natri đã được tái hấp thu trước khi đến ống lượn xa là vị trí chủ yếu thuốc có tác dụng. Hydrochlorothiazide có tác dụng hạ huyết áp, trước tiên có lẽ do giảm thể tích huyết tương và dịch ngoại bào liên quan đến sự bài niệu natri. Sau đó trong quá trình dùng thuốc, tác dụng hạ huyết áp tùy thuộc vào sự giảm sức cản ngoại vi, thông qua sự thích nghi dần của các mạch máu trước tình trạng giảm nồng độ Na+. Vì vậy, tác dụng hạ huyết áp của hydro
+
+**DƯỢC ĐỘNG HỌC**
+* **Bisoprolol fumarate (B) kết hợp Hydrochlorothiazide (HCT)**
+Ở người tình nguyện khỏe mạnh, cả hai chất bisoprolol fumarate và hydrochlorothiazide đều được hấp thu tốt sau khi uống. Không thấy có sự thay đổi sinh khả dụng của mỗi chất khi uống chung với nhau trong cùng một viên thuốc duy nhất.
+Sự hấp thu của bisoprolol fumarate và hydrochlorothiazide không bị ảnh hưởng dù dùng chung với thức ăn hay không. Nồng độ đỉnh trung bình trong huyết tương của bisoprolol fumarate khoảng 9ng/mL, 19ng/mL và 36ng/mL xảy ra khoảng 3 giờ sau khi uống các liều 2,5mg/6,25mg, 5mg/6,25mg và 10mg/6,25mg của viên kết hợp, tương ứng. Nồng độ đỉnh trung bình trong huyết tương của hydrochlorothiazide đạt 30ng/mL xảy ra khoảng 2,5 giờ sau khi uống viên kết hợp. Tăng liều làm tăng tỷ lệ nồng độ trong huyết tương của bisoprolol fumarate đã được quan sát giữa liều 2,5 mg và 5mg, cũng như giữa liều 5mg và 10mg. Nửa đời thải trừ T1/2 của bisoprolol fumarate trong phạm vi từ 7 giờ đến 15 giờ và hydrochlorothiazide khoảng từ 4 giờ đến 10 giờ. Tỷ lệ phần trăm liều lượng bài tiết trong nước tiểu khoảng 55% đối với bisoprolol fumarate và khoảng 60% với hydrochlorothiazide.
+* **Bisoprolol fumarate:** Bisoprolol fumarate hầu như được hấp thu hoàn toàn qua đường tiêu hoá. Và chỉ qua chuyển hoá bước đầu rất ít nên sinh khả dụng qua đường uống khoảng 90%. Sau khi uống, nồng độ đỉnh trong huyết tương đạt được từ 2 - 4 giờ. Khoảng 30% thuốc gắn vào protein huyết tương. Thức ăn không ảnh hưởng đến hấp thu của thuốc. Nửa đời thải trừ ở huyết tương từ 10 đến 12 giờ. Bisoprolol hoá tan vừa phải trong lipid. Thuốc chuyển hoá ở gan và bài tiết trong nước tiểu, khoảng 50% dưới dạng không đổi và 50% dưới dạng chất chuyển hoá. Ở người cao tuổi, nửa đời đào thải trong huyết tương hơi kéo dài hơn so với người trẻ tuổi, tuy nồng độ trung bình trong huyết tương ở trạng thái ổn định tăng lên, nhưng không có sự khác nhau có ý nghĩa về mức độ tích luỹ bisoprolol giữa người trẻ tuổi và người cao tuổi. Ở người có hệ số thanh thải creatinine dưới 40 ml/phút, nửa đời huyết tương tăng gấp khoảng 3 lần so với người bình thường. Ở người xơ gan, tốc độ thải trừ bisoprolol thay đổi nhiều hơn và thấp hơn có ý nghĩa so với người bình thường (8,3 - 21,7 giờ). Sinh khả dụng tuyệt đối sau liều uống 10mg bisoprolol fumarate đạt khoảng 80%. Sự trao đổi chất đầu tiên của bisoprolol fumarate đạt khoảng 20%. Các hồ sơ dược động học của bisoprolol fumarate đã được kiểm tra sau liều duy nhất và ở trạng thái ổn định. Liên kết với protein huyết thanh khoảng 30%. Nồng độ đỉnh huyết tương xảy ra trong vòng 2 - 4 giờ sau khi dùng thuốc với các liều từ 2,5mg đến 20mg và giá trị đỉnh trung bình đạt từ 9ng/ml ở liều 2,5mg đến 70ng/ml ở liều 20 mg. Khi uống bisoprolol fumarate với chuẩn liều một lần mỗi ngày sẽ cho kết quả là nồng độ đỉnh huyết tương ít biến đổi hơn gấp hai lần. Nồng độ tỷ lệ thuận với liều uống trong khoảng từ 2,5mg đến 20mg. Nửa đời huyết tương khoảng 9 - 12 giờ và hơi dài hơn ở những bệnh nhân cao tuổi, một phần do chức năng thận giảm. Trạng thái ổn định đạt được trong vòng 5 ngày với liều dùng một lần mỗi ngày. Trong cả hai nhóm người trẻ và người cao tuổi, độ tích tụ trong huyết tương thấp, yếu tố tích lũy khoảng từ 1,1 đến 1,3 và là những gì đã được dự kiến từ nửa đời và chuẩn liều cho mỗi ngày một lần dùng thuốc. Bisoprolol fumarate thải trừ như nhau theo đường thận và không qua thận, với khoảng 50% liều dùng xuất hiện trong nước tiểu dưới dạng không đổi và 50% dưới dạng các chất chuyển hóa không hoạt động. Ở người, các chất chuyển hóa được biết đến là bất ổn định hoặc không có hoạt tính dược lý. Có ít hơn 2% liều dùng được bài tiết qua phân. Các đặc điểm dược động học của hai đồng phân đối hình (*enantiomers*) là tương tự nhau. Bisoprolol không bị chuyển hóa bởi men cytochrome P450 II D6 (*debrisoquin hydroxylase*).
+Với các đối tượng có độ thanh thải creatinine dưới 40ml/phút, nửa đời huyết tương tăng lên khoảng gấp ba lần so với người khỏe mạnh. Ở những bệnh nhân bị xơ gan, tỷ lệ thải trừ bisoprolol thường biến đổi và chậm hơn đáng kể so với đối tượng khỏe mạnh, kèm theo nửa đời huyết tương khác nhau, từ 8 giờ đến 22 giờ. Ở những người cao tuổi nồng độ huyết tương trung bình ở trạng thái ổn định được tăng lên, một phần là do độ thanh thải creatinine giảm. Tuy nhiên, không có sự khác biệt đáng kể về mức độ tích tụ của bisoprolol được tìm thấy giữa nhóm người trẻ và người già.
+* **Hydrochlorothiazide (HCT):** Hydrochlorothiazide được hấp thu tốt (65% -75%) sau khi uống. Sự hấp thu của hydrochlorothiazide giảm ở những bệnh nhân bị suy tim sung huyết. Nồng độ đỉnh huyết tương quan sát được trong vòng 1-5 giờ sau khi dùng thuốc và nằm trong phạm vi 70 ng/ml - 490 ng/ml sau liều uống từ 12,5mg đến 100mg. Nồng độ trong huyết tương có tính tuyến tính liên quan đến liều dùng. Nồng độ của hydrochlorothiazide trong toàn bộ máu cao hơn 1,6 - 1,8 lần so với trong huyết tương. Liên kết với protein huyết thanh đã được báo cáo là khoảng 40% đến 68%. Nửa đời thải trừ huyết tương được báo cáo là khoảng 6-15 giờ. Hydrochlorothiazide được đào thải chủ yếu bằng đường thận.
+Sau liều uống 12,5mg đến 100mg, có khoảng 55% -77% liều dùng xuất hiện trong nước tiểu và hơn 95% của liều hấp thụ được bài tiết qua nước tiểu dưới dạng không đổi. Nồng độ trong huyết tương của HCT gia tăng và nửa đời thải trừ bị kéo dài ở những bệnh nhân bị bệnh thận.
+
+**CÁC DỮ LIỆU AN TOÀN TIỀN LÂM SÀNG**
+**Chất sinh ung thư**
+*Bisoprolol fumarate (B) và Hydrochlorothiazide (HCT)*
+*Nghiên cứu dài hạn đã không được thực hiện trên kết hợp B+HCT.*
+*Bisoprolol fumarate (B):* Nghiên cứu dài hạn được thực hiện với bisoprolol fumarate đường uống chung với thức ăn ở chuột nhắt (20 và 24 tháng tuổi) và chuột cống (26 tháng tuổi). Không có bằng chứng về tiềm năng gây ung thư ở chuột nhắt với đỉnh lượng liều lên đến 250mg/kg/ngày hoặc chuột cống với đỉnh lượng liều lên đến 125mg/kg/ngày. Tính toán dựa trên cơ sở thể trọng những liều này cao gấp 625 lần và 312 lần, tương ứng so với liều tối đa khuyến cáo ở người (MRHD) là 20mg hay 0,4mg/kg/ngày cho người cân nặng 50 kg, tính toán dựa trên cơ sở diện tích bề mặt cơ thể, những liều này cao gấp 59 lần (ở chuột nhắt) và 64 lần (ở chuột cống) so với liều MRHD.
+*Hydrochlorothiazide (HCT):* Trong nghiên cứu hai năm nuôi chuột nhắt và chuột cống được thực hiện dưới sự bảo trợ của Chương trình Chất độc Quốc gia Mỹ (NTP), hai nhóm chuột nhắt và chuột cống được điều trị với liều hydrochlorothiazide lên đến 600mg và 100 mg/kg/ngày, tương ứng. Tính trên cơ sở trọng lượng cơ thể, những liều này gấp 2400 lần (ở chuột nhắt) và 400 lần (ở chuột cống) so với liều MRHD của người, từi với liều hydrochlorothiazide (12,5mg/ngày) trong kết hợp B + HCT. Tính trên cơ sở diện tích bề mặt cơ thể, những liều này gấp 226 lần (ở chuột nhắt) và 82 lần (ở chuột cống) so với liều MRHD. Những nghiên cứu này phát hiện không thấy có bằng chứng về khả năng gây ung thư của hydrochlorothiazide ở chuột cống hay chuột nhắt cái, nhưng có bằng chứng không rõ ràng về khả năng gây ung thư gan cho chuột nhắt đực.
+**Đột biến gen**
+
+**LIỀU LƯỢNG VÀ CÁCH DÙNG**
+
+**Thuốc này chỉ dùng theo sự kê đơn của bác sĩ**
+
+*Cách dùng:* Thuốc dùng đường uống.
+
+*Liều lượng:* Liệu pháp bisoprolol là phương pháp điều trị hiệu quả tăng huyết áp ở dãy liều 2,5mg đến 40 mg dùng một lần mỗi ngày, trong khi hydrochlorothiazide có hiệu quả ở dãy liều 12,5mg-50mg. Trong các thử nghiệm lâm sàng điều trị kết hợp bisoprolol / hydrochlorothiazide khi sử dụng các liều kết hợp bisoprolol từ 2,5mg đến 20mg và liều hydrochlorothiazide từ 6,25mg đến 25mg, tác dụng hạ huyết áp tăng theo tỷ lệ thuận với tăng liều của từng thành phần. Các tác dụng phụ của bisoprolol là một hỗn hợp các hiện tượng phụ thuộc vào liều dùng (chủ yếu là nhịp tim chậm, tiêu chảy, suy nhược và mệt mỏi) và các hiện tượng độc lập với liều (ví dụ thỉnh thoảng phát ban) và của hydrochlorothiazide là một hỗn hợp các sự kiện phụ thuộc vào liều (chủ yếu là hạ kali máu) và hiện tượng độc lập với liều (ví dụ có thể viêm tụy), hiện tượng phụ thuộc vào liều lượng xảy ra phổ biến hơn nhiều so với các hiện tượng độc lập với liều.
+
+**Phác đồ hướng dẫn điều trị theo đáp ứng lâm sàng**
+
+Một bệnh nhân có huyết áp không kiểm soát được với các liều từ 2,5mg - 20mg bisoprolol hàng ngày có thể được thay thế với kết hợp bisoprolol fumarate+hydrochlorothiazide. Bệnh nhân có huyết áp được kiểm soát đầy đủ với liều 50mg hydrochlorothiazide hàng ngày, nhưng cho thấy mất kali huyết đáng kể với phác đồ này, có thể đạt được kiểm soát tương tự về huyết áp mà không có rối loạn chất điện giải nếu chuyển sang dùng kết hợp bisoprolol fumarate + hydrochlorothiazide.
+
+*Trị liệu khởi đầu:* Điều trị hạ huyết áp có thể được bắt đầu với liều thấp nhất của kết hợp bisoprolol fumarate + hydrochlorothiazide 2,5 mg/6,25 mg (B/HCT) uống 1 viên mỗi ngày một lần. Sau chuẩn độ (cách khoảng 14 ngày) có thể thực hiện tăng liều với viên kết hợp bisoprolol fumarate + hydrochlorothiazide lên đến liều khuyến cáo tối đa 20mg/12,5mg (tức hai lần liều 10mg/6,25mg) uống mỗi ngày một lần khi thích hợp.
+
+*Trị liệu thay thế:* Sự kết hợp này có thể được thay thế cho các thành phần riêng lẻ khi cần tăng liều.
+
+*Ngừng trị liệu:* Nếu muốn ngừng điều trị với bisoprolol fumarate và hydrochlorothiazide, cần lên kế hoạch để đạt được dần dần trong thời gian khoảng 2 tuần. Bệnh nhân phải được giám sát cẩn thận.
+
+*Bệnh nhân suy thận hoặc gan*
+
+Phải thận trọng sử dụng và điều chỉnh liều theo chuẩn độ ở bệnh nhân suy gan hoặc rối loạn chức năng thận. Vì không có dấu hiệu cho thấy hydrochlorothiazide có thể bị thẩm tách và có ít dữ liệu cho thấy bisoprolol có thể thẩm tách, không cần thiết thay thế thuốc ở bệnh nhân lọc thận.
+
+*Bệnh nhân cao tuổi:* Liều dùng điều chỉnh trên cơ sở tuổi tác thường không cần thiết, trừ khi có rối loạn chức năng thận hoặc gan đáng kể. Trong các thử nghiệm lâm sàng có ít nhất 270 bệnh nhân được điều trị với bisoprolol fumarate kết hợp hydrochlorothiazide (HCT) có độ tuổi từ 60 trở lên. HCT làm tăng thêm đáng kể tác dụng hạ huyết áp của bisoprolol ở những bệnh nhân cao tuổi tăng huyết áp. Không có sự khác biệt tổng thể về hiệu quả hoặc an toàn được quan sát thấy giữa các bệnh nhân cao tuổi và bệnh nhân trẻ tuổi. Các báo cáo kinh nghiệm lâm sàng đã xác định sự khác biệt trong đáp ứng thuốc giữa các bệnh nhân cao tuổi và trẻ hơn, nhưng độ nhạy cảm của một số cá nhân lớn tuổi không thể loại trừ.
+
+*Bệnh nhân trẻ em:* Không có dữ liệu đối với bisoprolol fumarate và hydrochlorothiazide.
+
+**CHỐNG CHỈ ĐỊNH**
+
+* *Bisoprolol:* Bisoprolol chống chỉ định ở bệnh nhân có sốc do tim, suy tim cấp, suy tim chưa kiểm soát được bằng điều trị nền, suy tim độ III nặng hoặc độ IV, bloc nhĩ - thất độ hai hoặc ba, và nhịp tim chậm xoang (dưới 60/phút trước khi điều trị), bệnh nút xoang, hen nặng hoặc bệnh phổi - phế quản mạn tính tắc nghẽn nặng. Hội chứng Reynaud nặng. Mẫn cảm với bisoprolol, u tuỷ thượng thận (u tế bào ưa crôm) khi chưa được điều trị.
+* *Hydrochlorothiazide:* Mẫn cảm với các thiazide và các dẫn chất sulfonamide, bệnh gút, tăng acid uric huyết, chứng vô niệu, bệnh Addison, chứng tăng calci huyết, suy gan và thận nặng.
+
+**CẢNH BÁO VÀ THẬN TRỌNG KHI SỬ DỤNG**
+
+*Cảnh báo:*
+
+**Bisoprolol*
+
+<u>Suy tim:</u> Kích thích giao cảm là một phần cần thiết hỗ trợ chức năng tuần hoàn trong giai đoạn bắt đầu suy tim sung huyết, và sự chẹn-beta có thể dẫn đến suy giảm thêm cơ bóp của cơ tim và thúc đẩy suy tim nặng hơn. Tuy nhiên, ở một số người bệnh có suy tim sung huyết còn bù có thể cần phải dùng thuốc này. Trong trường hợp này, phải dùng thuốc một cách thận trọng. Thuốc chỉ được dùng thêm vào khi đã có điều trị suy tim với các thuốc cơ bản (thuốc lợi tiểu, digitalis, ức chế men chuyển) dưới sự kiểm soát chặt chẽ của bác sĩ chuyên khoa.
+
+<u>Bệnh nhân không có bệnh sử suy tim</u>
+
+Trong một số bệnh nhân thuộc chẹn beta có thể tiếp tục gây suy yếu (chèn ép) cơ tim và thúc đẩy tình trạng suy tim. Dựa trên những dấu hiệu đầu tiên hoặc các triệu chứng của suy tim, cần xem xét việc ngừng bisoprolol fumarate và hydrochlorothiazide. Trong một số trường hợp, việc điều trị với bisoprolol fumarate và hydrochlorothiazide có thể được tiếp tục trong khi tình trạng suy tim được điều trị với các thuốc khác.
+
+<u>Ngừng điều trị đột ngột:</u> Các đợt cấp của đau thắt ngực và trong một số trường hợp, nhồi máu cơ tim hoặc loạn nhịp tâm thất đã được quan sát thấy ở những bệnh nhân bị bệnh động mạch vành xác định sau khi đột ngột ngừng điều trị với chẹn beta. Do đó những bệnh nhân này cần được cảnh báo không được gián đoạn hoặc ngừng điều trị mà không có lời khuyên của bác sĩ. Ngay cả ở những bệnh nhân không có bệnh động mạch vành rõ ràng có thể được khuyến thích để điều trị với bisoprolol fumarate và hydrochlorothiazide khoảng hơn 1 tuần với điều kiện các bệnh nhân phải được theo dõi cẩn thận. Nếu xảy ra các triệu chứng vãng vật, cần tái lập điều trị bằng chẹn beta, ít nhất là tạm thời. Nếu các triệu chứng cai thuốc xảy ra, nên dùng thuốc lại ít nhất trong một thời gian.
+
+<u>Bệnh mạch ngoại biên:</u> Các thuốc chẹn beta có thể thúc đẩy hoặc làm nặng thêm các triệu chứng của chứng suy động mạch ở những bệnh nhân bị bệnh mạch máu ngoại vi. Cần thận trọng dùng
+
+*Bisoprolol Fumarate (B) và Hydrochlorothiazide (HCT)*  
+Khả năng gây đột biến gen của kết hợp bisoprolol fumarate+hydrochlorothiazide được đánh giá trong các thử nghiệm kiểm tra vi khuẩn (Ames) về chủng đột biến gen, đột biến điểm và xét nghiệm quang sai nhiễm sắc thể trên tế bào V79 chuột túi má Trung Quốc và thử nghiệm *in vivo* ở chuột nhắt. Không có bằng chứng về khả năng gây đột biến trong các thử nghiệm *in vitro* và *in vivo* kể trên.  
+*Bisoprolol fumarate:* Tiềm năng gây đột biến của bisoprolol fumarate được đánh giá trong các thử nghiệm vi khuẩn (Ames) về chủng đột biến gen, đột biến điểm và xét nghiệm quang sai nhiễm sắc thể trên tế bào V79 chuột túi má Trung Quốc, thử nghiệm kiểm tra tổng hợp DNA đột xuất, thử nghiệm vi nhân ở chuột nhắt và khảo nghiệm di truyền tế bào (*cytogenetics*) ở chuột cống. Không thấy có bằng chứng về khả năng gây đột biến gen trong các thử nghiệm *in vitro* và *in vivo* kể trên.  
+*Hydrochlorothiazide:* Hydrochlorothiazide không cho thấy có bằng chứng về độc tính gen (*genotoxic*) trong các thử nghiệm *in vitro* khi sử dụng các chủng TA 98, TA 100, TA 1535, TA 1537 và TA 1538 của *Salmonella typhimurium* (thử nghiệm Ames), kiểm tra các sai lệch nhiễm sắc thể trên tế bào buồng trứng của chuột túi má Trung Quốc (CHO) hoặc trong xét nghiệm *in vivo* khi sử dụng các nhiễm sắc thể tế bào mầm chuột nhắt, nhiễm sắc thể tủy xương chuột túi má Trung Quốc và ruồi giấm *Drosophila* có liên kết đến đặc điểm gen lặn gây chết người. Kết quả xét nghiệm dương tính đã thu được trong thử nghiệm *in vitro* trao đổi nhiễm sắc thể tương cận (CHO *Sister Chromatid Exchange* gây vô nhiễm sắc thể, *clastogenicity*) và trong thử nghiệm tế bào lympho chuột nhắt (tính gây đột biến gen), sử dụng nồng độ hydrochlorothiazide từ 43mcg đến 1300 mcg/mL. Kết quả xét nghiệm dương tính cũng thu được trong việc khảo nghiệm *Aspergillus nidulans* không phân ly, sử dụng một nồng độ không xác định của hydrochlorothiazide.
+
+**Suy giảm khả năng sinh sản**  
+*Bisoprolol fumarate (B) và hydrochlorothiazide (HCT)*  
+Nghiên cứu về sinh sản ở chuột cống không cho thấy có bất kỳ sự suy giảm khả năng sinh sản với sự kết hợp B / HCT ở liều bisoprolol fumarate lên đến 30mg/ kg/ ngày kết hợp với liều hydrochlorothiazide 75mg/kg/ngày. Bisoprolol fumarate tính trên cơ sở trọng lượng cơ thể, những liều này gấp 75 lần và 300 lần, tương ứng so với liều tối đa khuyến cáo B+HCT cho người (MRHD). Hydrochlorothiazide tính trên cơ sở diện tích bề mặt cơ thể, những liều nghiên cứu này cao gấp 15 lần và 62 lần, tương ứng, so với liều MRHD cho người.  
+*Bisoprolol fumarate:* Nghiên cứu sinh sản ở chuột cống không cho thấy bất kỳ suy giảm khả năng sinh sản ở các liều bisoprolol fumarate lên đến 150mg/kg/ngày, hoặc cao gấp 375 lần và 77 lần so với liều MRHD tính trên cơ sở trọng lượng cơ thể và diện tích bề mặt cơ thể, tương ứng.  
+*Hydrochlorothiazide:* Hydrochlorothiazide không có ảnh hưởng xấu đến khả năng sinh sản của chuột nhắt và chuột cống thông qua quan hệ tình dục hoặc trong các nghiên cứu ở đó chúng được phối nhiễm qua chế độ ăn uống với các liều lên 100mg và 4mg/kg/ngày, tương ứng, trước khi cho giao phối và trong suốt thai kỳ. Bội số tương ứng so với liều tối đa khuyến cáo cho người là gấp 400 lần (chuột nhắt) và 16 lần (chuột cống) tính trên cơ sở của trọng lượng cơ thể và gấp 38 lần (chuột nhắt) và 3,3 lần (chuột cống) tính trên cơ sở diện tích bề mặt cơ thể.
+
+**Tác dụng gây quái thai**  
+*Bisoprolol fumarate (B) và hydrochlorothiazide (HCT)*  
+Ở chuột cống, bisoprolol fumarate/hydrochlorothiazide (B/HCT) kết hợp không gây quái thai ở các liều bisoprolol fumarate lên đến 51,4mg/kg/ngày kết hợp với liều hydrochlorothiazide 128,6mg/kg/ngày. Liều kết hợp bisoprolol fumarate+hydrochlorothiazide được sử dụng trong nghiên cứu chuột cống là bội số so với liều khuyến cáo tối đa cho người (MRHD) cao gấp 129 lần và 514 lần, tương ứng tính trên cơ sở trọng lượng cơ thể và 26 lần và 106 lần, tương ứng tính trên cơ sở bề mặt cơ thể. Sự kết hợp thuốc gây ra độc tính cho động vật mẹ (*maternaltoxic*, túc làm giảm trọng lượng cơ thể và tiêu thụ thực phẩm) xảy ra ở các liều phối hợp B 5,7/HCT 14,3 (mg/kg/ngày) và cao hơn và gây ra độc tính phôi (*fetotoxic*, túc tăng tiêu phôi muộn) ở các liều kết hợp B 17,1/ HCT 42,9 (mg/kg/ngày) và cao hơn. Độc tính cho động vật mẹ ở liều kết hợp B/HCT cao gấp 14/57 lần so với liều MRHD tương ứng, tính trên cơ sở trọng lượng cơ thể và cao gấp 3/12 lần so với liều MRHD tương ứng tính trên cơ sở diện tích bề mặt cơ thể. Độc tính phôi (*fetotoxicity*) của kết hợp B/HCT xảy ra cao gấp 43/172 lần so với liều MRHD tương ứng, tính trên cơ sở trọng lượng cơ thể và gấp 9/35 lần so với liều MRHD, tương ứng, tính trên cơ sở diện tích bề mặt cơ thể. Ở thỏ, sự kết hợp B/HCT không gây quái thai ở liều B10 /HCT 25 (mg/ kg/ ngày). Bisoprolol fumarate và hydrochlorothiazide được sử dụng trong nghiên cứu ở thỏ không gây quái thai cao gấp 25/100 lần liều MRHD, tương ứng, tính trên cơ sở trọng lượng cơ thể và 10/40 lần liều MRHD, tương ứng, tính trên cơ sở bề mặt cơ thể. Sự kết hợp thuốc gây độc tính cho vật mẹ (*maternaltoxic*, giảm trọng lượng cơ thể) xảy ra ở liều kết hợp B1/HCT 2,5 (mg/kg/ ngày) và cao hơn và độc tính phôi (*fetotoxic*, tăng tiêu phôi) xảy ra ở liều kết hợp B10/HCT 25 (mg/kg/ngày). Bội số của liều kết hợp B/HCT so với liều MRHD gây ra độc tính cho vật mẹ cao gấp 2,5/10 tương ứng (tính trên cơ sở trọng lượng cơ thể) và gấp 0,4/01 (tính trên cơ sở diện tích bề mặt cơ thể) và độc tính phôi (*fetotoxicity*) gấp 25/100 tương ứng (tính trên cơ sở trọng lượng cơ thể) và gấp 10/40 (tính trên cơ sở diện tích bề mặt cơ thể). Không có nghiên cứu đầy đủ và được kiểm soát tốt với bisoprolol fumarate và hydrochlorothiazide ở phụ nữ mang thai. Bisoprolol fumarate và hydrochlorothiazide nên được sử dụng trong thời kỳ mang thai chỉ khi lợi ích tiềm năng cao hơn nguy cơ cho thai nhi.  
+*Bisoprolol fumarate:* Ở chuột cống, bisoprolol fumarate không gây quái thai ở liều lên đến 150mg/kg/ngày, túc cao gấp 375 lần và 77 lần so với liều khuyến cáo tối đa cho người MRHD tính trên cơ sở trọng lượng cơ thể và diện tích bề mặt cơ thể, tương ứng. Bisoprolol fumarate gây độc tính phôi (*fetotoxic*, tăng tiêu phôi muộn) ở mức liều 50mg/kg/ngày) và độc tính cho vật mẹ (*maternaltoxic*, giảm tiêu thụ lượng thức ăn và giảm tăng trọng lượng cơ thể) ở mức liều 150mg/kg/ngày. Độc tính phôi ở chuột xảy ra cao gấp 125 lần so với liều MRHD tính trên cơ sở trọng lượng cơ thể và gấp 26 lần so với liều MRHD tính trên cơ sở diện tích bề mặt cơ thể. Độc tính cho vật mẹ xảy ra cao gấp 375 lần so với liều MRHD tính trên cơ sở trọng lượng cơ thể và gấp 77 lần so với liều MRHD tính trên cơ sở diện tích bề mặt cơ thể.  
+Ở thỏ, bisoprolol fumarate không gây quái thai ở các liều lên đến 12,5 mg/kg/ngày, túc cao gấp 31 lần và 12 lần so với liều MRHD tính dựa trên trọng lượng cơ thể và diện tích bề mặt cơ thể, tương ứng, nhưng gây chết phôi (*embryolethal*, tăng tiêu phôi sớm) ở liều 12,5mg/kg/ngày.  
+*Hydrochlorothiazide:* Cho những con chuột nhắt và chuột cống mang thai trong thời gian phát triển cơ quan chính (*organogenesis*) uống *hydrochlorothiazide* với liều lên đến 3000 và 1000 mg/kg/ngày, tương ứng. So với liều MRHD của người những liều này cao gấp 12.000 lần (ở chuột nhắt) và 4000 lần (ở chuột cống), tính dựa trên trọng lượng cơ thể và gấp 1129 lần (ở chuột nhắt) và 824 lần (ở chuột cống), tính dựa trên diện tích bề mặt cơ thể, đã không cho thấy có bằng chứng gây hại đến thai nhi. Tuy nhiên, không có nghiên cứu đầy đủ và có kiểm soát ở phụ nữ mang thai. Do các nghiên cứu sinh sản trên động vật không phải lúc nào cũng giúp tiên đoán phản ứng ở người nên thuốc này được sử dụng trong thời kỳ mang thai chỉ khi nào thật sự cần thiết.
+
+### CHỈ ĐỊNH ĐIỀU TRỊ
+- Kết hợp bisoprolol fumarate (5,0mg) và hydrochlorothiazide (6,25 mg) được chỉ định để điều trị tăng huyết áp. Là kết hợp hai tác nhân hạ huyết áp với liều uống một lần mỗi ngày: thuốc chọn lọc beta, tổng hợp (cạnh tranh thụ thể beta, của tim, bisoprolol fumarate) và một thuốc lợi tiểu nhóm benzothiadiazine (hydrochlorothiazide).
+- Tác dụng hạ huyết áp của các hoạt chất này là hiệp lực. Hydrochlorothiazide liều 6,25 mg làm tăng đáng kể tác dụng hạ huyết áp của bisoprolol fumarate.
+
+**TƯƠNG TÁC VỚI CÁC THUỐC KHÁC, CÁC DẠNG TƯƠNG TÁC KHÁC**
+
+* **Bisoprolol fumarate (B) và Hydrochlorothiazide (HCT)**
+Bisoprolol fumarate + hydrochlorothiazide có thể làm tăng tác dụng của các thuốc hạ huyết áp khác khi dùng đồng thời. Bisoprolol fumarate và hydrochlorothiazide không nên dùng kết hợp với chất chẹn beta khác. Bệnh nhân sử dụng thuốc làm suy giảm/tiêu hao *catecholamine*, chẳng hạn như *reserpine* hoặc *guanethidine* nên được giám sát chặt chẽ vì tác dụng chẹn beta adrenergic tăng thêm có thể gây giảm quá mức hoạt tính giao cảm. Ở những bệnh nhân được điều trị đồng thời với clonidine, nếu cần phải ngưng điều trị thì nên ngưng dùng bisoprolol fumarate và hydrochlorothiazide vài ngày trước khi ngưng dùng clonidine.
+Bisoprolol fumarate+hydrochlorothiazide nên thận trọng khi dùng chung với các thuốc ức chế cơ bóp cơ tim hoặc ức chế sự dẫn truyền nhĩ-thất hoặc thuốc trầm cảm, chẳng hạn như thuốc đối kháng calci xác định (đặc biệt thuộc các nhóm phenylalkylamine [*verapamil*] và benzothiazepine [*diltiazem*]) hoặc các thuốc chống loạn nhịp, chẳng hạn như *disopyramide*.
+Cả hai chất *digitalis glycosides* và chẹn beta làm chậm dẫn truyền nhĩ thất và nhịp tim giảm. Sử dụng đồng thời có thể làm tăng nguy cơ nhịp tim chậm.
+
+* ***Bisoprolol:*** Sử dụng đồng thời với *rifampin* làm tăng độ thanh thải của bisoprolol fumarate, rút ngắn thời gian nửa đời thải trừ. Tuy nhiên, không cần thiết phải thay đổi liều khởi đầu. Tài liệu nghiên cứu về dược động học không cho thấy có tương tác lâm sàng liên quan tới các chất dùng đồng thời khác, bao gồm cả thuốc lợi tiểu thiazide và *cimetidine*. Bisoprolol fumarate không có ảnh hưởng lên thời gian *prothrombin* ở những bệnh nhân dùng liều *warfarin* ổn định.
+*Nguy cơ phản ứng phản vệ:* Trong khi dùng thuốc chẹn beta, bệnh nhân có tiền sử dị ứng nghiêm trọng với các dị nguyên khác nhau có thể có phản ứng mạnh hơn với việc sử dụng thuốc nhắc lại hoặc do tình cờ hoặc do điều trị. Những bệnh nhân này có thể không đáp ứng với liều *epinephrine* thường dùng để điều trị các phản ứng dị ứng.
+
+* ***Hydrochlorothiazide:*** Khi được đồng thời với các loại thuốc sau đây có thể có tương tác với thuốc lợi tiểu thiazide bao gồm rượu, thuốc an thần hoặc thuốc ngủ gây nghiện: Có thể xảy ra tăng tiềm lực hạ huyết áp thế đứng.
+*Thuốc trị đái tháo đường (thuốc uống và insulin):* Cần điều chỉnh liều lượng của thuốc trị đái tháo đường do tăng glucose huyết.
+*Thuốc hạ huyết áp khác:* Có thể xảy ra tác dụng hiệp đồng hoặc tăng tiềm lực hạ huyết áp.
+*Cholestyramine và colestipol nhựa:* Sự hấp thu của hydrochlorothiazide bị suy giảm khi có sự hiện diện của các loại nhựa trao đổi anion nêu trên. Liều duy nhất của nhựa cholestyramine và colestipol gắn kết với hydrochlorothiazide và làm giảm độ hấp thu ở đường tiêu hóa đến 85% và 43%, tương ứng.
+*Corticosteroid, ACTH:* Làm tăng và cạn kiệt chất điện giải, đặc biệt là giảm kali máu.
+*Amin (ví dụ norepinephrine):* Có thể làm giảm đáp ứng với các amin tăng huyết áp nhưng không đủ để ngăn cản việc sử dụng chúng.
+*Thuốc giãn cơ xương, nhóm không khử cực (ví dụ, tubocurarine):* Có thể tăng đáp ứng với các thuốc giãn cơ.
+*Lithium:* Không nên dùng cùng với thuốc lợi tiểu. Các thuốc lợi tiểu làm giảm độ thanh thải thận của lithium và gây ra nguy cơ cao bị ngộ độc lithium. Hãy tham khảo tờ hướng dẫn sử dụng của các chế phẩm lithium trước khi sử dụng bisoprolol fumarate và hydrochlorothiazide.
+*Thuốc kháng viêm không steroid:* Trong một số bệnh nhân, khi uống thuốc kháng viêm không steroid có thể làm giảm tác dụng lợi tiểu, giảm bài tiết natri niệu và giảm tác dụng hạ huyết áp của thuốc lợi tiểu thiazide. Vì vậy, khi bisoprolol fumarate+hydrochlorothiazide được dùng đồng thời với các thuốc kháng viêm không steroid, bệnh nhân cần được giám sát chặt chẽ để xác định mức hiệu quả mong muốn của thuốc lợi tiểu.
+- Khi dùng thiazide, phản ứng nhạy cảm có thể xảy ra với các bệnh nhân có hoặc không có tiền sử dị ứng hoặc hen phế quản. Phản ứng nhạy cảm với ánh sáng và có thể làm tăng nặng thêm hoặc kích hoạt lupus ban đỏ toàn thân đã được báo cáo ở những bệnh nhân dùng thiazide. Tác dụng hạ huyết áp của thiazide có thể gia tăng ở bệnh nhân sau khi cắt bỏ thần kinh giao cảm.
+*Tương tác thuốc ở phòng thí nghiệm*
+Dựa trên các báo cáo liên quan đến thiazide, bisoprolol fumarate+ hydrochlorothiazide có thể làm giảm nồng độ iode gắn kết với protein huyết thanh nhưng không cho dấu hiệu của sự rối loạn tuyến giáp. Do thuốc kết hợp có chứa thiazide (hydrochlorothiazide) nên ngưng dùng thuốc trước khi thực hiện kiểm tra chức năng tuyến cận giáp
+
+**TRƯỜNG HỢP CÓ THAI VÀ CHO CON BÚ**
+*Trường hợp có thai:* Thiazide qua được hàng rào nhau thai và xuất hiện trong máu dây rốn. Việc sử dụng các thiazide ở phụ nữ mang thai đòi hỏi dự đoán được lợi ích so với các nguy cơ có thể cho thai nhi. Những mối nguy hiểm này bao gồm gây vàng da cho bào thai hoặc trẻ sơ sinh, viêm tụy, giảm tiểu cầu và có thể có phản ứng bất lợi khác đã xảy ra ở người lớn.
+*Trường hợp cho con bú:* Bisoprolol fumarate dùng đơn trị hoặc kết hợp với HCT đã không được nghiên cứu ở các bà mẹ đang nuôi con bú. Thiazide được bài tiết qua sữa mẹ. Một lượng nhỏ của bisoprolol fumarate (<2% liều dùng) đã được phát hiện trong sữa của những con chuột cống cho con bú. Do tiềm năng gây ra các phản ứng phụ nghiêm trọng khi điều dưỡng trẻ sơ sinh, việc quyết định ngừng cho con bú hoặc ngừng thuốc nên tính đến tầm quan trọng của thuốc đối với người mẹ.
+
+**TÁC ĐỘNG CỦA THUỐC KHI LÁI XE VÀ VẬN HÀNH MÁY MÓC:** Kinh nghiệm cho thấy việc điều trị không làm ảnh hưởng khả năng lái xe hay sử dụng máy móc của bệnh nhân. Tuy nhiên một số phản ứng bất lợi như chóng mặt, đau đầu, buồn ngủ hiếm gặp nhưng vẫn có thể xảy ra; do đó có thể ảnh hưởng đến khả năng lái xe hay vận hành máy móc.
+*Thông báo cho Bác sĩ những tác dụng không mong muốn gặp phải khi sử dụng thuốc*
+
+**TÁC DỤNG KHÔNG MONG MUỐN (ADR)**
+Kết hợp bisoprolol fumarate (B) và hydrochlorothiazide (HCT)
+Liều kết hợp bisoprolol fumarate/hydrochlorothiazide (HCT) 6,25mg được dung nạp tốt ở hầu hết các bệnh nhân. Hầu hết các tác dụng phụ (AES) đều nhẹ và thoáng qua. Trong số hơn 65.000 bệnh nhân được điều trị trên toàn thế giới với bisoprolol fumarate, hiếm gặp xuất hiện phản ứng cơ
+
+thắt phế quản. Tỷ lệ ngưng do AES tương tự như liều kết hợp bisoprolol fumarate /HCT 6,25 mg và những bệnh nhân dùng giả dược.
+
+Tại Hoa Kỳ, có 252 bệnh nhân được cho dùng các liều bisoprolol fumarate (2,5mg, 5mg,10mg hoặc 40mg) kết hợp với HCT 6,25mg và có 144 bệnh nhân dùng giả dược trong hai thử nghiệm đối chứng. Ở nghiên cứu 1, liều kết hợp bisoprolol fumarate 5mg/HCT 6,25mg được cho dùng trong 4 tuần. Ở nghiên cứu 2, các liều kết hợp bisoprolol fumarate 2,5 mg, 10 mg hoặc 40 mg/HCT 6,25 mg được cho dùng trong 12 tuần.
+
+Tất cả các tác dụng bất lợi xảy ra, có liên quan đến thuốc hay không và các tác dụng phụ bất lợi xảy ra ở các bệnh nhân được điều trị với các liều bisoprolol fumarate 2,5mg-10mg/HCT 6,25mg được báo cáo so sánh với thời gian điều trị 4 tuần có tần suất < 2% so với liều bisoprolol fumarate/HCT 6,25 mg của các bệnh nhân đã được điều trị (cộng thêm các kinh nghiệm phản ứng bất lợi) bao gồm:
+
+*Tim mạch:* Nhịp tim chậm / loạn nhịp tim / thiếu máu cục bộ ngoại vi / đau ngực
+*Hô hấp:* Co thắt phế quản / ho / viêm mũi / nhiễm trùng đường hô hấp trên (URI, Upper Respiratory Infection or Common cold)
+*Toàn thân:* Suy nhược / mệt mỏi / phù thần kinh ngoại vi
+*Hệ thần kinh trung ương:* Chóng mặt / đau đầu
+*Cơ xương khớp:* Chuột rút cơ bắp / đau cơ
+*Tâm thần:* mất ngủ / buồn ngủ / mất ham muốn tình dục/bất lực
+*Hệ tiêu hóa:* tiêu chảy / buồn nôn / rối loạn tiêu hóa
+
+Những kinh nghiệm bất lợi khác được báo cáo theo thành phần kết hợp được liệt kê dưới đây.
+
+**Bisoprolol fumarate:** Bisoprolol được dung nạp tốt ở phần lớn người bệnh. Phần lớn các tác dụng không mong muốn ở mức độ nhẹ và nhất thời. Tỷ lệ người bệnh phải ngừng điều trị do các tác dụng không mong muốn là 3,3% đối với người bệnh dùng bisoprolol và 6,8% đối với bệnh nhân dùng placebo. Trong các thử nghiệm lâm sàng trên toàn thế giới hoặc kinh nghiệm sau khi đưa thuốc ra thị trường, một loạt các tác dụng phụ (AES) khác, ngoài các tác dụng phụ đã được liệt kê ở trên, đã được báo cáo. Trong khi ở nhiều trường hợp liệu đó có phải là mối quan hệ nhân quả tồn tại giữa bisoprolol và những AES hay không, nhưng vẫn được liệt kê để cảnh báo cho bác sĩ về mối quan hệ có thể có.
+
+*Hệ thần kinh trung ương:* Đứng không vững, choáng váng, chóng mặt, nhức đầu, ngất xỉu, dị cảm, giảm cảm giác (*hypoesthesia*), tăng cảm giác (*hyperesthesia*), rối loạn giấc ngủ, mất ngủ, buồn ngủ, trầm cảm, lo lắng / bồn chồn.
+
+*Tim mạch:* Chậm nhịp tim, đánh trống ngực và rối loạn nhịp khác, tứ chi lạnh, đau cơn không đều (*claudication*), hạ huyết áp, hạ huyết áp tư thế, đau ngực, suy tim sung huyết, khó thở khi gắng sức.
+
+*Đường tiêu hóa:* Đau dạ dày / đau vùng thượng vị / đau bụng, loét dạ dày tá tràng, viêm dạ dày, khó tiêu, buồn nôn, nôn mửa, tiêu chảy, táo bón, khô miệng.
+
+*Cơ xương khớp:* Đau khớp, đau cơ bắp / đau khớp, đau lưng / đau cổ, chuột rút cơ bắp, co giật / run.
+
+*Da:* Phát ban, mụn trứng cá, chàm (*eczema*), bệnh vẩy nến, kích ứng da, ngứa, ban xuất huyết, đỏ bừng mặt, vã mồ hôi, rụng tóc, viêm da, viêm da tróc (rất hiếm), viêm mạch da.
+
+*Giác quan đặc biệt:* Rối loạn thị giác, mắt đau / hãn áp, chảy nước mắt bất thường, ù tai, giảm thính lực, đau tai, vị giác bất thường.
+
+*Trao đổi chất:* Bệnh gout.
+
+*Hô hấp:* Hen suyễn, co thắt phế quản, viêm phế quản, khó thở, viêm họng, viêm mũi, viêm xoang, URI (nhiễm trùng đường hô hấp trên).
+
+*Sinh dục:* Giảm ham muốn tình dục / bất lực, bệnh Peyronie rối loạn ở dương vật rất hiếm, viêm bàng quang, đau thận từng cơn (renal colic), tiểu nhiều.
+
+*Tổng quát:* Mệt mỏi, suy nhược, đau ngực, mệt mỏi, phù, tăng cân, phù mạch.
+
+**Hydrochlorothiazide:** Các tác dụng bất lợi theo kinh nghiệm, ngoài những tác dụng được liệt kê ở trên, đã được báo cáo với hydrochlorothiazide (thông thường với liều 25mg hoặc cao hơn).
+
+*Tổng quát:* Suy yếu.
+
+*Hệ thần kinh trung ương:* Chóng mặt, dị cảm, bồn chồn.
+
+*Tim mạch:* Hạ huyết áp tư thế (có thể tăng do dùng rượu, các loại thuốc an thần hoặc các chất gây nghiện).
+
+*Đường tiêu hóa:* Biếng ăn, kích thích dạ dày, co thắt, táo bón, vàng da (intrahepatic, vàng da ứ mật), viêm tụy, viêm túi mật, viêm tuyến nước bọt (sialadenitis), khô miệng.
+
+*Cơ xương khớp:* Co thắt cơ bắp.
+
+*Phản ứng quá mẫn:* Ban xuất huyết, nhạy cảm với ánh sáng, phát ban, nổi mề đay, viêm mạch hoại tử (viêm mạch, viêm mạch da), sốt, suy hô hấp bao gồm cả phù nề, viêm phổi và phù phổi, phản ứng phản vệ.
+
+*Giác quan đặc biệt:* Thoáng mờ mắt, chứng thấy sắc vàng (nhìn hoá vàng, xanthopsia).
+
+*Trao đổi chất:* Bệnh gout.
+
+*Sinh dục:* Rối loạn chức năng tình dục, suy thận, rối loạn chức năng thận,viêm thận kẽ.
+
+*Da:* Ban đỏ đa dạng bao gồm hội chứng Stevens-Johnson, viêm da tróc bao gồm hoại tử biểu bì độc hại.
+
+Dữ liệu kali huyết thanh từ các nghiên cứu có kiểm soát với giả dược ở Mỹ
+
+| Kali | Giả dượcª | B2.5/H 6.25mg | B5/H 6.25mg | B10/H 6.25mg | HCT 25mgª |
+| --- | --- | --- | --- | --- | --- |
+| | (N=130ª) | (N=28ª) | (N=149ª) | (N=28ª) | (N=142ª) |
+| Trung bình thay đổi (mEq/L) | +0.04 | +0.11 | -0.08 | 0.00 | -0.30% |
+| Hạ kali máuᵇ | 0.0% | 0.0% | 0.7% | 0.0% | 5.5% |
+
+a) Nghiên cứu kết hợp chéo.
+b) Bệnh nhân với kali huyết thanh bình thường tính theo đường cơ bản.
+c) Trung bình thay đổi tính từ đường cơ bản ở tuần thứ 4.
+d) Phần trăm bệnh nhân có bất thường ở tuần thứ 4.
+B (Bisoprolol fumarate) – H (Hydrochlorothiazide)
+
+Điều trị với cả 2 thuốc chẹn beta và thuốc lợi tiểu thiazide có liên quan tới sự gia tăng acid uric. Tuy nhiên, tầm quan trọng của sự thay đổi ở những bệnh nhân được điều trị với bisoprolol fumarate/HCT 6,25mg là thấp hơn ở những bệnh nhân được điều trị với HCT 25mg. Sự gia tăng trung bình các lipid trung tính huyết thanh đã được quan sát thấy ở những bệnh nhân được điều trị với bisoprolol fumarate + hydrochlorothiazide 6,25mg. Tổng số cholesterol nói chung không bị ảnh hưởng, nhưng có sự giảm nhẹ lượng cholesterol HDL đã được ghi nhận. Các xét nghiệm bất thường khác được báo cáo theo từng các thành phần được liệt kê dưới đây :
+
+**Bisoprolol fumarate:** Trong thử nghiệm lâm sàng các thay đổi chỉ số thường xuyên nhất trong phòng thí nghiệm là sự gia tăng các chất béo trung tính trong huyết thanh, nhưng điều này không nhất quán trong phát hiện. Bất thường không thường xuyên trong thử nghiệm gan đã được báo cáo. Theo kinh nghiệm của Mỹ các thử nghiệm có đối chứng với liều điều trị bisoprolol fumarate trong 4-12 tuần, tỷ lệ tăng cao đồng thời trong SGOT và SGPT gặp từ 1 đến 2 lần mức bình thường là 3,9% so với 2,5% của giả dược. Không có bệnh nhân nào có mức cao đồng thời gấp hơn 2 lần mức bình thường. Kinh nghiệm sử dụng lâu dài không kiểm soát khi điều trị với bisoprolol fumarate trong 6-18 tháng, tỷ lệ mắc phải của một hoặc đồng thời nhiều mức cao trong chỉ số SGOT và SGPT gấp từ 1 đến 2 lần mức bình thường là 6,2%. Tỷ lệ thường xuất hiện là 1,9%. Đối với mức cao đồng thời của SGOT và SGPT lớn hơn 2 lần mức bình thường, tỷ lệ mắc là 1,5%. Tỷ lệ xuất hiện nhiều là 0,3%. Trong nhiều trường hợp các mức cao là do rối loạn tiềm ẩn hoặc giải quyết trong quá trình tiếp tục điều trị với bisoprolol fumarate. Các thay đổi chỉ số khác ở phòng thí nghiệm bao gồm sự gia tăng nhẹ trong acid uric, creatinine, BUN (blood urea nitrogen or serum creatinine), kali huyết thanh, glucose và phospho, giảm bạch cầu và tiểu cầu. đã có báo cáo thường xuyên của tăng bạch cầu ái toan. Đây là những thay đổi thường không quan trọng và hiếm khi dẫn đến sự ngừng dùng bisoprolol fumarate.
+
+**Hydrochlorothiazide (HCT):** Tăng đường huyết, đường niệu, tăng acid uric máu, hạ kali máu và sự mất cân bằng điện giải (xem Thận trọng), tăng lipid máu, chứng tăng calci huyết, giảm bạch cầu, mất bạch cầu hạt, giảm tiểu cầu, thiếu máu bất sản, thiếu máu tán huyết có liên quan đến liệu pháp HCT.
+
+**Hướng dẫn cách xử trí ADR:**
+Khi xảy ra ADR với các biểu hiện trên, có thể xử trí như các trường hợp của triệu chứng quá liều (xem mục: Quá liều).
+
+### QUÁ LIỀU
+
+Hiện có ít thông tin về quá liều với bisoprolol fumarate và hydrochlorothiazide. Tuy nhiên, một số trường hợp quá liều với bisoprolol fumarate đã được báo cáo (tối đa : 2000 mg). Chậm nhịp tim và / hoặc tụt huyết áp đã được ghi nhận. Thuốc cường giao cảm đã được dùng trong một số trường hợp và tất cả các bệnh nhân đều hồi phục. Các dấu hiệu thường xuyên dự kiến quan sát với quá liều thuốc chẹn beta là chậm nhịp tim và hạ huyết áp. Tình trạng ngủ lịm cũng phổ biến và với quá liều nghiêm trọng sẽ bị mê sảng, hôn mê, co giật và ngừng hô hấp đã được báo cáo xảy ra. Suy tim sung huyết, co thắt phế quản và hạ đường huyết có thể xảy ra, đặc biệt là ở những bệnh nhân đang có sẵn các bệnh ở các cơ quan này. Với các thuốc lợi tiểu thiazide, nhiễm độc cấp tính rất hiếm xảy ra. Điểm đặc trưng nổi bật nhất của quá liều là gây mất dịch và chất điện giải cấp tính . Các dấu hiệu và triệu chứng bao gồm tim mạch (tim đập nhanh, hạ huyết áp, sốc), thần kinh cơ (yếu ớt, lú lẫn, chuột rút, chuột rút cơ bắp chân, đi giật, mệt mỏi, suy giảm ý thức), tiêu hóa (buồn nôn, nôn, khát nước), thận (tiểu nhiều, thiếu niệu hoặc vô niệu [gây ra do hemoconcentration]) và các thay đổi kết quả xét nghiệm ở phòng thí nghiệm (hạ kali máu, hạ natri máu, giảm chloride máu [hypochloremia], nhiễm kiềm, tăng nitrogen urea huyết (BUN, Blood Urea Nitrogen) [đặc biệt ở những bệnh nhân suy thận]) và mất nước do lợi tiểu quá mức. Liều uống LD₅₀ của hydrochlorothiazide lớn hơn 10g/kg cho cả hai loài chuột nhắt và chuột cống. Nếu nghi ngờ có quá liều bisoprolol fumarate và hydrochlorothiazide thì nên ngừng việc điều trị và bệnh nhân cần được theo dõi chặt chẽ. Điều trị triệu chứng và hỗ trợ vì không có thuốc giải độc đặc biệt. Một số dữ liệu hạn chế gợi ý bisoprolol fumarate không thể bị thẩm tách, tương tự như vậy cũng không có dấu hiệu cho thấy hydrochlorothiazide có thể bị thẩm tách. Các biện pháp đề nghị chung bao gồm gây nôn và/hoặc rửa dạ dày, uống than hoạt tính, hỗ trợ hô hấp, điều chỉnh sự mất cân bằng dịch lỏng và chất điện giải và điều trị co giật. Căn cứ vào các tác động dược lý học dự kiến và khuyến cáo cho thuốc chẹn beta khác và hydrochlorothiazide, các biện pháp sau đây cần được xem xét khi thực hiện lâm sàng:
+
+**Nhịp tim chậm:** Tiêm tĩnh mạch atropine. Nếu đáp ứng chưa đạt, có thể dùng thận trọng isoproterenol hoặc một thuốc khác có tác dụng làm tăng, điều nhịp (chronotropic) tích cực. Trong một số trường hợp, đặt máy tạo nhịp tim tạm thời để kích thích tăng nhịp.
+
+**Hạ huyết áp, Sốc:** Bệnh nhân khi nằm tư thế các chân nên được nâng lên. Truyền dịch tĩnh mạch để điều chỉnh cân bằng dịch lỏng và chất điện giải bị mất (kali, natri). Có thể cần tiêm tĩnh mạch glucagon hoặc một thuốc chủ vận alpha-adrenergic.
+
+**Block tim (mức độ thứ hai hoặc thứ ba)**
+Bệnh nhân cần được theo dõi cẩn thận và được điều trị bằng dịch truyền isoproterenol hoặc đặt máy tạo nhịp tim, nếu thích hợp.
+
+**Suy tim sung huyết:** Bắt đầu thực hiện các biện pháp điều trị thông thường (tức là dùng digitalis, thuốc lợi tiểu, thuốc làm giãn mạch, làm tăng lực co bóp cơ tim).
+
+**Co thắt phế quản:** Dùng một thuốc giãn phế quản như isoproterenol và / hoặc aminophylline.
+
+**Hạ đường huyết:** Tiêm tĩnh mạch glucose.
+
+**Giám sát y tế:** Cân bằng nước và chất điện giải (đặc biệt là huyết thanh kali) và chức năng thận phải được theo dõi cho đến khi bình thường hóa.
+
+**ĐÓNG GÓI:** Hộp 3 vỉ – Vỉ 10 viên
+
+**BẢO QUẢN:** Nơi khô, nhiệt độ không quá 30°C. Tránh ánh sáng
+
+**TIÊU CHUẨN ÁP DỤNG:** Tiêu chuẩn cơ sở.
+
+**HẠN DÙNG:** 36 tháng kể từ ngày sản xuất.
+
+*Để xa tầm tay của trẻ em*
+*Đọc kỹ hướng dẫn sử dụng trước khi dùng*
+*Nếu cần thêm thông tin, xin hỏi ý kiến Bác sĩ*
+
+Sản xuất tại
+**CÔNG TY CỔ PHẦN DƯỢC PHẨM SAVI (SaVipharm J.S.C)**
+Lô Z.01-02-03a KCN/KCX Tân Thuận, Q.7, Tp. Hồ Chí Minh
+ĐT : (84.8) 37700 144 - 37700 143 - 37700 142 Fax : (84.8) 37700 145

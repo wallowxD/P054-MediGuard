@@ -1,0 +1,14 @@
+[
+  {
+    "line": 118,
+    "corrected": "Có những báo cáo rất hiếm gặp đột tử với sertindol. Có thể do bệnh về tim. <!-- NEED_REVIEW: Văn bản có chứa từ 'sertindol' nhưng hoạt chất chính của thuốc là 'sulpirid', cần kiểm tra lại độ chính xác của nội dung hướng dẫn sử dụng -->"
+  },
+  {
+    "line": 122,
+    "corrected": "Sertindol có thể làm tăng nồng độ enzym gan thể hiện trong xét nghiệm máu. Điều này có thể có nghĩa là gan của bạn hoạt động không bình thường. <!-- NEED_REVIEW: Văn bản nhắc đến 'Sertindol' thay vì 'Sulpirid' ở mục tác dụng không mong muốn, cần kiểm tra lại -->"
+  },
+  {
+    "line": 493,
+    "corrected": "### 12. NGÀY XEM XÉT SỬA ĐỔI, CẬP NHẬT LẠI NỘI DUNG HƯỚNG DẪN SỬ DỤNG THUỐC <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

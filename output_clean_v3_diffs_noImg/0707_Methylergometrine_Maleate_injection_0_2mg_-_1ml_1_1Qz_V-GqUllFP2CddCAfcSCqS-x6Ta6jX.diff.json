@@ -1,0 +1,14 @@
+[
+  {
+    "line": 87,
+    "corrected": "Hiếm gặp (≥ 10 000 - < 1/1000) <!-- NEED_REVIEW: Tần suất hiếm gặp có khoảng giá trị không đồng nhất hoặc lỗi định dạng (≥ 1/10000 thay vì ≥ 10 000) -->"
+  },
+  {
+    "line": 88,
+    "corrected": "Rất hiếm gặp (<1/10 0000) <!-- NEED_REVIEW: Số lượng chữ số 0 trong mẫu số (10.0000) bất thường so với chuẩn y khoa (< 1/10.000) -->"
+  },
+  {
+    "line": 122,
+    "corrected": "Đối với co thắt: truyền chậm 10 - 20 mg diazepam và hỗ trợ hô hấp. <!-- NEED_REVIEW: Liều diazepam truyền chậm 10 - 20 mg có vẻ quá cao, thường dùng đường tĩnh mạch chậm liều 5 - 10 mg -->"
+  }
+]

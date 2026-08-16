@@ -1,0 +1,14 @@
+[
+  {
+    "line": 16,
+    "corrected": "Tá dược vừa đủ........5g <!-- NEED_REVIEW: Hàm lượng ketoconazol 100 mg cho 1 tuýp 5g (tương đương 2%) nhưng định lượng tá dược vừa đủ 5g là không chuẩn xác về mặt công thức bào chế (lẽ ra phải là khối lượng kem ví dụ 5g hoặc 10g, hoặc tá dược vừa đủ 1 tuýp) -->"
+  },
+  {
+    "line": 61,
+    "corrected": "| | Thường gặp<br>( ≥1/100 đến <1/10 ) | Ít gặp<br>( ≥1/1000 đến <1/100 ) | Chưa rõ |"
+  },
+  {
+    "line": 62,
+    "corrected": "| Rối loạn hệ thống miễn dịch | | Tăng huyết áp <!-- NEED_REVIEW: Tăng huyết áp là tác dụng toàn thân bất thường đối với thuốc kháng nấm bôi da không hấp thu vào tuần hoàn --> | Nổi mề đay |"
+  }
+]

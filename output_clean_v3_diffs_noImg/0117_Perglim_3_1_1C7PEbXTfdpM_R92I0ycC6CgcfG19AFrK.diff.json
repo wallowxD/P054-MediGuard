@@ -1,0 +1,10 @@
+[
+  {
+    "line": 260,
+    "corrected": "Glymeperid ức chế việc tạo glucose ở gan bằng cách làm tăng nồng độ trong tế bào của fructose 2,6-diphosphat, chất này tiếp tục ức chế sự tân tạo. <!-- NEED_REVIEW: Tên hoạt chất bị viết sai chính tả (Glymeperid -> Glimepirid) -->"
+  },
+  {
+    "line": 283,
+    "corrected": "Kết quả nghiên lâm sàng cho thấy nồng độ glimepirid trong huyết thanh giảm khi chức năng thận giảm. <!-- NEED_REVIEW: Thiếu từ 'cứu' trong 'nghiên cứu', và về mặt dược động học, suy thận thường làm tăng/giảm nồng độ thuốc tự do hoặc AUC, cần xem lại dữ liệu -->"
+  }
+]

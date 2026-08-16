@@ -1,0 +1,18 @@
+[
+  {
+    "line": 24,
+    "corrected": "Nhóm dược lý: thuốc kháng histamine đối vận H1, mã ACT: R06AX13 <!-- NEED_REVIEW: Mã ACT thường được gọi là mã ATC trong dược lý học -->"
+  },
+  {
+    "line": 34,
+    "corrected": "Loratadine được hấp thu tốt sau khi uống với nồng độ đỉnh là 24,3 và 30,5 mcg/L, đạt được sau 1 và 1,5 giờ sau khi dùng 40 mg. Loratadine liên kết với protein huyết tương là 97 đến 99%, và có thể tích phân bố lớn (119 l/kg). <!-- NEED_REVIEW: Liều 40 mg là liều cao hơn liều điều trị thông thường (10 mg), cần kiểm chứng lại thông tin dược động học này -->"
+  },
+  {
+    "line": 44,
+    "corrected": "Liều cho người lớn, gồm cả người cao tuổi và trẻ trên 12 tuổi: một viên loratadine 10 mg x 1 lần/ngày, uống lúc đói. <!-- NEED_REVIEW: Loratadine thường được khuyến cáo uống không phụ thuộc vào bữa ăn, uống lúc đói cần xem lại -->"
+  },
+  {
+    "line": 80,
+    "corrected": "Ngủ lơ mơ, nhịp tim nhanh và nhức đầu đã được báo cáo với những quá liều lớn hơn 10 mg (40 đến 180 mg). Trong trường hợp quá liều, nên điều trị ngay triệu chứng toàn thân và sử dụng các biện pháp hỗ trợ và duy trì trong thời gian cần thiết. <!-- NEED_REVIEW: Quá liều lớn hơn 10 mg là chưa chính xác vì liều điều trị hằng ngày đã là 10 mg -->"
+  }
+]

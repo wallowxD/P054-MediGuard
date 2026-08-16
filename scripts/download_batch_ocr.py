@@ -21,7 +21,6 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 # Add backend/src to sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
@@ -48,13 +47,13 @@ def clean_markdown_fences(text: str) -> str:
     return cleaned.strip()
 
 
-def parse_batch_results_jsonl(jsonl_content: str) -> Dict[str, List[Tuple[int, str]]]:
+def parse_batch_results_jsonl(jsonl_content: str) -> dict[str, list[tuple[int, str]]]:
     """Parse JSONL output lines from Gemini Batch API into per-folder page text dictionaries.
 
     Returns:
         Dict mapping folder_name -> list of tuples: (page_number, page_markdown_text)
     """
-    folder_pages: Dict[str, List[Tuple[int, str]]] = {}
+    folder_pages: dict[str, list[tuple[int, str]]] = {}
 
     for line_idx, raw_line in enumerate(jsonl_content.splitlines(), start=1):
         if not raw_line.strip():
@@ -183,7 +182,7 @@ def main():
 
     if args.status_only:
         print("\n" + "=" * 80)
-        print(f"BATCH JOB STATUS SUMMARY")
+        print("BATCH JOB STATUS SUMMARY")
         print("=" * 80)
         print(f"Job ID       : {job_id}")
         print(f"State        : {state_str}")

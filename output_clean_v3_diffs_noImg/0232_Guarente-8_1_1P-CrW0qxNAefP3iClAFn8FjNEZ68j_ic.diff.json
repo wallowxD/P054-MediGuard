@@ -1,0 +1,30 @@
+[
+  {
+    "line": 74,
+    "corrected": "### 7. Tác dụng không mong muốn"
+  },
+  {
+    "line": 75,
+    "corrected": "hư các thuốc khác, candesartan cilexetil có thể gây tác dụng không mong muốn, nhưng không phải ai cũng gặp phải. <!-- NEED_REVIEW: Từ 'hư' có thể do lỗi OCR của từ 'Như' -->"
+  },
+  {
+    "line": 101,
+    "corrected": "- Các thuốc chống tăng huyết áp khác: như các thuốc chẹn beta, chẹn calci hoặc các thuốc lợi tiểu nhóm thiazid, và các thuốc ức chế ACE như lisinopril, catopril hoặc ramipril. <!-- NEED_REVIEW: 'catopril' có khả năng là lỗi chính tả OCR của 'captopril' -->"
+  },
+  {
+    "line": 142,
+    "corrected": "- Nếu bạn bị bệnh tuyến thượng thận gọi là hội chứng Cohn (cường aldosteron tiên phát). <!-- NEED_REVIEW: Hội chứng cường aldosteron tiên phát thường gọi là hội chứng Conn thay vì Cohn -->"
+  },
+  {
+    "line": 176,
+    "corrected": "Candesartan không có tác dụng ức chế enzym chuyển angiotensin (ACE: angiotensin converting enzym), là enzym xúc tác cho quá trình chuyển angiotensin I thành angiotensin II và quá trình giáng hóa bradykinin. Vì vậy thuốc không ảnh hưởng đến đáp ứng đối với bradykinin. Trong các thử nghiệm lâm sàng có kiểm soát so sánh candesartan và các thuốc ức chế ACE, tỷ lệ bệnh nhân ở nhóm dùng candesartan cilexetil bị tác dụng không mong muốn như ho khan thấp hơn."
+  },
+  {
+    "line": 243,
+    "corrected": "Khi candesartan cilexetil đợc sử dụng ở bệnh nhân tăng huyết áp kèm suy thận, khuyến cáo định kỳ theo dõi nồng độ kali và creatinin huyết thanh. Kinh nghiệm sử dụng trên bệnh nhân suy thận <!-- NEED_REVIEW: Từ 'đợc' là lỗi chính tả OCR, nên sửa thành 'được' nhưng giữ nguyên cấu trúc dòng hiện tại -->"
+  },
+  {
+    "line": 376,
+    "corrected": "### 12. NGÀY XEM XÉT SỬA ĐỔI, CẬP NHẬT LẠI NỘI DUNG HƯỚNG DẪN SỬ DỤNG THUỐC <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

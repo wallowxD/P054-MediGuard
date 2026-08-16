@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Pill, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Logo from "@/components/ui/Logo";
@@ -9,7 +9,6 @@ import SidebarHistory from "./SidebarHistory";
 import SidebarNavList from "./SidebarNavList";
 import SidebarUserFooter from "./SidebarUserFooter";
 
-/** Topbar + drawer điều hướng cho mobile/tablet — chỉ hiển thị dưới `lg:` */
 export default function MobileTopbar() {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -27,8 +26,6 @@ export default function MobileTopbar() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Di chuyển focus vào/ra khỏi drawer để không rơi vào nội dung ẩn phía sau.
-  // Bỏ qua lần render đầu — tránh cướp focus vào nút hamburger ngay lúc tải trang.
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -43,29 +40,33 @@ export default function MobileTopbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 flex h-14 items-center gap-3 border-b border-border bg-background-elevated/80 px-4 backdrop-blur lg:hidden">
-        <button
-          ref={menuButtonRef}
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label="Mở menu điều hướng"
-          aria-expanded={open}
-          aria-controls="mobile-nav-drawer"
-          className="rounded-lg p-2 text-foreground-secondary hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          <Menu className="h-5 w-5" aria-hidden />
-        </button>
-        <Link
-          href={ROUTES.DASHBOARD}
-          className="flex items-center gap-2 font-heading text-base font-semibold text-foreground"
-        >
-          <Logo className="h-7 w-auto" />
-        </Link>
+      <header className="sticky top-0 z-40 flex h-14 items-center justify-between gap-3 border-b border-border/60 liquid-glass-bar px-4 lg:hidden">
+        <div className="flex items-center gap-3">
+          <button
+            ref={menuButtonRef}
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Mở menu điều hướng"
+            aria-expanded={open}
+            aria-controls="mobile-nav-drawer"
+            className="flex h-9 w-9 items-center justify-center rounded-full liquid-glass-pill text-foreground hover:bg-surface"
+          >
+            <Menu className="h-4.5 w-4.5" />
+          </button>
+          <Link
+            href={ROUTES.HOME}
+            aria-label="Vinmec — về trang chủ"
+            title="Trang chủ Vinmec"
+            className="flex items-center transition-opacity hover:opacity-85"
+          >
+            <Logo className="h-8 w-auto" />
+          </Link>
+        </div>
       </header>
 
       {open ? (
         <div
-          className="fixed inset-0 z-50 bg-black/50 lg:hidden"
+          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs lg:hidden"
           onClick={close}
           aria-hidden="true"
         />
@@ -78,26 +79,33 @@ export default function MobileTopbar() {
         aria-label="Điều hướng"
         inert={!open}
         aria-hidden={!open}
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col bg-background-elevated shadow-xl transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col liquid-glass-strong shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex h-14 items-center justify-between border-b border-border px-4">
-          <Logo className="h-7 w-auto" />
+        <div className="flex h-16 items-center justify-between border-b border-border/60 px-4">
+          <Link
+            href={ROUTES.HOME}
+            onClick={close}
+            aria-label="Vinmec — về trang chủ"
+            title="Trang chủ Vinmec"
+            className="flex items-center transition-opacity hover:opacity-85"
+          >
+            <Logo className="h-8 w-auto" />
+          </Link>
           <button
             ref={closeButtonRef}
             type="button"
             onClick={close}
             aria-label="Đóng menu"
-            className="rounded-lg p-2 text-foreground-secondary hover:bg-surface hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex h-8 w-8 items-center justify-center rounded-full liquid-glass-pill text-foreground hover:bg-surface"
           >
-            <X className="h-5 w-5" aria-hidden />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="flex flex-1 flex-col justify-between overflow-y-auto px-3 py-4">
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-4">
           <SidebarNavList onNavigate={close} />
-
           <SidebarHistory onNavigate={close} />
         </div>
 

@@ -1,0 +1,14 @@
+[
+  {
+    "line": 81,
+    "corrected": "- Bệnh nhân đang sử dụng các chất ức chế CYP2D6: Tùy thuộc đáp ứng của từng bệnh nhân, nên giảm liều amitriptylin nếu sử dụng đồng thời với 1 chất ức chế CYP2D6 mạnh (như bupropion, quinidin, fluoxetin, paroxetin). <!-- NEED_REVIEW: Thiếu dấu ngoặc đóng đơn cho danh sách thuốc ức chế CYP2D6 -->"
+  },
+  {
+    "line": 108,
+    "corrected": "- Dùng đồng thời thuốc chống trầm cảm 3 vòng với thuốc kháng cholinergic hoặc thuốc an thần có thể bị sốt cao, đặc biệt khi thời tiết nóng."
+  },
+  {
+    "line": 231,
+    "corrected": "Triệu chứng cai thuốc: Rối loạn tiêu hóa như buồn nôn; triệu chứng thực thể như suy nhược, <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

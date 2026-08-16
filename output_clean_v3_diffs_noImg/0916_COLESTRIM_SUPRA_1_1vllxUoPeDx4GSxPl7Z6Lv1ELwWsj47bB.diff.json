@@ -1,0 +1,22 @@
+[
+  {
+    "line": 30,
+    "corrected": "- Theo dõi định kỳ nồng độ lipid và xem xét giảm liều dùng Colestrim Spra nếu chỉ số lipid giảm đáng kể so với bình thường. <!-- NEED_REVIEW: Sai chính tả tên thuốc 'Colestrim Spra' -->"
+  },
+  {
+    "line": 70,
+    "corrected": "- Men Cytochrome P450: Thử nghiệm In vitro sử dụng microsom gan người cho thấy fenofibrat và acid fnofibric không phải là những chất ức chế cytochrom (CYP) P450 isoforms CYP3A4, CYP2D6, CYP2E1, hoặc CYP1A2. Chúng là những chất ức chế yếu CYP2C19 và CYP2A6, và là chất ức chế nhẹ đến vừa CYP2C9 ở nồng độ điều trị."
+  },
+  {
+    "line": 104,
+    "corrected": "- Gan: Các giai đoạn của viêm gan. Khi xảy ra các triệu chứng (như vàng da, ngرج) của viêm gan, cần tiến hành các xét nghiệm xác định và ngưng dùng fnofibric, nếu có thể. <!-- NEED_REVIEW: Lỗi OCR từ 'fnofibric' -->"
+  },
+  {
+    "line": 139,
+    "corrected": "Bệnh nhân suy thận nhẹ đến vừa (eGFR 30-59ml/phút/1,73m²) cho thấy tiếp xúc tương tự nhưng tăng"
+  },
+  {
+    "line": 141,
+    "corrected": "thời gian bán thải acid fenofibric so với người khỏe mạnh. Do đó, không dùng Colestrim Supra cho bệnh nhân suy thận nặng và giảm liều dùng ở bệnh nhân suy thận nhẹ đến vừa. <!-- NEED_REVIEW: Dòng 139 và 141 bị tách dòng ngắt quãng bất thường, cần kiểm tra lại logic nội dung suy thận nhẹ đến vừa -->"
+  }
+]

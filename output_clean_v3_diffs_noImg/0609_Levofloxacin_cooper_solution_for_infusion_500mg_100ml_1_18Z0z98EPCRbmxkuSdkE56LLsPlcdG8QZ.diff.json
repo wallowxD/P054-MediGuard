@@ -1,0 +1,42 @@
+[
+  {
+    "line": 21,
+    "corrected": "1 ml dung dịch tiêm truyền chứa 5,1246 mg levofloxacin hemihydrate turong duong 5 mg levofloxacin. <!-- NEED_REVIEW: Sai chính tả từ 'turong duong' (tương đương) -->"
+  },
+  {
+    "line": 118,
+    "corrected": "|| Chóng mặt | Ù tai | Mất thính lưucj<br>Suy giảm thính lực <!-- NEED_REVIEW: Sai chính tả 'thính lưucj' (thính lực) -->"
+  },
+  {
+    "line": 142,
+    "corrected": "Việc này là do cả hai loại thuốc này có khả năng ức chế sự bài tiết ở ống thận của levofloxacin. Tuy nhiên, trong một nghiên cứu ở liều thử nghiệm sự khác biệt về dược động học không có ý nghĩa thống kê trên lâm sàng . Nên thận trọng khi dùng chung levofloxacin levofloxacin với các thuốc có ảnh hưởng đến sự bài tiết ở ống thận nhưu probenecid và cimetidine , đặc biệt là trên bệnh nhân suy thận <!-- NEED_REVIEW: Lặp từ 'levofloxacin levofloxacin' và sai chính tả 'nhưu' -->"
+  },
+  {
+    "line": 275,
+    "corrected": "Ngừng sử dụng thuốc ngay khi có dấu hiệu hoặc triệu chứng đầu tiên của bất kỳ phản ứng có hại nghiêm trọng nào. Thêm vào đó, tránh sử dụng các kháng sinh nhóm Huoroquinolon cho các bệnh nhân đã từng gặp các phản ứng nghiêm trọng liên quan đến fluoroquinolon,). <!-- NEED_REVIEW: Sai chính tả 'Huoroquinolon' và thừa dấu ngoặc '),' -->"
+  },
+  {
+    "line": 316,
+    "corrected": "Levofloxacin là một kháng sinh tổng hợp thuộc nhóm flouro- quinolone và là đồng phân quang học dạng S (đối hình S (-)) trong hỗn hợp racemic. <!-- NEED_REVIEW: Sai chính tả 'flouro-quinolone' (fluoroquinolone) -->"
+  },
+  {
+    "line": 360,
+    "corrected": "*Enterococcus faecalis, Staphylococcus aureus kháng methicillin # Coagulase am tinh Staphylococcus spp <!-- NEED_REVIEW: Sai chính tả 'am tinh' (âm tính) -->"
+  },
+  {
+    "line": 527,
+    "corrected": "Trường hợp phản ứng da bóng nước nặng như hội chứng Ste vens-Johnson hoặc hội chứng Lyell đã được báo cáo với levo floxacin (xem mục Các tác dụng không mong muốn). Nếu dạ và/hoặc niêm mạc xảy ra phản ứng bỏng <!-- NEED_REVIEW: Sai chính tả 'dạ' (da) -->"
+  },
+  {
+    "line": 627,
+    "corrected": "Tăng thời gian đồng mẫu (PT/INR) và/hoặc chảy máu, có thể trầm trọng, đã được báo cáo trên bệnh nhân được điều trị levo floxacin phối hợp với thuốc đối kháng vitamin K (ví dụ warfa rin). Do đó, cần theo dõi các xét nghiệm đông máu trên bệnh nhấn được điều trị thuốc đối kháng vitamin K (xem mục Cảnh báo đặc biệt và thận trọng trong sử dụng). <!-- NEED_REVIEW: Sai chính tả 'đồng mẫu' (đông máu), 'bệnh nhấn' (bệnh nhân) -->"
+  },
+  {
+    "line": 653,
+    "corrected": "|| Chóng mặt | Ù tai | Mất thính luucj<br>Suy giảm thính lực <!-- NEED_REVIEW: Sai chính tả 'thính luucj' (thính lực) -->"
+  },
+  {
+    "line": 674,
+    "corrected": "### Các dấu hiệu cần lưu ý và khuyến cáo (nếu có) <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

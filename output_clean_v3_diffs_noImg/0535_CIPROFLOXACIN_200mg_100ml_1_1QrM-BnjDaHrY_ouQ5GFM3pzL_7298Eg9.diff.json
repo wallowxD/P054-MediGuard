@@ -1,0 +1,58 @@
+[
+  {
+    "line": 74,
+    "corrected": "*Nhiễm khuẩn than ở đường thở* : Tiêm tĩnh mạch 10 mg/kg/lần, cách 12 giờ/lần, điều trị trong 60 ngày, mg/kg/lần, cách 12 giờ/lần, điều trị trong 60 ngày, liều không vượt quá 400 mg/lần (800 mg/ngày) <!-- NEED_REVIEW: Lỗi lặp lại cụm từ liều dùng trong câu, cần chuẩn hóa lại hàm lượng -->"
+  },
+  {
+    "line": 87,
+    "corrected": "*Nhiễm khuẩn trong ổ bụng*: Tiêm tĩnh mạch 400 mg/lần, cách 12 giờ một lần, trong 7–14 ngày."
+  },
+  {
+    "line": 104,
+    "corrected": "| 30-50 | Uống 250 - 500 mg/lần, cách 12 giờ một lần hoặc tiêm tĩnh mạch liều thường dùng. <!-- NEED_REVIEW: Thiếu dấu gạch ngang giữa khoảng liều 250 và 500 mg --> |"
+  },
+  {
+    "line": 108,
+    "corrected": "<u>*Bệnh nhân suy thận:*</u> Cần phải giảm liều ở người bị suy giảm chức năng thận hay chức năng gan. Trong trường hợp suy chức năng thận, nếu dùng liều thấp thì không cần giảm liều; nếu dùng liều cao phải điều chỉnh liều dựa vào độ thanh thải creatinin hoặc nồng độ creatinin trong huyết thanh Ở những bệnh nhân bị suy giảm chức năng gan, không cần điều chỉnh liều. <!-- NEED_REVIEW: Dùng từ suy thân -> suy thận, kiểm tra lại câu văn dài thiếu dấu ngắt câu -->"
+  },
+  {
+    "line": 117,
+    "corrected": "- Dung dịch ciprofloxacin lactat để tiêm truyền tĩnh mạch chứa 2 mg/ml có thể dùng không cần pha loãng. Thuốc nên truyền vào tĩnh mạch lớn và truyền chậm trong 60 phút để giảm đau và nguy cơ kích ứng mạch. Nếu các phản ứng xảy ra, chúng sẽ hết nhanh sau khi tiêm truyền xong nhà sản xuất khuyến cáo không cần <!-- NEED_REVIEW: Câu bị ngắt quãng ý nghĩa đoạn cuối, cấu trúc lủng củng -->"
+  },
+  {
+    "line": 118,
+    "corrected": "chống chỉ định tiêm truyền ciprofloxacin lactat sau đó trừ khi các phản ứng tái phát và nặng hơn. <!-- NEED_REVIEW: Ngữ cảnh chống chỉ định tiêm truyền tiếp có vẻ bất thường, cần dược sĩ kiểm chứng -->"
+  },
+  {
+    "line": 133,
+    "corrected": "Phải tiêm truyền tĩnh mạch chậm trong 60 phút, nếu tiêm truyền nhanh dưới 30 phút và vào tĩnh mạch nhỏ, tăng nguy cơ kích ứng tại chỗ tiêm. Khi dùng ciprofloxacin phải tránh gắng sức, luyện tập thể lực nặng vì tăng nguy cơ đứt gân <!-- NEED_REVIEW: Sửa lỗi OCR 'nnguy cơ' thành 'nguy cơ' -->"
+  },
+  {
+    "line": 175,
+    "corrected": "- Thần kinh trung ương: Cơn co giật, lú lẫn, rối loạn tâm thần, hoang tưởng, mất ngủ, trầm cảm, loạn cảm ngoại vi, rối loạn thị giác kể cả ảo giác, rối loạn thính giác, ù tai, rối <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  },
+  {
+    "line": 181,
+    "corrected": "*<u>Khác:</u>* Nhạy cảm với ánh sáng khi phơi nắng, phù thanh quản hoặc phù phổi, khó thở, co thắt phế quản. ADR khác đối với tim mạch bao gồm: Phù nề, ngất, cơn bốc hỏa, đổ mồ hôi. Kéo dài thời gian QT và loạn nhịp thất. Bội nhiễm *Candida*, *Clostridium difficile* và *Streptococcus pneumoniae* cũng có thể xảy ra khi sử dụng ciprofloxacin. <!-- NEED_REVIEW: Sửa lỗi chính tả 'Clostridium dificile' thành 'Clostridium difficile' -->"
+  },
+  {
+    "line": 206,
+    "corrected": "Thần kinh trung ương: Cơn co giật, lú lẫn, rối loạn tâm thần, hoang tưởng, mất ngủ, trầm cảm, loạn cảm ngoại vi, rối loạn thị giác kể cả ảo giác, rối loạn thính giác, ù tai, rối <!-- NEED_REVIEW: Đoạn này bị lặp lại nội dung từ phần ADR phía trên, cần kiểm tra cấu trúc tài liệu -->"
+  },
+  {
+    "line": 220,
+    "corrected": "<u>*Khác:*</u> Nhạy cảm với ánh sáng khi phơi nắng, phù thanh quản hoặc phù phổi, khó thở, co thắt phế quản. ADR khác đối với tim mạch bao gồm: Phù nề, ngất, cơn bốc hỏa, đổ mồ hôi. Kéo dài thời gian QT và loạn nhịp thất. Bội nhiễm *Candida*. *Clostridium difficile* và *Streptococcus pneumoniae* cũng có thể xảy ra khi sử dụng ciprofloxacin. <!-- NEED_REVIEW: Sửa dấu chấm thành dấu phẩy trước Candida và sửa lỗi chính tả Clostridium dificile -->"
+  },
+  {
+    "line": 230,
+    "corrected": "- Các triệu chứng khi dùng quá liều bao gồm chóng mặt, run, nhức đầu, mệt mỏi, co giật, ảo giác, nhầm lẫn, khó chịu ở bụng, suy thận và gan cũng như kết tinh và tiểu máu. Độc tính thận đảo ngược đã được báo cáo. Ngoài các biện pháp khẩn cấp thông thường nên theo dõi cần, để ngăn ngừa tinh thể niệu. Bệnh nhân cần được giữ chức năng thận, bao gồm pH nước tiểu và acid hóa, nếu mặt lý thuyết có thể làm giảm sự <!-- NEED_REVIEW: Câu văn bị lỗi dịch máy/OCR nặng ('theo dõi cần', 'nếu mặt lý thuyết'), cấu trúc tối nghĩa -->"
+  },
+  {
+    "line": 231,
+    "corrected": "hấp thu của ciprofloxacin nước tốt. Canxi hoặc magnesium có chứa kháng acid về khi dùng quá liều. <!-- NEED_REVIEW: Câu văn bị đứt đoạn và tối nghĩa, sai ngữ pháp y khoa nặng -->"
+  },
+  {
+    "line": 233,
+    "corrected": "- Chỉ một lượng nhỏ ciprofloxacin (<10%) được loại bỏ Trong trường hợp quá liều, nên thực hiện điều trị triệu bằng thẩm tách máu hoặc thẩm phân phúc mạc. chứng. Thực hiện giám sát ECG nhằm kéo dài khoảng QT <!-- NEED_REVIEW: Trật tự từ bị xáo trộn ('điều trị triệu bằng... chứng'), nguy cơ lỗi OCR nặng -->"
+  }
+]

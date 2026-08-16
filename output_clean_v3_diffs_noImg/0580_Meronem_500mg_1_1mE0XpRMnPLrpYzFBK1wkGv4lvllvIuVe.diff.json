@@ -1,0 +1,38 @@
+[
+  {
+    "line": 21,
+    "corrected": "- Nhiễm khuẩn da va cấu trúc da có biến chứng <!-- NEED_REVIEW: Lỗi gõ máy 'va' thay cho 'và' -->"
+  },
+  {
+    "line": 45,
+    "corrected": "Trong viêm màng não, liều khuyến cáo là 2 g mỗi 8g iờ. Khi điều trị nhiễm khuẩn hay nghi ngờ nhiễm khuẩn Pseudomonas aeruginosa, liều khuyên cáo ở người trưởng thành là ít nhất 1g mỗi 8 giờ (liều tối đa cho phép là 6g mỗi ngày chia làm 3 lần) và liều khuyến cáo ở trẻ em là ít nhất 20 mg/kg mỗi 8 giờ (liều tối đa cho phép là 120 mg/kg mỗi ngày chia làm 3 lần). <!-- NEED_REVIEW: Lỗi gõ '8g iờ' bất thường -->"
+  },
+  {
+    "line": 49,
+    "corrected": "Khuyến cáo nên thường xuyên thử nghiệm độ nhay cảm của thuốc khi điều trị nhiễm khuẩn do Pseudomonas aeruginosa. <!-- NEED_REVIEW: Lỗi chính tả 'nhay cảm' thay vì 'nhạy cảm' -->"
+  },
+  {
+    "line": 53,
+    "corrected": "<u>Liều dùng cho bệnh nhân người lớn suy chức năng thân :</u> <!-- NEED_REVIEW: Lỗi chính tả 'thân' thay vì 'thận' -->"
+  },
+  {
+    "line": 75,
+    "corrected": "Không cản điều chỉnh liều cho bệnh nhân cao tuổi có chức năng thận bình thường hay độ thanh thải creatinine > 50 ml/phút <51ml/phút theo hướng dẫn dưới đây: <!-- NEED_REVIEW: Diễn đạt mâu thuẫn > 50 ml/phút và < 51 ml/phút, lỗi gõ 'cản' -->"
+  },
+  {
+    "line": 91,
+    "corrected": "MERONEM IV với các dạng trình bày có sẵn có thê dùng tiêm tĩnh mạch trong khoảng 5 phút hay truyền tinh mạch trong khoảng 15-30 phút. <!-- NEED_REVIEW: Lỗi chính tả 'thê', 'tinh mạch' -->"
+  },
+  {
+    "line": 107,
+    "corrected": "Khi sử dụng MERONEM IV cho bệnh nhân bị bệnh gan cân theo dõi kỹ nồng độ transaminase và bilirubin Cũng như các kháng sinh khác, tăng sinh các vi khuẩn không nhạy cảm với thuốc có thể xảy ra và do đó, cần phải theo dõi bệnh nhân liên tục. <!-- NEED_REVIEW: Thiếu dấu câu sau bilirubin, lỗi gõ 'cân' -->"
+  },
+  {
+    "line": 183,
+    "corrected": "| Rồi loạn dạ dày-ruột | Thường gặp | Tiêu chảy, ói mửa, buôn nôn, đau bụng. <!-- NEED_REVIEW: Lỗi chính tả 'Rồi loạn' và 'buôn nôn' -->"
+  },
+  {
+    "line": 186,
+    "corrected": "| | | (ALT), aspartate aminotransferase (AST), tăng nồng độ - alkaline phosphatase trong máu, tăng lactate dehydrogenase trong máu, tăng 4 gamma-2) glutamyltransferase (GGT). <!-- NEED_REVIEW: Ký tự lạ '- alkaline' và '4 gamma-2)' bất thường trong tên xét nghiệm -->"
+  }
+]

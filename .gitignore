@@ -35,12 +35,15 @@ Thumbs.db
 data/
 *.db
 *.sqlite3
-dataset/hdsd_raw/
 dataset/hdsd_images/
 dataset/*.pdf
 output/
 output_clean/
 output_clean_v*/
+!dataset/hdsd_raw/
+!output_clean_v3/
+!output_clean_v3_proofread_noImg/
+!output_clean_v3_diffs_noImg/
 tmp/
 
 

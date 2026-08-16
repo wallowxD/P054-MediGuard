@@ -1,0 +1,26 @@
+[
+  {
+    "line": 109,
+    "corrected": "- Rifampicin và fluconazol đã được báo cáo làm giảm nồng độ chất chuyển hóa có hoạt tính khi dùng đồng thời với losartan. Hệ quả lâm sàng của tương tác này chưa được đánh giá. <!-- NEED_REVIEW: Sửa lỗi chính tả 'Rifamipicin' thành 'Rifampicin', 'lorsartan' thành 'losartan' -->"
+  },
+  {
+    "line": 110,
+    "corrected": "- Cũng như với các thuốc khác thuộc nhóm phong bế angiotensin II hoặc có tác dụng tương tự, khi dùng kèm với thuốc lợi niệu giữ kali (ví dụ spironolacton, triamteren, amilorid), chất bổ sung kali hoặc các muối chứa kali có thể dẫn tới tăng nồng độ kali máu. Không khuyến cáo sự kết hợp này. <!-- NEED_REVIEW: Sửa lỗi chính tả 'chưa kali' thành 'chứa kali' -->"
+  },
+  {
+    "line": 178,
+    "corrected": "| Rối loạn máu và hệ bạch huyết | Ít gặp: thiếu máu, ban xuất huyết Henoch-Schonlein, bầm máu, tan huyết<br>Chưa rõ: giảm tiểu cầu | Ít gặp: mất hạt bạch cầu, thiếu máu không tái tạo, thiếu máu tán huyết, giảm bạch cầu, ban xuất huyết, giảm lượng tiểu cầu. <!-- NEED_REVIEW: Sửa lỗi gõ máy 'giatm bạch cầu' thành 'giảm bạch cầu' -->"
+  },
+  {
+    "line": 231,
+    "corrected": "Cả losartan và chất chuyển hóa có hoạt tính của có ái lực với thụ thể AT1 lớn hơn nhiều so với thụ thể AT2. Chất chuyển hóa có hoạt tính của thuốc mạnh hơn từ 10 đến 40 lần so với losartan, tính theo trọng lượng cơ thể. <!-- NEED_REVIEW: Sửa lỗi chính tả 'losatan' thành 'losartan' -->"
+  },
+  {
+    "line": 247,
+    "corrected": "Các thiazid ảnh hưởng đến các cơ chế của ống thận trong việc tái hấp thu chất điện giải, làm tăng sự bài tiết natri và clorid ở mức xấp xỉ tương đương. Tác dụng lợi tiểu của hydrochlorothiazid là làm giảm thể tích huyết tương, làm tăng hoạt tính renin huyết tương và tăng tiết aldosteron, do đó tăng kali máu và mất bicarbonat trong nước tiểu, và giảm kali huyết thanh <!-- NEED_REVIEW: Bất thường sinh lý: Lợi tiểu thiazid gây mất kali (giảm kali máu), dòng văn bản ghi 'tăng kali máu' có thể là mâu thuẫn hoặc dịch sai từ 'hypokalemia' -->"
+  },
+  {
+    "line": 297,
+    "corrected": "Sau khi dùng liều uống losartan ở bệnh nhân xơ gan do rượu từ nhẹ đến vừa, nồng độ losartan và chất chuyển hóa của nó trong máu tăng lần lượt 5 và 1,7 lần so với nồng độ ghi được trên các nam tình nguyện viên trẻ. <!-- NEED_REVIEW: Sửa lỗi chính tả 'lorsartan' thành 'losartan' (cả 2 vị trí) -->"
+  }
+]

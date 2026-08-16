@@ -1,46 +1,44 @@
 import { VINMEC_MILESTONES } from "./vinmec-about-content";
 
-/**
- * "Những cột mốc quan trọng" — dòng thời gian dọc, năm mới nhất ở trên.
- *
- * ★ Đường kẻ dọc và chấm tròn là trang trí thuần CSS trên `<li>`, không phải phần tử
- *   riêng — nhờ vậy cấu trúc vẫn là danh sách lồng danh sách đúng ngữ nghĩa, trình
- *   đọc màn hình nghe được "2026, danh sách 4 mục" thay vì một mớ div.
- *
- * ★ Bản gốc thiếu mốc 2020; khoảng trống đó là thật. Đừng chèn năm cho liền mạch.
- */
 export default function VinmecMilestones() {
   return (
-    <section className="bg-[var(--vm-gray-bg)] py-12 lg:py-16">
-      <div className="vinmec-container">
-        <h2 className="vinmec-title text-[var(--vm-text)]">Những cột mốc quan trọng</h2>
+    <section className="py-12 sm:py-16" aria-label="Các cột mốc phát triển">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mb-12 text-center max-w-2xl mx-auto space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Hành trình phát triển</p>
+          <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Những cột mốc quan trọng
+          </h2>
+          <p className="text-sm text-foreground-secondary">
+            Hành trình không ngừng vươn tới sự hoàn hảo trong chăm sóc y tế.
+          </p>
+        </div>
 
-        <ol className="mt-8">
+        <div className="relative mx-auto max-w-4xl space-y-6">
           {VINMEC_MILESTONES.map((milestone) => (
-            <li
+            <div
               key={milestone.year}
-              className="relative border-l-2 border-[var(--vm-border-soft)] pb-8 pl-8 last:border-transparent last:pb-0"
+              className="flex flex-col sm:flex-row gap-4 sm:gap-8 rounded-3xl liquid-glass p-6 sm:p-8"
             >
-              <span
-                aria-hidden="true"
-                className="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-4 border-[var(--vm-gray-bg)] bg-[var(--vm-green)]"
-              />
-              <h3 className="mb-3 text-2xl font-semibold leading-none text-[var(--vm-title-blue)]">
-                {milestone.year}
-              </h3>
-              <ul className="grid gap-2">
+              <div className="shrink-0">
+                <span className="inline-block font-heading text-3xl font-black text-primary">
+                  {milestone.year}
+                </span>
+              </div>
+              <ul className="grid gap-2.5 min-w-0 flex-1">
                 {milestone.events.map((event) => (
                   <li
                     key={event}
-                    className="relative pl-4 text-sm leading-relaxed text-[var(--vm-text)] before:absolute before:left-0 before:top-[9px] before:h-1.5 before:w-1.5 before:rounded-full before:bg-[var(--vm-text-faint)]"
+                    className="flex items-start gap-2.5 text-xs sm:text-sm leading-relaxed text-foreground-secondary"
                   >
-                    {event}
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    <span>{event}</span>
                   </li>
                 ))}
               </ul>
-            </li>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );

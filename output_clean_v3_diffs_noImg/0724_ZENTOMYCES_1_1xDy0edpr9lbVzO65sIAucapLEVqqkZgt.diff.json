@@ -1,0 +1,10 @@
+[
+  {
+    "line": 11,
+    "corrected": "*( Carbocistein 500 mg )* <!-- NEED_REVIEW: Tên hoạt chất là Carbocistein nhưng thành phần bên dưới lại là Saccharomyces boulardii, có sự mâu thuẫn tên thuốc và hoạt chất -->"
+  },
+  {
+    "line": 31,
+    "corrected": "Không nên mở gói thuốc nơi gần bệnh nhân đặt catherter tĩnh mạch trung ương, tránh bất kỳ tiếp xúc nào vào catheter, đặc biệt là tay. Rất hiếm trường hợp nhiễm nấm trong máu bệnh nhân đặt cartherter tĩnh mạch trung ương ngay cả khi không điều trị bằng S.boulardii, hầu hết thường dẫn đến sốt và cấy máu dương tính với Saccharomyces. <!-- NEED_REVIEW: Từ 'catherter' viết sai chính tả, nên sửa thành 'catheter' -->"
+  }
+]

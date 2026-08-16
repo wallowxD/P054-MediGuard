@@ -1,0 +1,34 @@
+[
+  {
+    "line": 142,
+    "corrected": "Các phản ứng bất lợi được liệt kê dưới đây dựa trên các dữ liệu lâm sàng và được phân loại theo tần suất và nhom hệ cơ quan của MeoDRA. Các nhóm tần suất được xác định theo quy ước sau: Rất thường gặp 2 1/10); thường gặp (2 1/100 đến <1/10), ít gặp (>1/1.000 den < 1/100), hiem gap (>1/10.000 den < 1/1.000), rất hiếm gặp (< 1/10.000), chưa rõ tần suất (không thể ước tính từ các dữ_liệu hiện có). <!-- NEED_REVIEW: Lỗi OCR ký tự toán học và tên MedDRA, cần kiểm tra lại khoảng tần suất -->"
+  },
+  {
+    "line": 151,
+    "corrected": "| | Không rõ – Thoái hóa tinh bột ở da*t <!-- NEED_REVIEW: Ký tự *t có thể là lỗi OCR, cần kiểm tra lại -->"
+  },
+  {
+    "line": 188,
+    "corrected": "Nhóm *dược lý trị liệu*: Thuốc dùng trong bệnh đái tháo đường. Insulin và các chất tương tự insulin dạng tiêm, tác dụng trung gian hoặc tác dụng kéo dài kết hợp với tác dụng nhanh, insulin (người). Mã ATC: A10AD 1. Hiệu quả làm giảm glucose huyết của insulin là do làm cho sự hấp thu glucose dễ dàng hơn sau khi insulin gắn kết vào thụ thể trên tế bào cơ và tế bào mỡ, đồng thời ức chế sản xuất glucose từ gan. <!-- NEED_REVIEW: Mã ATC A10AD 1 có khoảng trắng hoặc thiếu ký tự, cần kiểm tra lại -->"
+  },
+  {
+    "line": 201,
+    "corrected": "Nồng độ cao nhất trong huyết tương của insulin tác dụng nhanh đạt được trong vòng 1,5 - 2,5 giờ sau khi tiền dưới da. <!-- NEED_REVIEW: Từ 'tiền' có thể là lỗi OCR của từ 'tiêm' -->"
+  },
+  {
+    "line": 203,
+    "corrected": "### Phân bố <!-- NEED_REVIEW: Mục phân bố nội dung phía dưới có vẻ lủng củng, cần kiểm tra bản gốc -->"
+  },
+  {
+    "line": 204,
+    "corrected": "Không gần mạnh với protein huyết tương, ngoài trừ không thể kháng insulin trong tuần hoàn (nếu có) đã được quan sát. <!-- NEED_REVIEW: Cụm từ 'Không gần mạnh' và 'không thể kháng' có vẻ sai nghĩa dược lý, cần kiểm tra lại OCR -->"
+  },
+  {
+    "line": 213,
+    "corrected": "Các thử nghiệm cho thấy tin khoảng 5 - 10 giờ. <!-- NEED_REVIEW: Cụm 'cho thấy tin' bất thường, có thể lỗi OCR -->"
+  },
+  {
+    "line": 216,
+    "corrected": "Các dữ liệu tiên lâm sàng cho thấy không có nguy cơ đặc biệt đối với người dựa trên những nghiên cứu thường quy về dược lý an toàn, độc tính với liều nhạc lại, độc tính gen, khả năng gây ung thư, độc tính đối với sinh sản. <!-- NEED_REVIEW: Từ 'nhạc lại' là lỗi OCR của 'lặp lại' -->"
+  }
+]

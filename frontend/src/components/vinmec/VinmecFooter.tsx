@@ -1,168 +1,132 @@
 import Image from "next/image";
 import Link from "next/link";
-import { DEAD_LINK, VINMEC_COPYRIGHT, VINMEC_FOOTER_COLUMNS } from "./vinmec-content";
+import {
+  DEAD_LINK,
+  VINMEC_COPYRIGHT,
+  VINMEC_FOOTER_COLUMNS,
+} from "./vinmec-content";
 
-const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vm-menu-blue)] focus-visible:ring-offset-2";
-
-/**
- * Footer Vinmec: 6 cột liên kết + dải bản quyền màu xám ở đáy.
- *
- * ★ Tự mang class `vinmec-theme` như VinmecHeader — nó được dùng ở cả `/vinmec`
- *   lẫn màn tính năng `/`, không thể trông chờ trang cha bọc sẵn biến `--vm-*`.
- *
- * ★ `medicalDisclaimer`: bật ở màn tính năng. Footer cũ của màn đó mang hai câu
- *   miễn trừ y khoa; thay footer mà bỏ luôn chúng là làm hụt phần an toàn bắt buộc
- *   của sản phẩm (xem nguyên tắc "không kết luận lâm sàng" trong AGENTS.md), nên
- *   chúng được mang sang đây chứ không biến mất.
- */
 export default function VinmecFooter({
   medicalDisclaimer = false,
 }: {
   medicalDisclaimer?: boolean;
 }) {
   return (
-    <footer className="vinmec-theme bg-white">
-      {/* SÁU cột, không phải năm: hai cột link + QR + shop + mạng xã hội + cột
-          badge bên phải. Để `lg:grid-cols-5` là cột badge rơi xuống hàng mới. */}
-      <div className="vinmec-container grid gap-8 py-12 sm:grid-cols-2 lg:grid-cols-6">
-        {VINMEC_FOOTER_COLUMNS.map((column) => (
-          <div key={column.title}>
-            <h3 className="mb-4 text-sm font-semibold text-[var(--vm-text)]">{column.title}</h3>
-            <ul className="space-y-2.5">
-              {column.links.map((link) => (
-                <li key={link}>
-                  <a
-                    href={DEAD_LINK}
-                    className={`rounded-sm text-[13px] text-[var(--vm-text-muted)] transition-colors hover:text-[var(--vm-menu-blue)] ${FOCUS}`}
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-
-        <div>
-          <h3 className="mb-4 text-sm font-semibold text-[var(--vm-text)]">Tải App MyVinmec</h3>
-          <Image
-            src="/images/vinmec/app-qr.svg"
-            alt="Mã QR tải ứng dụng MyVinmec"
-            width={124}
-            height={124}
-            className="h-[110px] w-[110px]"
-          />
-        </div>
-
-        <div>
-          <h3 className="mb-4 text-sm font-semibold text-[var(--vm-text)]">Vinmec shop</h3>
-          <Image
-            src="/images/vinmec/logo-vinmec-system.png"
-            alt="Online.Vinmec"
-            width={460}
-            height={290}
-            className="h-auto w-[120px] object-contain"
-          />
-          <p className="mt-1 text-sm font-semibold leading-tight text-[var(--vm-menu-blue)]">
-            ONLINE.
-            <br />
-            VINMEC
-          </p>
-        </div>
-
-        <div>
-          <h3 className="mb-4 text-sm font-semibold text-[var(--vm-text)]">Theo dõi chúng tôi</h3>
-          <div className="mb-5 flex gap-3">
-            <a href={DEAD_LINK} aria-label="YouTube Vinmec" className={`rounded-sm ${FOCUS}`}>
+    <footer className="relative mt-12 border-t border-border/80 bg-surface/40 backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          {/* Brand Column */}
+          <div className="space-y-4 lg:col-span-2">
+            <Link href="/" className="inline-block">
+              {/* Cùng lý do với logo trên header: chữ `#286BA6` quá xỉn trên nền tối. */}
               <Image
-                src="/images/vinmec/icon-youtube.svg"
-                alt=""
-                aria-hidden="true"
-                width={32}
-                height={32}
-                className="h-8 w-8"
+                src="/images/vinmec/logo.png"
+                alt="Vinmec Healthcare System"
+                width={128}
+                height={70}
+                className="logo-plate h-10 w-auto rounded-xl px-2 py-1"
               />
-            </a>
-            <a href={DEAD_LINK} aria-label="Facebook Vinmec" className={`rounded-sm ${FOCUS}`}>
-              <Image
-                src="/images/vinmec/icon-facebook.svg"
-                alt=""
-                aria-hidden="true"
-                width={32}
-                height={32}
-                className="h-8 w-8"
-              />
-            </a>
-          </div>
-
-          <h3 className="mb-3 text-sm font-semibold text-[var(--vm-text)]">Đối tác liên kết</h3>
-          <Image
-            src="/images/vinmec/partner-buoctiep.webp"
-            alt="Bước Tiếp"
-            width={160}
-            height={60}
-            className="h-9 w-auto object-contain"
-          />
-        </div>
-
-        <div className="flex flex-col items-start gap-3 lg:items-end">
-          <Image
-            src="/images/vinmec/badge-bocongthuong.svg"
-            alt="Đã thông báo Bộ Công Thương"
-            width={200}
-            height={76}
-            className="h-[52px] w-auto object-contain"
-          />
-          <Image
-            src="/images/vinmec/badge-dmca.png"
-            alt="DMCA Protected"
-            width={135}
-            height={28}
-            className="h-[22px] w-auto object-contain"
-          />
-        </div>
-      </div>
-
-      {medicalDisclaimer ? (
-        <div className="vinmec-container pb-8">
-          <div className="border-t border-[var(--vm-border)] pt-6 text-[13px] leading-6 text-[var(--vm-text-muted)]">
-            <p>
-              Sản phẩm mô phỏng phục vụ học tập và demo, không thay thế tư vấn hoặc chỉ
-              định y khoa.
+            </Link>
+            <p className="max-w-sm text-xs leading-relaxed text-foreground-secondary">
+              Hệ thống Y tế phi lợi nhuận do Tập đoàn Vingroup đầu tư phát triển
+              với sứ mệnh mang lại sự lựa chọn hoàn hảo về chăm sóc sức khỏe cho
+              người bệnh.
             </p>
-            <p>Bạn không chắc về kết quả? Hỏi dược sĩ/bác sĩ điều trị.</p>
+            <div className="flex items-center gap-3 pt-2">
+              <span className="text-xs text-foreground-muted">
+                Ứng dụng MyVinmec:
+              </span>
+              <div className="flex items-center gap-2">
+                <Image
+                  src="/images/vinmec/app-qr.svg"
+                  alt="QR tải MyVinmec"
+                  width={64}
+                  height={64}
+                  // Mã QR bắt buộc phải là mực sẫm trên nền sáng thì máy mới quét được.
+                  // Trên nền kính tối nó vừa vô hình vừa vô dụng, nên luôn cần plate sáng.
+                  className="logo-plate h-12 w-12 rounded-xl liquid-glass-subtle p-1"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Links Columns */}
+          {VINMEC_FOOTER_COLUMNS.slice(0, 2).map((column) => (
+            <div key={column.title} className="space-y-3">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                {column.title}
+              </h3>
+              <ul className="space-y-2">
+                {column.links.map((link) => (
+                  <li key={link}>
+                    <a
+                      href={DEAD_LINK}
+                      className="text-xs text-foreground-muted transition-colors hover:text-primary"
+                    >
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* Certifications & Badges Column */}
+          <div className="space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
+              Chứng nhận & Pháp lý
+            </h3>
+            {/* Hai badge pháp lý là ảnh nền trong suốt mực sẫm; `logo-plate` giữ chúng
+                đọc được ở chế độ tối mà không phải đổi màu nhận diện của bên thứ ba. */}
+            <div className="flex flex-col items-start gap-2.5">
+              <Image
+                src="/images/vinmec/badge-bocongthuong.svg"
+                alt="Bộ Công Thương"
+                width={140}
+                height={50}
+                className="logo-plate h-9 w-auto rounded-lg object-contain px-1.5 py-0.5 opacity-80"
+              />
+              <Image
+                src="/images/vinmec/badge-dmca.png"
+                alt="DMCA Protected"
+                width={120}
+                height={24}
+                className="logo-plate h-5 w-auto rounded-md object-contain px-1.5 opacity-80"
+              />
+            </div>
           </div>
         </div>
-      ) : null}
 
-      <div className="bg-[var(--vm-gray-bg)]">
-        <div className="vinmec-container flex flex-col gap-2 py-4 text-[12px] text-[var(--vm-text-muted)] lg:flex-row lg:items-center lg:justify-between">
+        {/* Safety Disclaimer */}
+        {medicalDisclaimer ? (
+          <div className="mt-8 rounded-2xl liquid-glass-subtle p-4 text-xs leading-relaxed text-foreground-muted">
+            <p className="font-semibold text-foreground">Lưu ý y khoa:</p>
+            <p>
+              Các cảnh báo tương tác thuốc và thông tin tra cứu trên hệ thống
+              mang tính tham khảo y tế, không thay thế chỉ định trực tiếp từ bác
+              sĩ chuyên khoa hoặc dược sĩ lâm sàng.
+            </p>
+          </div>
+        ) : null}
+
+        {/* Bottom Bar */}
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-6 text-xs text-foreground-muted sm:flex-row">
           <p>{VINMEC_COPYRIGHT}</p>
-          {/* Hai link này trỏ tới trang thật trong app, không phải `#` như phần còn
-              lại của footer — footer cũ là lối vào DUY NHẤT tới trang pháp lý, và
-              sitemap vẫn quảng cáo chúng. */}
-          <ul className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <li>
-              <Link
-                href="/privacy-policy"
-                className={`rounded-sm transition-colors hover:text-[var(--vm-menu-blue)] ${FOCUS}`}
-              >
-                Chính sách bảo vệ dữ liệu cá nhân
-              </Link>
-            </li>
-            <li aria-hidden="true" className="text-[var(--vm-border)]">
-              |
-            </li>
-            <li>
-              <Link
-                href="/terms-of-service"
-                className={`rounded-sm transition-colors hover:text-[var(--vm-menu-blue)] ${FOCUS}`}
-              >
-                Điều khoản sử dụng
-              </Link>
-            </li>
-          </ul>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/privacy-policy"
+              className="hover:text-primary transition-colors"
+            >
+              Chính sách bảo mật
+            </Link>
+            <span>•</span>
+            <Link
+              href="/terms-of-service"
+              className="hover:text-primary transition-colors"
+            >
+              Điều khoản sử dụng
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

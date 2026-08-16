@@ -1,0 +1,10 @@
+[
+  {
+    "line": 34,
+    "corrected": "Bệnh nhân bị dị ứng với lúa mì (trừ bệnh celiac). <!-- NEED_REVIEW: Mâu thuẫn y khoa: dị ứng lúa mì nhưng lại ngoại trừ bệnh celiac hoặc diễn đạt chưa chính xác về dung nạp gluten/lúa mì -->"
+  },
+  {
+    "line": 39,
+    "corrected": "Thuốc này có chứa tinh bột mì nhưng có thể sử dụng cho bệnh nhân bị celiac. Vì lượng gluten trong tá dược tinh bột mì của thuốc rất nhỏ không đáng kể. <!-- NEED_REVIEW: Tinh bột mì chứa gluten, thường chống chỉ định hoặc rất thận trọng với bệnh celiac; câu khẳng định có thể sử dụng cần được xem xét lại theo tờ hướng dẫn chuẩn -->"
+  }
+]

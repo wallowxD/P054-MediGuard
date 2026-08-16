@@ -1,76 +1,85 @@
-import { ArrowRight } from "lucide-react";
+"use client";
+
+import {
+  ArrowRight,
+  CheckCircle2,
+  Database,
+  Sparkles,
+} from "lucide-react";
 import Button from "@/components/ui/Button";
 import { LANDING_SECTIONS, ROUTES } from "@/constants/routes";
-import Reveal from "./Reveal";
+import InteractivePillCanvas from "./InteractivePillCanvas";
 
-// `id` của section là neo cho mục nav "Trang chủ" và là section đầu tiên scroll spy dò.
 export default function HeroSection() {
   return (
     <section
       id={LANDING_SECTIONS.HOME.slice(1)}
-      className="relative overflow-hidden scroll-mt-20"
+      className="relative overflow-hidden pt-8 pb-16 sm:pt-14 sm:pb-24"
+      aria-label="Giới thiệu Trợ lý An toàn Thuốc Vinmec"
     >
-      <div aria-hidden className="landing-hero-gradient absolute inset-0 -z-10" />
-      <div
-        aria-hidden
-        className="landing-hero-texture pointer-events-none absolute -top-6 -right-10 hidden h-56 w-56 opacity-40 sm:block"
-      />
-      <div
-        aria-hidden
-        className="landing-hero-texture pointer-events-none absolute -bottom-10 -left-14 hidden h-64 w-64 opacity-30 sm:block"
-      />
+      {/*
+        ★ KHÔNG đặt orb `absolute … blur-3xl` vào section này.
 
-      {/* `landing-hero-viewport` giữ min-height của hero ở lg (xem globals.css) và phải
-          ở cùng element với `lg:items-center` để nội dung căn giữa đáng tin cậy. */}
-      <div className="landing-wide-container landing-hero-viewport grid gap-12 pt-10 pb-16 sm:pt-14 sm:pb-20 lg:grid-cols-[minmax(0,38rem)_1fr] lg:items-center lg:gap-[clamp(3rem,6vw,7.5rem)] lg:py-12">
-        {/* The illustration column is capped to the image's own size (not a flexible
-            fraction) so it doesn't leave a wide dead zone next to a fixed-size image
-            as the container grows — the remaining width goes to the text column. */}
-        {/* Left zone — pill render bleeds over the background, no cropping box.
-            The asset itself is already a diagonal composition, so it isn't rotated again here.
-            Capped at a real pixel size (not a % of the column) so it keeps visual weight
-            instead of floating small inside a now much wider column. */}
-        <Reveal className="relative mx-auto w-full max-w-sm lg:mx-0 lg:max-w-none">
-          <img
-            src="/pill-render.png"
-            alt=""
-            aria-hidden="true"
-            draggable={false}
-            className="landing-hero-figure landing-pill-shadow mx-auto w-full max-w-[22rem] select-none sm:max-w-sm lg:mx-0 lg:w-auto lg:max-w-[min(100%,38rem)]"
-          />
-        </Reveal>
+        Section có `overflow-hidden`, nên `blur` bị cắt phẳng đúng tại mép section —
+        tạo một đường kẻ ngang sắc lẹm ngay dưới header và một mảng màu lệch hẳn so
+        với vùng phía trên. Blur chỉ toả mượt theo phương không bị cắt, nên hiện
+        tượng nhìn như "hai khoảng màu" chứ không như lỗi kỹ thuật, rất dễ bỏ sót.
 
-        {/* Right zone — headline, subtext, CTA. */}
-        <Reveal delay="short" className="max-w-xl lg:justify-self-start">
-          {/* Chỉ còn `fontSize` inline vì cỡ chữ theo `clamp()` không có sẵn ở
-              utility Tailwind. Font family cố tình KHÔNG khai báo — hero thừa
-              hưởng Inter như toàn site, xem docs/frontend.md § Typography. */}
-          <h1
-            style={{ fontSize: "clamp(2rem, 1.3rem + 3vw, 3rem)" }}
-            className="font-semibold leading-[1.12] tracking-tight text-foreground"
-          >
-            Hiểu rõ hơn về thuốc
-            <br /> bạn đang sử dụng
-          </h1>
+        Ánh sáng nền của toàn bộ trang công khai do `.landing-theme::before` trong
+        globals.css đảm nhiệm: nó `position: fixed` ở cấp trang nên trải liên tục qua
+        header và mọi section, không mép nào cắt được.
+      */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+          {/* Left Text Zone with Apple-Style Fade-Up Entrance */}
+          <div className="lg:col-span-6 space-y-6">
+            <div className="animate-fade-up inline-flex items-center gap-2 rounded-full liquid-glass-pill px-3.5 py-1.5 text-xs font-semibold text-primary">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>AI An toàn Thuốc Chuẩn Y Khoa</span>
+            </div>
 
-          <p className="mt-5 max-w-md text-lg leading-relaxed text-foreground-secondary">
-            Tra cứu tương tác thuốc và thực phẩm, kèm trích dẫn nguồn để bạn đối chiếu.
-          </p>
+            <h1 className="animate-fade-up delay-100 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl lg:leading-[1.12]">
+              Hiểu rõ hơn về thuốc <br />
+              {/* Bậc màu tối đi kèm — xem ghi chú cùng gradient này trong VinmecHero. */}
+              <span className="bg-gradient-to-r from-[#0066cc] via-[#0284c7] to-[#10b981] bg-clip-text text-transparent dark:from-[#58b6ff] dark:via-[#7dd3fc] dark:to-[#34d399]">
+                bạn đang sử dụng
+              </span>
+            </h1>
 
-          <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <Button href={ROUTES.SIGNIN} variant="accent">
-              Tra cứu thuốc ngay
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Button>
-            <Button href={ROUTES.SIGNUP} variant="outline">
-              Đăng ký
-            </Button>
+            <p className="animate-fade-up delay-200 max-w-xl text-base leading-relaxed text-foreground-secondary sm:text-lg">
+              Tra cứu tương tác thuốc–thuốc, thuốc–bệnh nền và thuốc–thực phẩm theo thời gian thực.
+              Mọi cảnh báo đều có trích dẫn nguyên văn từ tờ hướng dẫn sử dụng gốc.
+            </p>
+
+            <div className="animate-fade-up delay-300 flex flex-wrap items-center gap-3 pt-2">
+              <Button href={ROUTES.SIGNIN} variant="solid" size="lg" className="shadow-lg hover:shadow-primary/25">
+                <span>Tra cứu thuốc ngay</span>
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Button href={ROUTES.SIGNUP} variant="glass" size="lg">
+                <span>Đăng ký tài khoản</span>
+              </Button>
+            </div>
+
+            <div className="animate-fade-up delay-400 flex items-center gap-4 text-xs text-foreground-muted pt-1">
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                <span>100% Dẫn nguồn HDSD</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Database className="h-4 w-4 text-primary" />
+                <span>Đối chiếu exact key chuẩn</span>
+              </div>
+            </div>
           </div>
 
-          <p className="mt-4 max-w-md text-sm text-foreground-secondary">
-            Chỉ mang tính tham khảo, không thay thế tư vấn của bác sĩ hoặc dược sĩ.
-          </p>
-        </Reveal>
+          {/* Right 3D Interactive WebGL Pill - Pure & Large Display without enclosing cards */}
+          <div className="lg:col-span-6 relative flex items-center justify-center">
+            <div className="relative w-full h-[440px] sm:h-[540px] lg:h-[620px] flex items-center justify-center">
+              <InteractivePillCanvas />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -1,127 +1,133 @@
 @import "tailwindcss";
 
 /*
- * Tailwind v4 → KHÔNG có tailwind.config.ts.
- * Tailwind v3 dùng config JS + content globs; ở v4 mọi thứ khai báo bằng CSS:
- * `@theme` sinh utility class từ biến.
- *
- * Đổi màu chỉ sửa ở khối :root / .dark bên dưới, không rải màu trong component.
+ * Hệ thống giao diện Apple Tech-Health & Liquid Glassmorphism
+ * Kết hợp kính mờ đa tầng, specular highlights, ambient glow và viền phản chiếu ánh sáng.
  */
 
-/* Dark mode theo class để còn làm nút toggle được; vẫn tôn trọng cài đặt hệ điều hành */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --background-elevated: #f7f8fa;
-  --surface: rgba(15, 23, 42, 0.04);
-  --card: #ffffff;
+  /* ★ Nền KHÔNG được là trắng hoặc gần trắng.
+     Toàn bộ hệ thống glass ở dưới (`.liquid-glass*`) là các lớp trắng bán trong
+     suốt. Đặt chúng lên nền trắng thì thẻ, viền và specular highlight biến mất
+     hoàn toàn — màn hình chỉ còn một mảng trắng phẳng chói mắt. Glass cần một nền
+     có sắc độ để nổi lên.
+     #eef2f8 ≈ 93% luminance (so với 98% của #f8fafc): vẫn là giao diện sáng, nhưng
+     đủ tối để card trắng và viền kính đọc được. */
+  --background: #eef2f8;
+  --background-elevated: #ffffff;
+  /* Dùng cho dải section xen kẽ. Phải đậm hơn --background, nếu không `bg-surface`
+     ở 45 chỗ trong code sẽ không nhìn thấy gì. */
+  --surface: rgba(203, 213, 225, 0.42);
+  --card: rgba(255, 255, 255, 0.82);
 
   --foreground: #0f172a;
-  --foreground-secondary: #475569;
-  /* Text phụ vẫn là text có nghĩa nên phải đạt WCAG AA 4.5:1 với nền dưới nó.
-     Giá trị cũ #94a3b8 chỉ đạt 2.56:1 trên nền trắng — đọc được trên màn thiết kế,
-     không đọc được ngoài nắng hay trên màn rẻ tiền. #64748b đạt 4.76:1 và trùng đúng
-     token muted của landing theme, nên hai theme không lệch nhau. */
+  --foreground-secondary: #334155;
   --foreground-muted: #64748b;
 
-  --primary: #1b2a4a;
-  --primary-hover: #263b5e;
+  --primary: #0066cc;
+  --primary-hover: #0052a3;
   --primary-foreground: #ffffff;
 
-  /* Nền gradient nhạt cho hero/banner — đậm ở đầu, nhạt dần về trắng */
-  --hero-tint: #eaf1fb;
-  --hero-tint-soft: #f5f9ff;
+  --hero-tint: #ebf3fd;
+  --hero-tint-soft: #f4f8ff;
 
-  --success: #16a34a;
-  --error: #dc2626;
-  --warning: #d97706;
-  --info: #2563eb;
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  --info: #0284c7;
 
-  --border: #e2e8f0;
-  --input: #ffffff;
-  --ring: #1b2a4a;
+  --border: rgba(226, 232, 240, 0.8);
+  --border-glass: rgba(255, 255, 255, 0.6);
+  --input: rgba(255, 255, 255, 0.9);
+  --ring: #0066cc;
 
-  /* Severity — bậc thang cảnh báo, dùng chung cho badge/border/icon.
-     Mức do backend `domain/severity.py` quyết định, FE chỉ tô màu. */
-  --severity-contraindicated: #b91c1c;
+  /* Severity - Chuẩn màu Apple Health */
+  --severity-contraindicated: #dc2626;
   --severity-major: #ea580c;
   --severity-moderate: #d97706;
-  --severity-minor: #0891b2;
+  --severity-minor: #0284c7;
   --severity-unknown: #64748b;
+
+  /* Vinmec Apple Tech Tokens */
+  --vm-blue: #0066cc;
+  --vm-blue-start: #0088cc;
+  --vm-blue-end: #0055aa;
+  --vm-menu-blue: #0066cc;
+  --vm-title-blue: #004d99;
+  --vm-green: #10b981;
+  --vm-green-line: #10b981;
+  --vm-gray-bg: #e7edf6;
+  --vm-text: #1e293b;
+  --vm-text-muted: #64748b;
+  --vm-text-faint: #94a3b8;
+  --vm-border: rgba(226, 232, 240, 0.8);
+  --vm-border-soft: rgba(241, 245, 249, 0.8);
 }
 
 .dark {
-  --background: #0b0d10;
-  --background-elevated: #12151a;
-  --surface: rgba(255, 255, 255, 0.04);
-  --card: #161a20;
+  --background: #090d16;
+  --background-elevated: #0f172a;
+  --surface: rgba(30, 41, 59, 0.6);
+  --card: rgba(15, 23, 42, 0.7);
 
-  --foreground: #ffffff;
-  --foreground-secondary: #a3abb8;
-  /* #6b7280 chỉ đạt 3.55:1 trên nền card tối — dưới ngưỡng AA. #9ca3af đạt 6.7:1. */
-  --foreground-muted: #9ca3af;
+  --foreground: #f8fafc;
+  --foreground-secondary: #cbd5e1;
+  --foreground-muted: #94a3b8;
 
-  --primary: #7ca6e6;
-  --primary-hover: #9cbef0;
-  --primary-foreground: #0b1220;
+  --primary: #38bdf8;
+  --primary-hover: #0284c7;
+  --primary-foreground: #090d16;
 
-  --hero-tint: var(--background-elevated);
-  --hero-tint-soft: var(--background);
+  --hero-tint: rgba(14, 165, 233, 0.15);
+  --hero-tint-soft: rgba(14, 165, 233, 0.08);
 
-  --success: #22c55e;
-  --error: #ef4444;
-  --warning: #f59e0b;
-  --info: #60a5fa;
+  --success: #34d399;
+  --error: #f87171;
+  --warning: #fbbf24;
+  --info: #38bdf8;
 
-  --border: rgba(255, 255, 255, 0.12);
-  --input: #10141a;
-  --ring: #7ca6e6;
+  --border: rgba(51, 65, 85, 0.6);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --input: rgba(15, 23, 42, 0.8);
+  --ring: #38bdf8;
 
   --severity-contraindicated: #f87171;
   --severity-major: #fb923c;
   --severity-moderate: #fbbf24;
   --severity-minor: #38bdf8;
   --severity-unknown: #94a3b8;
+
+  --vm-blue: #38bdf8;
+  --vm-blue-start: #38bdf8;
+  --vm-blue-end: #0284c7;
+  --vm-menu-blue: #38bdf8;
+  --vm-title-blue: #7dd3fc;
+  --vm-green: #34d399;
+  --vm-green-line: #34d399;
+  --vm-gray-bg: #090d16;
+  --vm-text: #f8fafc;
+  --vm-text-muted: #94a3b8;
+  --vm-text-faint: #64748b;
+  --vm-border: rgba(51, 65, 85, 0.6);
+  --vm-border-soft: rgba(30, 41, 59, 0.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --background: #0b0d10;
-    --background-elevated: #12151a;
-    --surface: rgba(255, 255, 255, 0.04);
-    --card: #161a20;
+/* ==========================================================================
+   ★ Cầu nối token → utility class của Tailwind v4
+   ==========================================================================
 
-    --foreground: #ffffff;
-    --foreground-secondary: #a3abb8;
-    /* Giữ trùng giá trị với khối .dark ở trên — xem ghi chú tương phản tại đó. */
-    --foreground-muted: #9ca3af;
+   Tailwind v4 KHÔNG tự đọc biến trong `:root`. Chỉ những biến khai báo trong
+   `@theme` mới sinh ra utility. Không có khối này thì `bg-background`,
+   `text-foreground`, `bg-primary`, `bg-surface`, `text-foreground-muted`,
+   `font-heading`… đều là class không tồn tại: trình duyệt bỏ qua, trang mất sạch
+   màu nền lẫn màu chữ và trả về mặc định trắng–đen của user agent.
 
-    --primary: #7ca6e6;
-    --primary-hover: #9cbef0;
-    --primary-foreground: #0b1220;
+   Mọi token thêm vào `:root`/`.dark` bên trên phải được ánh xạ xuống đây, nếu
+   không nó chỉ dùng được qua arbitrary value `[var(--x)]`.
+   ========================================================================== */
 
-    --hero-tint: var(--background-elevated);
-    --hero-tint-soft: var(--background);
-
-    --success: #22c55e;
-    --error: #ef4444;
-    --warning: #f59e0b;
-    --info: #60a5fa;
-
-    --border: rgba(255, 255, 255, 0.12);
-    --input: #10141a;
-    --ring: #7ca6e6;
-
-    --severity-contraindicated: #f87171;
-    --severity-major: #fb923c;
-    --severity-moderate: #fbbf24;
-    --severity-minor: #38bdf8;
-    --severity-unknown: #94a3b8;
-  }
-}
-
-/* Map biến → token Tailwind: bg-background, text-foreground-muted, border-border… */
 @theme inline {
   --color-background: var(--background);
   --color-background-elevated: var(--background-elevated);
@@ -145,6 +151,7 @@
   --color-info: var(--info);
 
   --color-border: var(--border);
+  --color-border-glass: var(--border-glass);
   --color-input: var(--input);
   --color-ring: var(--ring);
 
@@ -154,14 +161,24 @@
   --color-severity-minor: var(--severity-minor);
   --color-severity-unknown: var(--severity-unknown);
 
+  --color-vm-blue: var(--vm-blue);
+  --color-vm-menu-blue: var(--vm-menu-blue);
+  --color-vm-title-blue: var(--vm-title-blue);
+  --color-vm-green: var(--vm-green);
+  --color-vm-gray-bg: var(--vm-gray-bg);
+  --color-vm-text: var(--vm-text);
+  --color-vm-text-muted: var(--vm-text-muted);
+  --color-vm-text-faint: var(--vm-text-faint);
+  --color-vm-border: var(--vm-border);
+  --color-vm-border-soft: var(--vm-border-soft);
+
   --font-sans: var(--font-body);
   /* ★ Trỏ về CÙNG một font với `font-sans`: toàn site dùng Inter, kể cả tiêu đề —
      đúng như trang chủ Vinmec (xem docs/frontend.md § Typography).
 
-     Vẫn giữ utility `font-heading` thay vì xoá khỏi 14 file đang dùng, vì hai lý do:
-     nó ghi lại ý định "đây là tiêu đề", và nếu sau này team muốn tiêu đề dùng font
-     khác thì chỉ sửa đúng dòng này. Đừng hiểu nhầm `font-heading` là một font riêng
-     — hiện tại nó bằng hệt `font-sans`. */
+     Vẫn giữ utility `font-heading` thay vì xoá khỏi các file đang dùng: nó ghi lại
+     ý định "đây là tiêu đề", và nếu sau này team muốn tiêu đề dùng font khác thì
+     chỉ sửa đúng dòng này. */
   --font-heading: var(--font-body);
 }
 
@@ -173,8 +190,8 @@ body {
 /*
  * Trình duyệt tự cuộn phần tử vừa nhận focus vào khung nhìn, nhưng nó không biết
  * MobileTopbar dính trên đỉnh và BottomNav dính dưới đáy. Không có scroll-margin,
- * phần tử đang focus có thể nằm gọn dưới một trong hai thanh đó — người dùng bàn phím
- * mất dấu hoàn toàn. Chỉ áp dưới `lg` vì từ `lg` trở lên hai thanh này không hiển thị.
+ * phần tử đang focus có thể nằm gọn dưới một trong hai thanh đó — người dùng bàn
+ * phím mất dấu hoàn toàn. Chỉ áp dưới `lg` vì từ `lg` trở lên hai thanh này ẩn.
  */
 @media (max-width: 1023px) {
   :where(a, button, input, select, textarea, summary, [tabindex]) {
@@ -183,292 +200,450 @@ body {
   }
 }
 
-/* Marketing pages stay calm and light even when the authenticated app follows dark mode. */
+/* ==========================================================================
+   Apple Liquid Glass & Specular Classes
+   ========================================================================== */
+
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 8px 32px 0 rgba(0, 50, 120, 0.06),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.03);
+}
+
+.dark .liquid-glass {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 12px 40px 0 rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.5);
+}
+
+.liquid-glass-subtle {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.03);
+}
+
+.dark .liquid-glass-subtle {
+  background: rgba(30, 41, 59, 0.45);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+.liquid-glass-strong {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 16px 48px -8px rgba(0, 50, 120, 0.1),
+    inset 0 1px 0 0 rgba(255, 255, 255, 1);
+}
+
+.dark .liquid-glass-strong {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 20px 50px -10px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.liquid-glass-bar {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 10px 30px -5px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+}
+
+.dark .liquid-glass-bar {
+  background: rgba(10, 16, 29, 0.75);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 10px 30px -5px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+}
+
+.liquid-glass-pill {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.dark .liquid-glass-pill {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/*
+ * ★ Dùng bởi `Button variant="glass"` và nút phụ trong VinmecHero.
+ *
+ * Class này từng được gọi ở hai chỗ nhưng KHÔNG hề tồn tại trong CSS. Tailwind bỏ
+ * qua class lạ mà không báo gì, nên hai nút đó render ra chữ trần không nền, không
+ * viền — nhìn như link chứ không như nút. Đừng xoá khối này.
+ */
+.liquid-glass-button {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 4px 16px rgba(0, 50, 120, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.liquid-glass-button:hover {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 6px 20px rgba(0, 50, 120, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.dark .liquid-glass-button {
+  background: rgba(30, 41, 59, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.dark .liquid-glass-button:hover {
+  background: rgba(51, 65, 85, 0.7);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.liquid-glass-input {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass-input:focus {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.15);
+}
+
+.dark .liquid-glass-input {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.7);
+}
+
+.dark .liquid-glass-input:focus {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+/* Ambient luminous mesh orbs */
+.ambient-glow-mesh {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-blob-1 {
+  position: absolute;
+  top: -10%;
+  left: 20%;
+  width: 55vw;
+  height: 55vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 102, 204, 0.08) 0%, rgba(56, 189, 248, 0.03) 50%, transparent 70%);
+  filter: blur(60px);
+  animation: blob-drift 24s ease-in-out infinite alternate;
+}
+
+.ambient-blob-2 {
+  position: absolute;
+  bottom: 5%;
+  right: -5%;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, rgba(14, 165, 233, 0.02) 50%, transparent 70%);
+  filter: blur(50px);
+  animation: blob-drift 20s ease-in-out infinite alternate-reverse;
+}
+
+.ambient-blob-3 {
+  position: absolute;
+  top: 45%;
+  left: -10%;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.04) 0%, transparent 60%);
+  filter: blur(60px);
+  animation: blob-drift 28s ease-in-out infinite alternate;
+}
+
+.dark .ambient-blob-1 {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(56, 189, 248, 0.04) 50%, transparent 70%);
+}
+
+.dark .ambient-blob-2 {
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.08) 0%, rgba(14, 165, 233, 0.03) 50%, transparent 70%);
+}
+
+@keyframes blob-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -20px) scale(1.06);
+  }
+  100% {
+    transform: translate(-20px, 30px) scale(0.95);
+  }
+}
+
+/* ==========================================================================
+   Theme wrapper cho các trang công khai
+   ==========================================================================
+
+   `(public)/layout.tsx` bọc `.landing-theme`, còn `/` và `/ve-vinmec` bọc thêm
+   `.vinmec-theme`. Hai class này phải TỒN TẠI, nếu không lớp bọc chỉ là div rỗng.
+   ========================================================================== */
+
+/*
+ * ★ `.landing-theme` là BẢNG MÀU SÁNG của cổng công khai, không phải khoá cứng chế độ sáng.
+ *
+ * Trước đây khối này cố tình ghi đè `.dark` để ép trang công khai luôn sáng. Cách đó
+ * hỏng ngay từ đầu và hỏng theo kiểu khó thấy: nó chỉ ghi đè TOKEN MÀU, trong khi các
+ * class kính (`.dark .liquid-glass*` bên trên) khớp theo tổ tiên `.dark` trên thẻ
+ * <html> nên vẫn nhảy sang nền tối. Kết quả là header, thẻ và thanh dịch vụ có nền
+ * xanh đen còn chữ vẫn là `#0f172a` của bảng sáng — chữ tối trên nền tối, không đọc
+ * được, trên cả ba trang `/`, `/tinh-nang`, `/ve-vinmec`.
+ *
+ * Nay cổng công khai theo đúng chế độ mà người dùng chọn: khối này giữ giá trị sáng,
+ * `.dark .landing-theme` ngay bên dưới cung cấp giá trị tối. Thêm token mới ở đây thì
+ * phải thêm cặp tối tương ứng, nếu không nó sẽ rơi lại giá trị sáng khi bật dark.
+ */
 .landing-theme {
-  --background: #ffffff;
-  --background-elevated: #f5f8fc;
-  --surface: #f1f5fb;
-  --card: #ffffff;
-  --foreground: #1b3155;
-  --foreground-secondary: #44546f;
+  --background: #eef2f8;
+  --background-elevated: #ffffff;
+  --surface: rgba(203, 213, 225, 0.42);
+  --card: rgba(255, 255, 255, 0.82);
+
+  --foreground: #0f172a;
+  --foreground-secondary: #334155;
   --foreground-muted: #64748b;
-  --primary: #1b3155;
-  --primary-hover: color-mix(in srgb, var(--primary) 82%, black);
+
+  --primary: #0066cc;
+  --primary-hover: #0052a3;
   --primary-foreground: #ffffff;
-  --hero-tint: #eaf1fb;
-  --hero-tint-mid: #f0f5ff;
-  --hero-tint-soft: #f5f9ff;
-  /* The landing page's one interactive blue — hero CTA, final CTA band, active nav link.
-     Supersedes the old "ocean-blue" name now that it carries a primary CTA role, not just
-     a supporting illustration tint. */
-  --primary-blue: #4b7fc3;
-  --coral: #f28c78;
-  --border: #e6eaf0;
-  --input: #ffffff;
-  --ring: var(--primary);
 
-  --cta-accent: var(--primary-blue);
-  --cta-accent-hover: color-mix(in srgb, var(--primary-blue) 78%, black);
+  --hero-tint: #dfeafb;
+  --hero-tint-soft: #eaf1fc;
 
-  /* Chiều cao header chiếm TRONG LUỒNG, dùng để trừ khỏi viewport khi tính
-     min-height của hero. Trừ sai là hero dài/ngắn hơn màn hình một cách khó hiểu.
+  --border: rgba(203, 213, 225, 0.85);
+  --border-glass: rgba(255, 255, 255, 0.6);
+  --input: rgba(255, 255, 255, 0.9);
+  --ring: #0066cc;
 
-     ★ Từ khi màn "/" dùng VinmecHeader thay cho LandingHeader, con số này là tổng
-       ba tầng của header Vinmec ở `lg` trở lên:
-         36px  topbar gradient (h-9)
-       + 68px  hàng logo + tìm kiếm (h-[68px])
-       + 49px  hàng nav chính (py-3.5 + border-top 1px)
-       = 153px
-       Sửa chiều cao bất kỳ tầng nào trong VinmecHeader thì phải sửa cả ở đây. */
-  --landing-header-block: 153px;
-  /* Header Vinmec nằm trong luồng, KHÔNG sticky và không đè lên hero như header
-     cũ, nên phần bù bằng 0. Giữ biến lại để phép tính bên dưới không phải đổi. */
-  --landing-header-offset: 0px;
-  /* `lg:py-12` của grid hero — khai báo ở đây để phép tính giới hạn ảnh không phải
-     lặp lại một magic number đã nằm trong className. */
-  --landing-hero-block-padding: 3rem;
+  --vm-blue: #0066cc;
+  --vm-menu-blue: #0066cc;
+  --vm-title-blue: #004d99;
+  --vm-green: #10b981;
+  --vm-gray-bg: #e7edf6;
+  --vm-text: #1e293b;
+  --vm-text-muted: #64748b;
+  --vm-text-faint: #94a3b8;
+  --vm-border: rgba(203, 213, 225, 0.85);
+  --vm-border-soft: rgba(226, 232, 240, 0.9);
 
+  background: var(--background);
+  color: var(--foreground);
   scroll-behavior: smooth;
+  /* ★ Bắt buộc, đừng xoá. `::before` bên dưới là lớp nền của trang và nằm ở
+     `z-index: -1`. Thứ tự vẽ trong CSS quy định phần tử z-index âm chỉ được vẽ ĐÈ
+     LÊN nền của phần tử tạo ra stacking context chứa nó — không phải nền của mọi tổ
+     tiên. Không có `isolation`, `.landing-theme` không tạo stacking context, `::before`
+     rơi lên tận stacking context gốc và bị chính `background` opaque ngay dòng trên
+     che kín: gradient biến mất hoàn toàn mà không có lỗi nào báo. */
+  isolation: isolate;
+}
+
+/*
+ * Bảng màu tối của cổng công khai.
+ *
+ * Độ đặc hiệu `.dark .landing-theme` (0,2,0) cao hơn `.landing-theme` (0,1,0) nên
+ * khối này thắng bất kể thứ tự khai báo. Giá trị bám sát `.dark` gốc nhưng nền đẩy
+ * sâu hơn một chút: nền công khai gần như phủ kín màn hình bằng lớp kính, cần nhiều
+ * tương phản hơn khu app để viền và specular highlight còn đọc được.
+ */
+.dark .landing-theme {
+  --background: #060a12;
+  --background-elevated: #0d1524;
+  --surface: rgba(51, 65, 85, 0.45);
+  --card: rgba(15, 23, 42, 0.72);
+
+  --foreground: #f1f5f9;
+  --foreground-secondary: #c7d2e0;
+  --foreground-muted: #93a3b8;
+
+  /* `#0066cc` của bảng sáng chỉ đạt ~2.1:1 trên nền tối này — dưới cả ngưỡng 3:1 cho
+     thành phần phi văn bản. Bậc sáng hơn đạt ~7:1. */
+  --primary: #58b6ff;
+  --primary-hover: #8ccdff;
+  --primary-foreground: #04121f;
+
+  --hero-tint: rgba(56, 189, 248, 0.14);
+  --hero-tint-soft: rgba(56, 189, 248, 0.06);
+
+  --border: rgba(148, 163, 184, 0.22);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --input: rgba(15, 23, 42, 0.75);
+  --ring: #58b6ff;
+
+  --vm-blue: #58b6ff;
+  --vm-menu-blue: #58b6ff;
+  --vm-title-blue: #9ad3ff;
+  --vm-green: #34d399;
+  --vm-gray-bg: #0d1524;
+  --vm-text: #f1f5f9;
+  --vm-text-muted: #93a3b8;
+  --vm-text-faint: #64748b;
+  --vm-border: rgba(148, 163, 184, 0.22);
+  --vm-border-soft: rgba(148, 163, 184, 0.14);
 }
 
 .landing-theme p {
   text-wrap: pretty;
 }
 
-.landing-hero-gradient {
-  background: linear-gradient(
-    180deg,
-    var(--hero-tint) 0%,
-    var(--hero-tint-mid) 40%,
-    var(--background) 100%
-  );
+.vinmec-theme {
+  /* `--max-body` của Vinmec. Container hẹp hơn phần còn lại của app là ĐÚNG bản gốc. */
+  --vm-body-width: 1110px;
+
+  color: var(--vm-text);
+  /* Trùng font với phần còn lại của site (Inter). Khai báo lại ở đây là thừa nhưng
+     cố ý: khối này gom mọi thứ "trông giống Vinmec" vào một chỗ. */
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
 }
 
 /*
- * Hero chiếm trọn phần viewport còn lại dưới LandingHeader.
+ * ★ Nền chuyển sắc cho toàn bộ trang công khai.
  *
- * Chỉ áp dụng từ `lg` trở lên: trên mobile/tablet ép full-screen sẽ đẩy CTA và ảnh ra
- * ngoài màn hình ở máy màn hình thấp, nên dưới `lg` hero vẫn cao theo nội dung.
+ * Không có nó, các section chỉ nằm trên một mảng #eef2f8 phẳng — đỡ chói hơn trắng
+ * nhưng vẫn đơn điệu suốt vài nghìn pixel cuộn. Gradient này cho mắt một điểm tựa
+ * và cho lớp kính thứ gì đó để khúc xạ.
  *
- * Là `min-height`, không phải `height`: màn hình quá thấp thì hero tự dài ra thay vì
- * cắt mất headline/CTA/disclaimer.
+ * ★ Đây là chỗ DUY NHẤT được đặt ánh sáng nền cho trang công khai.
  *
- * Phải nằm CÙNG element với `lg:items-center` (grid `.landing-wide-container` bên trong
- * HeroSection) — xem ghi chú "Căn giữa theo chiều dọc ở Hero" trong docs/frontend.md.
+ * Trước đây mỗi section tự gắn một orb `absolute … blur-3xl`. Vì section nào cũng có
+ * `overflow-hidden`, blur bị cắt phẳng đúng tại mép section: mắt thấy một đường kẻ
+ * ngang và hai mảng màu khác nhau ngay dưới header. Đặt ở cấp trang với `fixed` thì
+ * không có mép nào cắt được — nền liền một dải qua header và mọi section.
+ *
+ * `fixed`: gradient neo theo viewport nên đứng yên khi cuộn — mọi section đều nhìn
+ * thấy cùng một trường sáng, và không có mép nào để cắt.
+ * `z-index: -1`: dưới toàn bộ nội dung, trên nền phẳng của `.landing-theme`. Chỉ đúng
+ * nhờ `isolation: isolate` khai báo ở trên.
  */
-@media (min-width: 1024px) {
-  .landing-hero-viewport {
-    /* Fallback cho trình duyệt chưa có dvh; ở desktop hai đơn vị gần như bằng nhau. */
-    min-height: calc(100vh - var(--landing-header-block));
-    min-height: calc(100dvh - var(--landing-header-block));
-  }
-
-  /*
-   * Trần chiều cao cho ảnh hero, tính theo chỗ trống thật còn lại sau header, phần
-   * sticky đè lên và padding dọc của grid.
-   *
-   * Chỉ đặt `max-height` chứ không đặt `height`: với thẻ ảnh, trình duyệt tự co cả hai
-   * chiều theo đúng tỉ lệ gốc (1448×1086) khi vướng max-width/max-height, nên ảnh nhỏ
-   * lại chứ không bị méo hay bị crop. Ở 1366×768 trở lên trần này chưa chạm tới — nó
-   * chỉ có tác dụng trên laptop màn hình rất thấp.
-   */
-  .landing-hero-figure {
-    max-height: calc(
-      100vh - var(--landing-header-block) - var(--landing-header-offset) -
-        var(--landing-hero-block-padding) * 2
-    );
-    max-height: calc(
-      100dvh - var(--landing-header-block) - var(--landing-header-offset) -
-        var(--landing-hero-block-padding) * 2
-    );
-  }
+.landing-theme::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(62% 50% at 16% 4%, rgba(0, 102, 204, 0.14) 0%, transparent 62%),
+    radial-gradient(52% 42% at 88% 14%, rgba(16, 185, 129, 0.1) 0%, transparent 64%),
+    radial-gradient(70% 50% at 50% 100%, rgba(14, 165, 233, 0.08) 0%, transparent 60%),
+    var(--background);
 }
 
-.landing-cta-gradient {
-  background: linear-gradient(90deg, var(--hero-tint) 0%, var(--hero-tint-soft) 100%);
+/*
+ * Cùng bố cục ánh sáng ở chế độ tối, nhưng đảo vai trò: nền sáng cần vệt màu NHẠT để
+ * không chói, nền tối cần vệt màu ĐẬM hơn để không biến thành một mảng đen phẳng.
+ * Dùng lại đúng ba toạ độ radial của bản sáng nên lúc chuyển theme, vùng sáng không
+ * nhảy chỗ.
+ */
+.dark .landing-theme::before {
+  background:
+    radial-gradient(62% 50% at 16% 4%, rgba(56, 189, 248, 0.16) 0%, transparent 62%),
+    radial-gradient(52% 42% at 88% 14%, rgba(16, 185, 129, 0.12) 0%, transparent 64%),
+    radial-gradient(70% 50% at 50% 100%, rgba(14, 165, 233, 0.1) 0%, transparent 60%),
+    var(--background);
 }
 
+/* ==========================================================================
+   Logo của bên thứ ba trên nền tối
+   ==========================================================================
+
+   Logo đối tác và badge pháp lý là PNG/WebP nền trong suốt với mực sẫm (đã kiểm:
+   partner-*.webp, partner-*.png, badge-dmca.png đều `hasAlpha: yes`). Trên nền tối
+   chúng biến mất hoàn toàn — không phải mờ đi, mà là không còn nhìn thấy gì.
+
+   Không được xử lý bằng `invert`: bộ nhận diện của bên thứ ba không được đổi màu.
+   Cách đúng là trả lại cho chúng nền sáng mà chúng được thiết kế để đứng lên.
+
+   ★ Phải đặt SAU các class `.dark .liquid-glass*`: hai bên cùng độ đặc hiệu (0,2,0)
+   nên thứ tự khai báo mới là thứ quyết định ai thắng.
+   ========================================================================== */
+
+.dark .logo-plate {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+/*
+ * Logo thương hiệu chính đã có nền trong suốt nên không dùng `logo-plate` như logo
+ * đối tác. Giữ cạnh ảnh sắc nét: viền sáng kiểu halo làm chữ nhỏ bị nhoè. Dark mode
+ * chỉ nâng sáng và giảm nhẹ độ bão hoà để màu xanh đọc được trên nền navy. Class
+ * dùng chung cho header công khai, sidebar dashboard, mobile drawer và màn auth.
+ */
+.vinmec-brand-logo {
+  filter: none;
+}
+
+.dark .vinmec-brand-logo {
+  filter: brightness(1.4) saturate(0.88);
+}
+
+/* Dải chuyển từ nền hero xuống nền trang, dùng ở chân LandingFooter. */
 .landing-footer-wash {
   background: linear-gradient(180deg, var(--hero-tint-soft) 0%, var(--background) 9rem);
 }
 
-.landing-primary-shadow {
-  box-shadow: 0 12px 30px -14px color-mix(in srgb, var(--primary) 38%, transparent);
-}
-
-.landing-primary-shadow:hover {
-  box-shadow: 0 16px 34px -14px color-mix(in srgb, var(--primary) 48%, transparent);
-}
-
-/* Soft ground shadow under the hero pill render, tinted navy like the rest of the hero. */
-.landing-pill-shadow {
-  filter: drop-shadow(0 32px 40px color-mix(in srgb, var(--primary) 28%, transparent))
-    drop-shadow(0 8px 16px color-mix(in srgb, var(--primary) 18%, transparent));
-}
-
-/* Deliberately light — a thin border (border-border) carries the card edge,
-   this shadow just lifts it off the page a few pixels. */
-.landing-feature-card {
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 6%, transparent);
-}
-
-.landing-feature-card:hover {
-  box-shadow: 0 12px 28px color-mix(in srgb, var(--foreground) 10%, transparent);
-}
-
-.landing-icon-shadow {
-  box-shadow: 0 6px 16px color-mix(in srgb, var(--primary) 18%, transparent);
-}
-
-/* Hero CTA accent shadow — tinted to --cta-accent, not the navy brand primary. */
-.landing-cta-shadow {
-  box-shadow: 0 14px 32px -16px color-mix(in srgb, var(--cta-accent) 55%, transparent);
-}
-
-.landing-cta-shadow:hover {
-  box-shadow: 0 18px 38px -16px color-mix(in srgb, var(--cta-accent) 65%, transparent);
-}
-
-/* Faint dot texture for the hero's far corners — pure CSS, no image request. */
-.landing-hero-texture {
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--primary) 25%, transparent) 1px,
-    transparent 1.5px
-  );
-  background-size: 15px 15px;
-}
-
-@media (scripting: none) {
-  .landing-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
-/* ─────────────────────────────────────────────────────────────────────────────
- * Cổng Vinmec mô phỏng (/vinmec) — chỉ dùng để trình diễn luồng điều hướng.
- *
- * ★ Token đặt tiền tố `--vm-*`, KHÔNG ghi đè token của app.
- *   `.vinmec-theme` nằm LỒNG trong `.landing-theme` (do (public)/layout.tsx bọc).
- *   Nếu đặt lại `--primary`, `--background`… ở đây thì mọi component dùng chung
- *   (Button, Badge…) sẽ đổi màu theo Vinmec khi vô tình được render bên trong —
- *   hỏng im lặng và rất khó lần ra. Tiền tố riêng khiến hai bảng màu sống cạnh
- *   nhau mà không đụng nhau.
- *
- * Giá trị lấy đúng từ CSS gốc của vinmec.com (`/css/rs-head-foot.css`,
- * `/css/reset.css`, `/css/homepage.css`), không phải ước lượng bằng mắt.
- * ────────────────────────────────────────────────────────────────────────── */
-.vinmec-theme {
-  --vm-blue: #0076c0;
-  --vm-blue-start: #008ca8;
-  --vm-blue-end: #0068ab;
-  --vm-menu-blue: #0077aa;
-  --vm-title-blue: #3274ba;
-  --vm-green: #51be9d;
-  --vm-green-line: #6fbc9f;
-  --vm-gray-bg: #f3f7fb;
-  --vm-text: #4d4c4c;
-  --vm-text-muted: #828282;
-  --vm-text-faint: #a7a7a7;
-  --vm-border: #dfdede;
-  --vm-border-soft: #e0e0e0;
-  /* `--max-body` của Vinmec. Container hẹp hơn phần còn lại của app là ĐÚNG bản gốc. */
-  --vm-body-width: 1110px;
-
-  background: #ffffff;
-  color: var(--vm-text);
-  /* Trùng font với phần còn lại của site (Inter). Khai báo lại ở đây là thừa nhưng
-     cố ý: khối này là nơi gom mọi thứ "trông giống Vinmec", để người đọc thấy ngay
-     font cũng nằm trong nhóm đó. */
-  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
-}
-
-/* Bản mô phỏng cố tình chỉ có một chế độ sáng — không có biến thể dark. */
-.vinmec-container {
-  width: 100%;
-  max-width: var(--vm-body-width);
-  margin-inline: auto;
-  padding-inline: 1rem;
-}
-
-/* `.title-line` gốc: 35px, gạch chân 135×4px màu #6fbc9f. */
-.vinmec-title {
-  position: relative;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  font-size: clamp(1.5rem, 1.05rem + 1.9vw, 2.1875rem);
-  line-height: 1.2;
-  font-weight: 600;
-}
-
-.vinmec-title::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 135px;
-  max-width: 60%;
-  height: 4px;
-  background: var(--vm-green-line);
-}
-
-/* Trong dải xanh đặc, gạch chân đổi sang trắng cho đủ tương phản. */
-.vinmec-title-on-blue::after {
-  background: #ffffff;
-}
-
-.vinmec-title-centered {
-  text-align: center;
-}
-
-.vinmec-title-centered::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.vinmec-topbar {
-  background: linear-gradient(to bottom, var(--vm-blue-start) 0%, var(--vm-blue-end) 100%);
-}
-
-/* Banner gốc: aspect-ratio 1600/500, kẹp trong khoảng 500–600px. Dưới `lg` tỉ lệ
-   này để lại dải ảnh quá thấp nên mobile dùng tỉ lệ riêng, cao hơn. */
-.vinmec-hero-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-}
-
-@media (min-width: 768px) {
-  .vinmec-hero-frame {
-    aspect-ratio: 1600 / 500;
-    min-height: 380px;
-    max-height: 600px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .vinmec-hero-frame {
-    min-height: 500px;
-  }
-}
-
-.vinmec-cta-card {
-  box-shadow: -5px 8px 10px 0 rgba(0, 0, 0, 0.1);
-}
-
-/* Mũi tên "Xem thêm" trượt sang phải khi hover, đúng như bản gốc. */
-.vinmec-arrow-link svg {
-  transition: transform 0.15s ease;
-}
-
-.vinmec-arrow-link:hover svg {
-  transform: translateX(6px);
-}
-
-/* Shared by LandingHeader and HeroSection so they align edge-to-edge at every
-   width. Below `lg` this is just max-w-6xl (the same cap the rest of the
-   landing page uses). From `lg` up it widens to fill large desktop screens
-   instead of staying pinned at 1152px, while keeping a fixed ~48px margin. */
 .landing-wide-container {
   margin-inline: auto;
   max-width: 72rem;
@@ -488,8 +663,86 @@ body {
   }
 }
 
-/* Mỗi lần bong bóng của nút bác sĩ đổi nội dung (ba chấm ↔ câu mời hỏi) thì `key` đổi
-   theo, component remount và animation này chạy lại — không cần transition thủ công. */
+/* ==========================================================================
+   Entrance & Scroll Reveal Animation Utilities
+   ========================================================================== */
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes soft-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes medical-cross-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-1deg);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) rotate(1deg);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-soft-pop {
+  animation: soft-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.vinmec-medical-cross {
+  animation: medical-cross-float 5s ease-in-out infinite;
+  filter: drop-shadow(0 24px 30px rgba(127, 29, 29, 0.2));
+  will-change: transform;
+}
+
+.dark .vinmec-medical-cross {
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.42));
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* Chat FAB Animations */
+
+/* Bong bóng chỉ xuất hiện một lần. Nội dung bên trong tự chuyển trạng thái để khung và
+   avatar không bị thay đổi vị trí khi ba chấm đổi thành câu mời hỏi. */
 .chat-fab-bubble {
   animation: chat-fab-bubble-in 0.35s ease both;
 }
@@ -505,77 +758,98 @@ body {
   }
 }
 
-/* Vòng sóng quanh nút bác sĩ: chỉ đập vài nhịp rồi tắt hẳn (base opacity 0, animation
-   không fill) để không có vật thể động vĩnh viễn ở góc màn hình. */
+.chat-fab-content {
+  animation: chat-fab-content-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes chat-fab-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .chat-fab-ping {
-  opacity: 0;
-  animation: chat-fab-ping 1.4s cubic-bezier(0, 0, 0.2, 1) 5;
+  animation: chat-fab-ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
 @keyframes chat-fab-ping {
-  0% {
-    opacity: 0.55;
-    transform: scale(1);
-  }
-  80%,
-  100% {
+  75%, 100% {
+    transform: scale(1.6);
     opacity: 0;
-    transform: scale(1.7);
   }
 }
 
-/* Bong bóng "đang nghĩ" trên đầu bác sĩ: bồng bềnh + ba chấm chạy liên tục, kể cả khi
-   người dùng chưa tương tác, để nút trông như đang chờ được hỏi. */
-.chat-fab-think,
-.chat-fab-think-tail {
-  animation: chat-fab-float 3.2s ease-in-out infinite;
+.chat-fab-think {
+  animation: chat-fab-float 3.5s ease-in-out infinite;
 }
 
 .chat-fab-think-tail {
-  animation-delay: 0.12s;
+  animation-delay: 0.15s;
 }
 
 @keyframes chat-fab-float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
   }
 }
 
 .chat-fab-dot {
-  animation: chat-fab-dot 1.3s ease-in-out infinite;
+  animation: chat-fab-dot 1.4s ease-in-out infinite;
 }
 
 .chat-fab-dot:nth-child(2) {
-  animation-delay: 0.18s;
+  animation-delay: 0.2s;
 }
 
 .chat-fab-dot:nth-child(3) {
-  animation-delay: 0.36s;
+  animation-delay: 0.4s;
 }
 
 @keyframes chat-fab-dot {
-  0%,
-  60%,
-  100% {
+  0%, 60%, 100% {
     opacity: 0.3;
     transform: translateY(0);
   }
   30% {
     opacity: 1;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
   }
 }
 
+/* ==========================================================================
+   Reduced motion
+   ==========================================================================
+   Người bật "giảm chuyển động" ở hệ điều hành không được nhận vật thể động vĩnh
+   viễn. Reveal khi cuộn vẫn hiện nội dung (opacity/transform về trạng thái cuối),
+   chỉ bỏ phần chuyển động.
+   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   .chat-fab-bubble,
+  .chat-fab-content,
   .chat-fab-ping,
   .chat-fab-think,
   .chat-fab-think-tail,
-  .chat-fab-dot {
+  .chat-fab-dot,
+  .vinmec-medical-cross,
+  .ambient-blob-1,
+  .ambient-blob-2,
+  .ambient-blob-3 {
     animation: none;
+  }
+
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-soft-pop {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
   }
 }

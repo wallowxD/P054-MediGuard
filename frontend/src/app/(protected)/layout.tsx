@@ -5,35 +5,46 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import AppSidebar from "@/components/navigation/AppSidebar";
 import { BottomNav } from "@/components/navigation/BottomNav";
 import MobileTopbar from "@/components/navigation/MobileTopbar";
-import SkipLink, { MAIN_CONTENT_ID } from "@/components/ui/SkipLink";
+import { useSidebarCollapsed } from "@/components/navigation/use-sidebar-collapsed";
 
 import { ChatFab, ChatSidebar } from "@/components/chat";
 import { ChatProvider } from "@/context/ChatContext";
 
-// Middleware lo phần auth — vào được đây nghĩa là đã đăng nhập.
-// Desktop dùng AppSidebar cố định bên trái; mobile/tablet dùng MobileTopbar + drawer.
-// Hai component không hiển thị cùng lúc (chia theo breakpoint `lg:`) nên không tạo
-// navigation trùng lặp.
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
+  const { collapsed } = useSidebarCollapsed();
+
   return (
     <ChatProvider>
-      <div className="min-h-screen bg-background text-foreground lg:pl-64">
-        <MobileTopbar />
-        <AppSidebar />
-        <main className="mx-auto max-w-6xl p-4 pb-20 sm:p-6 lg:pb-6">
-          <Suspense
-            fallback={
-              <div className="flex min-h-96 items-center justify-center">
-                <LoadingSpinner size="lg" />
-              </div>
-            }
-          >
-            {children}
-          </Suspense>
-        </main>
-        <BottomNav />
-        <ChatFab />
-        <ChatSidebar />
+      <div className="relative min-h-screen bg-background text-foreground">
+        {/* Ambient Apple Lighting Layers */}
+        <div className="ambient-glow-mesh" aria-hidden>
+          <div className="ambient-blob-1" />
+          <div className="ambient-blob-2" />
+          <div className="ambient-blob-3" />
+        </div>
+
+        <div
+          className={`relative z-10 min-h-screen transition-[padding] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            collapsed ? "lg:pl-20" : "lg:pl-72"
+          }`}
+        >
+          <MobileTopbar />
+          <AppSidebar />
+          <main className="mx-auto max-w-6xl p-4 pb-24 sm:p-6 lg:p-8 lg:pb-12">
+            <Suspense
+              fallback={
+                <div className="flex min-h-96 items-center justify-center">
+                  <LoadingSpinner size="lg" />
+                </div>
+              }
+            >
+              {children}
+            </Suspense>
+          </main>
+          <BottomNav />
+          <ChatFab />
+          <ChatSidebar />
+        </div>
       </div>
     </ChatProvider>
   );

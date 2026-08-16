@@ -5,35 +5,45 @@ import { usePathname } from "next/navigation";
 import { PRIMARY_NAV_ITEMS, isNavItemActive } from "./nav-items";
 
 interface SidebarNavListProps {
-  /** Gọi khi người dùng bấm một link — dùng để đóng drawer trên mobile */
   onNavigate?: () => void;
+  collapsed?: boolean;
 }
 
-/** Danh sách điều hướng chính — dùng chung cho AppSidebar và drawer mobile. */
-export default function SidebarNavList({ onNavigate }: SidebarNavListProps) {
+export default function SidebarNavList({ onNavigate, collapsed = false }: SidebarNavListProps) {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Điều hướng chính" className="flex flex-col gap-1">
-      {PRIMARY_NAV_ITEMS.map(({ href, label, Icon }) => {
-        const active = isNavItemActive(pathname, href);
-        return (
-          <Link
-            key={href}
-            href={href}
-            onClick={onNavigate}
-            aria-current={active ? "page" : undefined}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-              active
-                ? "bg-surface text-primary"
-                : "text-foreground-secondary hover:bg-surface hover:text-foreground"
-            }`}
-          >
-            <Icon className="h-4 w-4 shrink-0" aria-hidden />
-            <span className="flex-1">{label}</span>
-          </Link>
-        );
-      })}
+    <nav aria-label="Điều hướng chính">
+      {collapsed ? null : (
+        <p className="mb-2.5 px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-foreground-muted">
+          Tra cứu
+        </p>
+      )}
+
+      <div className="flex flex-col gap-1">
+        {PRIMARY_NAV_ITEMS.map(({ href, label, Icon }) => {
+          const active = isNavItemActive(pathname, href);
+          return (
+            <Link
+              key={href}
+              href={href}
+              onClick={onNavigate}
+              aria-current={active ? "page" : undefined}
+              title={collapsed ? label : undefined}
+              className={`flex h-11 items-center rounded-xl text-sm transition-colors duration-200 ${
+                collapsed ? "mx-auto w-11 justify-center" : "gap-3 px-3"
+              } ${
+                active
+                  ? "bg-primary/10 font-semibold text-primary"
+                  : "font-medium text-foreground-secondary hover:bg-surface/70 hover:text-foreground"
+              }`}
+            >
+              <Icon className="h-5 w-5 shrink-0" strokeWidth={1.75} aria-hidden />
+              <span className={collapsed ? "sr-only" : "min-w-0 flex-1 truncate"}>{label}</span>
+            </Link>
+          );
+        })}
+      </div>
     </nav>
   );
 }

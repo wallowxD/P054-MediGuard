@@ -1,0 +1,10 @@
+[
+  {
+    "line": 10,
+    "corrected": "*Tá dược:* Lactose, Magnesi stearat, Gelatin, Titan dioxyd (E171), sắt oxyd hydrat (E172) (oxyd sắt vàng), phức hợp Chloropyyllin-đồng (E141). <!-- NEED_REVIEW: Từ 'Chloropyyllin' có thể là lỗi chính tả OCR của 'Chlorophyllin' -->"
+  },
+  {
+    "line": 57,
+    "corrected": "Dùng chung với chất ức chế monoamino-oxidase có thể gây tăng huyết áp. <!-- NEED_REVIEW: Men vi sinh Saccharomyces boulardii thường không gây tương tác tăng huyết áp với MAOI, cần kiểm tra lại thông tin này -->"
+  }
+]

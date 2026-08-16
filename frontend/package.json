@@ -23,13 +23,15 @@
     "react-loading-skeleton": "^3.5.0",
     "react-redux": "^9.3.0",
     "react-toastify": "^11.1.0",
-    "react-tooltip": "^6.0.8"
+    "react-tooltip": "^6.0.8",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^26.1.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "@types/three": "^0.185.4",
     "eslint": "9.39.5",
     "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",

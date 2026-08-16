@@ -1,0 +1,34 @@
+[
+  {
+    "line": 18,
+    "corrected": "Mã ATC: D06AX09, R01AX06 <!-- NEED_REVIEW: Mã ATC R01AX06 thường dùng cho chế phẩm xịt mũi, cần xem lại có phù hợp với mupirocin dạng thuốc mỡ da không -->"
+  },
+  {
+    "line": 36,
+    "corrected": "Trường hợp bệnh thận đa nang <!-- NEED_REVIEW: Chống chỉ định ở bệnh nhân bệnh thận đa nang thường liên quan đến các thuốc có tá dược PEG hàm lượng cao dùng đường toàn thân, với thuốc mỡ bôi ngoài da chứa PEG cần xem xét lại mức độ hấp thu -->"
+  },
+  {
+    "line": 37,
+    "corrected": "Phụ nữ có thai <!-- NEED_REVIEW: Mupirocin bôi ngoài da xếp loại B/C tùy phân loại, chống chỉ định tuyệt đối ở phụ nữ có thai cần được xem xét lại vì hấp thu qua da rất thấp -->"
+  },
+  {
+    "line": 42,
+    "corrected": "Không sử dụng thuốc này cho vết thương trong thời gian dài. Sử dụng lâu có thể tăng nguy cơ nhiễm khuẩn, viêm ruột kết màng giả. Không được bôi vào mắt, vào trong mũi. <!-- NEED_REVIEW: Mupirocin mỡ thường được chỉ định cho vết thương nhiễm khuẩn, câu 'Không sử dụng thuốc này cho vết thương' có thể gây mâu thuẫn với chỉ định -->"
+  },
+  {
+    "line": 54,
+    "corrected": "Không có báo cáo về sự dụng nạp của thuốc.Tuy nhiên, không loại trừ khả năng này. <!-- NEED_REVIEW: Từ 'sự dụng nạp' có thể là lỗi dịch từ 'tolerance' (sự kháng thuốc/dung nạp), cần hiệu đính chính xác hơn trong ngữ cảnh kháng sinh -->"
+  },
+  {
+    "line": 58,
+    "corrected": "Nếu đang sử dụng thuốc này và thuốc khác cùng lúc, tác dụng kháng khuẩn giảm. <!-- NEED_REVIEW: Mupirocin bôi ngoài da thường ít bị giảm tác dụng bởi thuốc khác trừ khi trộn trực tiếp, thông tin này quá chung chung -->"
+  },
+  {
+    "line": 64,
+    "corrected": "**Sử dụng ở trẻ em:**"
+  },
+  {
+    "line": 65,
+    "corrected": "Nếu sử dụng cùng các thuốc khác, tác dụng kháng khuẩn bị giảm. <!-- NEED_REVIEW: Nội dung mục Sử dụng ở trẻ em bị nhầm lẫn với tương tác thuốc ở dòng 58 -->"
+  }
+]

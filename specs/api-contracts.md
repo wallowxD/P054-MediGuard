@@ -3,7 +3,7 @@
 ## Nguồn sự thật
 
 ```text
-Pydantic schema + FastAPI route
+DB Models (SQLAlchemy) + Pydantic schema + FastAPI route
 → generated OpenAPI
 → frontend/src/lib/api/types.gen.ts
 → frontend service/query/component
@@ -13,12 +13,13 @@ Không sửa `types.gen.ts` bằng tay và không tạo handwritten type trùng 
 
 ## Quy ước phản hồi
 
-- Success trả typed payload trực tiếp theo ADR 0011.
-- Error dùng HTTP status phù hợp và typed error body.
-- Warning item bắt buộc có citation list không rỗng.
-- Missing/invalid evidence nằm trong structured `unavailable`, không dùng
-  `severity: unknown` thay thế.
+- Success trả typed payload trực tiếp theo [ADR 0011](../adrs/0011-direct-api-responses.md).
+- Error dùng HTTP status phù hợp và typed error body (`ErrorResponse` hoặc FastAPI `HTTPException`).
+- Warning item bắt buộc có citation list không rỗng (khớp `verbatim_quote` từ `drug_drug_interactions`, `drug_food_interactions`, `drug_disease_interactions` hoặc `evidence_chunks`).
+- Missing/invalid evidence nằm trong structured `unavailable`, không dùng `severity: unknown` thay thế.
+- `review_status` trong DB có giá trị `pending_review`, `approved`, `rejected`. Tầng API chuyển đổi `pending_review` → `pending` cho client.
 - `pending` và `approved` có thể trả cho patient; `rejected` bị loại ở backend.
+- Phân trang chuẩn dùng query parameter `page` (tối thiểu 1, mặc định 1) và `limit` (mặc định 20, tối đa 100). Phản h�## Danh mục thuốc
 
 ## Chỉ mục contract
 
@@ -90,52 +91,235 @@ phạm vi vẫn trả `200` với `items: []` và `total` giữ nguyên.
 
 `DrugListItem` **không có citation** vì danh sách không hiển thị nội dung lâm sàng; nó chỉ
 báo `hasLeaflet` để FE biết trang chi tiết có nguồn hay không. Nội dung có dẫn nguồn thuộc
-về endpoint chi tiết.
+về endpoint chi tiết.as/auth.py` | `User` (`users`), `OAuthIdentity` (`oauth_identities`) |
+| Tra cứu & OCR đơn thuốc | `/api/v1/drugs` | `backend/src/medsafe/schemas/drug.py`, `ocr.py` | `Drug` (`drugs`), `EvidenceChunk` (`evidence_chunks`) |
+| Kiểm tra & Lịch sử Tra cứu | `/api/v1/interactions` | `specs/001-core-interaction-check/contracts/interaction-check.openapi.yaml` | `DrugDrugInteraction`, `DrugFoodInteraction`, `DrugDiseaseInteraction`, `InteractionLookupHistory` (`interaction_lookup_history`) |
+| Duyệt Chuyên môn (Dược sĩ/Bác sĩ) | `/api/v1/review` | `backend/src/medsafe/schemas/review.py` | `InteractionLookupHistory`, `DrugDrugInteraction`, `DrugDiseaseInteraction` |
+| Quản trị hệ thống (Admin) | `/api/v1/admin` | `backend/src/medsafe/schemas/admin.py` | `User`, `Drug`, `EvidenceChunk` |
 
-## Auth
+---
+>>>>>>> Stashed changes
 
-| Endpoint | Body | Trả về |
-|---|---|---|
-| `POST /api/v1/auth/register` | `{email, password, name}` | `201` + `AuthUserResponse` |
-| `POST /api/v1/auth/login` | `{email, password}` | `200` + `LoginResponse` |
-| `POST /api/v1/auth/google` | `{idToken}` | `200` + `LoginResponse` |
-| `POST /api/v1/auth/refresh` | `{refreshToken}` | `200` + `TokenPairResponse` |
-| `GET /api/v1/auth/profiles` | — (header `Authorization: Bearer`) | `200` + `AuthUserResponse` |
+## 1. Auth & User Profiles (`/api/v1/auth`)
 
-`LoginResponse` = `{accessToken, refreshToken, expiresIn, user}`.
-`TokenPairResponse` = `{accessToken, refreshToken, expiresIn}` — **không có `user`**, vì
-lúc refresh client đã có hồ sơ rồi. Hai response model tách bạch để OpenAPI mô tả đúng
-từng luồng; khớp `ILoginResponse` và `IRefreshTokenResponse` ở `types/auth.d.ts`.
+| Endpoint | Method | Body / Query | Trả về | Quyền | Mô tả |
+|---|---|---|---|---|---|
+| `/api/v1/auth/register` | `POST` | `{email, password, name}` | `201` + `AuthUserResponse` | Public | Đăng ký tài khoản bệnh nhân |
+| `/api/v1/auth/login` | `POST` | `{email, password}` | `200` + `LoginResponse` | Public | Đăng nhập bằng email/password |
+| `/api/v1/auth/google` | `POST` | `{idToken}` | `200` + `LoginResponse` | Public | Đăng nhập Google OIDC |
+| `/api/v1/auth/refresh` | `POST` | `{refreshToken}` | `200` + `TokenPairResponse` | Public | Lấy cặp token mới bằng refresh token |
+| `/api/v1/auth/profiles` | `GET` | — (Header `Bearer`) | `200` + `AuthUserResponse` | Protected | Lấy thông tin tài khoản & profile chi tiết |
+| `/api/v1/auth/profiles` | `PATCH` | `UserProfileUpdateRequest` | `200` + `AuthUserResponse` | Protected | Cập nhật thông tin profile cá nhân |
 
-`/auth/refresh` chỉ nhận token loại `refresh`. Gửi access token vào đây trả `401` —
-refresh token sống 14 ngày còn access token sống 30 phút, nhận nhầm loại là kéo dài vòng
-đời token bị lộ lên gấp hàng trăm lần.
+### Cột bổ sung trong Bảng `users` (`User` Model):
+- **Bệnh nhân (`PATIENT`)**: `date_of_birth` (Date), `age` (Integer), `gender` (`male` \| `female` \| `other`), `weight_kg` (Float), `underlying_conditions` (Array Text, ví dụ: `["Tăng huyết áp", "Suy thận"]`).
+- **Bác sĩ / Dược sĩ (`PHARMACIST`)**: `specialty` (Text, ví dụ: `"Dược lâm sàng"`), `qualifications` (Text, ví dụ: `"Dược sĩ CKI"`).
 
-`register` không nhận field `role`; đăng ký công khai luôn tạo `PATIENT`. Xem
-[ADR 0015](../adrs/0015-backend-owned-identity.md).
+### Schemas Auth & Profiles:
+```typescript
+interface AuthUserResponse {
+  id: string;
+  email: string;
+  name: string;
+  roles: string[];
+  isActive: boolean;
+  // Chi tiết Profile theo role:
+  patientProfile?: {
+    age?: number;
+    dateOfBirth?: string;
+    gender?: "male" | "female" | "other";
+    weightKg?: number;
+    underlyingConditions?: string[];
+  };
+  doctorProfile?: {
+    specialty?: string;
+    qualifications?: string;
+  };
+}
 
-`/auth/google` nhận `idToken` (Google OpenID Connect ID Token, **không phải** access token
-hay authorization code), verify bằng thư viện `google-auth`, rồi trả `LoginResponse` giống
-hệt `/auth/login` — client không cần phân biệt hai luồng sau khi đăng nhập xong. Đăng nhập
-Google lần đầu luôn tạo user role `PATIENT`. Nếu email Google trùng một local account chưa
-liên kết, backend từ chối bằng `409 google_account_conflict` thay vì tự động liên kết — xem
-[ADR 0016](../adrs/0016-google-oidc-login.md).
+interface UserProfileUpdateRequest {
+  name?: string;
+  // Cho Patient:
+  age?: number;
+  dateOfBirth?: string;
+  gender?: "male" | "female" | "other";
+  weightKg?: number;
+  underlyingConditions?: string[];
+  // Cho Doctor/Pharmacist:
+  specialty?: string;
+  qualifications?: string;
+}
+```
 
-### Error code của auth
+---
 
-| Code | Status | Khi nào |
-|---|---|---|
-| `password_policy_violation` | 400 | Mật khẩu ngắn hơn `auth.password_min_length`, thiếu chữ hoặc thiếu số |
-| `invalid_credentials` | 401 | Sai mật khẩu **hoặc** email không tồn tại — cố ý không phân biệt |
-| `invalid_token` | 401 | Thiếu token, token hỏng, hết hạn, hoặc sai loại (dùng refresh thay access) |
-| `invalid_google_token` | 401 | Google ID token sai chữ ký, sai `aud`/`iss`, hết hạn, hoặc thiếu `sub` |
-| `google_email_not_verified` | 401 | Google trả `email_verified = false` hoặc thiếu `email` |
-| `account_inactive` | 403 | `is_active = false` |
-| `email_already_registered` | 409 | Email đã có tài khoản (đăng ký email/password) |
-| `google_account_conflict` | 409 | Email Google trùng local account nhưng chưa liên kết `oauth_identities` |
+## 2. Tra cứu Thuốc & OCR Đơn thuốc (`/api/v1/drugs`)
 
-Lỗi validate của Pydantic vẫn trả `422` với hình dạng mặc định của FastAPI
-(`{detail: [...]}`), không phải `ErrorResponse`.
+| Endpoint | Method | Params / Request | Trả về | Quyền | Mô tả |
+|---|---|---|---|---|---|
+| `/api/v1/drugs/search` | `GET` | Query `q`, `limit` | `200` + `DrugSearchResponse` | Public / Protected | Tìm kiếm danh mục thuốc (fuzzy match `brand_name_unaccent` & `canonical_ingredients`) |
+| `/api/v1/drugs/{drug_id}` | `GET` | Path `drug_id` | `200` + `DrugDetailResponse` | Public / Protected | Chi tiết thông tin thuốc & các mục HDSD từ model `Drug` |
+| `/api/v1/drugs/ocr-prescription` | `POST` | `multipart/form-data` (`file`) | `200` + `PrescriptionOCRResponse` | Protected | Trích xuất đơn thuốc từ ảnh/PDF -> danh sách candidate |
 
-Khi đổi endpoint/schema: cập nhật spec/contract → Pydantic/router → sinh OpenAPI và
-frontend types → cập nhật service/query → chạy integration tests và frontend build.
+### Ánh xạ DB & Schemas:
+- `DrugSearchResponse`: `{query: string, candidates: DrugCandidate[], requiresConfirmation: boolean}`
+- `DrugCandidate`: `{drugId: UUID, brandName: string, ingredient: string, confidence: number}`
+- `DrugDetailResponse` (Ánh xạ từ model `Drug`):
+  ```typescript
+  {
+    drugId: string;
+    brandName: string;
+    ingredientRaw: string;
+    canonicalIngredients: string[];
+    dosageForm?: string;
+    route?: string;
+    manufacturer?: string;
+    leafletUrl?: string;
+    indications?: string;
+    contraindications?: string;
+    dosageAndAdmin?: string;
+    warningsAndPrecautions?: string;
+    sideEffects?: string;
+    notes?: string;
+  }
+  ```
+- `PrescriptionOCRResponse`: `{rawText: string, detectedItems: PrescribedItemCandidate[]}`
+- `PrescribedItemCandidate`: `{originalText: string, matchedCandidate?: DrugCandidate, confidence: number}`
+
+---
+
+## 3. Kiểm tra Tương tác & Lịch sử Tra cứu (`/api/v1/interactions`)
+
+| Endpoint | Method | Request Body / Query | Trả về | Quyền | Mô tả |
+|---|---|---|---|---|---|
+| `/api/v1/interactions/check` | `POST` | `InteractionCheckRequest` | `200` + `InteractionCheckResponse` | Protected | Tra cứu tương tác Thuốc-Thuốc, Thuốc-Thực phẩm, Thuốc-Bệnh nền (Tự động lưu lịch sử) |
+| `/api/v1/interactions/history` | `GET` | Query `page`, `limit` | `200` + `PaginatedLookupHistory` | Patient | Xem danh sách lịch sử tra cứu của bệnh nhân |
+| `/api/v1/interactions/history/{id}` | `GET` | Path `id` | `200` + `LookupHistoryDetailResponse` | Patient / Doctor | Xem chi tiết 1 bản ghi tra cứu lịch sử |
+| `/api/v1/interactions/history/{id}/submit` | `POST` | `SubmitToDoctorRequest` | `200` + `LookupHistoryDetailResponse` | Patient | Gửi bản ghi tra cứu cho Bác sĩ phê duyệt & nhận xét |
+
+### Bảng ORM mới: `interaction_lookup_history` (`InteractionLookupHistory` Model):
+- `id` (UUID, PK)
+- `user_id` (UUID, FK `users.id`)
+- `query_drugs` (JSONB: mảng drug ID & tên thuốc đã tra)
+- `query_foods` (JSONB: mảng thực phẩm)
+- `query_conditions` (JSONB: mảng bệnh nền)
+- `check_result` (JSONB: kết quả `items` & `unavailable`)
+- `is_submitted_to_doctor` (Boolean, mặc định `False`)
+- `submitted_at` (DateTime, optional)
+- `patient_notes` (Text, optional: ghi chú của bệnh nhân khi gửi)
+- `assigned_doctor_id` (UUID, FK `users.id`, optional)
+- `doctor_status` (String: `pending_review` \| `reviewed` \| `approved` \| `rejected`, mặc định null/pending)
+- `doctor_comment` (Text, optional: nhận xét & hướng dẫn chuyên môn của bác sĩ)
+- `doctor_reviewed_at` (DateTime, optional)
+- `created_at` (DateTime)
+
+### Schemas chính:
+```typescript
+interface InteractionCheckRequest {
+  drugIds: string[];
+  foods?: string[];
+  conditions?: string[];
+}
+
+interface LookupHistoryItemResponse {
+  id: string;
+  createdAt: string;
+  queryDrugs: { drugId: string; brandName: string }[];
+  queryFoods: string[];
+  queryConditions: string[];
+  checkResult: InteractionCheckResponse;
+  isSubmittedToDoctor: boolean;
+  submittedAt?: string;
+  patientNotes?: string;
+  doctorStatus?: "pending_review" | "reviewed" | "approved" | "rejected";
+  doctorComment?: string;
+  doctorReviewedAt?: string;
+}
+
+interface SubmitToDoctorRequest {
+  patientNotes?: string;
+  preferredDoctorId?: string;
+}
+```
+
+---
+
+## 4. Luồng Duyệt Chuyên môn Dược sĩ / Bác sĩ (`/api/v1/review`)
+
+Dành riêng cho Bác sĩ / Dược sĩ chuyên môn (`ROLES.PHARMACIST` / Doctor) truy cập tầng `/review/**`.
+
+| Endpoint | Method | Request / Query | Trả về | Quyền | Mô tả |
+|---|---|---|---|---|---|
+| `/api/v1/review/consultations` | `GET` | Query `page`, `limit`, `status` | `200` + `PaginatedLookupHistory` | Pharmacist / Doctor | Xem danh sách các bản ghi tra cứu do bệnh nhân submit |
+| `/api/v1/review/consultations/{id}` | `GET` | Path `id` | `200` + `LookupHistoryDetailResponse` | Pharmacist / Doctor | Xem chi tiết bản ghi tra cứu kèm hồ sơ bệnh nhân |
+| `/api/v1/review/consultations/{id}/action` | `POST` | `ConsultationReviewActionRequest` | `200` + `LookupHistoryDetailResponse` | Pharmacist / Doctor | Bác sĩ phê duyệt/từ chối bản ghi và gửi comment/khuyến cáo |
+| `/api/v1/review/queue` | `GET` | Query `page`, `limit` | `200` + `ReviewQueueResponse` | Pharmacist / Doctor | Xem hàng chờ bằng chứng OCR/Leaflet cần kiểm tra |
+| `/api/v1/review/evidences/{version_id}/action` | `POST` | `EvidenceReviewActionRequest` | `200` + `EvidenceVersionResponse` | Pharmacist / Doctor | Cập nhật `review_status`, `reviewer_id`, `reviewed_at` trong database |
+
+### Schemas chính:
+```typescript
+interface ConsultationReviewActionRequest {
+  action: "approve" | "reject" | "comment";
+  doctorComment: string;
+  recommendedAdjustments?: string;
+}
+
+interface EvidenceReviewActionRequest {
+  action: "approve" | "reject" | "correct";
+  professionalComment?: string;
+  correctedQuote?: string;
+  correctedSeverity?: string;
+}
+```
+
+---
+
+## 5. Quản trị Hệ thống Admin (`/api/v1/admin`)
+
+Dành cho Quản trị viên hệ thống (`ROLES.ADMIN`) quản lý tài khoản người dùng và cơ sở dữ liệu dataset.
+
+| Endpoint | Method | Request / Query | Trả về | Quyền | Mô tả |
+|---|---|---|---|---|---|
+| `/api/v1/admin/users` | `GET` | Query `page`, `limit`, `role`, `search` | `200` + `PaginatedUsersResponse` | Admin | Quản lý danh sách người dùng (`users` table) |
+| `/api/v1/admin/users/{user_id}` | `PATCH` | `UpdateUserRoleStatusRequest` | `200` + `AuthUserResponse` | Admin | Cập nhật phân quyền (`role`: `PATIENT`, `PHARMACIST`, `ADMIN`) hoặc khóa/mở tài khoản (`is_active`) |
+| `/api/v1/admin/datasets/import` | `POST` | `multipart/form-data` (`file`, `sourceName`) | `202` + `DatasetImportJobResponse` | Admin | Import/nạp mới tập dữ liệu thuốc vào `drugs`, `evidence_chunks` |
+| `/api/v1/admin/datasets/jobs` | `GET` | Query `page`, `limit` | `200` + `PaginatedDatasetJobs` | Admin | Theo dõi tiến trình indexing Qdrant & PostgreSQL background |
+
+### Schemas chính:
+- `UpdateUserRoleStatusRequest`: `{role?: "PATIENT" | "PHARMACIST" | "ADMIN", isActive?: boolean}`
+- `DatasetImportJobResponse`: `{jobId: string, status: "processing" | "completed" | "failed", filename: string, totalRecords?: number, createdAt: string}`
+
+---
+
+## 6. Định dạng Phản hồi Lỗi & Error Codes
+
+### Phản hồi lỗi chuẩn (`ErrorResponse`):
+```json
+{
+  "status": 400,
+  "code": "error_code_name",
+  "message": "Thông điệp lỗi dành cho giao diện / người dùng",
+  "details": []
+}
+```
+
+### Chỉ mục Error Codes:
+
+| Phân nhóm | Error Code | HTTP Status | Khi nào phát sinh |
+|---|---|---|---|
+| **Auth & Profile** | `password_policy_violation` | 400 | Mật khẩu ngắn hơn yêu cầu, thiếu chữ hoặc thiếu số |
+| | `invalid_credentials` | 401 | Mật khẩu sai hoặc email không tồn tại |
+| | `invalid_token` | 401 | Access / Refresh Token hỏng, hết hạn hoặc dùng sai loại |
+| | `invalid_google_token` | 401 | Google ID Token sai chữ ký, hết hạn hoặc không hợp lệ |
+| | `google_email_not_verified` | 401 | Tài khoản Google chưa được xác minh email |
+| | `account_inactive` | 403 | Tài khoản ở trạng thái `is_active = false` |
+| | `email_already_registered` | 409 | Email đã được sử dụng tạo tài khoản local |
+| | `google_account_conflict` | 409 | Trùng email local nhưng chưa liên kết `oauth_identities` |
+| **Catalog & OCR** | `drug_not_found` | 404 | Không tìm thấy mã thuốc trong danh mục |
+| | `ocr_processing_failed` | 422 | Tệp ảnh/PDF đơn thuốc mờ hoặc lỗi không trích xuất được |
+| **History & Consultation** | `history_record_not_found` | 404 | Không tìm thấy bản ghi tra cứu theo ID |
+| | `already_submitted` | 409 | Bản ghi tra cứu này đã được gửi cho bác sĩ trước đó |
+| | `unauthorized_review_action` | 403 | Người dùng không có quyền Bác sĩ / Dược sĩ |
+| | `evidence_version_not_found` | 404 | Phiên bản bằng chứng không tồn tại trong hệ thống |
+| **Admin** | `admin_privilege_required` | 403 | Yêu cầu quyền ADMIN để thực hiện thao tác này |
+| | `dataset_import_failed` | 422 | File dataset import bị lỗi cấu trúc / định dạng |

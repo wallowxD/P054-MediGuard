@@ -1,0 +1,42 @@
+[
+  {
+    "line": 113,
+    "corrected": "Bảng chuyển đổi CMS: <!-- NEED_REVIEW: Từ 'Bang' có thể là lỗi OCR của từ 'Bảng' -->"
+  },
+  {
+    "line": 152,
+    "corrected": "Với nồng độ thích hợp trên lâm sàng, colistimethate natri đường tiêm tĩnh mạch không vượt qua hàng rào máu nào. Việc sử dụng colistimethate natri đường nội tủy hoặc não thất trong điều trị viêm màng nào chưa được nghiên cứu một cách hệ thống trong các thử nghiệm lâm sàng và chỉ được hỗ trợ bởi các trường hợp đã được báo cáo. Dữ liệu hỗ trợ trên lý thuyết còn rất hạn chế. Tác dụng không mong muốn thường gặp nhất trong điều colistimethate natri là viêm màng nào vô khuẩn. <!-- NEED_REVIEW: Cụm từ 'hàng rào máu nào' và 'viêm màng nào' có thể là lỗi OCR của 'hàng rào máu não' và 'viêm màng não' -->"
+  },
+  {
+    "line": 228,
+    "corrected": "Các vi khuẩn kháng thuốc có đặc trưng là sự thay đổi các nhóm phosphate của lipopolysaccharide bằng ethanolamine hoặc bằng aminoarabinose. Các vi khuẩn Gram âm kháng thuốc tự nhiên, chẳng hạn như *Proteus mirabilis* và *Burkholderia cepacia* có sự thay thế hoàn toàn các nhóm photsphate lipid bằng ethanolamine hoặc aminiarabinose. <!-- NEED_REVIEW: Từ 'photsphate' và 'aminiarabinose' có thể là lỗi chính tả OCR -->"
+  },
+  {
+    "line": 468,
+    "corrected": "Với nồng độ thích hợp trên lâm sàng, colistimethate natri đường tiêm tĩnh mạch không vượt qua hàng rào máu não. Việc sử dụng colistimethate natri đường nội tủy hoặc não thất trong điều trị viêm màng não chưa được nghiên cứu một cách hệ thống trong các thử nghiệm lâm sàng và chỉ được hỗ trợ bởi các trường hợp đã được báo cáo. Dữ liệu hỗ trợ trên lý thuyết còn rất hạn chế. Tác dụng không mong muốn thường gặp nhất trong điều colistimethate natri là viêm màng nào vô khuẩn. <!-- NEED_REVIEW: Cụm từ 'trong điều colistimethate natri' và 'viêm màng nào vô khuẩn' có vẻ thiếu sót và sai sót văn bản -->"
+  },
+  {
+    "line": 490,
+    "corrected": "Thận trọng trọng khi sử dụng đồng thời colistimethate natri tĩnh mạch với các thuốc có khả năng gây độc cho thận hoặc độc thần kinh. <!-- NEED_REVIEW: Từ 'Thận trọng trọng' bị lặp từ -->"
+  },
+  {
+    "line": 556,
+    "corrected": "Các vi khuẩn kháng thuốc có đặc trưng là sự thay đổi các nhóm phosphate của lipopolysaccharide bằng ethanolamine hoặc bằng aminoarabinose. Các vi khuẩn Gram âm kháng thuốc tự nhiên, chẳng hạn như *Proteus mirabilis* và *Burkholderia cepacia* có sự thay thế hoàn toàn các nhóm photsphate lipid bằng ethanolamine hoặc aminoarabinose. <!-- NEED_REVIEW: Từ 'photsphate' có thể là lỗi chính tả OCR của 'phosphate' -->"
+  },
+  {
+    "line": 560,
+    "corrected": "Mỗi tương quan giữa PK/PD: Polymyxin đã được báo cáo là có tác dụng diệt khuẩn phụ thuộc vào nồng độ ở các vi khuẩn nhạy cảm. fAUC/MIC được coi là tương quan với hiệu quả lâm sàng. <!-- NEED_REVIEW: Từ 'Mỗi tương quan' có thể là lỗi OCR của 'Mối tương quan' -->"
+  },
+  {
+    "line": 599,
+    "corrected": "Khi dùng đường xông hít, sự hấp thu được báo cáo có thể phụ thuộc vào kích thước hạt sọl khí, thiết bị phun và tình trạng phổi. Các nghiên cứu ở những người tình nguyện khỏe mạnh và bệnh nhân bị nhiều loại nhiễm khuẩn đã báo cáo nồng độ trong huyết thanh từ 0 đến nồng độ trị liệu tiềm năng từ 4 mg/l trở lên. Vì vậy, khả năng hấp thu toàn thân nên được lưu ý khi điều trị cho bệnh nhân bằng đường xông hít. <!-- NEED_REVIEW: Từ 'sọl khí' có thể là lỗi OCR của 'sol khí' hoặc 'Aerosol' -->"
+  },
+  {
+    "line": 611,
+    "corrected": "Colistin có hoạt tính được thải trừ không hoàn toàn. Colistin trải qua quá trình tái hấp thu tại ống thận và có thể"
+  },
+  {
+    "line": 612,
+    "corrected": "được thải trừ không qua thận hoặc trải qua quá trình chuyển hóa thận với khả năng tích lũy ở thận. Độ thanh thải colistin giảm ở bệnh nhân suy thận, có thể do tăng chuyển đổi colistimethate natri."
+  }
+]

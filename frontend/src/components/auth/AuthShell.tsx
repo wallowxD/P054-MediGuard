@@ -1,4 +1,4 @@
-import { FileCheck2, ShieldCheck, UserRoundCheck } from "lucide-react";
+import { FileCheck2, ShieldCheck, Sparkles, UserRoundCheck } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import Logo from "@/components/ui/Logo";
@@ -15,13 +15,13 @@ type AuthShellProps = {
 const TRUST_POINTS = [
   {
     Icon: FileCheck2,
-    title: "Bằng chứng nguyên văn",
-    description: "Mỗi cảnh báo đều đi kèm trích dẫn và nguồn để bạn kiểm tra.",
+    title: "Dẫn nguồn nguyên văn",
+    description: "Mọi cảnh báo tương tác đều đi kèm trích dẫn chính thức từ tờ HDSD.",
   },
   {
     Icon: UserRoundCheck,
-    title: "Dược sĩ xác nhận song song",
-    description: "Trạng thái chuyên môn luôn được thể hiện rõ ràng và minh bạch.",
+    title: "Dược sĩ đối chiếu song song",
+    description: "Hệ thống chuẩn y khoa được giám sát bởi đội ngũ chuyên gia Vinmec.",
   },
 ] as const;
 
@@ -30,87 +30,70 @@ export default function AuthShell({ eyebrow, title, description, children }: Aut
     <main
       id={MAIN_CONTENT_ID}
       tabIndex={-1}
-      className="grid min-h-[100dvh] bg-background lg:grid-cols-[minmax(0,0.9fr)_minmax(30rem,1.1fr)]"
+      className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-background p-4 sm:p-6 lg:p-10"
     >
-      <aside className="relative hidden overflow-hidden bg-hero-tint px-10 py-12 lg:flex lg:flex-col lg:justify-between xl:px-16 xl:py-16">
-        <div
-          aria-hidden
-          className="landing-hero-texture pointer-events-none absolute inset-y-0 right-0 w-2/3 opacity-30"
-        />
+      {/* Ambient background lighting */}
+      <div className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-primary/15 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 -bottom-20 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
 
-        <Link
-          href={ROUTES.HOME}
-          aria-label="Quay về trang chủ Vinmec"
-          className="relative inline-flex w-fit items-center gap-3 rounded-full text-primary transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-hero-tint"
-        >
-          <Logo className="h-11 w-auto" />
-        </Link>
+      <div className="relative z-10 w-full max-w-5xl rounded-3xl liquid-glass p-4 sm:p-8 lg:p-12 shadow-2xl">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
+          {/* Left Brand Showcase */}
+          <div className="space-y-6 lg:col-span-6 lg:pr-8">
+            <Link
+              href={ROUTES.HOME}
+              aria-label="Quay về trang chủ Vinmec"
+              className="inline-block transition-opacity hover:opacity-85"
+            >
+              <Logo className="h-10 w-auto" />
+            </Link>
 
-        <div className="relative max-w-xl py-16">
-          <div className="inline-flex items-center gap-2 rounded-full bg-background/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-            <ShieldCheck className="h-4 w-4" aria-hidden />
-            Trợ lý an toàn thuốc
-          </div>
-          <h2 className="mt-7 max-w-lg font-heading text-4xl font-semibold leading-tight text-foreground xl:text-5xl">
-            Hiểu rõ hơn về thuốc bạn đang sử dụng.
-          </h2>
-          <p className="mt-5 max-w-lg text-base leading-7 text-foreground-secondary">
-            Tra cứu tương tác thuốc với thông tin tham khảo có nguồn, được thiết kế để bạn
-            luôn biết dữ liệu đến từ đâu.
-          </p>
-
-          <div className="mt-10 grid gap-4">
-            {TRUST_POINTS.map(({ Icon, title: pointTitle, description: pointDescription }) => (
-              <div key={pointTitle} className="flex max-w-lg gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-background text-primary shadow-sm shadow-primary/10">
-                  <Icon className="h-5 w-5" aria-hidden />
-                </span>
-                <div>
-                  <p className="font-semibold text-foreground">{pointTitle}</p>
-                  <p className="mt-1 text-sm leading-6 text-foreground-secondary">
-                    {pointDescription}
-                  </p>
-                </div>
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-full liquid-glass-pill px-3 py-1 text-xs font-semibold text-primary">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                <span>Trợ lý An toàn Thuốc AI</span>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <p className="relative max-w-md text-xs leading-5 text-foreground-muted">
-          Thông tin trên Vinmec chỉ mang tính tham khảo và không thay thế đánh giá của
-          bác sĩ hoặc dược sĩ.
-        </p>
-      </aside>
-
-      <section className="flex items-center justify-center px-4 py-10 sm:px-8 sm:py-14 lg:px-12">
-        <div className="w-full max-w-md">
-          <Link
-            href={ROUTES.HOME}
-            aria-label="Quay về trang chủ Vinmec"
-            className="mb-10 inline-flex items-center gap-3 text-primary transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 lg:hidden"
-          >
-            <Logo className="h-11 w-auto" />
-          </Link>
-
-          <div className="rounded-[2rem] bg-surface p-1.5 shadow-2xl shadow-primary/10">
-            <div className="rounded-[calc(2rem-0.375rem)] border border-border bg-card px-5 py-7 sm:px-8 sm:py-9">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-foreground-muted">
-                {eyebrow}
+              <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Hiểu rõ hơn về thuốc bạn đang sử dụng.
+              </h2>
+              <p className="text-sm leading-relaxed text-foreground-secondary">
+                Tra cứu tương tác thuốc và bệnh nền với dữ liệu có nguồn kiểm chứng, hỗ trợ bạn chăm sóc sức khỏe an toàn mỗi ngày.
               </p>
-              <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-foreground">
-                {title}
-              </h1>
-              <p className="mt-3 text-sm leading-6 text-foreground-secondary">{description}</p>
-              <div className="mt-8">{children}</div>
+            </div>
+
+            <div className="grid gap-3 pt-2">
+              {TRUST_POINTS.map(({ Icon, title: pointTitle, description: pointDescription }) => (
+                <div key={pointTitle} className="flex items-start gap-3 rounded-2xl liquid-glass-subtle p-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Icon className="h-4.5 w-4.5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-foreground">{pointTitle}</p>
+                    <p className="text-[11px] leading-relaxed text-foreground-secondary">{pointDescription}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-[11px] text-foreground-muted">
+              Hệ thống tra cứu an toàn thuốc chỉ mang tính tham khảo y khoa, không thay thế chỉ định trực tiếp từ bác sĩ điều trị.
+            </p>
+          </div>
+
+          {/* Right Form Card */}
+          <div className="lg:col-span-6">
+            <div className="rounded-3xl liquid-glass-strong p-6 sm:p-8 shadow-xl">
+              <div className="mb-6 space-y-1">
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary">{eyebrow}</p>
+                <h1 className="font-heading text-2xl font-bold text-foreground">{title}</h1>
+                <p className="text-xs text-foreground-secondary">{description}</p>
+              </div>
+
+              {children}
             </div>
           </div>
-
-          <p className="mx-auto mt-6 max-w-sm text-center text-xs leading-5 text-foreground-muted lg:hidden">
-            Thông tin chỉ mang tính tham khảo, không thay thế đánh giá của bác sĩ hoặc dược
-            sĩ.
-          </p>
         </div>
-      </section>
+      </div>
     </main>
   );
 }

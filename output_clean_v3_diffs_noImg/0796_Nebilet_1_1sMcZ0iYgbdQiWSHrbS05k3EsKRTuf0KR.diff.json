@@ -1,0 +1,90 @@
+[
+  {
+    "line": 7,
+    "corrected": "Thuốc này chỉ dùng theo đơn thuốc <!-- NEED_REVIEW: Lỗi OCR từ 'shi' thành 'chỉ' cần xác nhận lại ngữ cảnh -->"
+  },
+  {
+    "line": 15,
+    "corrected": "Mỗi viên nén chứa 2,5 mg nebivolol (dạng nebivolol hydrochloride 5 mg SRRR-nebivolol và 2,5 mg RSSS-nebivolol) <!-- NEED_REVIEW: Dữ liệu thành phần và đồng phân phức tạp, cần dược sĩ kiểm tra lại hàm lượng -->"
+  },
+  {
+    "line": 17,
+    "corrected": "Tá dược có tác dụng biết rõ: mỗi viên nén chứa 141,75 mg lactose monohydrate (xem mục 4.4 và 6.1) <!-- NEED_REVIEW: Cụm 'hơn mục' được sửa thành 'xem mục', cần kiểm tra lại -->"
+  },
+  {
+    "line": 65,
+    "corrected": "Điều chỉnh liều tăng dần nên được tiến hành theo từng bước sau, với khoảng cách giữa các lần tăng liều là 1 - 2 tuần tuỳ theo đáp ứng của bệnh nhân: khởi đầu 1,25 mg nebivolol, tăng đến 2,5 mg nebivolol dùng 1 lần/ngày, sau đó là 5 mg x 1 lần/ngày, sau đó là 10 mg x 1 lần/ngày."
+  },
+  {
+    "line": 69,
+    "corrected": "Khi bắt đầu điều trị và mỗi lần tăng liều nên được giám sát chặt chẽ bởi một <!-- NEED_REVIEW: Câu bị ngắt quãng giữa dòng 69 và 70, cần ghép nối hoặc xem lại bản gốc -->"
+  },
+  {
+    "line": 70,
+    "corrected": "bác sĩ có kinh nghiệm trong ít nhất 2 giờ để đảm bảo rằng các <!-- NEED_REVIEW: Dòng bị lặp và tách rời từ OCR -->"
+  },
+  {
+    "line": 92,
+    "corrected": "trị cho bệnh nhân suy thận nặng (creatinin huyết thanh ≥ 250 µmol/L). Do đó, <!-- NEED_REVIEW: Sửa lỗi ký hiệu '≥' và đơn vị 'pmol/L' thành 'µmol/L' theo chuẩn y học thận -->"
+  },
+  {
+    "line": 120,
+    "corrected": "- Suy gan hoặc rối loạn chức năng gan. <!-- NEED_REVIEW: Cụm 'vid ng ast' phía sau không rõ nghĩa y khoa -->"
+  },
+  {
+    "line": 157,
+    "corrected": "Ở những bệnh nhân có đau thắt ngực Prinzmetal do tác dụng đối kháng thụ thể alpha gây ra co thắt động mạch vành; các thuốc ức chế beta có thể làm tăng tần suất và thời gian cơn đau thắt ngực. Nhìn chung sự phối hợp giữa nebivolol với các thuốc ức chế kênh calci nhóm verapamil và diltiazem, các thuốc chống loạn nhịp nhóm I, các thuốc hạ huyết áp tác dụng lên trung ương không được khuyến cáo, chi tiết hơn xin xem mục 4.5."
+  },
+  {
+    "line": 187,
+    "corrected": "*Các thuốc chống loạn nhịp nhóm I (quinidine, hydroquinidine, cibenzoline, flecainide, disopyramide, lidocaine, mexiletine, propafenone):* tác dụng làm chậm thời gian dẫn truyền nhĩ-thất và giảm sức co bóp của cơ tim (xem mục 4.4)."
+  },
+  {
+    "line": 188,
+    "corrected": "<!-- NEED_REVIEW: Dòng chữ 'lạnh' đơn độc không rõ ngữ cảnh y khoa -->"
+  },
+  {
+    "line": 189,
+    "corrected": "*Các thuốc ức chế kênh calci loại verapamil/diltiazem:* giảm sức co bóp của cơ tim và ức chế sự dẫn truyền nhĩ-thất. Tiêm tĩnh mạch verapamil cho những bệnh nhân đang điều trị bằng các thuốc ức chế beta có thể dẫn đến hạ huyết áp quá mức và bloc nhĩ-thất (xem mục 4.4)."
+  },
+  {
+    "line": 190,
+    "corrected": "<!-- NEED_REVIEW: Cụm 'ta có thể' bị thừa ở cuối đoạn, cần kiểm tra bản gốc -->"
+  },
+  {
+    "line": 213,
+    "corrected": "Dùng phối hợp đồng thời nebivolol với cimetidine làm tăng nồng độ nebivolol trong huyết tương nhưng không làm thay đổi hiệu quả trên lâm sàng. Dùng đồng thời với ranitidine không ảnh hưởng đến dược động học. Miễn là uống Nebilet trong bữa ăn, hoặc có dùng thuốc kháng acid giữa các bữa ăn, loại thuốc này có thể dùng cùng nhau. <!-- NEED_REVIEW: Lỗi OCR cụm 'dã. Miễn là' được hiệu đính thành câu chuẩn hơn -->"
+  },
+  {
+    "line": 224,
+    "corrected": "Không nên sử dụng nebivolol khi mang thai trừ khi thực sự cần thiết. Nếu việc điều trị với nebivolol là cần thiết thì phải theo dõi sát lưu lượng máu đến tử cung-nhau và sự phát triển của bào thai. Trong trường hợp gây tác hại cho người mẹ và thai nhỏ thì nên cân nhắc sử dụng thuốc khác. Trẻ sơ sinh phải được theo dõi chặt chẽ. Các triệu chứng của hạ huyết áp và nhịp tim chậm thường xảy ra trong 3 ngày đầu tiên"
+  },
+  {
+    "line": 228,
+    "corrected": "Các nghiên cứu trên động vật cho thấy nebivolol bài tiết được qua sữa. Trên người, chưa biết liệu thuốc này có bài tiết vào sữa của người mẹ hay không. Hầu hết các thuốc ức chế beta, đặc biệt là các chế phẩm tan trong mô như nebivolol và chất chuyển hóa có hoạt tính của nó bài tiết vào sữa mẹ mặc dù với những mức độ khác nhau. Do không thể loại trừ rủi ro đối với trẻ sơ sinh, các bà mẹ đang dùng nebivolol không nên cho con bú"
+  },
+  {
+    "line": 232,
+    "corrected": "Nebivolol không ảnh hưởng đến khả năng sinh sản của chuột ngoại trừ ở liều cao, hơn nhiều lần so với liều khuyến cáo tối đa cho người khi quan sát thấy các tác dụng phụ trên cơ quan sinh sản của chuột cống và chuột nhắt ở cả con đực và con cái. Ảnh hưởng của nebivolol đối với khả năng sinh sản của con người vẫn chưa được biết"
+  },
+  {
+    "line": 270,
+    "corrected": "Các dữ liệu về tác dụng không mong muốn đối với những bệnh nhân suy tim được thống kê từ một thử nghiệm lâm sàng có so sánh với giả dược trên 1.067 bệnh nhân dùng nebivolol và 1.061 bệnh nhân dùng giả dược. Trong nghiên cứu này, có tổng số 449 bệnh nhân dùng nebivolol (42,1%) gặp các tác dụng không mong muốn có thể liên quan đến dùng thuốc so với 334 bệnh nhân dùng giả dược (31,5%). Các tác dụng không mong muốn chủ yếu ở các bệnh nhân dùng nebivolol là nhịp tim chậm và hoa mắt, xảy ra ở khoảng 11% bệnh nhân. Tần suất tương ứng với nhóm dùng giả dược là khoảng 2% và 7%."
+  },
+  {
+    "line": 299,
+    "corrected": "Trong trường hợp quá liều hoặc quá mẫn, bệnh nhân phải được giám sát chặt chẽ và được điều trị tại khoa săn sóc tích cực. Nên kiểm tra nồng độ đường huyết. Sự hấp thu phần thuốc còn lại trong dạ dày có thể được ngăn lại bằng cách rửa dạ dày và uống than hoạt hoặc thuốc nhuận tràng. Hô hấp nhân tạo đôi khi có thể được yêu cầu. Nhịp tim chậm hoặc phản ứng cường phế vị có thể điều trị được bằng cách dùng atropine hoặc methylatropine. Hạ huyết áp và sốc có thể xử trí bằng cách truyền huyết tương và/hoặc các dung dịch thay thế huyết tương và nếu có thể dùng các catecholamine. Tác dụng của các thuốc ức chế beta có thể được đối kháng bằng cách truyền tĩnh mạch chậm isoprenaline hydrochloride, bắt đầu với liều khoảng 5 µg/phút, hoặc dobutamine, bắt đầu với liều khoảng 2,5 µg/phút, cho đến khi đạt được tác dụng yêu cầu. Nếu vẫn chưa đạt được tác dụng yêu cầu, có thể dùng phối hợp isoprenaline với dopamine. Nếu vẫn chưa đạt được hiệu quả mong muốn thì có thể cân nhắc tiêm tĩnh mạch glucagon với liều 50 – 100 µg/kg. Nếu cần, tiêm nhắc lại trong vòng 1 h, sau đó, nếu cần có thể truyền tĩnh mạch glucagon 70 µg/kg/h. Trong một số hiếm các trường hợp nhịp tim chậm kháng trị, có thể dùng máy tạo nhịp tim."
+  },
+  {
+    "line": 314,
+    "corrected": "Trong quá trình điều trị ngắn và điều trị dài ngày với nebivolol cho bệnh nhân tăng huyết áp, kháng lực mạch toàn thân giảm. Mặc dù nhịp tim giảm, nhưng cung lượng tim khi nghỉ và khi vận động thể lực cũng không đổi do tăng thể tích nhát bóp. Các nghiên cứu lâm sàng về sự khác nhau về huyết động học khi so sánh với các chất đối kháng thụ thể beta 1 khác chưa được thiết lập đầy đủ. <!-- NEED_REVIEW: Dòng bị lặp văn bản OCR ở bản gốc, đã được biên tập lại cho mạch lạc -->"
+  },
+  {
+    "line": 317,
+    "corrected": "Về tỷ lệ tử vong và tỷ lệ bệnh tật, trong một thử nghiệm lâm sàng có so sánh với giả dược tiến hành trên 2128 bệnh nhân ≥ 70 tuổi (tuổi trung bình là 75,2) bị suy tim mạn tính ổn định có hoặc không có suy giảm phân suất tống máu của thất trái (LVEF trung bình: 36 ± 12,3%, với sự phân bố như sau: LVEF < 35% ở 56% bệnh nhân và LVEF > 45% ở 19% bệnh nhân) theo dõi trong thời gian trung bình 20 tháng, nebivolol, thuộc nhóm trị liệu tốt nhất, kéo dài thời gian xuất hiện tử vong hoặc nhập viện lại vì những lý do tim mạch với tỉ lệ giảm nguy cơ tương đối 14% (tỉ lệ giảm nguy cơ tuyệt đối là 4,2%). Nguy cơ giảm sau 6 tháng điều trị và duy trì trong suốt quá trình điều trị (trung bình là 18 tháng). Hiệu quả của nebivolol không phụ thuộc vào tuổi tác, giới tính hoặc LVEF của đối tượng nghiên cứu. Lợi ích giảm tử vong do mọi nguyên nhân không khác biệt có ý nghĩa thống kê khi so sánh với giả dược (giảm tỉ lệ tử vong tuyệt đối 2,3%)."
+  },
+  {
+    "line": 330,
+    "corrected": "Nebivolol được chuyển hoá rộng rãi, phần lớn thành chất chuyển hoá hydroxy hoạt tính. Nebivolol được chuyển hoá thông qua hydroxyl hoá vòng no và vòng thơm, khử alkyl và glucuronide hoá, ngoài ra, glucuronide của chất chuyển hoá hydroxyl cũng được hình thành. Chất chuyển hoá của nebivolol bằng cách hydroxyl hoá vòng thơm do enzyme CYP2D6 phụ thuộc vào hình thái oxy hoá mang tính chất di truyền. <!-- NEED_REVIEW: Dòng bị lặp đoạn văn bản OCR nặng từ bản gốc -->"
+  }
+]

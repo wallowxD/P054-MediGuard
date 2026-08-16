@@ -1,0 +1,18 @@
+[
+  {
+    "line": 27,
+    "corrected": "- Trẻ em từ 1 tháng tuổi: 3 mg sắt nguyên tố/kg mỗi ngày, không vượt quá 60 mg."
+  },
+  {
+    "line": 74,
+    "corrected": "- Nhóm kháng sinh fluoroquinolon."
+  },
+  {
+    "line": 75,
+    "corrected": "- Nhóm kháng sinh diphosphonat (đường uống). <!-- NEED_REVIEW: Diphosphonat không thuộc nhóm kháng sinh -->"
+  },
+  {
+    "line": 100,
+    "corrected": "Sử dụng các chất tạo phức chelate rất có hiệu quả, nhất là khi dùng déféroxamine, chủ yếu khi nồng độ chất sắt trong máu trên 5 mg/ml. Tình trạng sốc, mất nước và bất thường acide-base được điều trị bằng các phương pháp cổ điển. <!-- NEED_REVIEW: Nồng độ sắt trong máu 5 mg/ml bất thường về đơn vị, nghi ngờ là 5 mcg/ml hoặc 5 mg/L -->"
+  }
+]

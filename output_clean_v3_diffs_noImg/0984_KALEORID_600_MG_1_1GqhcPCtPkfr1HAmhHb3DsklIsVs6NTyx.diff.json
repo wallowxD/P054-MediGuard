@@ -1,0 +1,38 @@
+[
+  {
+    "line": 39,
+    "corrected": "Không có kinh nghiệm lâm sàng cụ thể ở người cao tuổi, tuy nhiên phần lớn những nghiên cứu lâm sàng trên người già đã được thực hiện. <!-- NEED_REVIEW: Mâu thuẫn: 'không có kinh nghiệm lâm sàng cụ thể' nhưng lại nói 'phần lớn nghiên cứu lâm sàng trên người già đã được thực hiện' -->"
+  },
+  {
+    "line": 79,
+    "corrected": "**TƯƠNG TÁC VỚI CÁC THUỐC KHÁC VÀ CÁC DẠNG TƯƠNG TÁC KHÁC**"
+  },
+  {
+    "line": 80,
+    "corrected": "**Điều trị đồng thời với thuốc lợi tiểu giảm Kali hoặc chất ức chế men chuyển angiotensin và chất đối kháng thụ thể angiotensin II làm tăng nguy cơ tăng Kali huyết** <!-- NEED_REVIEW: Thuốc lợi tiểu giảm Kali (thải kali) kết hợp kali lẽ ra làm giảm nguy cơ tăng kali, cần xem lại thuật ngữ 'thuốc lợi tiểu giảm Kali' hay ý tác giả là thuốc lợi tiểu giữ kali -->"
+  },
+  {
+    "line": 87,
+    "corrected": "Kali clorid nên được dùng thận trọng với những bệnh nhân có sự vận chuyển qua dạ dày – ruột bị chậm lại như ở phụ nữ mang thai. <!-- NEED_REVIEW: Mục 'Phụ nữ có thai và cho con bú' nhưng nội dung câu đầu lại lặp lại ý thận trọng trên đường tiêu hóa, câu sau nói an toàn, diễn đạt chưa chặt chẽ -->"
+  },
+  {
+    "line": 99,
+    "corrected": "*Tác dụng dược lý:*"
+  },
+  {
+    "line": 100,
+    "corrected": "Tác dụng dược lý lực học của Kali bổ sung khi sử dụng điều trị là để ngăn chặn các tác dụng phụ do tình trạng thiếu hụt Kali gây ra. <!-- NEED_REVIEW: Cụm từ 'dược lý lực học' là thừa từ và lặp nghĩa -->"
+  },
+  {
+    "line": 104,
+    "corrected": "Kali clorid được giải phóng dần dần từ một nhân xơ vì vậy ngăn ngừa nồng độ Kali tại chỗ cao. Nhân trò không tan này sẽ được thải trừ qua phân. <!-- NEED_REVIEW: Từ 'Nhân trò' có vẻ là lỗi OCR của từ 'Nhân trơ' -->"
+  },
+  {
+    "line": 107,
+    "corrected": "*Triệu chứng:*"
+  },
+  {
+    "line": 108,
+    "corrected": "Sử dụng quá liều Kali dẫn đến tăng Kali máu đặc biệt ở bệnh nhân bị suy thận. Các triệu chứng bao gồm: suy suy nhược, rối loạn trí nhớ, cảm giác khác thường của các chi, yếu cơ, chứng liệt, giảm huyết áp, chứng loạn nhịp tim, chẹn tim và sự ngừng tim. Đặc điểm điện tâm đồ cũng có thể thay đổi. <!-- NEED_REVIEW: Cụm từ 'suy suy nhược' bị lặp từ -->"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "line": 96,
+    "corrected": "| | Không rõ tần suất <!-- NEED_REVIEW: Lỗi chính tả 'tần xuất' nên sửa thành 'tần suất' --> | Từ 0,1% tới dưới 5% |"
+  },
+  {
+    "line": 106,
+    "corrected": "Dung dịch chứa khoảng 100 mEq/L <!-- NEED_REVIEW: 'mEdq/L' có thể là lỗi OCR của 'mEq/L' --> ion acetat, vì thế khi truyền lượng lớn hoặc phối hợp với dung dịch điện giải, cần lưu ý đến tình trạng cân bằng điện giải."
+  }
+]

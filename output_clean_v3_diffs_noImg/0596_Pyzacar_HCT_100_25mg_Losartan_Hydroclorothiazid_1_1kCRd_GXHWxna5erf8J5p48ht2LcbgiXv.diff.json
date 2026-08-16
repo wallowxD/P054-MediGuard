@@ -1,0 +1,18 @@
+[
+  {
+    "line": 77,
+    "corrected": "*Bệnh tim mạch vành và bệnh mạch máu nào:* Như với mọi thuốc hạ huyết áp, hạ huyết áp quá mức ở những bệnh nhân có bệnh tim mạch và mạch máu nào có thể dẫn đến nhồi máu cơ tim hay đột quỵ. <!-- NEED_REVIEW: Từ 'mạch máu nào' có thể là lỗi OCR của 'mạch máu não' -->"
+  },
+  {
+    "line": 181,
+    "corrected": "Các phản ứng phụ đã quan sát thấy ở từng thành phần riêng lẻ và có thể xảy ra với phối hợp losartan kali/hydrocolorothiazid như sau: <!-- NEED_REVIEW: 'hydrocolorothiazid' nghi ngờ lỗi chính tả, chuẩn là 'hydrochlorothiazid' -->"
+  },
+  {
+    "line": 220,
+    "corrected": "Ít gặp: đau cánh tay, sưng khớp, đau đầu gối, đau cơ xương, đau vai, cứng khớp, đau khớp, viêm khớp, lao khớp xương, đau xơ cơ, yếu cơ. <!-- NEED_REVIEW: 'lao khớp xương' là bệnh lý nhiễm trùng đặc hiệu, ít khi được xếp là ADR thông thường của losartan -->"
+  },
+  {
+    "line": 278,
+    "corrected": "Ít gặp: bệnh đái tháo đường, viêm thận kẽ, rối loạn chức năng thận, suy thận. <!-- NEED_REVIEW: 'bệnh đái tháo đường' khó có khả năng là ADR ít gặp do hydrochlorothiazid gây ra, có thể nhầm với đái tháo nhạt hoặc tăng đường huyết -->"
+  }
+]

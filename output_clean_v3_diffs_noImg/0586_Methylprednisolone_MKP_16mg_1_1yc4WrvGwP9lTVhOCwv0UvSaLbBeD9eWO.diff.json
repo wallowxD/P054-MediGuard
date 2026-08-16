@@ -1,0 +1,22 @@
+[
+  {
+    "line": 23,
+    "corrected": "- Mecthylprednisolone còn được chỉ định trong hội chứng thận hư nguyên phát. <!-- NEED_REVIEW: Sai chính tả tên hoạt chất Mecthylprednisolone -->"
+  },
+  {
+    "line": 31,
+    "corrected": "- Cơn hen cấp tính: 32-48 mg/ngày x 5 ngày, sau đó dùng liều thấp hơn trong <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  },
+  {
+    "line": 59,
+    "corrected": "- Methylprednisolone ức chế tổng hợp prostaglandin và như vậy làm mất tác dụng của prostaglandin trên đường tiêu hóa, gồm ức chế tiết acid dạ dày và bảo vệ niêm mạc dạ dày. <!-- NEED_REVIEW: Về mặt sinh lý bệnh, corticoid làm giảm tổng hợp prostaglandin dẫn đến *tăng* nguy cơ loét dạ dày do mất tác dụng bảo vệ niêm mạc, diễn đạt \"làm mất tác dụng... bảo vệ\" có thể gây nhầm lẫn -->"
+  },
+  {
+    "line": 73,
+    "corrected": "+ Nội tiết và chuyển hóa: Hội chứng Cushing, ức chế trục tuyến yên- thượng thận, chậm lớn, không dungnạp glucose, giảm kali huyết, nhiễm kiềm, vô kinh, giữ natri và nước, tăng glucose huyết."
+  },
+  {
+    "line": 86,
+    "corrected": "- Khi sử dụng liều quá cao trong thời gian dài, có thể xảy ra tăng năng vỏ tuyến thượng thận va ức chế tuyến thượng thận. Trong những trường hợp này cần cân nhắc để có quyết định đúng đắn tạm ngừng hoặc ngừng hẳn dùng thuốc"
+  }
+]

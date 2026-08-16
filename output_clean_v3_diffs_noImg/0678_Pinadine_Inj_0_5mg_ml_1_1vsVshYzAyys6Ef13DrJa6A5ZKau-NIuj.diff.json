@@ -1,0 +1,10 @@
+[
+  {
+    "line": 73,
+    "corrected": "*Thường gặp, ADR >1/100* <!-- NEED_REVIEW: Tỷ lệ tần suất ADR thường gặp chuẩn là > 1/10, cần kiểm tra lại tài liệu gốc -->"
+  },
+  {
+    "line": 215,
+    "corrected": "**“Thông báo cho bác sỹ các tác dụng không mong muốn gặp phải khi dùng thuốc”.**"
+  }
+]

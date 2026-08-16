@@ -1,0 +1,14 @@
+[
+  {
+    "line": 12,
+    "corrected": "- Tá dược vừa 1 viên <!-- NEED_REVIEW: Thiếu từ \"đủ\" trong cụm \"Tá dược vừa đủ 1 viên\" -->"
+  },
+  {
+    "line": 24,
+    "corrected": "- **Thận trọng:** Vì khả năng gây mất dịch kính, nên không khuyến cáo dùng chymotrypsin trong phẫu thuật đục nhân mắt ở người bệnh dưới 20 tuổi. Không dùng thuốc cho người bệnh tăng áp suất dịch kính và có vết thương hở hoặc người bệnh dục nhân mắt bẩm sinh. <!-- NEED_REVIEW: Từ \"dục\" có thể là lỗi OCR của \"đục\" trong cụm \"đục nhân mắt bẩm sinh\" -->"
+  },
+  {
+    "line": 26,
+    "corrected": "- **Tác dụng không mong muốn của thuốc:** Tác dụng không mong muốn thường gặp nhất của thuốc là tăng nhất thời nhãn áp do các mảnh vụn dây chằng bị tiêu hủy làm tắc mạng bó dây. <!-- NEED_REVIEW: Cụm từ \"mạng bó dây\" có thể là lỗi OCR hoặc thuật ngữ chưa chuẩn xác, nên kiểm tra lại tài liệu gốc -->"
+  }
+]

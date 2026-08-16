@@ -1,0 +1,26 @@
+[
+  {
+    "line": 83,
+    "corrected": "*Ngừng sử dụng metformin khi thực hiện xét nghiệm chuẩn đoán hình ảnh có sử dụng thuốc cản quang chứa iod.* <!-- NEED_REVIEW: Từ chuẩn đoán nên dùng là chẩn đoán -->"
+  },
+  {
+    "line": 84,
+    "corrected": "Trên những bệnh nhân có eGFR nằm trong khoảng từ 30 – 60 ml/phút/1,73 m², trên những bệnh nhân có tiền sử bệnh lý về gan, nghiện rượu hoặc suy tim, hoặc trên những bệnh nhân sẽ sử dụng thuốc cản quang chứa iod qua đường động mạch, ngừng metformin trước hoặc tại thời điểm thực hiện xét nghiệm chuẩn đoán hình ảnh có sử dụng thuốc cản quang chứa iod. Đánh giá lại chỉ số eGFR sau khi chiếu chụp 48 giờ, sử dụng lại metformin nếu chức năng thận ổn định [*xem mục Cảnh báo và thận trọng khi dùng thuốc*]. <!-- NEED_REVIEW: Từ chuẩn đoán nên dùng là chẩn đoán -->"
+  },
+  {
+    "line": 135,
+    "corrected": "*Thực hiện các xét nghiệm chẩn đoán có sử dụng thuốc cản quang:* Tiêm thuốc cản quang vào nội mạch ở những bệnh nhân đang điều trị metformin có thể dẫn tới suy giảm cấp tính chức năng thận và gây ra toan lactic. Ngừng sử dụng metformin trước hoặc tại thời điểm thực hiện chiếu chụp có sử dụng thuốc cản quang có chứa iod ở những bệnh nhân có eGFR nằm trong khoảng 30 – 60 ml/phút/1,73 m², những bệnh nhân có tiền sử suy gan, nghiện rượu, suy tim hoặc những bệnh nhân sẽ sử dụng thuốc cản quang chứa iod theo đường động mạch. Đánh giá lại eGFR 48 giờ sau khi chiếu chụp và sử dụng lại metformin nếu chức năng thận ổn định."
+  },
+  {
+    "line": 227,
+    "corrected": "ó thể tránh những ADR về tiêu hóa nếu uống metformin vào các bữa ăn và tăng liều dần từng bước. <!-- NEED_REVIEW: Ký tự đầu dòng bị thiếu chữ 'C' trong từ Có thể -->"
+  },
+  {
+    "line": 269,
+    "corrected": "Ngoài tác dụng trên đường huyết, metformin còn có ảnh hưởng tốt trên chuyển hóa lipid. Điều này đã được chứng minh qua các nghiên cứu cứu lâm sàng trung và dài hạn có kiểm soát ở liều điều trị: *Metformin làm giảm cholesterol toàn phần, LDL-cholesterol (Low Density Lipoprotein cholesterol) và cả triglyceride. Thể trọng của người được điều trị bằng metformin có xu hướng ổn định hoặc có thể hơi giảm.* <!-- NEED_REVIEW: Từ 'nghiên cứu cứu' bị lặp từ -->"
+  },
+  {
+    "line": 277,
+    "corrected": "Ở trạng thái ổn định, C<sub>max</sub> và AUC (Area under the curve) không tăng tỷ lệ với liều dùng. AUC của liều đơn 2000 mg meformin dạng phóng thích kéo dài tương tự với liều 1000 mg metformin × 2 lần/ngày dạng phóng thích tức thời. <!-- NEED_REVIEW: Từ meformin có thể là lỗi chính tả của metformin -->"
+  }
+]

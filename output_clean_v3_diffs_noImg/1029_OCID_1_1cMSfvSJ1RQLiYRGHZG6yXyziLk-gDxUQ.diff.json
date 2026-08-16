@@ -1,0 +1,34 @@
+[
+  {
+    "line": 13,
+    "corrected": "uate, bytyl-ate hydroxyl toluene, disodium ETDA, purified water, methacrylic, acid copolyme,"
+  },
+  {
+    "line": 14,
+    "corrected": "ate hydroxyl toluene, disodium EDTA <!-- NEED_REVIEW: Sai chính tả từ ETDA (phải là EDTA) -->, purified water, methacrylic, acid copolyme,"
+  },
+  {
+    "line": 19,
+    "corrected": "xuất benzimidazoly - không biểu hiện tính kháng tiết acetylcholine và kháng H2"
+  },
+  {
+    "line": 45,
+    "corrected": "Như vậy có sự thải mật đáng kể của các chuyển hóa trong huyết tương- dẫn"
+  },
+  {
+    "line": 52,
+    "corrected": "500-600 ml/phút. Với bệnh nhân suy năng thận mãn tính mà thanh thải Creatinine <!-- NEED_REVIEW: Sai chính tả từ 'suy năng thận' (thường là 'suy thận') -->"
+  },
+  {
+    "line": 71,
+    "corrected": "60mg Ocid uống 1 lần/ngày và phải liên tục theo sự chỉ dẫn của bác sĩ Liều cao hơn 80mg/ngày phải được chia làm 2 lần/ngày. Không cần thiết điều chỉnh liều Ocid đối với bệnh nhân suy chức năng gan, thận hay người già."
+  },
+  {
+    "line": 83,
+    "corrected": "<u>Phụ nữ có thai hoặc đang cho trẻ sơ sinh bú:</u> Ngoại trừ lợi ích của việc điều trị rất là cần thiết, Ocid không được sử dụng cho. Sự an toàn của thuốc đối với trẻ em là chưa được ghi nhận. <!-- NEED_REVIEW: Câu bị cụt 'không được sử dụng cho.' thiếu đối tượng -->"
+  },
+  {
+    "line": 87,
+    "corrected": "Bệnh nhân có bệnh khác mà phải dùng thuốc có các hoạt chất như: diazepam <!-- NEED_REVIEW: Sửa lỗi chính tả daizepam thành diazepam -->, warfarin và phenytoin, phải điều chỉnh lại liều của các loại thuốc này, khi dùng cùng một lúc với Ocid. Ocid có thể gây trở ngại cho sự hấp thụ các thước trao đổi chất bởi hệ thống enzyme cytochrome P450. Ocid không tương tác với các antacid."
+  }
+]

@@ -1,0 +1,4945 @@
+﻿drug1,drug2,status
+Aciclovir,Adenosin,unknown
+Aciclovir,Albumin Human,unknown
+Aciclovir,Amikacin sulfat,compatible
+Aciclovir,Aminophyline (Theophylin-ethylendiamin),compatible
+Aciclovir,Amiodarone hydrochlorid,incompatible
+Aciclovir,Amoxicilin + Acid clavulanic,unknown
+Aciclovir,Amphotericin B,incompatible
+Aciclovir,Ampicillin + Sulbactam,incompatible
+Aciclovir,Atropin Sulfat,unknown
+Aciclovir,Azithromycin,compatible
+Aciclovir,Bupivacaine HCl,unknown
+Aciclovir,Cafein,incompatible
+Aciclovir,Calci chlorid,compatible
+Aciclovir,Calci gluconat,compatible
+Aciclovir,Caspofungin,controversial
+Aciclovir,Cefamandol,compatible
+Aciclovir,Cefazolin,compatible
+Aciclovir,Cefepim,incompatible
+Aciclovir,Cefoperazon,compatible
+Aciclovir,Cefoperazon + sulbactam,unknown
+Aciclovir,Cefotaxim,compatible
+Aciclovir,Cefoxitin,compatible
+Aciclovir,Ceftarolin,compatible
+Aciclovir,Ceftazidim,compatible
+Aciclovir,Ceftazidim  +  Avibactam,unknown
+Aciclovir,Ceftriaxon,compatible
+Aciclovir,Ciprofloxacin,incompatible
+Aciclovir,Clindamycin,compatible
+Aciclovir,Deferoxamin mesilat,unknown
+Aciclovir,Dexamethason phosphat,compatible
+Aciclovir,Dextrose,unknown
+Aciclovir,Diazepam,incompatible
+Aciclovir,Diphenhydramin hydroclorid,controversial
+Aciclovir,Dobutamine Hydrochlorid,incompatible
+Aciclovir,Dopamin hydrochlorid,incompatible
+Aciclovir,Enoxaparin natri,unknown
+Aciclovir,Adrenalin,incompatible
+Aciclovir,Esomeprazol,unknown
+Aciclovir,Fentanyl,compatible
+Aciclovir,Filgrastim,compatible
+Aciclovir,Fluconazol,compatible
+Aciclovir,Fosfomycin Sodium,unknown
+Aciclovir,Furosemid,compatible
+Aciclovir,Ganciclovir,unknown
+Aciclovir,Gentamicin,controversial
+Aciclovir,Heparin natri,compatible
+Aciclovir,Gelatin,unknown
+Aciclovir,Benzylpenicilin natri,unknown
+Aciclovir,Acid tranexamic,unknown
+Aciclovir,Hydrocortison,unknown
+Aciclovir,Iloprost,unknown
+Aciclovir,Imipenem + Cilasatin,compatible
+Aciclovir,Immune globulin,unknown
+Aciclovir,Insulin aspart,unknown
+Aciclovir,Iohexol,unknown
+Aciclovir,Iopromide,unknown
+Aciclovir,Ketamine,incompatible
+Aciclovir,Ketorolac Tromethamol,incompatible
+Aciclovir,Levobupivacain,unknown
+Aciclovir,Levofloxacin,incompatible
+Aciclovir,Lidocain hydroclorid,incompatible
+Aciclovir,Linezolid,compatible
+Aciclovir,Magie Chlorid,unknown
+Aciclovir,Magie sulfat,compatible
+Aciclovir,Manitol,compatible
+Aciclovir,Meropenem,controversial
+Aciclovir,Methotrexat,compatible
+Aciclovir,Methylprednisolon,unknown
+Aciclovir,Metronidazol,compatible
+Aciclovir,Micafungin natri,unknown
+Aciclovir,Midazolam,incompatible
+Aciclovir,Milrinone,compatible
+Aciclovir,Morphin sulfat,controversial
+Aciclovir,Kali chlorid,compatible
+Aciclovir,Natri colistimethat,unknown
+Aciclovir,Recombinant Human Erythropoietin alfa,unknown
+Aciclovir,Naloxon hydroclorid,controversial
+Aciclovir,Neostigmin methylsulfat,unknown
+Aciclovir,Nicardipin hydrochlorid,incompatible
+Aciclovir,Noradrenalin,unknown
+Aciclovir,Octreotide,compatible
+Aciclovir,Omeprazol,unknown
+Aciclovir,Ondansetron,incompatible
+Aciclovir,Oxacilin,compatible
+Aciclovir,Pantoprazol,controversial
+Aciclovir,Phenobarbital,compatible
+Aciclovir,Phytomenadion,unknown
+Aciclovir,Piperacilin + Tazobactam,incompatible
+Aciclovir,Propofol,compatible
+Aciclovir,Rocuronium Bromid,compatible
+Aciclovir,Natri bicarbonat,compatible
+Aciclovir,Natri Chlorid,unknown
+Aciclovir,Natri lactat,unknown
+Aciclovir,Sugammadex,unknown
+Aciclovir,Terbutalin sulfat,unknown
+Aciclovir,Tinidazol,unknown
+Aciclovir,Tobramycin sulfat,compatible
+Aciclovir,Vancomycin,compatible
+Aciclovir,Voriconazol,compatible
+Acid tranexamic,Adenosin,unknown
+Acid tranexamic,Albumin Human,unknown
+Acid tranexamic,Amikacin sulfat,unknown
+Acid tranexamic,Aminophyline (Theophylin-ethylendiamin),unknown
+Acid tranexamic,Amiodarone hydrochlorid,unknown
+Acid tranexamic,Amoxicilin + Acid clavulanic,unknown
+Acid tranexamic,Amphotericin B,unknown
+Acid tranexamic,Ampicillin + Sulbactam,incompatible
+Acid tranexamic,Atropin Sulfat,unknown
+Acid tranexamic,Azithromycin,unknown
+Acid tranexamic,Bupivacaine HCl,unknown
+Acid tranexamic,Cafein,unknown
+Acid tranexamic,Calci chlorid,unknown
+Acid tranexamic,Calci gluconat,unknown
+Acid tranexamic,Caspofungin,unknown
+Acid tranexamic,Cefamandol,unknown
+Acid tranexamic,Cefazolin,unknown
+Acid tranexamic,Cefepim,unknown
+Acid tranexamic,Cefoperazon,unknown
+Acid tranexamic,Cefoperazon + sulbactam,unknown
+Acid tranexamic,Cefotaxim,unknown
+Acid tranexamic,Cefoxitin,unknown
+Acid tranexamic,Ceftarolin,unknown
+Acid tranexamic,Ceftazidim,unknown
+Acid tranexamic,Ceftazidim  +  Avibactam,unknown
+Acid tranexamic,Ceftriaxon,unknown
+Acid tranexamic,Ciprofloxacin,unknown
+Acid tranexamic,Clindamycin,unknown
+Acid tranexamic,Deferoxamin mesilat,unknown
+Acid tranexamic,Dexamethason phosphat,unknown
+Acid tranexamic,Dextrose,unknown
+Acid tranexamic,Diazepam,unknown
+Acid tranexamic,Diphenhydramin hydroclorid,unknown
+Acid tranexamic,Dobutamine Hydrochlorid,unknown
+Acid tranexamic,Dopamin hydrochlorid,unknown
+Acid tranexamic,Enoxaparin natri,unknown
+Acid tranexamic,Adrenalin,unknown
+Acid tranexamic,Esomeprazol,unknown
+Acid tranexamic,Fentanyl,unknown
+Acid tranexamic,Filgrastim,unknown
+Acid tranexamic,Fluconazol,unknown
+Acid tranexamic,Fosfomycin Sodium,unknown
+Acid tranexamic,Furosemid,unknown
+Acid tranexamic,Ganciclovir,unknown
+Acid tranexamic,Gentamicin,unknown
+Acid tranexamic,Heparin natri,compatible
+Acid tranexamic,Gelatin,unknown
+Acid tranexamic,Benzylpenicilin natri,incompatible
+Acid tranexamic,Hydrocortison,unknown
+Acid tranexamic,Iloprost,unknown
+Acid tranexamic,Imipenem + Cilasatin,unknown
+Acid tranexamic,Immune globulin,unknown
+Acid tranexamic,Insulin aspart,unknown
+Acid tranexamic,Iohexol,unknown
+Acid tranexamic,Iopromide,unknown
+Acid tranexamic,Ketamine,unknown
+Acid tranexamic,Ketorolac Tromethamol,unknown
+Acid tranexamic,Levobupivacain,unknown
+Acid tranexamic,Levofloxacin,unknown
+Acid tranexamic,Lidocain hydroclorid,unknown
+Acid tranexamic,Linezolid,unknown
+Acid tranexamic,Magie Chlorid,unknown
+Acid tranexamic,Magie sulfat,unknown
+Acid tranexamic,Manitol,unknown
+Acid tranexamic,Meropenem,unknown
+Acid tranexamic,Methotrexat,unknown
+Acid tranexamic,Methylprednisolon,unknown
+Acid tranexamic,Metronidazol,unknown
+Acid tranexamic,Micafungin natri,unknown
+Acid tranexamic,Midazolam,unknown
+Acid tranexamic,Milrinone,unknown
+Acid tranexamic,Morphin sulfat,unknown
+Acid tranexamic,Kali chlorid,unknown
+Acid tranexamic,Natri colistimethat,unknown
+Acid tranexamic,Recombinant Human Erythropoietin alfa,unknown
+Acid tranexamic,Naloxon hydroclorid,unknown
+Acid tranexamic,Neostigmin methylsulfat,unknown
+Acid tranexamic,Nicardipin hydrochlorid,unknown
+Acid tranexamic,Noradrenalin,unknown
+Acid tranexamic,Octreotide,unknown
+Acid tranexamic,Omeprazol,unknown
+Acid tranexamic,Ondansetron,unknown
+Acid tranexamic,Oxacilin,unknown
+Acid tranexamic,Pantoprazol,unknown
+Acid tranexamic,Phenobarbital,unknown
+Acid tranexamic,Phytomenadion,unknown
+Acid tranexamic,Piperacilin + Tazobactam,incompatible
+Acid tranexamic,Propofol,unknown
+Acid tranexamic,Rocuronium Bromid,unknown
+Acid tranexamic,Natri bicarbonat,unknown
+Acid tranexamic,Natri Chlorid,unknown
+Acid tranexamic,Natri lactat,unknown
+Acid tranexamic,Sugammadex,unknown
+Acid tranexamic,Terbutalin sulfat,unknown
+Acid tranexamic,Tinidazol,unknown
+Acid tranexamic,Tobramycin sulfat,unknown
+Acid tranexamic,Vancomycin,unknown
+Acid tranexamic,Voriconazol,unknown
+Adenosin,Albumin Human,unknown
+Adenosin,Amikacin sulfat,unknown
+Adenosin,Aminophyline (Theophylin-ethylendiamin),unknown
+Adenosin,Amiodarone hydrochlorid,unknown
+Adenosin,Amoxicilin + Acid clavulanic,unknown
+Adenosin,Amphotericin B,unknown
+Adenosin,Ampicillin + Sulbactam,unknown
+Adenosin,Atropin Sulfat,unknown
+Adenosin,Azithromycin,unknown
+Adenosin,Bupivacaine HCl,unknown
+Adenosin,Cafein,unknown
+Adenosin,Calci chlorid,unknown
+Adenosin,Calci gluconat,unknown
+Adenosin,Caspofungin,unknown
+Adenosin,Cefamandol,unknown
+Adenosin,Cefazolin,unknown
+Adenosin,Cefepim,unknown
+Adenosin,Cefoperazon,unknown
+Adenosin,Cefoperazon + sulbactam,unknown
+Adenosin,Cefotaxim,unknown
+Adenosin,Cefoxitin,unknown
+Adenosin,Ceftarolin,unknown
+Adenosin,Ceftazidim,unknown
+Adenosin,Ceftazidim  +  Avibactam,unknown
+Adenosin,Ceftriaxon,unknown
+Adenosin,Ciprofloxacin,unknown
+Adenosin,Clindamycin,unknown
+Adenosin,Deferoxamin mesilat,unknown
+Adenosin,Dexamethason phosphat,unknown
+Adenosin,Dextrose,unknown
+Adenosin,Diazepam,unknown
+Adenosin,Diphenhydramin hydroclorid,unknown
+Adenosin,Dobutamine Hydrochlorid,unknown
+Adenosin,Dopamin hydrochlorid,unknown
+Adenosin,Enoxaparin natri,unknown
+Adenosin,Adrenalin,unknown
+Adenosin,Esomeprazol,unknown
+Adenosin,Fentanyl,unknown
+Adenosin,Filgrastim,unknown
+Adenosin,Fluconazol,unknown
+Adenosin,Fosfomycin Sodium,unknown
+Adenosin,Furosemid,unknown
+Adenosin,Ganciclovir,unknown
+Adenosin,Gentamicin,unknown
+Adenosin,Heparin natri,unknown
+Adenosin,Gelatin,unknown
+Adenosin,Benzylpenicilin natri,unknown
+Adenosin,Hydrocortison,unknown
+Adenosin,Iloprost,unknown
+Adenosin,Imipenem + Cilasatin,unknown
+Adenosin,Immune globulin,unknown
+Adenosin,Insulin aspart,unknown
+Adenosin,Iohexol,unknown
+Adenosin,Iopromide,unknown
+Adenosin,Ketamine,unknown
+Adenosin,Ketorolac Tromethamol,unknown
+Adenosin,Levobupivacain,unknown
+Adenosin,Levofloxacin,unknown
+Adenosin,Lidocain hydroclorid,unknown
+Adenosin,Linezolid,unknown
+Adenosin,Magie Chlorid,unknown
+Adenosin,Magie sulfat,unknown
+Adenosin,Manitol,unknown
+Adenosin,Meropenem,unknown
+Adenosin,Methotrexat,unknown
+Adenosin,Methylprednisolon,unknown
+Adenosin,Metronidazol,unknown
+Adenosin,Micafungin natri,unknown
+Adenosin,Midazolam,unknown
+Adenosin,Milrinone,unknown
+Adenosin,Morphin sulfat,unknown
+Adenosin,Kali chlorid,unknown
+Adenosin,Natri colistimethat,unknown
+Adenosin,Recombinant Human Erythropoietin alfa,unknown
+Adenosin,Naloxon hydroclorid,unknown
+Adenosin,Neostigmin methylsulfat,unknown
+Adenosin,Nicardipin hydrochlorid,unknown
+Adenosin,Noradrenalin,unknown
+Adenosin,Octreotide,unknown
+Adenosin,Omeprazol,unknown
+Adenosin,Ondansetron,unknown
+Adenosin,Oxacilin,unknown
+Adenosin,Pantoprazol,unknown
+Adenosin,Phenobarbital,unknown
+Adenosin,Phytomenadion,unknown
+Adenosin,Piperacilin + Tazobactam,unknown
+Adenosin,Propofol,unknown
+Adenosin,Rocuronium Bromid,unknown
+Adenosin,Natri bicarbonat,unknown
+Adenosin,Natri Chlorid,unknown
+Adenosin,Natri lactat,unknown
+Adenosin,Sugammadex,unknown
+Adenosin,Terbutalin sulfat,unknown
+Adenosin,Tinidazol,unknown
+Adenosin,Tobramycin sulfat,unknown
+Adenosin,Vancomycin,unknown
+Adenosin,Voriconazol,unknown
+Adrenalin,Albumin Human,unknown
+Adrenalin,Amikacin sulfat,compatible
+Adrenalin,Aminophyline (Theophylin-ethylendiamin),incompatible
+Adrenalin,Amiodarone hydrochlorid,compatible
+Adrenalin,Amoxicilin + Acid clavulanic,unknown
+Adrenalin,Amphotericin B,incompatible
+Adrenalin,Ampicillin + Sulbactam,controversial
+Adrenalin,Atropin Sulfat,compatible
+Adrenalin,Azithromycin,compatible
+Adrenalin,Bupivacaine HCl,unknown
+Adrenalin,Cafein,compatible
+Adrenalin,Calci chlorid,compatible
+Adrenalin,Calci gluconat,compatible
+Adrenalin,Caspofungin,compatible
+Adrenalin,Cefamandol,compatible
+Adrenalin,Cefazolin,compatible
+Adrenalin,Cefepim,unknown
+Adrenalin,Cefoperazon,compatible
+Adrenalin,Cefoperazon + sulbactam,unknown
+Adrenalin,Cefotaxim,compatible
+Adrenalin,Cefoxitin,compatible
+Adrenalin,Ceftarolin,unknown
+Adrenalin,Ceftazidim,compatible
+Adrenalin,Ceftazidim  +  Avibactam,unknown
+Adrenalin,Ceftriaxon,compatible
+Adrenalin,Ciprofloxacin,unknown
+Adrenalin,Clindamycin,compatible
+Adrenalin,Deferoxamin mesilat,unknown
+Adrenalin,Dexamethason phosphat,compatible
+Adrenalin,Dextrose,unknown
+Adrenalin,Diazepam,incompatible
+Adrenalin,Diphenhydramin hydroclorid,compatible
+Adrenalin,Dobutamine Hydrochlorid,compatible
+Adrenalin,Dopamin hydrochlorid,compatible
+Adrenalin,Enoxaparin natri,unknown
+Adrenalin,Esomeprazol,unknown
+Adrenalin,Fentanyl,compatible
+Adrenalin,Filgrastim,unknown
+Adrenalin,Fluconazol,compatible
+Adrenalin,Fosfomycin Sodium,controversial
+Adrenalin,Furosemid,compatible
+Adrenalin,Ganciclovir,incompatible
+Adrenalin,Gentamicin,compatible
+Adrenalin,Heparin natri,compatible
+Adrenalin,Gelatin,unknown
+Adrenalin,Benzylpenicilin natri,compatible
+Adrenalin,Hydrocortison,compatible
+Adrenalin,Iloprost,unknown
+Adrenalin,Imipenem + Cilasatin,compatible
+Adrenalin,Immune globulin,unknown
+Adrenalin,Insulin aspart,compatible
+Adrenalin,Iohexol,unknown
+Adrenalin,Iopromide,unknown
+Adrenalin,Ketamine,compatible
+Adrenalin,Ketorolac Tromethamol,compatible
+Adrenalin,Levobupivacain,unknown
+Adrenalin,Levofloxacin,compatible
+Adrenalin,Lidocain hydroclorid,compatible
+Adrenalin,Linezolid,compatible
+Adrenalin,Magie Chlorid,unknown
+Adrenalin,Magie sulfat,compatible
+Adrenalin,Manitol,compatible
+Adrenalin,Meropenem,compatible
+Adrenalin,Methotrexat,compatible
+Adrenalin,Methylprednisolon,unknown
+Adrenalin,Metronidazol,compatible
+Adrenalin,Micafungin natri,incompatible
+Adrenalin,Midazolam,compatible
+Adrenalin,Milrinone,compatible
+Adrenalin,Morphin sulfat,compatible
+Adrenalin,Kali chlorid,compatible
+Adrenalin,Natri colistimethat,compatible
+Adrenalin,Recombinant Human Erythropoietin alfa,compatible
+Adrenalin,Naloxon hydroclorid,compatible
+Adrenalin,Neostigmin methylsulfat,unknown
+Adrenalin,Nicardipin hydrochlorid,compatible
+Adrenalin,Noradrenalin,unknown
+Adrenalin,Octreotide,compatible
+Adrenalin,Omeprazol,unknown
+Adrenalin,Ondansetron,compatible
+Adrenalin,Oxacilin,compatible
+Adrenalin,Pantoprazol,controversial
+Adrenalin,Phenobarbital,incompatible
+Adrenalin,Phytomenadion,compatible
+Adrenalin,Piperacilin + Tazobactam,compatible
+Adrenalin,Propofol,controversial
+Adrenalin,Rocuronium Bromid,compatible
+Adrenalin,Natri bicarbonat,incompatible
+Adrenalin,Natri Chlorid,unknown
+Adrenalin,Natri lactat,unknown
+Adrenalin,Sugammadex,unknown
+Adrenalin,Terbutalin sulfat,unknown
+Adrenalin,Tinidazol,unknown
+Adrenalin,Tobramycin sulfat,compatible
+Adrenalin,Vancomycin,compatible
+Adrenalin,Voriconazol,compatible
+Albumin Human,Amikacin sulfat,unknown
+Albumin Human,Aminophyline (Theophylin-ethylendiamin),unknown
+Albumin Human,Amiodarone hydrochlorid,unknown
+Albumin Human,Amoxicilin + Acid clavulanic,unknown
+Albumin Human,Amphotericin B,unknown
+Albumin Human,Ampicillin + Sulbactam,unknown
+Albumin Human,Atropin Sulfat,unknown
+Albumin Human,Azithromycin,unknown
+Albumin Human,Bupivacaine HCl,unknown
+Albumin Human,Cafein,unknown
+Albumin Human,Calci chlorid,unknown
+Albumin Human,Calci gluconat,unknown
+Albumin Human,Caspofungin,unknown
+Albumin Human,Cefamandol,unknown
+Albumin Human,Cefazolin,unknown
+Albumin Human,Cefepim,unknown
+Albumin Human,Cefoperazon,unknown
+Albumin Human,Cefoperazon + sulbactam,unknown
+Albumin Human,Cefotaxim,unknown
+Albumin Human,Cefoxitin,unknown
+Albumin Human,Ceftarolin,unknown
+Albumin Human,Ceftazidim,unknown
+Albumin Human,Ceftazidim  +  Avibactam,unknown
+Albumin Human,Ceftriaxon,unknown
+Albumin Human,Ciprofloxacin,unknown
+Albumin Human,Clindamycin,unknown
+Albumin Human,Deferoxamin mesilat,unknown
+Albumin Human,Dexamethason phosphat,unknown
+Albumin Human,Dextrose,unknown
+Albumin Human,Diazepam,unknown
+Albumin Human,Diphenhydramin hydroclorid,unknown
+Albumin Human,Dobutamine Hydrochlorid,unknown
+Albumin Human,Dopamin hydrochlorid,unknown
+Albumin Human,Enoxaparin natri,unknown
+Albumin Human,Esomeprazol,unknown
+Albumin Human,Fentanyl,unknown
+Albumin Human,Filgrastim,unknown
+Albumin Human,Fluconazol,unknown
+Albumin Human,Fosfomycin Sodium,incompatible
+Albumin Human,Furosemid,unknown
+Albumin Human,Ganciclovir,unknown
+Albumin Human,Gentamicin,unknown
+Albumin Human,Heparin natri,unknown
+Albumin Human,Gelatin,unknown
+Albumin Human,Benzylpenicilin natri,unknown
+Albumin Human,Natri colistimethat,unknown
+Albumin Human,Recombinant Human Erythropoietin alfa,unknown
+Albumin Human,Naloxon hydroclorid,unknown
+Albumin Human,Neostigmin methylsulfat,unknown
+Albumin Human,Nicardipin hydrochlorid,unknown
+Albumin Human,Noradrenalin,unknown
+Albumin Human,Octreotide,unknown
+Albumin Human,Omeprazol,unknown
+Albumin Human,Ondansetron,unknown
+Albumin Human,Oxacilin,unknown
+Albumin Human,Pantoprazol,unknown
+Albumin Human,Phenobarbital,unknown
+Albumin Human,Phytomenadion,unknown
+Albumin Human,Piperacilin + Tazobactam,unknown
+Albumin Human,Propofol,unknown
+Albumin Human,Rocuronium Bromid,unknown
+Albumin Human,Natri bicarbonat,unknown
+Albumin Human,Natri Chlorid,unknown
+Albumin Human,Natri lactat,unknown
+Albumin Human,Sugammadex,unknown
+Albumin Human,Terbutalin sulfat,unknown
+Albumin Human,Tinidazol,unknown
+Albumin Human,Tobramycin sulfat,unknown
+Albumin Human,Vancomycin,incompatible
+Albumin Human,Voriconazol,unknown
+Albumin Human,Hydrocortison,compatible
+Albumin Human,Iloprost,unknown
+Albumin Human,Imipenem + Cilasatin,unknown
+Albumin Human,Immune globulin,unknown
+Albumin Human,Insulin aspart,unknown
+Albumin Human,Iohexol,unknown
+Albumin Human,Iopromide,unknown
+Albumin Human,Ketamine,compatible
+Albumin Human,Ketorolac Tromethamol,unknown
+Albumin Human,Levobupivacain,unknown
+Albumin Human,Levofloxacin,unknown
+Albumin Human,Lidocain hydroclorid,unknown
+Albumin Human,Linezolid,unknown
+Albumin Human,Magie Chlorid,unknown
+Albumin Human,Magie sulfat,unknown
+Albumin Human,Manitol,unknown
+Albumin Human,Meropenem,compatible
+Albumin Human,Methotrexat,unknown
+Albumin Human,Methylprednisolon,unknown
+Albumin Human,Metronidazol,unknown
+Albumin Human,Micafungin natri,incompatible
+Albumin Human,Midazolam,incompatible
+Albumin Human,Milrinone,unknown
+Albumin Human,Morphin sulfat,unknown
+Albumin Human,Kali chlorid,unknown
+Amikacin sulfat,Aminophyline (Theophylin-ethylendiamin),compatible
+Amikacin sulfat,Amiodarone hydrochlorid,compatible
+Amikacin sulfat,Amoxicilin + Acid clavulanic,unknown
+Amikacin sulfat,Amphotericin B,incompatible
+Amikacin sulfat,Ampicillin + Sulbactam,controversial
+Amikacin sulfat,Atropin Sulfat,compatible
+Amikacin sulfat,Azithromycin,controversial
+Amikacin sulfat,Bupivacaine HCl,unknown
+Amikacin sulfat,Cafein,unknown
+Amikacin sulfat,Calci chlorid,compatible
+Amikacin sulfat,Calci gluconat,compatible
+Amikacin sulfat,Caspofungin,compatible
+Amikacin sulfat,Cefamandol,compatible
+Amikacin sulfat,Cefazolin,compatible
+Amikacin sulfat,Cefepim,compatible
+Amikacin sulfat,Cefoperazon,incompatible
+Amikacin sulfat,Cefoperazon + sulbactam,unknown
+Amikacin sulfat,Cefotaxim,compatible
+Amikacin sulfat,Cefoxitin,compatible
+Amikacin sulfat,Ceftarolin,compatible
+Amikacin sulfat,Ceftazidim,compatible
+Amikacin sulfat,Ceftazidim  +  Avibactam,compatible
+Amikacin sulfat,Ceftriaxon,compatible
+Amikacin sulfat,Ciprofloxacin,unknown
+Amikacin sulfat,Clindamycin,compatible
+Amikacin sulfat,Deferoxamin mesilat,unknown
+Amikacin sulfat,Dexamethason phosphat,compatible
+Amikacin sulfat,Dextrose,unknown
+Amikacin sulfat,Diazepam,incompatible
+Amikacin sulfat,Diphenhydramin hydroclorid,compatible
+Amikacin sulfat,Dobutamine Hydrochlorid,compatible
+Amikacin sulfat,Dopamin hydrochlorid,compatible
+Amikacin sulfat,Enoxaparin natri,unknown
+Amikacin sulfat,Esomeprazol,unknown
+Amikacin sulfat,Fentanyl,compatible
+Amikacin sulfat,Filgrastim,compatible
+Amikacin sulfat,Fluconazol,compatible
+Amikacin sulfat,Fosfomycin Sodium,compatible
+Amikacin sulfat,Furosemid,compatible
+Amikacin sulfat,Ganciclovir,incompatible
+Amikacin sulfat,Gentamicin,compatible
+Amikacin sulfat,Heparin natri,controversial
+Amikacin sulfat,Gelatin,unknown
+Amikacin sulfat,Benzylpenicilin natri,compatible
+Amikacin sulfat,Hydrocortison,unknown
+Amikacin sulfat,Iloprost,unknown
+Amikacin sulfat,Imipenem + Cilasatin,compatible
+Amikacin sulfat,Immune globulin,unknown
+Amikacin sulfat,Insulin aspart,unknown
+Amikacin sulfat,Iohexol,unknown
+Amikacin sulfat,Iopromide,unknown
+Amikacin sulfat,Ketamine,compatible
+Amikacin sulfat,Ketorolac Tromethamol,compatible
+Amikacin sulfat,Levobupivacain,unknown
+Amikacin sulfat,Levofloxacin,compatible
+Amikacin sulfat,Lidocain hydroclorid,compatible
+Amikacin sulfat,Linezolid,compatible
+Amikacin sulfat,Magie Chlorid,unknown
+Amikacin sulfat,Magie sulfat,compatible
+Amikacin sulfat,Manitol,compatible
+Amikacin sulfat,Meropenem,controversial
+Amikacin sulfat,Methotrexat,compatible
+Amikacin sulfat,Methylprednisolon,unknown
+Amikacin sulfat,Metronidazol,compatible
+Amikacin sulfat,Micafungin natri,unknown
+Amikacin sulfat,Midazolam,compatible
+Amikacin sulfat,Milrinone,compatible
+Amikacin sulfat,Morphin sulfat,compatible
+Amikacin sulfat,Kali chlorid,compatible
+Amikacin sulfat,Natri colistimethat,unknown
+Amikacin sulfat,Recombinant Human Erythropoietin alfa,compatible
+Amikacin sulfat,Naloxon hydroclorid,compatible
+Amikacin sulfat,Neostigmin methylsulfat,unknown
+Amikacin sulfat,Nicardipin hydrochlorid,compatible
+Amikacin sulfat,Noradrenalin,unknown
+Amikacin sulfat,Octreotide,compatible
+Amikacin sulfat,Omeprazol,unknown
+Amikacin sulfat,Ondansetron,compatible
+Amikacin sulfat,Oxacilin,controversial
+Amikacin sulfat,Pantoprazol,controversial
+Amikacin sulfat,Phenobarbital,compatible
+Amikacin sulfat,Phytomenadion,compatible
+Amikacin sulfat,Piperacilin + Tazobactam,compatible
+Amikacin sulfat,Propofol,incompatible
+Amikacin sulfat,Rocuronium Bromid,compatible
+Amikacin sulfat,Natri bicarbonat,compatible
+Amikacin sulfat,Natri Chlorid,unknown
+Amikacin sulfat,Natri lactat,unknown
+Amikacin sulfat,Sugammadex,unknown
+Amikacin sulfat,Terbutalin sulfat,unknown
+Amikacin sulfat,Tinidazol,unknown
+Amikacin sulfat,Tobramycin sulfat,compatible
+Amikacin sulfat,Vancomycin,compatible
+Amikacin sulfat,Voriconazol,compatible
+Aminophyline (Theophylin-ethylendiamin),Amiodarone hydrochlorid,incompatible
+Aminophyline (Theophylin-ethylendiamin),Amoxicilin + Acid clavulanic,unknown
+Aminophyline (Theophylin-ethylendiamin),Amphotericin B,controversial
+Aminophyline (Theophylin-ethylendiamin),Ampicillin + Sulbactam,controversial
+Aminophyline (Theophylin-ethylendiamin),Atropin Sulfat,compatible
+Aminophyline (Theophylin-ethylendiamin),Azithromycin,compatible
+Aminophyline (Theophylin-ethylendiamin),Bupivacaine HCl,unknown
+Aminophyline (Theophylin-ethylendiamin),Cafein,unknown
+Aminophyline (Theophylin-ethylendiamin),Calci chlorid,compatible
+Aminophyline (Theophylin-ethylendiamin),Calci gluconat,compatible
+Aminophyline (Theophylin-ethylendiamin),Caspofungin,compatible
+Aminophyline (Theophylin-ethylendiamin),Cefamandol,compatible
+Aminophyline (Theophylin-ethylendiamin),Cefazolin,compatible
+Aminophyline (Theophylin-ethylendiamin),Cefepim,unknown
+Aminophyline (Theophylin-ethylendiamin),Cefoperazon,compatible
+Aminophyline (Theophylin-ethylendiamin),Cefoperazon + sulbactam,unknown
+Aminophyline (Theophylin-ethylendiamin),Cefotaxim,compatible
+Aminophyline (Theophylin-ethylendiamin),Cefoxitin,compatible
+Aminophyline (Theophylin-ethylendiamin),Ceftarolin,compatible
+Aminophyline (Theophylin-ethylendiamin),Ceftazidim,compatible
+Aminophyline (Theophylin-ethylendiamin),Ceftazidim  +  Avibactam,unknown
+Aminophyline (Theophylin-ethylendiamin),Ceftriaxon,compatible
+Aminophyline (Theophylin-ethylendiamin),Ciprofloxacin,incompatible
+Aminophyline (Theophylin-ethylendiamin),Clindamycin,compatible
+Aminophyline (Theophylin-ethylendiamin),Deferoxamin mesilat,unknown
+Aminophyline (Theophylin-ethylendiamin),Dexamethason phosphat,compatible
+Aminophyline (Theophylin-ethylendiamin),Dextrose,unknown
+Aminophyline (Theophylin-ethylendiamin),Diazepam,incompatible
+Aminophyline (Theophylin-ethylendiamin),Diphenhydramin hydroclorid,incompatible
+Aminophyline (Theophylin-ethylendiamin),Dobutamine Hydrochlorid,incompatible
+Aminophyline (Theophylin-ethylendiamin),Dopamin hydrochlorid,compatible
+Aminophyline (Theophylin-ethylendiamin),Enoxaparin natri,unknown
+Aminophyline (Theophylin-ethylendiamin),Esomeprazol,unknown
+Aminophyline (Theophylin-ethylendiamin),Fentanyl,compatible
+Aminophyline (Theophylin-ethylendiamin),Filgrastim,compatible
+Aminophyline (Theophylin-ethylendiamin),Fluconazol,compatible
+Aminophyline (Theophylin-ethylendiamin),Fosfomycin Sodium,unknown
+Aminophyline (Theophylin-ethylendiamin),Furosemid,compatible
+Aminophyline (Theophylin-ethylendiamin),Ganciclovir,incompatible
+Aminophyline (Theophylin-ethylendiamin),Gentamicin,compatible
+Aminophyline (Theophylin-ethylendiamin),Heparin natri,compatible
+Aminophyline (Theophylin-ethylendiamin),Gelatin,unknown
+Aminophyline (Theophylin-ethylendiamin),Benzylpenicilin natri,controversial
+Aminophyline (Theophylin-ethylendiamin),Hydrocortison,unknown
+Aminophyline (Theophylin-ethylendiamin),Iloprost,unknown
+Aminophyline (Theophylin-ethylendiamin),Imipenem + Cilasatin,controversial
+Aminophyline (Theophylin-ethylendiamin),Immune globulin,unknown
+Aminophyline (Theophylin-ethylendiamin),Insulin aspart,unknown
+Aminophyline (Theophylin-ethylendiamin),Iohexol,unknown
+Aminophyline (Theophylin-ethylendiamin),Iopromide,unknown
+Aminophyline (Theophylin-ethylendiamin),Ketamine,incompatible
+Aminophyline (Theophylin-ethylendiamin),Ketorolac Tromethamol,compatible
+Aminophyline (Theophylin-ethylendiamin),Levobupivacain,unknown
+Aminophyline (Theophylin-ethylendiamin),Levofloxacin,compatible
+Aminophyline (Theophylin-ethylendiamin),Lidocain hydroclorid,compatible
+Aminophyline (Theophylin-ethylendiamin),Linezolid,compatible
+Aminophyline (Theophylin-ethylendiamin),Magie Chlorid,unknown
+Aminophyline (Theophylin-ethylendiamin),Magie sulfat,incompatible
+Aminophyline (Theophylin-ethylendiamin),Manitol,compatible
+Aminophyline (Theophylin-ethylendiamin),Meropenem,compatible
+Aminophyline (Theophylin-ethylendiamin),Methotrexat,compatible
+Aminophyline (Theophylin-ethylendiamin),Methylprednisolon,unknown
+Aminophyline (Theophylin-ethylendiamin),Metronidazol,compatible
+Aminophyline (Theophylin-ethylendiamin),Micafungin natri,compatible
+Aminophyline (Theophylin-ethylendiamin),Midazolam,incompatible
+Aminophyline (Theophylin-ethylendiamin),Milrinone,compatible
+Aminophyline (Theophylin-ethylendiamin),Morphin sulfat,compatible
+Aminophyline (Theophylin-ethylendiamin),Kali chlorid,compatible
+Aminophyline (Theophylin-ethylendiamin),Natri colistimethat,compatible
+Aminophyline (Theophylin-ethylendiamin),Recombinant Human Erythropoietin alfa,compatible
+Aminophyline (Theophylin-ethylendiamin),Naloxon hydroclorid,controversial
+Aminophyline (Theophylin-ethylendiamin),Neostigmin methylsulfat,unknown
+Aminophyline (Theophylin-ethylendiamin),Nicardipin hydrochlorid,controversial
+Aminophyline (Theophylin-ethylendiamin),Noradrenalin,unknown
+Aminophyline (Theophylin-ethylendiamin),Octreotide,compatible
+Aminophyline (Theophylin-ethylendiamin),Omeprazol,unknown
+Aminophyline (Theophylin-ethylendiamin),Ondansetron,incompatible
+Aminophyline (Theophylin-ethylendiamin),Oxacilin,compatible
+Aminophyline (Theophylin-ethylendiamin),Pantoprazol,compatible
+Aminophyline (Theophylin-ethylendiamin),Phenobarbital,compatible
+Aminophyline (Theophylin-ethylendiamin),Phytomenadion,compatible
+Aminophyline (Theophylin-ethylendiamin),Piperacilin + Tazobactam,compatible
+Aminophyline (Theophylin-ethylendiamin),Propofol,compatible
+Aminophyline (Theophylin-ethylendiamin),Rocuronium Bromid,compatible
+Aminophyline (Theophylin-ethylendiamin),Natri bicarbonat,compatible
+Aminophyline (Theophylin-ethylendiamin),Natri Chlorid,unknown
+Aminophyline (Theophylin-ethylendiamin),Natri lactat,unknown
+Aminophyline (Theophylin-ethylendiamin),Sugammadex,unknown
+Aminophyline (Theophylin-ethylendiamin),Terbutalin sulfat,unknown
+Aminophyline (Theophylin-ethylendiamin),Tinidazol,unknown
+Aminophyline (Theophylin-ethylendiamin),Tobramycin sulfat,compatible
+Aminophyline (Theophylin-ethylendiamin),Vancomycin,incompatible
+Aminophyline (Theophylin-ethylendiamin),Voriconazol,compatible
+Amiodarone hydrochlorid,Amoxicilin + Acid clavulanic,incompatible
+Amiodarone hydrochlorid,Amphotericin B,controversial
+Amiodarone hydrochlorid,Ampicillin + Sulbactam,incompatible
+Amiodarone hydrochlorid,Atropin Sulfat,compatible
+Amiodarone hydrochlorid,Azithromycin,incompatible
+Amiodarone hydrochlorid,Bupivacaine HCl,unknown
+Amiodarone hydrochlorid,Cafein,unknown
+Amiodarone hydrochlorid,Calci chlorid,compatible
+Amiodarone hydrochlorid,Calci gluconat,controversial
+Amiodarone hydrochlorid,Caspofungin,compatible
+Amiodarone hydrochlorid,Cefamandol,incompatible
+Amiodarone hydrochlorid,Cefazolin,controversial
+Amiodarone hydrochlorid,Cefepim,compatible
+Amiodarone hydrochlorid,Cefoperazon,unknown
+Amiodarone hydrochlorid,Cefoperazon + sulbactam,unknown
+Amiodarone hydrochlorid,Cefotaxim,incompatible
+Amiodarone hydrochlorid,Ceftarolin,compatible
+Amiodarone hydrochlorid,Ceftazidim,incompatible
+Amiodarone hydrochlorid,Ceftazidim  +  Avibactam,unknown
+Amiodarone hydrochlorid,Ceftriaxon,controversial
+Amiodarone hydrochlorid,Ciprofloxacin,compatible
+Amiodarone hydrochlorid,Clindamycin,compatible
+Amiodarone hydrochlorid,Deferoxamin mesilat,unknown
+Amiodarone hydrochlorid,Dexamethason phosphat,incompatible
+Amiodarone hydrochlorid,Dextrose,unknown
+Amiodarone hydrochlorid,Diazepam,incompatible
+Amiodarone hydrochlorid,Diphenhydramin hydroclorid,compatible
+Amiodarone hydrochlorid,Dobutamine Hydrochlorid,controversial
+Amiodarone hydrochlorid,Dopamin hydrochlorid,compatible
+Amiodarone hydrochlorid,Enoxaparin natri,unknown
+Amiodarone hydrochlorid,Esomeprazol,unknown
+Amiodarone hydrochlorid,Fentanyl,controversial
+Amiodarone hydrochlorid,Filgrastim,unknown
+Amiodarone hydrochlorid,Fluconazol,compatible
+Amiodarone hydrochlorid,Fosfomycin Sodium,incompatible
+Amiodarone hydrochlorid,Furosemid,controversial
+Amiodarone hydrochlorid,Ganciclovir,incompatible
+Amiodarone hydrochlorid,Gentamicin,compatible
+Amiodarone hydrochlorid,Heparin natri,incompatible
+Amiodarone hydrochlorid,Gelatin,unknown
+Amiodarone hydrochlorid,Benzylpenicilin natri,unknown
+Amiodarone hydrochlorid,Hydrocortison,unknown
+Amiodarone hydrochlorid,Iloprost,unknown
+Amiodarone hydrochlorid,Imipenem + Cilasatin,incompatible
+Amiodarone hydrochlorid,Immune globulin,unknown
+Amiodarone hydrochlorid,Insulin aspart,compatible
+Amiodarone hydrochlorid,Iohexol,unknown
+Amiodarone hydrochlorid,Iopromide,unknown
+Amiodarone hydrochlorid,Ketamine,compatible
+Amiodarone hydrochlorid,Ketorolac Tromethamol,incompatible
+Amiodarone hydrochlorid,Levobupivacain,unknown
+Amiodarone hydrochlorid,Levofloxacin,incompatible
+Amiodarone hydrochlorid,Lidocain hydroclorid,compatible
+Amiodarone hydrochlorid,Linezolid,compatible
+Amiodarone hydrochlorid,Magie Chlorid,unknown
+Amiodarone hydrochlorid,Magie sulfat,controversial
+Amiodarone hydrochlorid,Manitol,compatible
+Amiodarone hydrochlorid,Meropenem,incompatible
+Amiodarone hydrochlorid,Methotrexat,incompatible
+Amiodarone hydrochlorid,Methylprednisolon,unknown
+Amiodarone hydrochlorid,Metronidazol,compatible
+Amiodarone hydrochlorid,Micafungin natri,incompatible
+Amiodarone hydrochlorid,Midazolam,compatible
+Amiodarone hydrochlorid,Milrinone,compatible
+Amiodarone hydrochlorid,Morphin sulfat,compatible
+Amiodarone hydrochlorid,Kali chlorid,controversial
+Amiodarone hydrochlorid,Natri colistimethat,unknown
+Amiodarone hydrochlorid,Recombinant Human Erythropoietin alfa,unknown
+Amiodarone hydrochlorid,Naloxon hydroclorid,compatible
+Amiodarone hydrochlorid,Neostigmin methylsulfat,unknown
+Amiodarone hydrochlorid,Nicardipin hydrochlorid,compatible
+Amiodarone hydrochlorid,Noradrenalin,unknown
+Amiodarone hydrochlorid,Octreotide,compatible
+Amiodarone hydrochlorid,Omeprazol,unknown
+Amiodarone hydrochlorid,Ondansetron,compatible
+Amiodarone hydrochlorid,Oxacilin,unknown
+Amiodarone hydrochlorid,Pantoprazol,controversial
+Amiodarone hydrochlorid,Phenobarbital,incompatible
+Amiodarone hydrochlorid,Phytomenadion,unknown
+Amiodarone hydrochlorid,Piperacilin + Tazobactam,incompatible
+Amiodarone hydrochlorid,Propofol,unknown
+Amiodarone hydrochlorid,Rocuronium Bromid,compatible
+Amiodarone hydrochlorid,Natri bicarbonat,incompatible
+Amiodarone hydrochlorid,Natri Chlorid,unknown
+Amiodarone hydrochlorid,Natri lactat,unknown
+Amiodarone hydrochlorid,Sugammadex,unknown
+Amiodarone hydrochlorid,Terbutalin sulfat,unknown
+Amiodarone hydrochlorid,Tinidazol,unknown
+Amiodarone hydrochlorid,Tobramycin sulfat,compatible
+Amiodarone hydrochlorid,Vancomycin,compatible
+Amiodarone hydrochlorid,Voriconazol,compatible
+Amoxicilin + Acid clavulanic,Amphotericin B,unknown
+Amoxicilin + Acid clavulanic,Ampicillin + Sulbactam,unknown
+Amoxicilin + Acid clavulanic,Atropin Sulfat,unknown
+Amoxicilin + Acid clavulanic,Azithromycin,unknown
+Amoxicilin + Acid clavulanic,Bupivacaine HCl,unknown
+Amoxicilin + Acid clavulanic,Cafein,unknown
+Amoxicilin + Acid clavulanic,Calci chlorid,unknown
+Amoxicilin + Acid clavulanic,Calci gluconat,unknown
+Amoxicilin + Acid clavulanic,Caspofungin,unknown
+Amoxicilin + Acid clavulanic,Cefamandol,unknown
+Amoxicilin + Acid clavulanic,Cefazolin,unknown
+Amoxicilin + Acid clavulanic,Cefepim,unknown
+Amoxicilin + Acid clavulanic,Cefoperazon,unknown
+Amoxicilin + Acid clavulanic,Cefoperazon + sulbactam,unknown
+Amoxicilin + Acid clavulanic,Cefotaxim,unknown
+Amoxicilin + Acid clavulanic,Cefoxitin,unknown
+Amoxicilin + Acid clavulanic,Ceftarolin,unknown
+Amoxicilin + Acid clavulanic,Ceftazidim,unknown
+Amoxicilin + Acid clavulanic,Ceftazidim  +  Avibactam,unknown
+Amoxicilin + Acid clavulanic,Ceftriaxon,unknown
+Amoxicilin + Acid clavulanic,Ciprofloxacin,unknown
+Amoxicilin + Acid clavulanic,Clindamycin,unknown
+Amoxicilin + Acid clavulanic,Deferoxamin mesilat,unknown
+Amoxicilin + Acid clavulanic,Dexamethason phosphat,unknown
+Amoxicilin + Acid clavulanic,Dextrose,unknown
+Amoxicilin + Acid clavulanic,Diazepam,unknown
+Amoxicilin + Acid clavulanic,Diphenhydramin hydroclorid,unknown
+Amoxicilin + Acid clavulanic,Dobutamine Hydrochlorid,unknown
+Amoxicilin + Acid clavulanic,Dopamin hydrochlorid,unknown
+Amoxicilin + Acid clavulanic,Enoxaparin natri,unknown
+Amoxicilin + Acid clavulanic,Esomeprazol,unknown
+Amoxicilin + Acid clavulanic,Fentanyl,unknown
+Amoxicilin + Acid clavulanic,Filgrastim,unknown
+Amoxicilin + Acid clavulanic,Fluconazol,unknown
+Amoxicilin + Acid clavulanic,Fosfomycin Sodium,unknown
+Amoxicilin + Acid clavulanic,Furosemid,unknown
+Amoxicilin + Acid clavulanic,Ganciclovir,unknown
+Amoxicilin + Acid clavulanic,Gentamicin,unknown
+Amoxicilin + Acid clavulanic,Heparin natri,unknown
+Amoxicilin + Acid clavulanic,Gelatin,unknown
+Amoxicilin + Acid clavulanic,Benzylpenicilin natri,unknown
+Amoxicilin + Acid clavulanic,Hydrocortison,unknown
+Amoxicilin + Acid clavulanic,Iloprost,unknown
+Amoxicilin + Acid clavulanic,Imipenem + Cilasatin,unknown
+Amoxicilin + Acid clavulanic,Immune globulin,unknown
+Amoxicilin + Acid clavulanic,Insulin aspart,unknown
+Amoxicilin + Acid clavulanic,Iohexol,unknown
+Amoxicilin + Acid clavulanic,Iopromide,unknown
+Amoxicilin + Acid clavulanic,Ketamine,unknown
+Amoxicilin + Acid clavulanic,Ketorolac Tromethamol,unknown
+Amoxicilin + Acid clavulanic,Levobupivacain,unknown
+Amoxicilin + Acid clavulanic,Levofloxacin,unknown
+Amoxicilin + Acid clavulanic,Lidocain hydroclorid,unknown
+Amoxicilin + Acid clavulanic,Linezolid,unknown
+Amoxicilin + Acid clavulanic,Magie Chlorid,unknown
+Amoxicilin + Acid clavulanic,Magie sulfat,unknown
+Amoxicilin + Acid clavulanic,Manitol,unknown
+Amoxicilin + Acid clavulanic,Meropenem,unknown
+Amoxicilin + Acid clavulanic,Methotrexat,unknown
+Amoxicilin + Acid clavulanic,Methylprednisolon,unknown
+Amoxicilin + Acid clavulanic,Metronidazol,unknown
+Amoxicilin + Acid clavulanic,Micafungin natri,unknown
+Amoxicilin + Acid clavulanic,Midazolam,controversial
+Amoxicilin + Acid clavulanic,Milrinone,unknown
+Amoxicilin + Acid clavulanic,Morphin sulfat,unknown
+Amoxicilin + Acid clavulanic,Kali chlorid,unknown
+Amoxicilin + Acid clavulanic,Natri colistimethat,unknown
+Amoxicilin + Acid clavulanic,Recombinant Human Erythropoietin alfa,unknown
+Amoxicilin + Acid clavulanic,Naloxon hydroclorid,unknown
+Amoxicilin + Acid clavulanic,Neostigmin methylsulfat,unknown
+Amoxicilin + Acid clavulanic,Nicardipin hydrochlorid,unknown
+Amoxicilin + Acid clavulanic,Noradrenalin,unknown
+Amoxicilin + Acid clavulanic,Octreotide,unknown
+Amoxicilin + Acid clavulanic,Omeprazol,unknown
+Amoxicilin + Acid clavulanic,Ondansetron,unknown
+Amoxicilin + Acid clavulanic,Oxacilin,unknown
+Amoxicilin + Acid clavulanic,Pantoprazol,compatible
+Amoxicilin + Acid clavulanic,Phenobarbital,unknown
+Amoxicilin + Acid clavulanic,Phytomenadion,unknown
+Amoxicilin + Acid clavulanic,Piperacilin + Tazobactam,unknown
+Amoxicilin + Acid clavulanic,Propofol,compatible
+Amoxicilin + Acid clavulanic,Rocuronium Bromid,unknown
+Amoxicilin + Acid clavulanic,Natri bicarbonat,unknown
+Amoxicilin + Acid clavulanic,Natri Chlorid,unknown
+Amoxicilin + Acid clavulanic,Natri lactat,unknown
+Amoxicilin + Acid clavulanic,Sugammadex,unknown
+Amoxicilin + Acid clavulanic,Terbutalin sulfat,unknown
+Amoxicilin + Acid clavulanic,Tinidazol,unknown
+Amoxicilin + Acid clavulanic,Tobramycin sulfat,unknown
+Amoxicilin + Acid clavulanic,Vancomycin,compatible
+Amoxicilin + Acid clavulanic,Voriconazol,unknown
+Ampicillin + Sulbactam,Amphotericin B,incompatible
+Ampicillin + Sulbactam,Atropin Sulfat,controversial
+Ampicillin + Sulbactam,Azithromycin,compatible
+Ampicillin + Sulbactam,Bupivacaine HCl,unknown
+Ampicillin + Sulbactam,Cafein,unknown
+Ampicillin + Sulbactam,Calci chlorid,controversial
+Ampicillin + Sulbactam,Calci gluconat,controversial
+Ampicillin + Sulbactam,Caspofungin,incompatible
+Ampicillin + Sulbactam,Cefamandol,controversial
+Ampicillin + Sulbactam,Cefazolin,controversial
+Ampicillin + Sulbactam,Cefepim,compatible
+Ampicillin + Sulbactam,Cefoperazon,controversial
+Ampicillin + Sulbactam,Cefoperazon + sulbactam,unknown
+Ampicillin + Sulbactam,Cefotaxim,controversial
+Ampicillin + Sulbactam,Ceftarolin,unknown
+Ampicillin + Sulbactam,Ceftazidim,controversial
+Ampicillin + Sulbactam,Ceftazidim  +  Avibactam,unknown
+Ampicillin + Sulbactam,Ceftriaxon,controversial
+Ampicillin + Sulbactam,Ciprofloxacin,incompatible
+Ampicillin + Sulbactam,Clindamycin,controversial
+Ampicillin + Sulbactam,Deferoxamin mesilat,unknown
+Ampicillin + Sulbactam,Dexamethason phosphat,controversial
+Ampicillin + Sulbactam,Dextrose,unknown
+Ampicillin + Sulbactam,Diazepam,incompatible
+Ampicillin + Sulbactam,Diphenhydramin hydroclorid,controversial
+Ampicillin + Sulbactam,Dobutamine Hydrochlorid,incompatible
+Ampicillin + Sulbactam,Dopamin hydrochlorid,controversial
+Ampicillin + Sulbactam,Enoxaparin natri,unknown
+Ampicillin + Sulbactam,Esomeprazol,unknown
+Ampicillin + Sulbactam,Fentanyl,controversial
+Ampicillin + Sulbactam,Filgrastim,compatible
+Ampicillin + Sulbactam,Fluconazol,controversial
+Ampicillin + Sulbactam,Fosfomycin Sodium,compatible
+Ampicillin + Sulbactam,Furosemid,controversial
+Ampicillin + Sulbactam,Ganciclovir,incompatible
+Ampicillin + Sulbactam,Gentamicin,controversial
+Ampicillin + Sulbactam,Heparin natri,controversial
+Ampicillin + Sulbactam,Gelatin,unknown
+Ampicillin + Sulbactam,Benzylpenicilin natri,controversial
+Ampicillin + Sulbactam,Hydrocortison,unknown
+Ampicillin + Sulbactam,Iloprost,unknown
+Ampicillin + Sulbactam,Imipenem + Cilasatin,controversial
+Ampicillin + Sulbactam,Immune globulin,unknown
+Ampicillin + Sulbactam,Insulin aspart,unknown
+Ampicillin + Sulbactam,Iohexol,unknown
+Ampicillin + Sulbactam,Iopromide,unknown
+Ampicillin + Sulbactam,Ketamine,unknown
+Ampicillin + Sulbactam,Ketorolac Tromethamol,controversial
+Ampicillin + Sulbactam,Levobupivacain,unknown
+Ampicillin + Sulbactam,Levofloxacin,compatible
+Ampicillin + Sulbactam,Lidocain hydroclorid,controversial
+Ampicillin + Sulbactam,Linezolid,compatible
+Ampicillin + Sulbactam,Magie Chlorid,unknown
+Ampicillin + Sulbactam,Magie sulfat,controversial
+Ampicillin + Sulbactam,Manitol,controversial
+Ampicillin + Sulbactam,Meropenem,unknown
+Ampicillin + Sulbactam,Methotrexat,compatible
+Ampicillin + Sulbactam,Methylprednisolon,unknown
+Ampicillin + Sulbactam,Metronidazol,compatible
+Ampicillin + Sulbactam,Micafungin natri,unknown
+Ampicillin + Sulbactam,Midazolam,incompatible
+Ampicillin + Sulbactam,Milrinone,compatible
+Ampicillin + Sulbactam,Morphin sulfat,controversial
+Ampicillin + Sulbactam,Kali chlorid,controversial
+Ampicillin + Sulbactam,Natri colistimethat,unknown
+Ampicillin + Sulbactam,Recombinant Human Erythropoietin alfa,controversial
+Ampicillin + Sulbactam,Naloxon hydroclorid,controversial
+Ampicillin + Sulbactam,Neostigmin methylsulfat,unknown
+Ampicillin + Sulbactam,Nicardipin hydrochlorid,incompatible
+Ampicillin + Sulbactam,Noradrenalin,unknown
+Ampicillin + Sulbactam,Octreotide,compatible
+Ampicillin + Sulbactam,Omeprazol,unknown
+Ampicillin + Sulbactam,Ondansetron,incompatible
+Ampicillin + Sulbactam,Oxacilin,controversial
+Ampicillin + Sulbactam,Pantoprazol,compatible
+Ampicillin + Sulbactam,Phenobarbital,controversial
+Ampicillin + Sulbactam,Phytomenadion,controversial
+Ampicillin + Sulbactam,Piperacilin + Tazobactam,unknown
+Ampicillin + Sulbactam,Propofol,unknown
+Ampicillin + Sulbactam,Rocuronium Bromid,compatible
+Ampicillin + Sulbactam,Natri bicarbonat,controversial
+Ampicillin + Sulbactam,Natri Chlorid,unknown
+Ampicillin + Sulbactam,Natri lactat,unknown
+Ampicillin + Sulbactam,Sugammadex,unknown
+Ampicillin + Sulbactam,Terbutalin sulfat,unknown
+Ampicillin + Sulbactam,Tinidazol,unknown
+Ampicillin + Sulbactam,Tobramycin sulfat,controversial
+Ampicillin + Sulbactam,Vancomycin,controversial
+Ampicillin + Sulbactam,Voriconazol,compatible
+Amphotericin B,Atropin Sulfat,incompatible
+Amphotericin B,Azithromycin,incompatible
+Amphotericin B,Bupivacaine HCl,unknown
+Amphotericin B,Cafein,compatible
+Amphotericin B,Calci chlorid,incompatible
+Amphotericin B,Calci gluconat,incompatible
+Amphotericin B,Caspofungin,incompatible
+Amphotericin B,Cefamandol,incompatible
+Amphotericin B,Cefazolin,controversial
+Amphotericin B,Cefepim,incompatible
+Amphotericin B,Cefoperazon,controversial
+Amphotericin B,Cefoperazon + sulbactam,unknown
+Amphotericin B,Cefotaxim,controversial
+Amphotericin B,Cefoxitin,controversial
+Amphotericin B,Ceftarolin,incompatible
+Amphotericin B,Ceftazidim,controversial
+Amphotericin B,Ceftazidim  +  Avibactam,unknown
+Amphotericin B,Ceftriaxon,controversial
+Amphotericin B,Ciprofloxacin,unknown
+Amphotericin B,Clindamycin,incompatible
+Amphotericin B,Deferoxamin mesilat,unknown
+Amphotericin B,Dexamethason phosphat,incompatible
+Amphotericin B,Dextrose,unknown
+Amphotericin B,Diazepam,incompatible
+Amphotericin B,Diphenhydramin hydroclorid,incompatible
+Amphotericin B,Dobutamine Hydrochlorid,incompatible
+Amphotericin B,Dopamin hydrochlorid,incompatible
+Amphotericin B,Enoxaparin natri,unknown
+Amphotericin B,Esomeprazol,unknown
+Amphotericin B,Fentanyl,controversial
+Amphotericin B,Filgrastim,incompatible
+Amphotericin B,Fluconazol,incompatible
+Amphotericin B,Fosfomycin Sodium,unknown
+Amphotericin B,Furosemid,controversial
+Amphotericin B,Ganciclovir,incompatible
+Amphotericin B,Gentamicin,incompatible
+Amphotericin B,Heparin natri,controversial
+Amphotericin B,Gelatin,unknown
+Amphotericin B,Benzylpenicilin natri,incompatible
+Amphotericin B,Hydrocortison,unknown
+Amphotericin B,Iloprost,unknown
+Amphotericin B,Imipenem + Cilasatin,controversial
+Amphotericin B,Immune globulin,unknown
+Amphotericin B,Insulin aspart,unknown
+Amphotericin B,Iohexol,unknown
+Amphotericin B,Iopromide,unknown
+Amphotericin B,Ketamine,unknown
+Amphotericin B,Ketorolac Tromethamol,incompatible
+Amphotericin B,Levobupivacain,unknown
+Amphotericin B,Levofloxacin,incompatible
+Amphotericin B,Lidocain hydroclorid,incompatible
+Amphotericin B,Linezolid,incompatible
+Amphotericin B,Magie Chlorid,unknown
+Amphotericin B,Magie sulfat,controversial
+Amphotericin B,Manitol,controversial
+Amphotericin B,Meropenem,incompatible
+Amphotericin B,Methotrexat,incompatible
+Amphotericin B,Methylprednisolon,unknown
+Amphotericin B,Metronidazol,incompatible
+Amphotericin B,Micafungin natri,unknown
+Amphotericin B,Midazolam,incompatible
+Amphotericin B,Milrinone,incompatible
+Amphotericin B,Morphin sulfat,incompatible
+Amphotericin B,Kali chlorid,incompatible
+Amphotericin B,Natri colistimethat,unknown
+Amphotericin B,Recombinant Human Erythropoietin alfa,incompatible
+Amphotericin B,Naloxon hydroclorid,controversial
+Amphotericin B,Neostigmin methylsulfat,unknown
+Amphotericin B,Nicardipin hydrochlorid,incompatible
+Amphotericin B,Noradrenalin,unknown
+Amphotericin B,Octreotide,compatible
+Amphotericin B,Omeprazol,unknown
+Amphotericin B,Ondansetron,incompatible
+Amphotericin B,Oxacilin,incompatible
+Amphotericin B,Pantoprazol,incompatible
+Amphotericin B,Phenobarbital,controversial
+Amphotericin B,Phytomenadion,controversial
+Amphotericin B,Piperacilin + Tazobactam,incompatible
+Amphotericin B,Propofol,incompatible
+Amphotericin B,Rocuronium Bromid,incompatible
+Amphotericin B,Natri bicarbonat,incompatible
+Amphotericin B,Natri Chlorid,unknown
+Amphotericin B,Natri lactat,unknown
+Amphotericin B,Sugammadex,unknown
+Amphotericin B,Terbutalin sulfat,unknown
+Amphotericin B,Tinidazol,unknown
+Amphotericin B,Tobramycin sulfat,incompatible
+Amphotericin B,Vancomycin,incompatible
+Amphotericin B,Voriconazol,incompatible
+Atropin Sulfat,Azithromycin,unknown
+Atropin Sulfat,Bupivacaine HCl,unknown
+Atropin Sulfat,Cafein,unknown
+Atropin Sulfat,Calci chlorid,compatible
+Atropin Sulfat,Calci gluconat,compatible
+Atropin Sulfat,Caspofungin,unknown
+Atropin Sulfat,Cefamandol,compatible
+Atropin Sulfat,Cefazolin,compatible
+Atropin Sulfat,Cefepim,unknown
+Atropin Sulfat,Cefoperazon,compatible
+Atropin Sulfat,Cefoperazon + sulbactam,unknown
+Atropin Sulfat,Cefotaxim,compatible
+Atropin Sulfat,Cefoxitin,compatible
+Atropin Sulfat,Ceftarolin,unknown
+Atropin Sulfat,Ceftazidim,compatible
+Atropin Sulfat,Ceftazidim  +  Avibactam,unknown
+Atropin Sulfat,Ceftriaxon,compatible
+Atropin Sulfat,Ciprofloxacin,unknown
+Atropin Sulfat,Clindamycin,compatible
+Atropin Sulfat,Deferoxamin mesilat,unknown
+Atropin Sulfat,Dexamethason phosphat,compatible
+Atropin Sulfat,Dextrose,unknown
+Atropin Sulfat,Diazepam,incompatible
+Atropin Sulfat,Diphenhydramin hydroclorid,compatible
+Atropin Sulfat,Dobutamine Hydrochlorid,compatible
+Atropin Sulfat,Dopamin hydrochlorid,compatible
+Atropin Sulfat,Enoxaparin natri,unknown
+Atropin Sulfat,Esomeprazol,unknown
+Atropin Sulfat,Fentanyl,compatible
+Atropin Sulfat,Filgrastim,unknown
+Atropin Sulfat,Fluconazol,compatible
+Atropin Sulfat,Fosfomycin Sodium,unknown
+Atropin Sulfat,Furosemid,compatible
+Atropin Sulfat,Ganciclovir,compatible
+Atropin Sulfat,Gentamicin,compatible
+Atropin Sulfat,Heparin natri,compatible
+Atropin Sulfat,Gelatin,unknown
+Atropin Sulfat,Benzylpenicilin natri,compatible
+Atropin Sulfat,Hydrocortison,unknown
+Atropin Sulfat,Iloprost,unknown
+Atropin Sulfat,Imipenem + Cilasatin,compatible
+Atropin Sulfat,Immune globulin,unknown
+Atropin Sulfat,Insulin aspart,unknown
+Atropin Sulfat,Iohexol,unknown
+Atropin Sulfat,Iopromide,unknown
+Atropin Sulfat,Ketamine,compatible
+Atropin Sulfat,Ketorolac Tromethamol,compatible
+Atropin Sulfat,Levobupivacain,unknown
+Atropin Sulfat,Levofloxacin,unknown
+Atropin Sulfat,Lidocain hydroclorid,compatible
+Atropin Sulfat,Linezolid,unknown
+Atropin Sulfat,Magie Chlorid,unknown
+Atropin Sulfat,Magie sulfat,compatible
+Atropin Sulfat,Manitol,compatible
+Atropin Sulfat,Meropenem,compatible
+Atropin Sulfat,Methotrexat,unknown
+Atropin Sulfat,Methylprednisolon,unknown
+Atropin Sulfat,Metronidazol,unknown
+Atropin Sulfat,Micafungin natri,unknown
+Atropin Sulfat,Midazolam,compatible
+Atropin Sulfat,Milrinone,unknown
+Atropin Sulfat,Morphin sulfat,compatible
+Atropin Sulfat,Kali chlorid,compatible
+Atropin Sulfat,Natri colistimethat,compatible
+Atropin Sulfat,Recombinant Human Erythropoietin alfa,compatible
+Atropin Sulfat,Naloxon hydroclorid,compatible
+Atropin Sulfat,Neostigmin methylsulfat,unknown
+Atropin Sulfat,Nicardipin hydrochlorid,unknown
+Atropin Sulfat,Noradrenalin,unknown
+Atropin Sulfat,Octreotide,unknown
+Atropin Sulfat,Omeprazol,unknown
+Atropin Sulfat,Ondansetron,compatible
+Atropin Sulfat,Oxacilin,compatible
+Atropin Sulfat,Pantoprazol,incompatible
+Atropin Sulfat,Phenobarbital,compatible
+Atropin Sulfat,Phytomenadion,compatible
+Atropin Sulfat,Piperacilin + Tazobactam,unknown
+Atropin Sulfat,Propofol,controversial
+Atropin Sulfat,Rocuronium Bromid,unknown
+Atropin Sulfat,Natri bicarbonat,compatible
+Atropin Sulfat,Natri Chlorid,unknown
+Atropin Sulfat,Natri lactat,unknown
+Atropin Sulfat,Sugammadex,unknown
+Atropin Sulfat,Terbutalin sulfat,unknown
+Atropin Sulfat,Tinidazol,unknown
+Atropin Sulfat,Tobramycin sulfat,compatible
+Atropin Sulfat,Vancomycin,compatible
+Atropin Sulfat,Voriconazol,unknown
+Azithromycin,Bupivacaine HCl,unknown
+Azithromycin,Cafein,unknown
+Azithromycin,Calci chlorid,compatible
+Azithromycin,Calci gluconat,compatible
+Azithromycin,Caspofungin,controversial
+Azithromycin,Cefamandol,unknown
+Azithromycin,Cefazolin,compatible
+Azithromycin,Cefepim,compatible
+Azithromycin,Cefoperazon,compatible
+Azithromycin,Cefoperazon + sulbactam,unknown
+Azithromycin,Cefotaxim,controversial
+Azithromycin,Cefoxitin,compatible
+Azithromycin,Ceftarolin,compatible
+Azithromycin,Ceftazidim,controversial
+Azithromycin,Ceftazidim  +  Avibactam,compatible
+Azithromycin,Ceftriaxon,controversial
+Azithromycin,Ciprofloxacin,controversial
+Azithromycin,Clindamycin,controversial
+Azithromycin,Deferoxamin mesilat,unknown
+Azithromycin,Dexamethason phosphat,compatible
+Azithromycin,Dextrose,unknown
+Azithromycin,Diazepam,incompatible
+Azithromycin,Diphenhydramin hydroclorid,compatible
+Azithromycin,Dobutamine Hydrochlorid,compatible
+Azithromycin,Dopamin hydrochlorid,compatible
+Azithromycin,Enoxaparin natri,unknown
+Azithromycin,Esomeprazol,unknown
+Azithromycin,Fentanyl,controversial
+Azithromycin,Filgrastim,unknown
+Azithromycin,Fluconazol,compatible
+Azithromycin,Fosfomycin Sodium,compatible
+Azithromycin,Furosemid,controversial
+Azithromycin,Ganciclovir,compatible
+Azithromycin,Gentamicin,controversial
+Azithromycin,Heparin natri,compatible
+Azithromycin,Gelatin,unknown
+Azithromycin,Benzylpenicilin natri,unknown
+Azithromycin,Hydrocortison,unknown
+Azithromycin,Iloprost,unknown
+Azithromycin,Imipenem + Cilasatin,controversial
+Azithromycin,Immune globulin,unknown
+Azithromycin,Insulin aspart,unknown
+Azithromycin,Iohexol,unknown
+Azithromycin,Iopromide,unknown
+Azithromycin,Ketamine,unknown
+Azithromycin,Ketorolac Tromethamol,controversial
+Azithromycin,Levobupivacain,unknown
+Azithromycin,Levofloxacin,controversial
+Azithromycin,Lidocain hydroclorid,compatible
+Azithromycin,Linezolid,compatible
+Azithromycin,Magie Chlorid,unknown
+Azithromycin,Magie sulfat,compatible
+Azithromycin,Manitol,compatible
+Azithromycin,Meropenem,compatible
+Azithromycin,Methotrexat,compatible
+Azithromycin,Methylprednisolon,unknown
+Azithromycin,Metronidazol,compatible
+Azithromycin,Micafungin natri,unknown
+Azithromycin,Midazolam,incompatible
+Azithromycin,Milrinone,compatible
+Azithromycin,Morphin sulfat,controversial
+Azithromycin,Kali chlorid,controversial
+Azithromycin,Natri colistimethat,unknown
+Azithromycin,Recombinant Human Erythropoietin alfa,unknown
+Azithromycin,Naloxon hydroclorid,compatible
+Azithromycin,Neostigmin methylsulfat,unknown
+Azithromycin,Nicardipin hydrochlorid,incompatible
+Azithromycin,Noradrenalin,unknown
+Azithromycin,Octreotide,compatible
+Azithromycin,Omeprazol,unknown
+Azithromycin,Ondansetron,compatible
+Azithromycin,Oxacilin,unknown
+Azithromycin,Pantoprazol,compatible
+Azithromycin,Phenobarbital,compatible
+Azithromycin,Phytomenadion,unknown
+Azithromycin,Piperacilin + Tazobactam,controversial
+Azithromycin,Propofol,unknown
+Azithromycin,Rocuronium Bromid,compatible
+Azithromycin,Natri bicarbonat,compatible
+Azithromycin,Natri Chlorid,unknown
+Azithromycin,Natri lactat,unknown
+Azithromycin,Sugammadex,unknown
+Azithromycin,Terbutalin sulfat,unknown
+Azithromycin,Tinidazol,unknown
+Azithromycin,Tobramycin sulfat,controversial
+Azithromycin,Vancomycin,compatible
+Azithromycin,Voriconazol,compatible
+Benzylpenicilin natri,Bupivacaine HCl,unknown
+Benzylpenicilin natri,Cafein,compatible
+Benzylpenicilin natri,Calci chlorid,compatible
+Benzylpenicilin natri,Calci gluconat,compatible
+Benzylpenicilin natri,Caspofungin,unknown
+Benzylpenicilin natri,Cefamandol,compatible
+Benzylpenicilin natri,Cefazolin,compatible
+Benzylpenicilin natri,Cefepim,unknown
+Benzylpenicilin natri,Cefoperazon,compatible
+Benzylpenicilin natri,Cefoperazon + sulbactam,unknown
+Benzylpenicilin natri,Cefotaxim,compatible
+Benzylpenicilin natri,Cefoxitin,compatible
+Benzylpenicilin natri,Ceftarolin,unknown
+Benzylpenicilin natri,Ceftazidim,compatible
+Benzylpenicilin natri,Ceftazidim  +  Avibactam,unknown
+Benzylpenicilin natri,Ceftriaxon,compatible
+Benzylpenicilin natri,Ciprofloxacin,unknown
+Benzylpenicilin natri,Clindamycin,compatible
+Benzylpenicilin natri,Deferoxamin mesilat,unknown
+Benzylpenicilin natri,Dexamethason phosphat,compatible
+Benzylpenicilin natri,Dextrose,unknown
+Benzylpenicilin natri,Diazepam,incompatible
+Benzylpenicilin natri,Diphenhydramin hydroclorid,compatible
+Benzylpenicilin natri,Dobutamine Hydrochlorid,incompatible
+Benzylpenicilin natri,Dopamin hydrochlorid,compatible
+Benzylpenicilin natri,Enoxaparin natri,unknown
+Benzylpenicilin natri,Esomeprazol,unknown
+Benzylpenicilin natri,Fentanyl,compatible
+Benzylpenicilin natri,Filgrastim,unknown
+Benzylpenicilin natri,Fluconazol,compatible
+Benzylpenicilin natri,Fosfomycin Sodium,unknown
+Benzylpenicilin natri,Furosemid,compatible
+Benzylpenicilin natri,Ganciclovir,incompatible
+Benzylpenicilin natri,Gentamicin,compatible
+Benzylpenicilin natri,Heparin natri,compatible
+Benzylpenicilin natri,Gelatin,unknown
+Benzylpenicilin natri,Hydrocortison,unknown
+Benzylpenicilin natri,Iloprost,unknown
+Benzylpenicilin natri,Imipenem + Cilasatin,compatible
+Benzylpenicilin natri,Immune globulin,unknown
+Benzylpenicilin natri,Insulin aspart,unknown
+Benzylpenicilin natri,Iohexol,unknown
+Benzylpenicilin natri,Iopromide,unknown
+Benzylpenicilin natri,Ketamine,compatible
+Benzylpenicilin natri,Ketorolac Tromethamol,compatible
+Benzylpenicilin natri,Levobupivacain,unknown
+Benzylpenicilin natri,Levofloxacin,compatible
+Benzylpenicilin natri,Lidocain hydroclorid,compatible
+Benzylpenicilin natri,Linezolid,unknown
+Benzylpenicilin natri,Magie Chlorid,unknown
+Benzylpenicilin natri,Magie sulfat,compatible
+Benzylpenicilin natri,Manitol,compatible
+Benzylpenicilin natri,Meropenem,compatible
+Benzylpenicilin natri,Methotrexat,unknown
+Benzylpenicilin natri,Methylprednisolon,unknown
+Benzylpenicilin natri,Metronidazol,unknown
+Benzylpenicilin natri,Micafungin natri,unknown
+Benzylpenicilin natri,Midazolam,compatible
+Benzylpenicilin natri,Milrinone,unknown
+Benzylpenicilin natri,Morphin sulfat,compatible
+Benzylpenicilin natri,Kali chlorid,compatible
+Benzylpenicilin natri,Natri colistimethat,compatible
+Benzylpenicilin natri,Recombinant Human Erythropoietin alfa,compatible
+Benzylpenicilin natri,Naloxon hydroclorid,compatible
+Benzylpenicilin natri,Neostigmin methylsulfat,unknown
+Benzylpenicilin natri,Nicardipin hydrochlorid,unknown
+Benzylpenicilin natri,Noradrenalin,unknown
+Benzylpenicilin natri,Octreotide,unknown
+Benzylpenicilin natri,Omeprazol,unknown
+Benzylpenicilin natri,Ondansetron,compatible
+Benzylpenicilin natri,Oxacilin,compatible
+Benzylpenicilin natri,Pantoprazol,compatible
+Benzylpenicilin natri,Phenobarbital,controversial
+Benzylpenicilin natri,Phytomenadion,compatible
+Benzylpenicilin natri,Piperacilin + Tazobactam,unknown
+Benzylpenicilin natri,Propofol,unknown
+Benzylpenicilin natri,Rocuronium Bromid,unknown
+Benzylpenicilin natri,Natri bicarbonat,compatible
+Benzylpenicilin natri,Natri Chlorid,unknown
+Benzylpenicilin natri,Natri lactat,unknown
+Benzylpenicilin natri,Sugammadex,unknown
+Benzylpenicilin natri,Terbutalin sulfat,unknown
+Benzylpenicilin natri,Tinidazol,unknown
+Benzylpenicilin natri,Tobramycin sulfat,compatible
+Benzylpenicilin natri,Vancomycin,unknown
+Benzylpenicilin natri,Voriconazol,unknown
+Bupivacaine HCl,Cafein,unknown
+Bupivacaine HCl,Calci chlorid,unknown
+Bupivacaine HCl,Calci gluconat,unknown
+Bupivacaine HCl,Caspofungin,unknown
+Bupivacaine HCl,Cefamandol,unknown
+Bupivacaine HCl,Cefazolin,unknown
+Bupivacaine HCl,Cefepim,unknown
+Bupivacaine HCl,Cefoperazon,unknown
+Bupivacaine HCl,Cefoperazon + sulbactam,unknown
+Bupivacaine HCl,Cefotaxim,unknown
+Bupivacaine HCl,Cefoxitin,unknown
+Bupivacaine HCl,Ceftarolin,unknown
+Bupivacaine HCl,Ceftazidim,unknown
+Bupivacaine HCl,Ceftazidim  +  Avibactam,unknown
+Bupivacaine HCl,Ceftriaxon,unknown
+Bupivacaine HCl,Ciprofloxacin,unknown
+Bupivacaine HCl,Clindamycin,unknown
+Bupivacaine HCl,Deferoxamin mesilat,unknown
+Bupivacaine HCl,Dexamethason phosphat,unknown
+Bupivacaine HCl,Dextrose,unknown
+Bupivacaine HCl,Diazepam,unknown
+Bupivacaine HCl,Diphenhydramin hydroclorid,unknown
+Bupivacaine HCl,Dobutamine Hydrochlorid,unknown
+Bupivacaine HCl,Dopamin hydrochlorid,unknown
+Bupivacaine HCl,Enoxaparin natri,unknown
+Bupivacaine HCl,Esomeprazol,unknown
+Bupivacaine HCl,Fentanyl,unknown
+Bupivacaine HCl,Filgrastim,unknown
+Bupivacaine HCl,Fluconazol,unknown
+Bupivacaine HCl,Fosfomycin Sodium,unknown
+Bupivacaine HCl,Furosemid,unknown
+Bupivacaine HCl,Ganciclovir,unknown
+Bupivacaine HCl,Gentamicin,unknown
+Bupivacaine HCl,Heparin natri,unknown
+Bupivacaine HCl,Gelatin,unknown
+Bupivacaine HCl,Hydrocortison,unknown
+Bupivacaine HCl,Iloprost,unknown
+Bupivacaine HCl,Imipenem + Cilasatin,unknown
+Bupivacaine HCl,Immune globulin,unknown
+Bupivacaine HCl,Insulin aspart,unknown
+Bupivacaine HCl,Iohexol,unknown
+Bupivacaine HCl,Iopromide,unknown
+Bupivacaine HCl,Ketamine,unknown
+Bupivacaine HCl,Ketorolac Tromethamol,unknown
+Bupivacaine HCl,Levobupivacain,unknown
+Bupivacaine HCl,Levofloxacin,unknown
+Bupivacaine HCl,Lidocain hydroclorid,unknown
+Bupivacaine HCl,Linezolid,unknown
+Bupivacaine HCl,Magie Chlorid,unknown
+Bupivacaine HCl,Magie sulfat,unknown
+Bupivacaine HCl,Manitol,unknown
+Bupivacaine HCl,Meropenem,incompatible
+Bupivacaine HCl,Methotrexat,unknown
+Bupivacaine HCl,Methylprednisolon,unknown
+Bupivacaine HCl,Metronidazol,unknown
+Bupivacaine HCl,Micafungin natri,unknown
+Bupivacaine HCl,Midazolam,unknown
+Bupivacaine HCl,Milrinone,unknown
+Bupivacaine HCl,Morphin sulfat,unknown
+Bupivacaine HCl,Kali chlorid,unknown
+Bupivacaine HCl,Natri colistimethat,unknown
+Bupivacaine HCl,Recombinant Human Erythropoietin alfa,unknown
+Bupivacaine HCl,Naloxon hydroclorid,unknown
+Bupivacaine HCl,Neostigmin methylsulfat,unknown
+Bupivacaine HCl,Nicardipin hydrochlorid,unknown
+Bupivacaine HCl,Noradrenalin,unknown
+Bupivacaine HCl,Octreotide,unknown
+Bupivacaine HCl,Omeprazol,unknown
+Bupivacaine HCl,Ondansetron,unknown
+Bupivacaine HCl,Oxacilin,unknown
+Bupivacaine HCl,Pantoprazol,unknown
+Bupivacaine HCl,Phenobarbital,unknown
+Bupivacaine HCl,Phytomenadion,unknown
+Bupivacaine HCl,Piperacilin + Tazobactam,unknown
+Bupivacaine HCl,Propofol,unknown
+Bupivacaine HCl,Rocuronium Bromid,unknown
+Bupivacaine HCl,Natri bicarbonat,unknown
+Bupivacaine HCl,Natri Chlorid,unknown
+Bupivacaine HCl,Natri lactat,unknown
+Bupivacaine HCl,Sugammadex,unknown
+Bupivacaine HCl,Terbutalin sulfat,unknown
+Bupivacaine HCl,Tinidazol,unknown
+Bupivacaine HCl,Tobramycin sulfat,unknown
+Bupivacaine HCl,Vancomycin,unknown
+Bupivacaine HCl,Voriconazol,unknown
+Cafein,Calci chlorid,unknown
+Cafein,Calci gluconat,compatible
+Cafein,Caspofungin,unknown
+Cafein,Cefamandol,unknown
+Cafein,Cefazolin,unknown
+Cafein,Cefepim,unknown
+Cafein,Cefoperazon,unknown
+Cafein,Cefoperazon + sulbactam,unknown
+Cafein,Cefotaxim,compatible
+Cafein,Cefoxitin,unknown
+Cafein,Ceftarolin,unknown
+Cafein,Ceftazidim,unknown
+Cafein,Ceftazidim  +  Avibactam,unknown
+Cafein,Ceftriaxon,unknown
+Cafein,Ciprofloxacin,compatible
+Cafein,Clindamycin,unknown
+Cafein,Deferoxamin mesilat,unknown
+Cafein,Dexamethason phosphat,unknown
+Cafein,Dextrose,unknown
+Cafein,Diazepam,unknown
+Cafein,Diphenhydramin hydroclorid,unknown
+Cafein,Dobutamine Hydrochlorid,compatible
+Cafein,Dopamin hydrochlorid,compatible
+Cafein,Enoxaparin natri,unknown
+Cafein,Esomeprazol,unknown
+Cafein,Fentanyl,compatible
+Cafein,Filgrastim,unknown
+Cafein,Fluconazol,compatible
+Cafein,Fosfomycin Sodium,unknown
+Cafein,Furosemid,incompatible
+Cafein,Ganciclovir,unknown
+Cafein,Gentamicin,compatible
+Cafein,Heparin natri,compatible
+Cafein,Gelatin,unknown
+Cafein,Hydrocortison,unknown
+Cafein,Iloprost,unknown
+Cafein,Imipenem + Cilasatin,unknown
+Cafein,Immune globulin,unknown
+Cafein,Insulin aspart,unknown
+Cafein,Iohexol,unknown
+Cafein,Iopromide,unknown
+Cafein,Ketamine,compatible
+Cafein,Ketorolac Tromethamol,unknown
+Cafein,Levobupivacain,unknown
+Cafein,Levofloxacin,compatible
+Cafein,Lidocain hydroclorid,unknown
+Cafein,Linezolid,compatible
+Cafein,Magie Chlorid,unknown
+Cafein,Magie sulfat,unknown
+Cafein,Manitol,unknown
+Cafein,Meropenem,compatible
+Cafein,Methotrexat,unknown
+Cafein,Methylprednisolon,unknown
+Cafein,Metronidazol,compatible
+Cafein,Micafungin natri,unknown
+Cafein,Midazolam,compatible
+Cafein,Milrinone,compatible
+Cafein,Morphin sulfat,compatible
+Cafein,Kali chlorid,unknown
+Cafein,Natri colistimethat,unknown
+Cafein,Recombinant Human Erythropoietin alfa,unknown
+Cafein,Naloxon hydroclorid,compatible
+Cafein,Neostigmin methylsulfat,unknown
+Cafein,Nicardipin hydrochlorid,unknown
+Cafein,Noradrenalin,unknown
+Cafein,Octreotide,unknown
+Cafein,Omeprazol,unknown
+Cafein,Ondansetron,unknown
+Cafein,Oxacilin,unknown
+Cafein,Pantoprazol,incompatible
+Cafein,Phenobarbital,compatible
+Cafein,Phytomenadion,unknown
+Cafein,Piperacilin + Tazobactam,compatible
+Cafein,Propofol,unknown
+Cafein,Rocuronium Bromid,unknown
+Cafein,Natri bicarbonat,compatible
+Cafein,Natri Chlorid,unknown
+Cafein,Natri lactat,unknown
+Cafein,Sugammadex,unknown
+Cafein,Terbutalin sulfat,unknown
+Cafein,Tinidazol,unknown
+Cafein,Tobramycin sulfat,unknown
+Cafein,Vancomycin,compatible
+Cafein,Voriconazol,unknown
+Calci chlorid,Calci gluconat,compatible
+Calci chlorid,Caspofungin,compatible
+Calci chlorid,Cefamandol,incompatible
+Calci chlorid,Cefazolin,incompatible
+Calci chlorid,Cefepim,unknown
+Calci chlorid,Cefoperazon,incompatible
+Calci chlorid,Cefoperazon + sulbactam,unknown
+Calci chlorid,Cefotaxim,compatible
+Calci chlorid,Cefoxitin,compatible
+Calci chlorid,Ceftarolin,compatible
+Calci chlorid,Ceftazidim,incompatible
+Calci chlorid,Ceftazidim  +  Avibactam,unknown
+Calci chlorid,Ceftriaxon,incompatible
+Calci chlorid,Ciprofloxacin,unknown
+Calci chlorid,Clindamycin,compatible
+Calci chlorid,Deferoxamin mesilat,unknown
+Calci chlorid,Dexamethason phosphat,controversial
+Calci chlorid,Dextrose,unknown
+Calci chlorid,Diazepam,incompatible
+Calci chlorid,Diphenhydramin hydroclorid,compatible
+Calci chlorid,Dobutamine Hydrochlorid,compatible
+Calci chlorid,Dopamin hydrochlorid,compatible
+Calci chlorid,Enoxaparin natri,unknown
+Calci chlorid,Esomeprazol,unknown
+Calci chlorid,Fentanyl,compatible
+Calci chlorid,Filgrastim,unknown
+Calci chlorid,Fluconazol,compatible
+Calci chlorid,Fosfomycin Sodium,controversial
+Calci chlorid,Furosemid,compatible
+Calci chlorid,Ganciclovir,compatible
+Calci chlorid,Gentamicin,compatible
+Calci chlorid,Heparin natri,controversial
+Calci chlorid,Gelatin,unknown
+Calci chlorid,Hydrocortison,unknown
+Calci chlorid,Iloprost,unknown
+Calci chlorid,Imipenem + Cilasatin,controversial
+Calci chlorid,Immune globulin,unknown
+Calci chlorid,Insulin aspart,unknown
+Calci chlorid,Iohexol,unknown
+Calci chlorid,Iopromide,unknown
+Calci chlorid,Ketamine,unknown
+Calci chlorid,Ketorolac Tromethamol,incompatible
+Calci chlorid,Levobupivacain,unknown
+Calci chlorid,Levofloxacin,unknown
+Calci chlorid,Lidocain hydroclorid,compatible
+Calci chlorid,Linezolid,compatible
+Calci chlorid,Magie Chlorid,unknown
+Calci chlorid,Magie sulfat,incompatible
+Calci chlorid,Manitol,compatible
+Calci chlorid,Meropenem,compatible
+Calci chlorid,Methotrexat,compatible
+Calci chlorid,Methylprednisolon,unknown
+Calci chlorid,Metronidazol,compatible
+Calci chlorid,Micafungin natri,compatible
+Calci chlorid,Midazolam,compatible
+Calci chlorid,Milrinone,compatible
+Calci chlorid,Morphin sulfat,compatible
+Calci chlorid,Kali chlorid,compatible
+Calci chlorid,Natri colistimethat,compatible
+Calci chlorid,Recombinant Human Erythropoietin alfa,compatible
+Calci chlorid,Naloxon hydroclorid,compatible
+Calci chlorid,Neostigmin methylsulfat,unknown
+Calci chlorid,Nicardipin hydrochlorid,compatible
+Calci chlorid,Noradrenalin,unknown
+Calci chlorid,Octreotide,compatible
+Calci chlorid,Omeprazol,unknown
+Calci chlorid,Ondansetron,compatible
+Calci chlorid,Oxacilin,incompatible
+Calci chlorid,Pantoprazol,incompatible
+Calci chlorid,Phenobarbital,compatible
+Calci chlorid,Phytomenadion,compatible
+Calci chlorid,Piperacilin + Tazobactam,compatible
+Calci chlorid,Propofol,incompatible
+Calci chlorid,Rocuronium Bromid,compatible
+Calci chlorid,Natri bicarbonat,incompatible
+Calci chlorid,Natri Chlorid,unknown
+Calci chlorid,Natri lactat,unknown
+Calci chlorid,Sugammadex,unknown
+Calci chlorid,Terbutalin sulfat,unknown
+Calci chlorid,Tinidazol,unknown
+Calci chlorid,Tobramycin sulfat,compatible
+Calci chlorid,Vancomycin,compatible
+Calci chlorid,Voriconazol,compatible
+Calci gluconat,Caspofungin,compatible
+Calci gluconat,Cefamandol,compatible
+Calci gluconat,Cefazolin,compatible
+Calci gluconat,Cefepim,compatible
+Calci gluconat,Cefoperazon,compatible
+Calci gluconat,Cefoperazon + sulbactam,unknown
+Calci gluconat,Cefotaxim,compatible
+Calci gluconat,Cefoxitin,compatible
+Calci gluconat,Ceftarolin,compatible
+Calci gluconat,Ceftazidim,compatible
+Calci gluconat,Ceftazidim  +  Avibactam,unknown
+Calci gluconat,Ceftriaxon,incompatible
+Calci gluconat,Ciprofloxacin,compatible
+Calci gluconat,Clindamycin,compatible
+Calci gluconat,Deferoxamin mesilat,unknown
+Calci gluconat,Dexamethason phosphat,controversial
+Calci gluconat,Dextrose,unknown
+Calci gluconat,Diazepam,incompatible
+Calci gluconat,Diphenhydramin hydroclorid,compatible
+Calci gluconat,Dobutamine Hydrochlorid,compatible
+Calci gluconat,Dopamin hydrochlorid,compatible
+Calci gluconat,Enoxaparin natri,unknown
+Calci gluconat,Esomeprazol,unknown
+Calci gluconat,Fentanyl,compatible
+Calci gluconat,Filgrastim,compatible
+Calci gluconat,Fluconazol,controversial
+Calci gluconat,Fosfomycin Sodium,compatible
+Calci gluconat,Furosemid,compatible
+Calci gluconat,Ganciclovir,compatible
+Calci gluconat,Gentamicin,compatible
+Calci gluconat,Heparin natri,compatible
+Calci gluconat,Gelatin,unknown
+Calci gluconat,Hydrocortison,unknown
+Calci gluconat,Iloprost,unknown
+Calci gluconat,Imipenem + Cilasatin,controversial
+Calci gluconat,Immune globulin,unknown
+Calci gluconat,Insulin aspart,unknown
+Calci gluconat,Iohexol,unknown
+Calci gluconat,Iopromide,unknown
+Calci gluconat,Ketamine,compatible
+Calci gluconat,Ketorolac Tromethamol,controversial
+Calci gluconat,Levobupivacain,unknown
+Calci gluconat,Levofloxacin,compatible
+Calci gluconat,Lidocain hydroclorid,compatible
+Calci gluconat,Linezolid,compatible
+Calci gluconat,Magie Chlorid,unknown
+Calci gluconat,Magie sulfat,compatible
+Calci gluconat,Manitol,compatible
+Calci gluconat,Meropenem,controversial
+Calci gluconat,Methotrexat,compatible
+Calci gluconat,Methylprednisolon,unknown
+Calci gluconat,Metronidazol,compatible
+Calci gluconat,Micafungin natri,compatible
+Calci gluconat,Midazolam,compatible
+Calci gluconat,Milrinone,compatible
+Calci gluconat,Morphin sulfat,compatible
+Calci gluconat,Kali chlorid,compatible
+Calci gluconat,Natri colistimethat,compatible
+Calci gluconat,Recombinant Human Erythropoietin alfa,compatible
+Calci gluconat,Naloxon hydroclorid,compatible
+Calci gluconat,Neostigmin methylsulfat,unknown
+Calci gluconat,Nicardipin hydrochlorid,compatible
+Calci gluconat,Noradrenalin,unknown
+Calci gluconat,Octreotide,compatible
+Calci gluconat,Omeprazol,unknown
+Calci gluconat,Ondansetron,compatible
+Calci gluconat,Oxacilin,incompatible
+Calci gluconat,Pantoprazol,controversial
+Calci gluconat,Phenobarbital,compatible
+Calci gluconat,Phytomenadion,compatible
+Calci gluconat,Piperacilin + Tazobactam,compatible
+Calci gluconat,Propofol,compatible
+Calci gluconat,Rocuronium Bromid,compatible
+Calci gluconat,Natri bicarbonat,incompatible
+Calci gluconat,Natri Chlorid,unknown
+Calci gluconat,Natri lactat,unknown
+Calci gluconat,Sugammadex,unknown
+Calci gluconat,Terbutalin sulfat,unknown
+Calci gluconat,Tinidazol,unknown
+Calci gluconat,Tobramycin sulfat,compatible
+Calci gluconat,Vancomycin,compatible
+Calci gluconat,Voriconazol,compatible
+Caspofungin,Cefamandol,unknown
+Caspofungin,Cefazolin,incompatible
+Caspofungin,Cefepim,incompatible
+Caspofungin,Cefoperazon,incompatible
+Caspofungin,Cefoperazon + sulbactam,unknown
+Caspofungin,Cefotaxim,incompatible
+Caspofungin,Cefoxitin,incompatible
+Caspofungin,Ceftarolin,incompatible
+Caspofungin,Ceftazidim,incompatible
+Caspofungin,Ceftazidim  +  Avibactam,unknown
+Caspofungin,Ceftriaxon,incompatible
+Caspofungin,Ciprofloxacin,compatible
+Caspofungin,Clindamycin,incompatible
+Caspofungin,Deferoxamin mesilat,unknown
+Caspofungin,Dexamethason phosphat,incompatible
+Caspofungin,Dextrose,unknown
+Caspofungin,Diazepam,incompatible
+Caspofungin,Diphenhydramin hydroclorid,compatible
+Caspofungin,Dobutamine Hydrochlorid,compatible
+Caspofungin,Dopamin hydrochlorid,compatible
+Caspofungin,Enoxaparin natri,unknown
+Caspofungin,Esomeprazol,unknown
+Caspofungin,Fentanyl,compatible
+Caspofungin,Filgrastim,unknown
+Caspofungin,Fluconazol,compatible
+Caspofungin,Fosfomycin Sodium,incompatible
+Caspofungin,Furosemid,incompatible
+Caspofungin,Ganciclovir,compatible
+Caspofungin,Gentamicin,compatible
+Caspofungin,Heparin natri,incompatible
+Caspofungin,Gelatin,unknown
+Caspofungin,Hydrocortison,unknown
+Caspofungin,Iloprost,unknown
+Caspofungin,Imipenem + Cilasatin,compatible
+Caspofungin,Immune globulin,unknown
+Caspofungin,Insulin aspart,unknown
+Caspofungin,Iohexol,unknown
+Caspofungin,Iopromide,unknown
+Caspofungin,Ketamine,unknown
+Caspofungin,Ketorolac Tromethamol,incompatible
+Caspofungin,Levobupivacain,unknown
+Caspofungin,Levofloxacin,compatible
+Caspofungin,Lidocain hydroclorid,incompatible
+Caspofungin,Linezolid,compatible
+Caspofungin,Magie Chlorid,unknown
+Caspofungin,Magie sulfat,compatible
+Caspofungin,Manitol,compatible
+Caspofungin,Meropenem,compatible
+Caspofungin,Methotrexat,incompatible
+Caspofungin,Methylprednisolon,unknown
+Caspofungin,Metronidazol,controversial
+Caspofungin,Micafungin natri,unknown
+Caspofungin,Midazolam,compatible
+Caspofungin,Milrinone,compatible
+Caspofungin,Morphin sulfat,compatible
+Caspofungin,Kali chlorid,compatible
+Caspofungin,Natri colistimethat,unknown
+Caspofungin,Recombinant Human Erythropoietin alfa,unknown
+Caspofungin,Naloxon hydroclorid,compatible
+Caspofungin,Neostigmin methylsulfat,unknown
+Caspofungin,Nicardipin hydrochlorid,compatible
+Caspofungin,Noradrenalin,unknown
+Caspofungin,Octreotide,compatible
+Caspofungin,Omeprazol,unknown
+Caspofungin,Ondansetron,compatible
+Caspofungin,Oxacilin,unknown
+Caspofungin,Pantoprazol,controversial
+Caspofungin,Phenobarbital,incompatible
+Caspofungin,Phytomenadion,unknown
+Caspofungin,Piperacilin + Tazobactam,incompatible
+Caspofungin,Propofol,unknown
+Caspofungin,Rocuronium Bromid,compatible
+Caspofungin,Natri bicarbonat,incompatible
+Caspofungin,Natri Chlorid,unknown
+Caspofungin,Natri lactat,unknown
+Caspofungin,Sugammadex,unknown
+Caspofungin,Terbutalin sulfat,unknown
+Caspofungin,Tinidazol,unknown
+Caspofungin,Tobramycin sulfat,compatible
+Caspofungin,Vancomycin,compatible
+Caspofungin,Voriconazol,compatible
+Cefamandol,Cefazolin,compatible
+Cefamandol,Cefepim,unknown
+Cefamandol,Cefoperazon,compatible
+Cefamandol,Cefoperazon + sulbactam,unknown
+Cefamandol,Cefotaxim,compatible
+Cefamandol,Cefoxitin,compatible
+Cefamandol,Ceftarolin,unknown
+Cefamandol,Ceftazidim,compatible
+Cefamandol,Ceftazidim  +  Avibactam,unknown
+Cefamandol,Ceftriaxon,compatible
+Cefamandol,Ciprofloxacin,unknown
+Cefamandol,Clindamycin,compatible
+Cefamandol,Deferoxamin mesilat,unknown
+Cefamandol,Dexamethason phosphat,compatible
+Cefamandol,Dextrose,unknown
+Cefamandol,Diazepam,incompatible
+Cefamandol,Diphenhydramin hydroclorid,incompatible
+Cefamandol,Dobutamine Hydrochlorid,incompatible
+Cefamandol,Dopamin hydrochlorid,compatible
+Cefamandol,Enoxaparin natri,unknown
+Cefamandol,Esomeprazol,unknown
+Cefamandol,Fentanyl,compatible
+Cefamandol,Filgrastim,unknown
+Cefamandol,Fluconazol,compatible
+Cefamandol,Fosfomycin Sodium,unknown
+Cefamandol,Furosemid,compatible
+Cefamandol,Ganciclovir,incompatible
+Cefamandol,Gentamicin,compatible
+Cefamandol,Heparin natri,compatible
+Cefamandol,Gelatin,unknown
+Cefamandol,Hydrocortison,unknown
+Cefamandol,Iloprost,unknown
+Cefamandol,Imipenem + Cilasatin,compatible
+Cefamandol,Immune globulin,unknown
+Cefamandol,Insulin aspart,unknown
+Cefamandol,Iohexol,unknown
+Cefamandol,Iopromide,unknown
+Cefamandol,Ketamine,unknown
+Cefamandol,Ketorolac Tromethamol,compatible
+Cefamandol,Levobupivacain,unknown
+Cefamandol,Levofloxacin,unknown
+Cefamandol,Lidocain hydroclorid,compatible
+Cefamandol,Linezolid,unknown
+Cefamandol,Magie Chlorid,unknown
+Cefamandol,Magie sulfat,controversial
+Cefamandol,Manitol,compatible
+Cefamandol,Meropenem,unknown
+Cefamandol,Methotrexat,unknown
+Cefamandol,Methylprednisolon,unknown
+Cefamandol,Metronidazol,unknown
+Cefamandol,Micafungin natri,unknown
+Cefamandol,Midazolam,compatible
+Cefamandol,Milrinone,unknown
+Cefamandol,Morphin sulfat,compatible
+Cefamandol,Kali chlorid,compatible
+Cefamandol,Natri colistimethat,unknown
+Cefamandol,Recombinant Human Erythropoietin alfa,compatible
+Cefamandol,Naloxon hydroclorid,compatible
+Cefamandol,Neostigmin methylsulfat,unknown
+Cefamandol,Nicardipin hydrochlorid,unknown
+Cefamandol,Noradrenalin,unknown
+Cefamandol,Octreotide,unknown
+Cefamandol,Omeprazol,unknown
+Cefamandol,Ondansetron,incompatible
+Cefamandol,Oxacilin,compatible
+Cefamandol,Pantoprazol,unknown
+Cefamandol,Phenobarbital,compatible
+Cefamandol,Phytomenadion,compatible
+Cefamandol,Piperacilin + Tazobactam,unknown
+Cefamandol,Propofol,unknown
+Cefamandol,Rocuronium Bromid,unknown
+Cefamandol,Natri bicarbonat,compatible
+Cefamandol,Natri Chlorid,unknown
+Cefamandol,Natri lactat,unknown
+Cefamandol,Sugammadex,unknown
+Cefamandol,Terbutalin sulfat,unknown
+Cefamandol,Tinidazol,unknown
+Cefamandol,Tobramycin sulfat,compatible
+Cefamandol,Vancomycin,controversial
+Cefamandol,Voriconazol,unknown
+Cefazolin,Cefepim,unknown
+Cefazolin,Cefoperazon,compatible
+Cefazolin,Cefoperazon + sulbactam,unknown
+Cefazolin,Cefotaxim,incompatible
+Cefazolin,Cefoxitin,compatible
+Cefazolin,Ceftarolin,unknown
+Cefazolin,Ceftazidim,compatible
+Cefazolin,Ceftazidim  +  Avibactam,unknown
+Cefazolin,Ceftriaxon,compatible
+Cefazolin,Ciprofloxacin,unknown
+Cefazolin,Clindamycin,compatible
+Cefazolin,Deferoxamin mesilat,unknown
+Cefazolin,Dexamethason phosphat,compatible
+Cefazolin,Dextrose,unknown
+Cefazolin,Diazepam,incompatible
+Cefazolin,Diphenhydramin hydroclorid,incompatible
+Cefazolin,Dobutamine Hydrochlorid,incompatible
+Cefazolin,Dopamin hydrochlorid,incompatible
+Cefazolin,Enoxaparin natri,unknown
+Cefazolin,Esomeprazol,unknown
+Cefazolin,Fentanyl,compatible
+Cefazolin,Filgrastim,compatible
+Cefazolin,Fluconazol,compatible
+Cefazolin,Fosfomycin Sodium,compatible
+Cefazolin,Furosemid,compatible
+Cefazolin,Ganciclovir,incompatible
+Cefazolin,Gentamicin,compatible
+Cefazolin,Heparin natri,compatible
+Cefazolin,Gelatin,unknown
+Cefazolin,Hydrocortison,unknown
+Cefazolin,Iloprost,unknown
+Cefazolin,Imipenem + Cilasatin,compatible
+Cefazolin,Immune globulin,unknown
+Cefazolin,Insulin aspart,unknown
+Cefazolin,Iohexol,unknown
+Cefazolin,Iopromide,unknown
+Cefazolin,Ketamine,compatible
+Cefazolin,Ketorolac Tromethamol,compatible
+Cefazolin,Levobupivacain,unknown
+Cefazolin,Levofloxacin,incompatible
+Cefazolin,Lidocain hydroclorid,compatible
+Cefazolin,Linezolid,compatible
+Cefazolin,Magie Chlorid,unknown
+Cefazolin,Magie sulfat,controversial
+Cefazolin,Manitol,compatible
+Cefazolin,Meropenem,compatible
+Cefazolin,Methotrexat,compatible
+Cefazolin,Methylprednisolon,unknown
+Cefazolin,Metronidazol,compatible
+Cefazolin,Micafungin natri,unknown
+Cefazolin,Midazolam,compatible
+Cefazolin,Milrinone,compatible
+Cefazolin,Morphin sulfat,compatible
+Cefazolin,Kali chlorid,compatible
+Cefazolin,Natri colistimethat,unknown
+Cefazolin,Recombinant Human Erythropoietin alfa,compatible
+Cefazolin,Naloxon hydroclorid,controversial
+Cefazolin,Neostigmin methylsulfat,unknown
+Cefazolin,Nicardipin hydrochlorid,compatible
+Cefazolin,Noradrenalin,unknown
+Cefazolin,Octreotide,compatible
+Cefazolin,Omeprazol,unknown
+Cefazolin,Ondansetron,compatible
+Cefazolin,Oxacilin,compatible
+Cefazolin,Pantoprazol,controversial
+Cefazolin,Phenobarbital,compatible
+Cefazolin,Phytomenadion,compatible
+Cefazolin,Piperacilin + Tazobactam,unknown
+Cefazolin,Propofol,compatible
+Cefazolin,Rocuronium Bromid,controversial
+Cefazolin,Natri bicarbonat,compatible
+Cefazolin,Natri Chlorid,unknown
+Cefazolin,Natri lactat,unknown
+Cefazolin,Sugammadex,unknown
+Cefazolin,Terbutalin sulfat,unknown
+Cefazolin,Tinidazol,unknown
+Cefazolin,Tobramycin sulfat,incompatible
+Cefazolin,Vancomycin,controversial
+Cefazolin,Voriconazol,compatible
+Cefepim,Cefoperazon,unknown
+Cefepim,Cefoperazon + sulbactam,unknown
+Cefepim,Cefotaxim,unknown
+Cefepim,Cefoxitin,unknown
+Cefepim,Ceftarolin,unknown
+Cefepim,Ceftazidim,unknown
+Cefepim,Ceftazidim  +  Avibactam,unknown
+Cefepim,Ceftriaxon,unknown
+Cefepim,Ciprofloxacin,incompatible
+Cefepim,Clindamycin,unknown
+Cefepim,Deferoxamin mesilat,unknown
+Cefepim,Dexamethason phosphat,compatible
+Cefepim,Dextrose,unknown
+Cefepim,Diazepam,incompatible
+Cefepim,Diphenhydramin hydroclorid,incompatible
+Cefepim,Dobutamine Hydrochlorid,controversial
+Cefepim,Dopamin hydrochlorid,controversial
+Cefepim,Enoxaparin natri,unknown
+Cefepim,Esomeprazol,unknown
+Cefepim,Fentanyl,unknown
+Cefepim,Filgrastim,incompatible
+Cefepim,Fluconazol,compatible
+Cefepim,Fosfomycin Sodium,compatible
+Cefepim,Furosemid,compatible
+Cefepim,Ganciclovir,incompatible
+Cefepim,Gentamicin,compatible
+Cefepim,Heparin natri,unknown
+Cefepim,Gelatin,unknown
+Cefepim,Hydrocortison,compatible
+Cefepim,Iloprost,unknown
+Cefepim,Imipenem + Cilasatin,compatible
+Cefepim,Immune globulin,unknown
+Cefepim,Insulin aspart,unknown
+Cefepim,Iohexol,unknown
+Cefepim,Iopromide,unknown
+Cefepim,Ketamine,compatible
+Cefepim,Ketorolac Tromethamol,unknown
+Cefepim,Levobupivacain,unknown
+Cefepim,Levofloxacin,compatible
+Cefepim,Lidocain hydroclorid,unknown
+Cefepim,Linezolid,compatible
+Cefepim,Magie Chlorid,unknown
+Cefepim,Magie sulfat,incompatible
+Cefepim,Manitol,incompatible
+Cefepim,Meropenem,unknown
+Cefepim,Methotrexat,compatible
+Cefepim,Methylprednisolon,unknown
+Cefepim,Metronidazol,compatible
+Cefepim,Micafungin natri,unknown
+Cefepim,Midazolam,incompatible
+Cefepim,Milrinone,compatible
+Cefepim,Morphin sulfat,controversial
+Cefepim,Kali chlorid,unknown
+Cefepim,Natri colistimethat,unknown
+Cefepim,Recombinant Human Erythropoietin alfa,unknown
+Cefepim,Naloxon hydroclorid,unknown
+Cefepim,Neostigmin methylsulfat,unknown
+Cefepim,Nicardipin hydrochlorid,controversial
+Cefepim,Noradrenalin,unknown
+Cefepim,Octreotide,compatible
+Cefepim,Omeprazol,unknown
+Cefepim,Ondansetron,incompatible
+Cefepim,Oxacilin,unknown
+Cefepim,Pantoprazol,incompatible
+Cefepim,Phenobarbital,unknown
+Cefepim,Phytomenadion,unknown
+Cefepim,Piperacilin + Tazobactam,compatible
+Cefepim,Propofol,controversial
+Cefepim,Rocuronium Bromid,compatible
+Cefepim,Natri bicarbonat,compatible
+Cefepim,Natri Chlorid,unknown
+Cefepim,Natri lactat,unknown
+Cefepim,Sugammadex,unknown
+Cefepim,Terbutalin sulfat,unknown
+Cefepim,Tinidazol,unknown
+Cefepim,Tobramycin sulfat,compatible
+Cefepim,Vancomycin,controversial
+Cefepim,Voriconazol,incompatible
+Cefoperazon,Cefoperazon + sulbactam,unknown
+Cefoperazon,Cefotaxim,compatible
+Cefoperazon,Cefoxitin,compatible
+Cefoperazon,Ceftarolin,unknown
+Cefoperazon,Ceftazidim,compatible
+Cefoperazon,Ceftazidim  +  Avibactam,unknown
+Cefoperazon,Ceftriaxon,compatible
+Cefoperazon,Ciprofloxacin,unknown
+Cefoperazon,Clindamycin,compatible
+Cefoperazon,Deferoxamin mesilat,unknown
+Cefoperazon,Dexamethason phosphat,compatible
+Cefoperazon,Dextrose,unknown
+Cefoperazon,Diazepam,incompatible
+Cefoperazon,Diphenhydramin hydroclorid,incompatible
+Cefoperazon,Dobutamine Hydrochlorid,incompatible
+Cefoperazon,Dopamin hydrochlorid,incompatible
+Cefoperazon,Enoxaparin natri,unknown
+Cefoperazon,Esomeprazol,unknown
+Cefoperazon,Fentanyl,compatible
+Cefoperazon,Filgrastim,incompatible
+Cefoperazon,Fluconazol,compatible
+Cefoperazon,Fosfomycin Sodium,unknown
+Cefoperazon,Furosemid,compatible
+Cefoperazon,Ganciclovir,incompatible
+Cefoperazon,Gentamicin,incompatible
+Cefoperazon,Heparin natri,compatible
+Cefoperazon,Gelatin,unknown
+Cefoperazon,Hydrocortison,unknown
+Cefoperazon,Iloprost,unknown
+Cefoperazon,Imipenem + Cilasatin,compatible
+Cefoperazon,Immune globulin,unknown
+Cefoperazon,Insulin aspart,unknown
+Cefoperazon,Iohexol,unknown
+Cefoperazon,Iopromide,unknown
+Cefoperazon,Ketamine,unknown
+Cefoperazon,Ketorolac Tromethamol,compatible
+Cefoperazon,Levobupivacain,unknown
+Cefoperazon,Levofloxacin,incompatible
+Cefoperazon,Lidocain hydroclorid,compatible
+Cefoperazon,Linezolid,compatible
+Cefoperazon,Magie Chlorid,unknown
+Cefoperazon,Magie sulfat,controversial
+Cefoperazon,Manitol,compatible
+Cefoperazon,Meropenem,unknown
+Cefoperazon,Methotrexat,compatible
+Cefoperazon,Methylprednisolon,unknown
+Cefoperazon,Metronidazol,compatible
+Cefoperazon,Micafungin natri,unknown
+Cefoperazon,Midazolam,incompatible
+Cefoperazon,Milrinone,unknown
+Cefoperazon,Morphin sulfat,controversial
+Cefoperazon,Kali chlorid,compatible
+Cefoperazon,Natri colistimethat,unknown
+Cefoperazon,Recombinant Human Erythropoietin alfa,compatible
+Cefoperazon,Naloxon hydroclorid,compatible
+Cefoperazon,Neostigmin methylsulfat,unknown
+Cefoperazon,Nicardipin hydrochlorid,incompatible
+Cefoperazon,Noradrenalin,unknown
+Cefoperazon,Octreotide,unknown
+Cefoperazon,Omeprazol,unknown
+Cefoperazon,Ondansetron,incompatible
+Cefoperazon,Oxacilin,compatible
+Cefoperazon,Pantoprazol,incompatible
+Cefoperazon,Phenobarbital,compatible
+Cefoperazon,Phytomenadion,compatible
+Cefoperazon,Piperacilin + Tazobactam,unknown
+Cefoperazon,Propofol,compatible
+Cefoperazon,Rocuronium Bromid,incompatible
+Cefoperazon,Natri bicarbonat,compatible
+Cefoperazon,Natri Chlorid,unknown
+Cefoperazon,Natri lactat,unknown
+Cefoperazon,Sugammadex,unknown
+Cefoperazon,Terbutalin sulfat,unknown
+Cefoperazon,Tinidazol,unknown
+Cefoperazon,Tobramycin sulfat,incompatible
+Cefoperazon,Vancomycin,incompatible
+Cefoperazon,Voriconazol,unknown
+Cefoperazon + sulbactam,Cefotaxim,unknown
+Cefoperazon + sulbactam,Cefoxitin,unknown
+Cefoperazon + sulbactam,Ceftarolin,unknown
+Cefoperazon + sulbactam,Ceftazidim,unknown
+Cefoperazon + sulbactam,Ceftazidim  +  Avibactam,unknown
+Cefoperazon + sulbactam,Ceftriaxon,unknown
+Cefoperazon + sulbactam,Ciprofloxacin,unknown
+Cefoperazon + sulbactam,Clindamycin,unknown
+Cefoperazon + sulbactam,Deferoxamin mesilat,unknown
+Cefoperazon + sulbactam,Dexamethason phosphat,unknown
+Cefoperazon + sulbactam,Dextrose,unknown
+Cefoperazon + sulbactam,Diazepam,unknown
+Cefoperazon + sulbactam,Diphenhydramin hydroclorid,unknown
+Cefoperazon + sulbactam,Dobutamine Hydrochlorid,unknown
+Cefoperazon + sulbactam,Dopamin hydrochlorid,unknown
+Cefoperazon + sulbactam,Enoxaparin natri,unknown
+Cefoperazon + sulbactam,Esomeprazol,unknown
+Cefoperazon + sulbactam,Fentanyl,unknown
+Cefoperazon + sulbactam,Filgrastim,unknown
+Cefoperazon + sulbactam,Fluconazol,unknown
+Cefoperazon + sulbactam,Fosfomycin Sodium,unknown
+Cefoperazon + sulbactam,Furosemid,unknown
+Cefoperazon + sulbactam,Ganciclovir,unknown
+Cefoperazon + sulbactam,Gentamicin,unknown
+Cefoperazon + sulbactam,Heparin natri,unknown
+Cefoperazon + sulbactam,Gelatin,unknown
+Cefoperazon + sulbactam,Hydrocortison,unknown
+Cefoperazon + sulbactam,Iloprost,unknown
+Cefoperazon + sulbactam,Imipenem + Cilasatin,unknown
+Cefoperazon + sulbactam,Immune globulin,unknown
+Cefoperazon + sulbactam,Insulin aspart,unknown
+Cefoperazon + sulbactam,Iohexol,unknown
+Cefoperazon + sulbactam,Iopromide,unknown
+Cefoperazon + sulbactam,Ketamine,unknown
+Cefoperazon + sulbactam,Ketorolac Tromethamol,unknown
+Cefoperazon + sulbactam,Levobupivacain,unknown
+Cefoperazon + sulbactam,Levofloxacin,unknown
+Cefoperazon + sulbactam,Lidocain hydroclorid,unknown
+Cefoperazon + sulbactam,Linezolid,unknown
+Cefoperazon + sulbactam,Magie Chlorid,unknown
+Cefoperazon + sulbactam,Magie sulfat,unknown
+Cefoperazon + sulbactam,Manitol,unknown
+Cefoperazon + sulbactam,Meropenem,unknown
+Cefoperazon + sulbactam,Methotrexat,unknown
+Cefoperazon + sulbactam,Methylprednisolon,unknown
+Cefoperazon + sulbactam,Metronidazol,unknown
+Cefoperazon + sulbactam,Micafungin natri,unknown
+Cefoperazon + sulbactam,Midazolam,unknown
+Cefoperazon + sulbactam,Milrinone,unknown
+Cefoperazon + sulbactam,Morphin sulfat,unknown
+Cefoperazon + sulbactam,Kali chlorid,unknown
+Cefoperazon + sulbactam,Natri colistimethat,unknown
+Cefoperazon + sulbactam,Recombinant Human Erythropoietin alfa,unknown
+Cefoperazon + sulbactam,Naloxon hydroclorid,unknown
+Cefoperazon + sulbactam,Neostigmin methylsulfat,unknown
+Cefoperazon + sulbactam,Nicardipin hydrochlorid,unknown
+Cefoperazon + sulbactam,Noradrenalin,unknown
+Cefoperazon + sulbactam,Octreotide,unknown
+Cefoperazon + sulbactam,Omeprazol,unknown
+Cefoperazon + sulbactam,Ondansetron,unknown
+Cefoperazon + sulbactam,Oxacilin,unknown
+Cefoperazon + sulbactam,Pantoprazol,unknown
+Cefoperazon + sulbactam,Phenobarbital,unknown
+Cefoperazon + sulbactam,Phytomenadion,unknown
+Cefoperazon + sulbactam,Piperacilin + Tazobactam,unknown
+Cefoperazon + sulbactam,Propofol,unknown
+Cefoperazon + sulbactam,Rocuronium Bromid,unknown
+Cefoperazon + sulbactam,Natri bicarbonat,unknown
+Cefoperazon + sulbactam,Natri Chlorid,unknown
+Cefoperazon + sulbactam,Natri lactat,unknown
+Cefoperazon + sulbactam,Sugammadex,unknown
+Cefoperazon + sulbactam,Terbutalin sulfat,unknown
+Cefoperazon + sulbactam,Tinidazol,unknown
+Cefoperazon + sulbactam,Tobramycin sulfat,unknown
+Cefoperazon + sulbactam,Vancomycin,unknown
+Cefoperazon + sulbactam,Voriconazol,unknown
+Cefotaxim,Cefoxitin,compatible
+Cefotaxim,Ceftarolin,unknown
+Cefotaxim,Ceftazidim,incompatible
+Cefotaxim,Ceftazidim  +  Avibactam,unknown
+Cefotaxim,Ceftriaxon,compatible
+Cefotaxim,Ciprofloxacin,unknown
+Cefotaxim,Clindamycin,compatible
+Cefotaxim,Deferoxamin mesilat,unknown
+Cefotaxim,Dexamethason phosphat,compatible
+Cefotaxim,Dextrose,unknown
+Cefotaxim,Diazepam,incompatible
+Cefotaxim,Diphenhydramin hydroclorid,incompatible
+Cefotaxim,Dobutamine Hydrochlorid,incompatible
+Cefotaxim,Dopamin hydrochlorid,compatible
+Cefotaxim,Enoxaparin natri,unknown
+Cefotaxim,Esomeprazol,unknown
+Cefotaxim,Fentanyl,compatible
+Cefotaxim,Filgrastim,incompatible
+Cefotaxim,Fluconazol,controversial
+Cefotaxim,Fosfomycin Sodium,unknown
+Cefotaxim,Furosemid,compatible
+Cefotaxim,Ganciclovir,incompatible
+Cefotaxim,Gentamicin,compatible
+Cefotaxim,Heparin natri,compatible
+Cefotaxim,Gelatin,unknown
+Cefotaxim,Hydrocortison,unknown
+Cefotaxim,Iloprost,unknown
+Cefotaxim,Imipenem + Cilasatin,compatible
+Cefotaxim,Immune globulin,unknown
+Cefotaxim,Insulin aspart,unknown
+Cefotaxim,Iohexol,unknown
+Cefotaxim,Iopromide,unknown
+Cefotaxim,Ketamine,compatible
+Cefotaxim,Ketorolac Tromethamol,compatible
+Cefotaxim,Levobupivacain,unknown
+Cefotaxim,Levofloxacin,controversial
+Cefotaxim,Lidocain hydroclorid,compatible
+Cefotaxim,Linezolid,compatible
+Cefotaxim,Magie Chlorid,unknown
+Cefotaxim,Magie sulfat,compatible
+Cefotaxim,Manitol,compatible
+Cefotaxim,Meropenem,compatible
+Cefotaxim,Methotrexat,compatible
+Cefotaxim,Methylprednisolon,unknown
+Cefotaxim,Metronidazol,compatible
+Cefotaxim,Micafungin natri,unknown
+Cefotaxim,Midazolam,compatible
+Cefotaxim,Milrinone,compatible
+Cefotaxim,Morphin sulfat,compatible
+Cefotaxim,Kali chlorid,compatible
+Cefotaxim,Natri colistimethat,unknown
+Cefotaxim,Recombinant Human Erythropoietin alfa,compatible
+Cefotaxim,Naloxon hydroclorid,compatible
+Cefotaxim,Neostigmin methylsulfat,unknown
+Cefotaxim,Nicardipin hydrochlorid,compatible
+Cefotaxim,Noradrenalin,unknown
+Cefotaxim,Octreotide,compatible
+Cefotaxim,Omeprazol,unknown
+Cefotaxim,Ondansetron,compatible
+Cefotaxim,Oxacilin,compatible
+Cefotaxim,Pantoprazol,incompatible
+Cefotaxim,Phenobarbital,incompatible
+Cefotaxim,Phytomenadion,compatible
+Cefotaxim,Piperacilin + Tazobactam,unknown
+Cefotaxim,Propofol,compatible
+Cefotaxim,Rocuronium Bromid,compatible
+Cefotaxim,Natri bicarbonat,incompatible
+Cefotaxim,Natri Chlorid,unknown
+Cefotaxim,Natri lactat,unknown
+Cefotaxim,Sugammadex,unknown
+Cefotaxim,Terbutalin sulfat,unknown
+Cefotaxim,Tinidazol,unknown
+Cefotaxim,Tobramycin sulfat,compatible
+Cefotaxim,Vancomycin,controversial
+Cefotaxim,Voriconazol,compatible
+Cefoxitin,Ceftarolin,unknown
+Cefoxitin,Ceftazidim,compatible
+Cefoxitin,Ceftazidim  +  Avibactam,unknown
+Cefoxitin,Ceftriaxon,compatible
+Cefoxitin,Ciprofloxacin,unknown
+Cefoxitin,Clindamycin,compatible
+Cefoxitin,Deferoxamin mesilat,unknown
+Cefoxitin,Dexamethason phosphat,compatible
+Cefoxitin,Dextrose,unknown
+Cefoxitin,Diazepam,incompatible
+Cefoxitin,Diphenhydramin hydroclorid,incompatible
+Cefoxitin,Dobutamine Hydrochlorid,incompatible
+Cefoxitin,Dopamin hydrochlorid,compatible
+Cefoxitin,Enoxaparin natri,unknown
+Cefoxitin,Esomeprazol,unknown
+Cefoxitin,Fentanyl,compatible
+Cefoxitin,Filgrastim,incompatible
+Cefoxitin,Fluconazol,compatible
+Cefoxitin,Fosfomycin Sodium,unknown
+Cefoxitin,Furosemid,compatible
+Cefoxitin,Ganciclovir,incompatible
+Cefoxitin,Gentamicin,compatible
+Cefoxitin,Heparin natri,compatible
+Cefoxitin,Gelatin,unknown
+Cefoxitin,Hydrocortison,unknown
+Cefoxitin,Iloprost,unknown
+Cefoxitin,Imipenem + Cilasatin,controversial
+Cefoxitin,Immune globulin,unknown
+Cefoxitin,Insulin aspart,unknown
+Cefoxitin,Iohexol,unknown
+Cefoxitin,Iopromide,unknown
+Cefoxitin,Ketamine,unknown
+Cefoxitin,Ketorolac Tromethamol,compatible
+Cefoxitin,Levobupivacain,unknown
+Cefoxitin,Levofloxacin,incompatible
+Cefoxitin,Lidocain hydroclorid,compatible
+Cefoxitin,Linezolid,compatible
+Cefoxitin,Magie Chlorid,unknown
+Cefoxitin,Magie sulfat,compatible
+Cefoxitin,Manitol,compatible
+Cefoxitin,Meropenem,compatible
+Cefoxitin,Methotrexat,compatible
+Cefoxitin,Methylprednisolon,unknown
+Cefoxitin,Metronidazol,compatible
+Cefoxitin,Micafungin natri,unknown
+Cefoxitin,Midazolam,compatible
+Cefoxitin,Milrinone,compatible
+Cefoxitin,Morphin sulfat,compatible
+Cefoxitin,Kali chlorid,compatible
+Cefoxitin,Natri colistimethat,unknown
+Cefoxitin,Recombinant Human Erythropoietin alfa,compatible
+Cefoxitin,Naloxon hydroclorid,compatible
+Cefoxitin,Neostigmin methylsulfat,unknown
+Cefoxitin,Nicardipin hydrochlorid,compatible
+Cefoxitin,Noradrenalin,unknown
+Cefoxitin,Octreotide,compatible
+Cefoxitin,Omeprazol,unknown
+Cefoxitin,Ondansetron,compatible
+Cefoxitin,Oxacilin,compatible
+Cefoxitin,Pantoprazol,controversial
+Cefoxitin,Phenobarbital,incompatible
+Cefoxitin,Phytomenadion,compatible
+Cefoxitin,Piperacilin + Tazobactam,unknown
+Cefoxitin,Propofol,compatible
+Cefoxitin,Rocuronium Bromid,compatible
+Cefoxitin,Natri bicarbonat,incompatible
+Cefoxitin,Natri Chlorid,unknown
+Cefoxitin,Natri lactat,unknown
+Cefoxitin,Sugammadex,unknown
+Cefoxitin,Terbutalin sulfat,unknown
+Cefoxitin,Tinidazol,unknown
+Cefoxitin,Tobramycin sulfat,compatible
+Cefoxitin,Vancomycin,controversial
+Cefoxitin,Voriconazol,compatible
+Ceftarolin,Ceftazidim,unknown
+Ceftarolin,Ceftazidim  +  Avibactam,compatible
+Ceftarolin,Ceftriaxon,unknown
+Ceftarolin,Ciprofloxacin,compatible
+Ceftarolin,Clindamycin,compatible
+Ceftarolin,Deferoxamin mesilat,unknown
+Ceftarolin,Dexamethason phosphat,compatible
+Ceftarolin,Dextrose,unknown
+Ceftarolin,Diazepam,incompatible
+Ceftarolin,Diphenhydramin hydroclorid,compatible
+Ceftarolin,Dobutamine Hydrochlorid,controversial
+Ceftarolin,Dopamin hydrochlorid,compatible
+Ceftarolin,Enoxaparin natri,unknown
+Ceftarolin,Esomeprazol,compatible
+Ceftarolin,Fentanyl,compatible
+Ceftarolin,Filgrastim,incompatible
+Ceftarolin,Fluconazol,compatible
+Ceftarolin,Fosfomycin Sodium,incompatible
+Ceftarolin,Furosemid,compatible
+Ceftarolin,Ganciclovir,unknown
+Ceftarolin,Gentamicin,compatible
+Ceftarolin,Heparin natri,compatible
+Ceftarolin,Gelatin,unknown
+Ceftarolin,Natri colistimethat,unknown
+Ceftarolin,Recombinant Human Erythropoietin alfa,unknown
+Ceftarolin,Naloxon hydroclorid,unknown
+Ceftarolin,Neostigmin methylsulfat,unknown
+Ceftarolin,Nicardipin hydrochlorid,unknown
+Ceftarolin,Noradrenalin,unknown
+Ceftarolin,Octreotide,unknown
+Ceftarolin,Omeprazol,unknown
+Ceftarolin,Ondansetron,compatible
+Ceftarolin,Oxacilin,unknown
+Ceftarolin,Pantoprazol,compatible
+Ceftarolin,Phenobarbital,unknown
+Ceftarolin,Phytomenadion,unknown
+Ceftarolin,Piperacilin + Tazobactam,unknown
+Ceftarolin,Propofol,compatible
+Ceftarolin,Rocuronium Bromid,unknown
+Ceftarolin,Natri bicarbonat,compatible
+Ceftarolin,Natri Chlorid,unknown
+Ceftarolin,Natri lactat,unknown
+Ceftarolin,Sugammadex,unknown
+Ceftarolin,Terbutalin sulfat,unknown
+Ceftarolin,Tinidazol,unknown
+Ceftarolin,Tobramycin sulfat,compatible
+Ceftarolin,Vancomycin,unknown
+Ceftarolin,Voriconazol,compatible
+Ceftarolin,Hydrocortison,unknown
+Ceftarolin,Iloprost,unknown
+Ceftarolin,Imipenem + Cilasatin,unknown
+Ceftarolin,Immune globulin,unknown
+Ceftarolin,Insulin aspart,unknown
+Ceftarolin,Iohexol,unknown
+Ceftarolin,Iopromide,unknown
+Ceftarolin,Ketamine,unknown
+Ceftarolin,Ketorolac Tromethamol,unknown
+Ceftarolin,Levobupivacain,unknown
+Ceftarolin,Levofloxacin,compatible
+Ceftarolin,Lidocain hydroclorid,compatible
+Ceftarolin,Linezolid,unknown
+Ceftarolin,Magie Chlorid,unknown
+Ceftarolin,Magie sulfat,controversial
+Ceftarolin,Manitol,compatible
+Ceftarolin,Meropenem,unknown
+Ceftarolin,Methotrexat,unknown
+Ceftarolin,Methylprednisolon,unknown
+Ceftarolin,Metronidazol,compatible
+Ceftarolin,Micafungin natri,unknown
+Ceftarolin,Midazolam,compatible
+Ceftarolin,Milrinone,compatible
+Ceftarolin,Morphin sulfat,compatible
+Ceftarolin,Kali chlorid,compatible
+Ceftazidim,Ceftazidim  +  Avibactam,unknown
+Ceftazidim,Ceftriaxon,compatible
+Ceftazidim,Ciprofloxacin,compatible
+Ceftazidim,Clindamycin,compatible
+Ceftazidim,Deferoxamin mesilat,unknown
+Ceftazidim,Dexamethason phosphat,compatible
+Ceftazidim,Dextrose,unknown
+Ceftazidim,Diazepam,incompatible
+Ceftazidim,Diphenhydramin hydroclorid,incompatible
+Ceftazidim,Dobutamine Hydrochlorid,controversial
+Ceftazidim,Dopamin hydrochlorid,compatible
+Ceftazidim,Enoxaparin natri,unknown
+Ceftazidim,Esomeprazol,unknown
+Ceftazidim,Fentanyl,compatible
+Ceftazidim,Filgrastim,compatible
+Ceftazidim,Fluconazol,controversial
+Ceftazidim,Fosfomycin Sodium,compatible
+Ceftazidim,Furosemid,compatible
+Ceftazidim,Ganciclovir,incompatible
+Ceftazidim,Gentamicin,compatible
+Ceftazidim,Heparin natri,compatible
+Ceftazidim,Gelatin,unknown
+Ceftazidim,Natri colistimethat,compatible
+Ceftazidim,Recombinant Human Erythropoietin alfa,compatible
+Ceftazidim,Naloxon hydroclorid,compatible
+Ceftazidim,Neostigmin methylsulfat,unknown
+Ceftazidim,Nicardipin hydrochlorid,controversial
+Ceftazidim,Noradrenalin,unknown
+Ceftazidim,Octreotide,compatible
+Ceftazidim,Omeprazol,unknown
+Ceftazidim,Ondansetron,controversial
+Ceftazidim,Oxacilin,compatible
+Ceftazidim,Pantoprazol,controversial
+Ceftazidim,Phenobarbital,compatible
+Ceftazidim,Phytomenadion,compatible
+Ceftazidim,Piperacilin + Tazobactam,unknown
+Ceftazidim,Propofol,controversial
+Ceftazidim,Rocuronium Bromid,compatible
+Ceftazidim,Natri bicarbonat,compatible
+Ceftazidim,Natri Chlorid,unknown
+Ceftazidim,Natri lactat,unknown
+Ceftazidim,Sugammadex,unknown
+Ceftazidim,Terbutalin sulfat,unknown
+Ceftazidim,Tinidazol,unknown
+Ceftazidim,Tobramycin sulfat,compatible
+Ceftazidim,Vancomycin,controversial
+Ceftazidim,Voriconazol,compatible
+Ceftazidim,Hydrocortison,unknown
+Ceftazidim,Iloprost,unknown
+Ceftazidim,Imipenem + Cilasatin,compatible
+Ceftazidim,Immune globulin,unknown
+Ceftazidim,Insulin aspart,compatible
+Ceftazidim,Iohexol,unknown
+Ceftazidim,Iopromide,unknown
+Ceftazidim,Ketamine,compatible
+Ceftazidim,Ketorolac Tromethamol,compatible
+Ceftazidim,Levobupivacain,unknown
+Ceftazidim,Levofloxacin,compatible
+Ceftazidim,Lidocain hydroclorid,compatible
+Ceftazidim,Linezolid,compatible
+Ceftazidim,Magie Chlorid,unknown
+Ceftazidim,Magie sulfat,compatible
+Ceftazidim,Manitol,compatible
+Ceftazidim,Meropenem,compatible
+Ceftazidim,Methotrexat,compatible
+Ceftazidim,Methylprednisolon,unknown
+Ceftazidim,Metronidazol,compatible
+Ceftazidim,Micafungin natri,unknown
+Ceftazidim,Midazolam,incompatible
+Ceftazidim,Milrinone,compatible
+Ceftazidim,Morphin sulfat,compatible
+Ceftazidim,Kali chlorid,compatible
+Ceftazidim  +  Avibactam,Ceftriaxon,unknown
+Ceftazidim  +  Avibactam,Ciprofloxacin,unknown
+Ceftazidim  +  Avibactam,Clindamycin,unknown
+Ceftazidim  +  Avibactam,Deferoxamin mesilat,unknown
+Ceftazidim  +  Avibactam,Dexamethason phosphat,unknown
+Ceftazidim  +  Avibactam,Dextrose,unknown
+Ceftazidim  +  Avibactam,Diazepam,unknown
+Ceftazidim  +  Avibactam,Diphenhydramin hydroclorid,unknown
+Ceftazidim  +  Avibactam,Dobutamine Hydrochlorid,unknown
+Ceftazidim  +  Avibactam,Dopamin hydrochlorid,compatible
+Ceftazidim  +  Avibactam,Enoxaparin natri,unknown
+Ceftazidim  +  Avibactam,Esomeprazol,unknown
+Ceftazidim  +  Avibactam,Fentanyl,unknown
+Ceftazidim  +  Avibactam,Filgrastim,unknown
+Ceftazidim  +  Avibactam,Fluconazol,unknown
+Ceftazidim  +  Avibactam,Fosfomycin Sodium,compatible
+Ceftazidim  +  Avibactam,Furosemid,compatible
+Ceftazidim  +  Avibactam,Ganciclovir,unknown
+Ceftazidim  +  Avibactam,Gentamicin,compatible
+Ceftazidim  +  Avibactam,Heparin natri,compatible
+Ceftazidim  +  Avibactam,Gelatin,unknown
+Ceftazidim  +  Avibactam,Natri colistimethat,compatible
+Ceftazidim  +  Avibactam,Recombinant Human Erythropoietin alfa,unknown
+Ceftazidim  +  Avibactam,Naloxon hydroclorid,unknown
+Ceftazidim  +  Avibactam,Neostigmin methylsulfat,unknown
+Ceftazidim  +  Avibactam,Nicardipin hydrochlorid,unknown
+Ceftazidim  +  Avibactam,Noradrenalin,unknown
+Ceftazidim  +  Avibactam,Octreotide,unknown
+Ceftazidim  +  Avibactam,Omeprazol,unknown
+Ceftazidim  +  Avibactam,Ondansetron,unknown
+Ceftazidim  +  Avibactam,Oxacilin,unknown
+Ceftazidim  +  Avibactam,Pantoprazol,unknown
+Ceftazidim  +  Avibactam,Phenobarbital,unknown
+Ceftazidim  +  Avibactam,Phytomenadion,unknown
+Ceftazidim  +  Avibactam,Piperacilin + Tazobactam,unknown
+Ceftazidim  +  Avibactam,Propofol,unknown
+Ceftazidim  +  Avibactam,Rocuronium Bromid,unknown
+Ceftazidim  +  Avibactam,Natri bicarbonat,compatible
+Ceftazidim  +  Avibactam,Natri Chlorid,unknown
+Ceftazidim  +  Avibactam,Natri lactat,unknown
+Ceftazidim  +  Avibactam,Sugammadex,unknown
+Ceftazidim  +  Avibactam,Terbutalin sulfat,unknown
+Ceftazidim  +  Avibactam,Tinidazol,unknown
+Ceftazidim  +  Avibactam,Tobramycin sulfat,compatible
+Ceftazidim  +  Avibactam,Vancomycin,compatible
+Ceftazidim  +  Avibactam,Voriconazol,unknown
+Ceftazidim  +  Avibactam,Hydrocortison,unknown
+Ceftazidim  +  Avibactam,Iloprost,unknown
+Ceftazidim  +  Avibactam,Imipenem + Cilasatin,compatible
+Ceftazidim  +  Avibactam,Immune globulin,unknown
+Ceftazidim  +  Avibactam,Insulin aspart,unknown
+Ceftazidim  +  Avibactam,Iohexol,unknown
+Ceftazidim  +  Avibactam,Iopromide,unknown
+Ceftazidim  +  Avibactam,Ketamine,unknown
+Ceftazidim  +  Avibactam,Ketorolac Tromethamol,unknown
+Ceftazidim  +  Avibactam,Levobupivacain,unknown
+Ceftazidim  +  Avibactam,Levofloxacin,compatible
+Ceftazidim  +  Avibactam,Lidocain hydroclorid,unknown
+Ceftazidim  +  Avibactam,Linezolid,compatible
+Ceftazidim  +  Avibactam,Magie Chlorid,unknown
+Ceftazidim  +  Avibactam,Magie sulfat,compatible
+Ceftazidim  +  Avibactam,Manitol,unknown
+Ceftazidim  +  Avibactam,Meropenem,compatible
+Ceftazidim  +  Avibactam,Methotrexat,unknown
+Ceftazidim  +  Avibactam,Methylprednisolon,unknown
+Ceftazidim  +  Avibactam,Metronidazol,compatible
+Ceftazidim  +  Avibactam,Micafungin natri,unknown
+Ceftazidim  +  Avibactam,Midazolam,unknown
+Ceftazidim  +  Avibactam,Milrinone,unknown
+Ceftazidim  +  Avibactam,Morphin sulfat,unknown
+Ceftazidim  +  Avibactam,Kali chlorid,compatible
+Ceftriaxon,Ciprofloxacin,unknown
+Ceftriaxon,Clindamycin,incompatible
+Ceftriaxon,Deferoxamin mesilat,unknown
+Ceftriaxon,Dexamethason phosphat,compatible
+Ceftriaxon,Dextrose,unknown
+Ceftriaxon,Diazepam,incompatible
+Ceftriaxon,Diphenhydramin hydroclorid,incompatible
+Ceftriaxon,Dobutamine Hydrochlorid,incompatible
+Ceftriaxon,Dopamin hydrochlorid,compatible
+Ceftriaxon,Enoxaparin natri,unknown
+Ceftriaxon,Esomeprazol,unknown
+Ceftriaxon,Fentanyl,compatible
+Ceftriaxon,Filgrastim,incompatible
+Ceftriaxon,Fluconazol,controversial
+Ceftriaxon,Fosfomycin Sodium,compatible
+Ceftriaxon,Furosemid,compatible
+Ceftriaxon,Ganciclovir,incompatible
+Ceftriaxon,Gentamicin,compatible
+Ceftriaxon,Heparin natri,compatible
+Ceftriaxon,Gelatin,unknown
+Ceftriaxon,Natri colistimethat,unknown
+Ceftriaxon,Recombinant Human Erythropoietin alfa,compatible
+Ceftriaxon,Naloxon hydroclorid,compatible
+Ceftriaxon,Neostigmin methylsulfat,unknown
+Ceftriaxon,Nicardipin hydrochlorid,compatible
+Ceftriaxon,Noradrenalin,unknown
+Ceftriaxon,Octreotide,compatible
+Ceftriaxon,Omeprazol,unknown
+Ceftriaxon,Ondansetron,controversial
+Ceftriaxon,Oxacilin,compatible
+Ceftriaxon,Pantoprazol,compatible
+Ceftriaxon,Phenobarbital,compatible
+Ceftriaxon,Phytomenadion,compatible
+Ceftriaxon,Piperacilin + Tazobactam,unknown
+Ceftriaxon,Propofol,controversial
+Ceftriaxon,Rocuronium Bromid,compatible
+Ceftriaxon,Natri bicarbonat,compatible
+Ceftriaxon,Natri Chlorid,unknown
+Ceftriaxon,Natri lactat,unknown
+Ceftriaxon,Sugammadex,unknown
+Ceftriaxon,Terbutalin sulfat,unknown
+Ceftriaxon,Tinidazol,unknown
+Ceftriaxon,Tobramycin sulfat,incompatible
+Ceftriaxon,Vancomycin,controversial
+Ceftriaxon,Voriconazol,compatible
+Ceftriaxon,Hydrocortison,unknown
+Ceftriaxon,Iloprost,unknown
+Ceftriaxon,Imipenem + Cilasatin,incompatible
+Ceftriaxon,Immune globulin,unknown
+Ceftriaxon,Insulin aspart,compatible
+Ceftriaxon,Iohexol,unknown
+Ceftriaxon,Iopromide,unknown
+Ceftriaxon,Ketamine,unknown
+Ceftriaxon,Ketorolac Tromethamol,compatible
+Ceftriaxon,Levobupivacain,unknown
+Ceftriaxon,Levofloxacin,compatible
+Ceftriaxon,Lidocain hydroclorid,compatible
+Ceftriaxon,Linezolid,compatible
+Ceftriaxon,Magie Chlorid,unknown
+Ceftriaxon,Magie sulfat,unknown
+Ceftriaxon,Manitol,compatible
+Ceftriaxon,Meropenem,compatible
+Ceftriaxon,Methotrexat,compatible
+Ceftriaxon,Methylprednisolon,unknown
+Ceftriaxon,Metronidazol,compatible
+Ceftriaxon,Micafungin natri,unknown
+Ceftriaxon,Midazolam,compatible
+Ceftriaxon,Milrinone,compatible
+Ceftriaxon,Morphin sulfat,compatible
+Ceftriaxon,Kali chlorid,compatible
+Ciprofloxacin,Clindamycin,unknown
+Ciprofloxacin,Deferoxamin mesilat,unknown
+Ciprofloxacin,Dexamethason phosphat,incompatible
+Ciprofloxacin,Dextrose,unknown
+Ciprofloxacin,Diazepam,unknown
+Ciprofloxacin,Diphenhydramin hydroclorid,compatible
+Ciprofloxacin,Dobutamine Hydrochlorid,compatible
+Ciprofloxacin,Dopamin hydrochlorid,compatible
+Ciprofloxacin,Enoxaparin natri,unknown
+Ciprofloxacin,Esomeprazol,unknown
+Ciprofloxacin,Fentanyl,unknown
+Ciprofloxacin,Filgrastim,unknown
+Ciprofloxacin,Fluconazol,unknown
+Ciprofloxacin,Fosfomycin Sodium,incompatible
+Ciprofloxacin,Furosemid,incompatible
+Ciprofloxacin,Ganciclovir,unknown
+Ciprofloxacin,Gentamicin,compatible
+Ciprofloxacin,Heparin natri,incompatible
+Ciprofloxacin,Gelatin,unknown
+Ciprofloxacin,Natri colistimethat,unknown
+Ciprofloxacin,Recombinant Human Erythropoietin alfa,unknown
+Ciprofloxacin,Naloxon hydroclorid,compatible
+Ciprofloxacin,Neostigmin methylsulfat,unknown
+Ciprofloxacin,Nicardipin hydrochlorid,compatible
+Ciprofloxacin,Noradrenalin,unknown
+Ciprofloxacin,Octreotide,compatible
+Ciprofloxacin,Omeprazol,unknown
+Ciprofloxacin,Ondansetron,compatible
+Ciprofloxacin,Oxacilin,unknown
+Ciprofloxacin,Pantoprazol,incompatible
+Ciprofloxacin,Phenobarbital,unknown
+Ciprofloxacin,Phytomenadion,unknown
+Ciprofloxacin,Piperacilin + Tazobactam,incompatible
+Ciprofloxacin,Propofol,incompatible
+Ciprofloxacin,Rocuronium Bromid,compatible
+Ciprofloxacin,Natri bicarbonat,controversial
+Ciprofloxacin,Natri Chlorid,compatible
+Ciprofloxacin,Natri lactat,unknown
+Ciprofloxacin,Sugammadex,unknown
+Ciprofloxacin,Terbutalin sulfat,unknown
+Ciprofloxacin,Tinidazol,unknown
+Ciprofloxacin,Tobramycin sulfat,compatible
+Ciprofloxacin,Vancomycin,compatible
+Ciprofloxacin,Voriconazol,compatible
+Ciprofloxacin,Hydrocortison,compatible
+Ciprofloxacin,Iloprost,unknown
+Ciprofloxacin,Imipenem + Cilasatin,unknown
+Ciprofloxacin,Immune globulin,unknown
+Ciprofloxacin,Insulin aspart,unknown
+Ciprofloxacin,Iohexol,unknown
+Ciprofloxacin,Iopromide,unknown
+Ciprofloxacin,Ketamine,unknown
+Ciprofloxacin,Ketorolac Tromethamol,unknown
+Ciprofloxacin,Levobupivacain,unknown
+Ciprofloxacin,Levofloxacin,unknown
+Ciprofloxacin,Lidocain hydroclorid,compatible
+Ciprofloxacin,Linezolid,compatible
+Ciprofloxacin,Magie Chlorid,unknown
+Ciprofloxacin,Magie sulfat,incompatible
+Ciprofloxacin,Manitol,unknown
+Ciprofloxacin,Meropenem,incompatible
+Ciprofloxacin,Methotrexat,compatible
+Ciprofloxacin,Methylprednisolon,unknown
+Ciprofloxacin,Metronidazol,compatible
+Ciprofloxacin,Micafungin natri,unknown
+Ciprofloxacin,Midazolam,compatible
+Ciprofloxacin,Milrinone,compatible
+Ciprofloxacin,Morphin sulfat,unknown
+Ciprofloxacin,Kali chlorid,compatible
+Clindamycin,Deferoxamin mesilat,unknown
+Clindamycin,Dexamethason phosphat,compatible
+Clindamycin,Dextrose,unknown
+Clindamycin,Diazepam,incompatible
+Clindamycin,Diphenhydramin hydroclorid,compatible
+Clindamycin,Dobutamine Hydrochlorid,compatible
+Clindamycin,Dopamin hydrochlorid,compatible
+Clindamycin,Enoxaparin natri,unknown
+Clindamycin,Esomeprazol,unknown
+Clindamycin,Fentanyl,compatible
+Clindamycin,Filgrastim,incompatible
+Clindamycin,Fluconazol,controversial
+Clindamycin,Fosfomycin Sodium,unknown
+Clindamycin,Furosemid,compatible
+Clindamycin,Ganciclovir,incompatible
+Clindamycin,Gentamicin,compatible
+Clindamycin,Heparin natri,compatible
+Clindamycin,Gelatin,unknown
+Clindamycin,Natri colistimethat,unknown
+Clindamycin,Recombinant Human Erythropoietin alfa,compatible
+Clindamycin,Naloxon hydroclorid,compatible
+Clindamycin,Neostigmin methylsulfat,unknown
+Clindamycin,Nicardipin hydrochlorid,controversial
+Clindamycin,Noradrenalin,unknown
+Clindamycin,Octreotide,compatible
+Clindamycin,Omeprazol,unknown
+Clindamycin,Ondansetron,compatible
+Clindamycin,Oxacilin,compatible
+Clindamycin,Pantoprazol,controversial
+Clindamycin,Phenobarbital,compatible
+Clindamycin,Phytomenadion,compatible
+Clindamycin,Piperacilin + Tazobactam,compatible
+Clindamycin,Propofol,compatible
+Clindamycin,Rocuronium Bromid,compatible
+Clindamycin,Natri bicarbonat,compatible
+Clindamycin,Natri Chlorid,unknown
+Clindamycin,Natri lactat,unknown
+Clindamycin,Sugammadex,unknown
+Clindamycin,Terbutalin sulfat,unknown
+Clindamycin,Tinidazol,unknown
+Clindamycin,Tobramycin sulfat,compatible
+Clindamycin,Vancomycin,compatible
+Clindamycin,Voriconazol,compatible
+Clindamycin,Hydrocortison,unknown
+Clindamycin,Iloprost,unknown
+Clindamycin,Imipenem + Cilasatin,compatible
+Clindamycin,Immune globulin,unknown
+Clindamycin,Insulin aspart,unknown
+Clindamycin,Iohexol,unknown
+Clindamycin,Iopromide,unknown
+Clindamycin,Ketamine,compatible
+Clindamycin,Ketorolac Tromethamol,compatible
+Clindamycin,Levobupivacain,unknown
+Clindamycin,Levofloxacin,compatible
+Clindamycin,Lidocain hydroclorid,compatible
+Clindamycin,Linezolid,compatible
+Clindamycin,Magie Chlorid,unknown
+Clindamycin,Magie sulfat,compatible
+Clindamycin,Manitol,compatible
+Clindamycin,Meropenem,compatible
+Clindamycin,Methotrexat,compatible
+Clindamycin,Methylprednisolon,unknown
+Clindamycin,Metronidazol,compatible
+Clindamycin,Micafungin natri,unknown
+Clindamycin,Midazolam,controversial
+Clindamycin,Milrinone,compatible
+Clindamycin,Morphin sulfat,compatible
+Clindamycin,Kali chlorid,compatible
+Deferoxamin mesilat,Dexamethason phosphat,unknown
+Deferoxamin mesilat,Dextrose,unknown
+Deferoxamin mesilat,Diazepam,unknown
+Deferoxamin mesilat,Diphenhydramin hydroclorid,unknown
+Deferoxamin mesilat,Dobutamine Hydrochlorid,unknown
+Deferoxamin mesilat,Dopamin hydrochlorid,unknown
+Deferoxamin mesilat,Enoxaparin natri,unknown
+Deferoxamin mesilat,Esomeprazol,unknown
+Deferoxamin mesilat,Fentanyl,unknown
+Deferoxamin mesilat,Filgrastim,unknown
+Deferoxamin mesilat,Fluconazol,unknown
+Deferoxamin mesilat,Fosfomycin Sodium,unknown
+Deferoxamin mesilat,Furosemid,unknown
+Deferoxamin mesilat,Ganciclovir,unknown
+Deferoxamin mesilat,Gentamicin,unknown
+Deferoxamin mesilat,Heparin natri,unknown
+Deferoxamin mesilat,Gelatin,unknown
+Deferoxamin mesilat,Natri colistimethat,unknown
+Deferoxamin mesilat,Recombinant Human Erythropoietin alfa,unknown
+Deferoxamin mesilat,Naloxon hydroclorid,unknown
+Deferoxamin mesilat,Neostigmin methylsulfat,unknown
+Deferoxamin mesilat,Nicardipin hydrochlorid,unknown
+Deferoxamin mesilat,Noradrenalin,unknown
+Deferoxamin mesilat,Octreotide,unknown
+Deferoxamin mesilat,Omeprazol,unknown
+Deferoxamin mesilat,Ondansetron,unknown
+Deferoxamin mesilat,Oxacilin,unknown
+Deferoxamin mesilat,Pantoprazol,unknown
+Deferoxamin mesilat,Phenobarbital,unknown
+Deferoxamin mesilat,Phytomenadion,unknown
+Deferoxamin mesilat,Piperacilin + Tazobactam,unknown
+Deferoxamin mesilat,Propofol,unknown
+Deferoxamin mesilat,Rocuronium Bromid,unknown
+Deferoxamin mesilat,Natri bicarbonat,unknown
+Deferoxamin mesilat,Natri Chlorid,unknown
+Deferoxamin mesilat,Natri lactat,unknown
+Deferoxamin mesilat,Sugammadex,unknown
+Deferoxamin mesilat,Terbutalin sulfat,unknown
+Deferoxamin mesilat,Tinidazol,unknown
+Deferoxamin mesilat,Tobramycin sulfat,unknown
+Deferoxamin mesilat,Vancomycin,unknown
+Deferoxamin mesilat,Voriconazol,unknown
+Deferoxamin mesilat,Hydrocortison,unknown
+Deferoxamin mesilat,Iloprost,unknown
+Deferoxamin mesilat,Imipenem + Cilasatin,unknown
+Deferoxamin mesilat,Immune globulin,unknown
+Deferoxamin mesilat,Insulin aspart,unknown
+Deferoxamin mesilat,Iohexol,unknown
+Deferoxamin mesilat,Iopromide,unknown
+Deferoxamin mesilat,Ketamine,unknown
+Deferoxamin mesilat,Ketorolac Tromethamol,unknown
+Deferoxamin mesilat,Levobupivacain,unknown
+Deferoxamin mesilat,Levofloxacin,unknown
+Deferoxamin mesilat,Lidocain hydroclorid,unknown
+Deferoxamin mesilat,Linezolid,unknown
+Deferoxamin mesilat,Magie Chlorid,unknown
+Deferoxamin mesilat,Magie sulfat,unknown
+Deferoxamin mesilat,Manitol,unknown
+Deferoxamin mesilat,Meropenem,unknown
+Deferoxamin mesilat,Methotrexat,unknown
+Deferoxamin mesilat,Methylprednisolon,unknown
+Deferoxamin mesilat,Metronidazol,unknown
+Deferoxamin mesilat,Micafungin natri,unknown
+Deferoxamin mesilat,Midazolam,unknown
+Deferoxamin mesilat,Milrinone,unknown
+Deferoxamin mesilat,Morphin sulfat,unknown
+Deferoxamin mesilat,Kali chlorid,unknown
+Dexamethason phosphat,Dextrose,unknown
+Dexamethason phosphat,Diazepam,incompatible
+Dexamethason phosphat,Diphenhydramin hydroclorid,incompatible
+Dexamethason phosphat,Dobutamine Hydrochlorid,incompatible
+Dexamethason phosphat,Dopamin hydrochlorid,compatible
+Dexamethason phosphat,Enoxaparin natri,unknown
+Dexamethason phosphat,Esomeprazol,unknown
+Dexamethason phosphat,Fentanyl,compatible
+Dexamethason phosphat,Filgrastim,compatible
+Dexamethason phosphat,Fluconazol,compatible
+Dexamethason phosphat,Fosfomycin Sodium,compatible
+Dexamethason phosphat,Furosemid,compatible
+Dexamethason phosphat,Ganciclovir,compatible
+Dexamethason phosphat,Gentamicin,controversial
+Dexamethason phosphat,Heparin natri,compatible
+Dexamethason phosphat,Gelatin,unknown
+Dexamethason phosphat,Natri colistimethat,compatible
+Dexamethason phosphat,Recombinant Human Erythropoietin alfa,compatible
+Dexamethason phosphat,Naloxon hydroclorid,compatible
+Dexamethason phosphat,Neostigmin methylsulfat,unknown
+Dexamethason phosphat,Nicardipin hydrochlorid,incompatible
+Dexamethason phosphat,Noradrenalin,unknown
+Dexamethason phosphat,Octreotide,compatible
+Dexamethason phosphat,Omeprazol,unknown
+Dexamethason phosphat,Ondansetron,compatible
+Dexamethason phosphat,Oxacilin,compatible
+Dexamethason phosphat,Pantoprazol,incompatible
+Dexamethason phosphat,Phenobarbital,compatible
+Dexamethason phosphat,Phytomenadion,compatible
+Dexamethason phosphat,Piperacilin + Tazobactam,compatible
+Dexamethason phosphat,Propofol,compatible
+Dexamethason phosphat,Rocuronium Bromid,controversial
+Dexamethason phosphat,Natri bicarbonat,compatible
+Dexamethason phosphat,Natri Chlorid,unknown
+Dexamethason phosphat,Natri lactat,unknown
+Dexamethason phosphat,Sugammadex,unknown
+Dexamethason phosphat,Terbutalin sulfat,unknown
+Dexamethason phosphat,Tinidazol,unknown
+Dexamethason phosphat,Tobramycin sulfat,incompatible
+Dexamethason phosphat,Vancomycin,compatible
+Dexamethason phosphat,Voriconazol,compatible
+Dexamethason phosphat,Hydrocortison,unknown
+Dexamethason phosphat,Iloprost,unknown
+Dexamethason phosphat,Imipenem + Cilasatin,compatible
+Dexamethason phosphat,Immune globulin,unknown
+Dexamethason phosphat,Insulin aspart,unknown
+Dexamethason phosphat,Iohexol,unknown
+Dexamethason phosphat,Iopromide,unknown
+Dexamethason phosphat,Ketamine,incompatible
+Dexamethason phosphat,Ketorolac Tromethamol,compatible
+Dexamethason phosphat,Levobupivacain,unknown
+Dexamethason phosphat,Levofloxacin,compatible
+Dexamethason phosphat,Lidocain hydroclorid,compatible
+Dexamethason phosphat,Linezolid,compatible
+Dexamethason phosphat,Magie Chlorid,unknown
+Dexamethason phosphat,Magie sulfat,incompatible
+Dexamethason phosphat,Manitol,compatible
+Dexamethason phosphat,Meropenem,compatible
+Dexamethason phosphat,Methotrexat,controversial
+Dexamethason phosphat,Methylprednisolon,unknown
+Dexamethason phosphat,Metronidazol,compatible
+Dexamethason phosphat,Micafungin natri,unknown
+Dexamethason phosphat,Midazolam,incompatible
+Dexamethason phosphat,Milrinone,compatible
+Dexamethason phosphat,Morphin sulfat,compatible
+Dexamethason phosphat,Kali chlorid,compatible
+Dextrose,Diazepam,unknown
+Dextrose,Diphenhydramin hydroclorid,unknown
+Dextrose,Dobutamine Hydrochlorid,unknown
+Dextrose,Dopamin hydrochlorid,unknown
+Dextrose,Enoxaparin natri,unknown
+Dextrose,Esomeprazol,unknown
+Dextrose,Fentanyl,unknown
+Dextrose,Filgrastim,unknown
+Dextrose,Fluconazol,unknown
+Dextrose,Fosfomycin Sodium,unknown
+Dextrose,Furosemid,unknown
+Dextrose,Ganciclovir,unknown
+Dextrose,Gentamicin,unknown
+Dextrose,Heparin natri,unknown
+Dextrose,Gelatin,unknown
+Dextrose,Natri colistimethat,unknown
+Dextrose,Recombinant Human Erythropoietin alfa,unknown
+Dextrose,Naloxon hydroclorid,unknown
+Dextrose,Neostigmin methylsulfat,unknown
+Dextrose,Nicardipin hydrochlorid,unknown
+Dextrose,Noradrenalin,unknown
+Dextrose,Octreotide,unknown
+Dextrose,Omeprazol,unknown
+Dextrose,Ondansetron,unknown
+Dextrose,Oxacilin,unknown
+Dextrose,Pantoprazol,unknown
+Dextrose,Phenobarbital,unknown
+Dextrose,Phytomenadion,unknown
+Dextrose,Piperacilin + Tazobactam,unknown
+Dextrose,Propofol,unknown
+Dextrose,Rocuronium Bromid,unknown
+Dextrose,Natri bicarbonat,unknown
+Dextrose,Natri Chlorid,unknown
+Dextrose,Natri lactat,unknown
+Dextrose,Sugammadex,unknown
+Dextrose,Terbutalin sulfat,unknown
+Dextrose,Tinidazol,unknown
+Dextrose,Tobramycin sulfat,unknown
+Dextrose,Vancomycin,unknown
+Dextrose,Voriconazol,unknown
+Dextrose,Hydrocortison,unknown
+Dextrose,Iloprost,unknown
+Dextrose,Imipenem + Cilasatin,unknown
+Dextrose,Immune globulin,unknown
+Dextrose,Insulin aspart,unknown
+Dextrose,Iohexol,unknown
+Dextrose,Iopromide,unknown
+Dextrose,Ketamine,unknown
+Dextrose,Ketorolac Tromethamol,unknown
+Dextrose,Levobupivacain,unknown
+Dextrose,Levofloxacin,unknown
+Dextrose,Lidocain hydroclorid,unknown
+Dextrose,Linezolid,unknown
+Dextrose,Magie Chlorid,unknown
+Dextrose,Magie sulfat,unknown
+Dextrose,Manitol,unknown
+Dextrose,Meropenem,unknown
+Dextrose,Methotrexat,unknown
+Dextrose,Methylprednisolon,unknown
+Dextrose,Metronidazol,unknown
+Dextrose,Micafungin natri,unknown
+Dextrose,Midazolam,unknown
+Dextrose,Milrinone,unknown
+Dextrose,Morphin sulfat,unknown
+Dextrose,Kali chlorid,unknown
+Diazepam,Diphenhydramin hydroclorid,incompatible
+Diazepam,Dobutamine Hydrochlorid,controversial
+Diazepam,Dopamin hydrochlorid,incompatible
+Diazepam,Enoxaparin natri,unknown
+Diazepam,Esomeprazol,unknown
+Diazepam,Fentanyl,controversial
+Diazepam,Filgrastim,unknown
+Diazepam,Fluconazol,incompatible
+Diazepam,Fosfomycin Sodium,unknown
+Diazepam,Furosemid,incompatible
+Diazepam,Ganciclovir,incompatible
+Diazepam,Gentamicin,incompatible
+Diazepam,Heparin natri,incompatible
+Diazepam,Gelatin,unknown
+Diazepam,Natri colistimethat,unknown
+Diazepam,Recombinant Human Erythropoietin alfa,incompatible
+Diazepam,Naloxon hydroclorid,incompatible
+Diazepam,Neostigmin methylsulfat,unknown
+Diazepam,Nicardipin hydrochlorid,incompatible
+Diazepam,Noradrenalin,unknown
+Diazepam,Octreotide,incompatible
+Diazepam,Omeprazol,unknown
+Diazepam,Ondansetron,controversial
+Diazepam,Oxacilin,incompatible
+Diazepam,Pantoprazol,incompatible
+Diazepam,Phenobarbital,incompatible
+Diazepam,Phytomenadion,incompatible
+Diazepam,Piperacilin + Tazobactam,compatible
+Diazepam,Propofol,incompatible
+Diazepam,Rocuronium Bromid,incompatible
+Diazepam,Natri bicarbonat,incompatible
+Diazepam,Natri Chlorid,unknown
+Diazepam,Natri lactat,unknown
+Diazepam,Sugammadex,unknown
+Diazepam,Terbutalin sulfat,unknown
+Diazepam,Tinidazol,unknown
+Diazepam,Tobramycin sulfat,incompatible
+Diazepam,Vancomycin,incompatible
+Diazepam,Voriconazol,incompatible
+Diazepam,Hydrocortison,unknown
+Diazepam,Iloprost,unknown
+Diazepam,Imipenem + Cilasatin,incompatible
+Diazepam,Immune globulin,unknown
+Diazepam,Insulin aspart,unknown
+Diazepam,Iohexol,unknown
+Diazepam,Iopromide,unknown
+Diazepam,Ketamine,unknown
+Diazepam,Ketorolac Tromethamol,incompatible
+Diazepam,Levobupivacain,unknown
+Diazepam,Levofloxacin,incompatible
+Diazepam,Lidocain hydroclorid,incompatible
+Diazepam,Linezolid,incompatible
+Diazepam,Magie Chlorid,unknown
+Diazepam,Magie sulfat,incompatible
+Diazepam,Manitol,incompatible
+Diazepam,Meropenem,incompatible
+Diazepam,Methotrexat,incompatible
+Diazepam,Methylprednisolon,unknown
+Diazepam,Metronidazol,incompatible
+Diazepam,Micafungin natri,unknown
+Diazepam,Midazolam,incompatible
+Diazepam,Milrinone,incompatible
+Diazepam,Morphin sulfat,controversial
+Diazepam,Kali chlorid,incompatible
+Diphenhydramin hydroclorid,Dobutamine Hydrochlorid,compatible
+Diphenhydramin hydroclorid,Dopamin hydrochlorid,compatible
+Diphenhydramin hydroclorid,Enoxaparin natri,unknown
+Diphenhydramin hydroclorid,Esomeprazol,unknown
+Diphenhydramin hydroclorid,Fentanyl,compatible
+Diphenhydramin hydroclorid,Filgrastim,compatible
+Diphenhydramin hydroclorid,Fluconazol,compatible
+Diphenhydramin hydroclorid,Fosfomycin Sodium,incompatible
+Diphenhydramin hydroclorid,Furosemid,incompatible
+Diphenhydramin hydroclorid,Ganciclovir,incompatible
+Diphenhydramin hydroclorid,Gentamicin,compatible
+Diphenhydramin hydroclorid,Heparin natri,incompatible
+Diphenhydramin hydroclorid,Gelatin,unknown
+Diphenhydramin hydroclorid,Natri colistimethat,unknown
+Diphenhydramin hydroclorid,Recombinant Human Erythropoietin alfa,compatible
+Diphenhydramin hydroclorid,Naloxon hydroclorid,compatible
+Diphenhydramin hydroclorid,Neostigmin methylsulfat,unknown
+Diphenhydramin hydroclorid,Nicardipin hydrochlorid,compatible
+Diphenhydramin hydroclorid,Noradrenalin,unknown
+Diphenhydramin hydroclorid,Octreotide,compatible
+Diphenhydramin hydroclorid,Omeprazol,unknown
+Diphenhydramin hydroclorid,Ondansetron,compatible
+Diphenhydramin hydroclorid,Oxacilin,incompatible
+Diphenhydramin hydroclorid,Pantoprazol,incompatible
+Diphenhydramin hydroclorid,Phenobarbital,incompatible
+Diphenhydramin hydroclorid,Phytomenadion,compatible
+Diphenhydramin hydroclorid,Piperacilin + Tazobactam,compatible
+Diphenhydramin hydroclorid,Propofol,compatible
+Diphenhydramin hydroclorid,Rocuronium Bromid,compatible
+Diphenhydramin hydroclorid,Natri bicarbonat,incompatible
+Diphenhydramin hydroclorid,Natri Chlorid,unknown
+Diphenhydramin hydroclorid,Natri lactat,unknown
+Diphenhydramin hydroclorid,Sugammadex,unknown
+Diphenhydramin hydroclorid,Terbutalin sulfat,unknown
+Diphenhydramin hydroclorid,Tinidazol,unknown
+Diphenhydramin hydroclorid,Tobramycin sulfat,compatible
+Diphenhydramin hydroclorid,Vancomycin,compatible
+Diphenhydramin hydroclorid,Voriconazol,compatible
+Diphenhydramin hydroclorid,Hydrocortison,unknown
+Diphenhydramin hydroclorid,Iloprost,unknown
+Diphenhydramin hydroclorid,Imipenem + Cilasatin,compatible
+Diphenhydramin hydroclorid,Immune globulin,unknown
+Diphenhydramin hydroclorid,Insulin aspart,unknown
+Diphenhydramin hydroclorid,Iohexol,unknown
+Diphenhydramin hydroclorid,Iopromide,unknown
+Diphenhydramin hydroclorid,Ketamine,compatible
+Diphenhydramin hydroclorid,Ketorolac Tromethamol,incompatible
+Diphenhydramin hydroclorid,Levobupivacain,unknown
+Diphenhydramin hydroclorid,Levofloxacin,compatible
+Diphenhydramin hydroclorid,Lidocain hydroclorid,compatible
+Diphenhydramin hydroclorid,Linezolid,compatible
+Diphenhydramin hydroclorid,Magie Chlorid,unknown
+Diphenhydramin hydroclorid,Magie sulfat,compatible
+Diphenhydramin hydroclorid,Manitol,compatible
+Diphenhydramin hydroclorid,Meropenem,compatible
+Diphenhydramin hydroclorid,Methotrexat,compatible
+Diphenhydramin hydroclorid,Methylprednisolon,unknown
+Diphenhydramin hydroclorid,Metronidazol,compatible
+Diphenhydramin hydroclorid,Micafungin natri,unknown
+Diphenhydramin hydroclorid,Midazolam,compatible
+Diphenhydramin hydroclorid,Milrinone,incompatible
+Diphenhydramin hydroclorid,Morphin sulfat,compatible
+Diphenhydramin hydroclorid,Kali chlorid,compatible
+Dobutamine Hydrochlorid,Dopamin hydrochlorid,compatible
+Dobutamine Hydrochlorid,Enoxaparin natri,unknown
+Dobutamine Hydrochlorid,Esomeprazol,incompatible
+Dobutamine Hydrochlorid,Fentanyl,compatible
+Dobutamine Hydrochlorid,Filgrastim,unknown
+Dobutamine Hydrochlorid,Fluconazol,compatible
+Dobutamine Hydrochlorid,Fosfomycin Sodium,compatible
+Dobutamine Hydrochlorid,Furosemid,controversial
+Dobutamine Hydrochlorid,Ganciclovir,incompatible
+Dobutamine Hydrochlorid,Gentamicin,compatible
+Dobutamine Hydrochlorid,Heparin natri,controversial
+Dobutamine Hydrochlorid,Gelatin,unknown
+Dobutamine Hydrochlorid,Natri colistimethat,unknown
+Dobutamine Hydrochlorid,Recombinant Human Erythropoietin alfa,compatible
+Dobutamine Hydrochlorid,Naloxon hydroclorid,compatible
+Dobutamine Hydrochlorid,Neostigmin methylsulfat,unknown
+Dobutamine Hydrochlorid,Nicardipin hydrochlorid,compatible
+Dobutamine Hydrochlorid,Noradrenalin,unknown
+Dobutamine Hydrochlorid,Octreotide,compatible
+Dobutamine Hydrochlorid,Omeprazol,unknown
+Dobutamine Hydrochlorid,Ondansetron,compatible
+Dobutamine Hydrochlorid,Oxacilin,incompatible
+Dobutamine Hydrochlorid,Pantoprazol,incompatible
+Dobutamine Hydrochlorid,Phenobarbital,incompatible
+Dobutamine Hydrochlorid,Phytomenadion,controversial
+Dobutamine Hydrochlorid,Piperacilin + Tazobactam,incompatible
+Dobutamine Hydrochlorid,Propofol,controversial
+Dobutamine Hydrochlorid,Rocuronium Bromid,compatible
+Dobutamine Hydrochlorid,Natri bicarbonat,incompatible
+Dobutamine Hydrochlorid,Natri Chlorid,unknown
+Dobutamine Hydrochlorid,Natri lactat,unknown
+Dobutamine Hydrochlorid,Sugammadex,unknown
+Dobutamine Hydrochlorid,Terbutalin sulfat,unknown
+Dobutamine Hydrochlorid,Tinidazol,unknown
+Dobutamine Hydrochlorid,Tobramycin sulfat,compatible
+Dobutamine Hydrochlorid,Vancomycin,compatible
+Dobutamine Hydrochlorid,Voriconazol,compatible
+Dobutamine Hydrochlorid,Hydrocortison,unknown
+Dobutamine Hydrochlorid,Iloprost,unknown
+Dobutamine Hydrochlorid,Imipenem + Cilasatin,controversial
+Dobutamine Hydrochlorid,Immune globulin,unknown
+Dobutamine Hydrochlorid,Insulin aspart,compatible
+Dobutamine Hydrochlorid,Iohexol,unknown
+Dobutamine Hydrochlorid,Iopromide,unknown
+Dobutamine Hydrochlorid,Ketamine,compatible
+Dobutamine Hydrochlorid,Ketorolac Tromethamol,incompatible
+Dobutamine Hydrochlorid,Levobupivacain,unknown
+Dobutamine Hydrochlorid,Levofloxacin,compatible
+Dobutamine Hydrochlorid,Lidocain hydroclorid,compatible
+Dobutamine Hydrochlorid,Linezolid,compatible
+Dobutamine Hydrochlorid,Magie Chlorid,unknown
+Dobutamine Hydrochlorid,Magie sulfat,compatible
+Dobutamine Hydrochlorid,Manitol,compatible
+Dobutamine Hydrochlorid,Meropenem,incompatible
+Dobutamine Hydrochlorid,Methotrexat,incompatible
+Dobutamine Hydrochlorid,Methylprednisolon,unknown
+Dobutamine Hydrochlorid,Metronidazol,compatible
+Dobutamine Hydrochlorid,Micafungin natri,incompatible
+Dobutamine Hydrochlorid,Midazolam,controversial
+Dobutamine Hydrochlorid,Milrinone,compatible
+Dobutamine Hydrochlorid,Morphin sulfat,compatible
+Dobutamine Hydrochlorid,Kali chlorid,compatible
+Dopamin hydrochlorid,Enoxaparin natri,unknown
+Dopamin hydrochlorid,Esomeprazol,incompatible
+Dopamin hydrochlorid,Fentanyl,compatible
+Dopamin hydrochlorid,Filgrastim,unknown
+Dopamin hydrochlorid,Fluconazol,compatible
+Dopamin hydrochlorid,Fosfomycin Sodium,controversial
+Dopamin hydrochlorid,Furosemid,controversial
+Dopamin hydrochlorid,Ganciclovir,incompatible
+Dopamin hydrochlorid,Gentamicin,compatible
+Dopamin hydrochlorid,Heparin natri,compatible
+Dopamin hydrochlorid,Gelatin,unknown
+Dopamin hydrochlorid,Natri colistimethat,unknown
+Dopamin hydrochlorid,Recombinant Human Erythropoietin alfa,compatible
+Dopamin hydrochlorid,Naloxon hydroclorid,compatible
+Dopamin hydrochlorid,Neostigmin methylsulfat,unknown
+Dopamin hydrochlorid,Nicardipin hydrochlorid,compatible
+Dopamin hydrochlorid,Noradrenalin,unknown
+Dopamin hydrochlorid,Octreotide,compatible
+Dopamin hydrochlorid,Omeprazol,unknown
+Dopamin hydrochlorid,Ondansetron,compatible
+Dopamin hydrochlorid,Oxacilin,compatible
+Dopamin hydrochlorid,Pantoprazol,controversial
+Dopamin hydrochlorid,Phenobarbital,compatible
+Dopamin hydrochlorid,Phytomenadion,compatible
+Dopamin hydrochlorid,Piperacilin + Tazobactam,compatible
+Dopamin hydrochlorid,Propofol,controversial
+Dopamin hydrochlorid,Rocuronium Bromid,compatible
+Dopamin hydrochlorid,Natri bicarbonat,incompatible
+Dopamin hydrochlorid,Natri Chlorid,unknown
+Dopamin hydrochlorid,Natri lactat,unknown
+Dopamin hydrochlorid,Sugammadex,unknown
+Dopamin hydrochlorid,Terbutalin sulfat,unknown
+Dopamin hydrochlorid,Tinidazol,unknown
+Dopamin hydrochlorid,Tobramycin sulfat,compatible
+Dopamin hydrochlorid,Vancomycin,compatible
+Dopamin hydrochlorid,Voriconazol,compatible
+Dopamin hydrochlorid,Hydrocortison,unknown
+Dopamin hydrochlorid,Iloprost,unknown
+Dopamin hydrochlorid,Imipenem + Cilasatin,compatible
+Dopamin hydrochlorid,Immune globulin,unknown
+Dopamin hydrochlorid,Insulin aspart,compatible
+Dopamin hydrochlorid,Iohexol,unknown
+Dopamin hydrochlorid,Iopromide,unknown
+Dopamin hydrochlorid,Ketamine,compatible
+Dopamin hydrochlorid,Ketorolac Tromethamol,compatible
+Dopamin hydrochlorid,Levobupivacain,unknown
+Dopamin hydrochlorid,Levofloxacin,compatible
+Dopamin hydrochlorid,Lidocain hydroclorid,compatible
+Dopamin hydrochlorid,Linezolid,compatible
+Dopamin hydrochlorid,Magie Chlorid,unknown
+Dopamin hydrochlorid,Magie sulfat,compatible
+Dopamin hydrochlorid,Manitol,compatible
+Dopamin hydrochlorid,Meropenem,compatible
+Dopamin hydrochlorid,Methotrexat,incompatible
+Dopamin hydrochlorid,Methylprednisolon,unknown
+Dopamin hydrochlorid,Metronidazol,compatible
+Dopamin hydrochlorid,Micafungin natri,compatible
+Dopamin hydrochlorid,Midazolam,compatible
+Dopamin hydrochlorid,Milrinone,compatible
+Dopamin hydrochlorid,Morphin sulfat,compatible
+Dopamin hydrochlorid,Kali chlorid,compatible
+Enoxaparin natri,Esomeprazol,unknown
+Enoxaparin natri,Fentanyl,unknown
+Enoxaparin natri,Filgrastim,unknown
+Enoxaparin natri,Fluconazol,unknown
+Enoxaparin natri,Fosfomycin Sodium,unknown
+Enoxaparin natri,Furosemid,unknown
+Enoxaparin natri,Ganciclovir,unknown
+Enoxaparin natri,Gentamicin,unknown
+Enoxaparin natri,Heparin natri,unknown
+Enoxaparin natri,Gelatin,unknown
+Enoxaparin natri,Natri colistimethat,unknown
+Enoxaparin natri,Recombinant Human Erythropoietin alfa,unknown
+Enoxaparin natri,Naloxon hydroclorid,unknown
+Enoxaparin natri,Neostigmin methylsulfat,unknown
+Enoxaparin natri,Nicardipin hydrochlorid,unknown
+Enoxaparin natri,Noradrenalin,unknown
+Enoxaparin natri,Octreotide,unknown
+Enoxaparin natri,Omeprazol,unknown
+Enoxaparin natri,Ondansetron,unknown
+Enoxaparin natri,Oxacilin,unknown
+Enoxaparin natri,Pantoprazol,unknown
+Enoxaparin natri,Phenobarbital,unknown
+Enoxaparin natri,Phytomenadion,unknown
+Enoxaparin natri,Piperacilin + Tazobactam,unknown
+Enoxaparin natri,Propofol,unknown
+Enoxaparin natri,Rocuronium Bromid,unknown
+Enoxaparin natri,Natri bicarbonat,unknown
+Enoxaparin natri,Natri Chlorid,unknown
+Enoxaparin natri,Natri lactat,unknown
+Enoxaparin natri,Sugammadex,unknown
+Enoxaparin natri,Terbutalin sulfat,unknown
+Enoxaparin natri,Tinidazol,unknown
+Enoxaparin natri,Tobramycin sulfat,unknown
+Enoxaparin natri,Vancomycin,unknown
+Enoxaparin natri,Voriconazol,unknown
+Enoxaparin natri,Hydrocortison,unknown
+Enoxaparin natri,Iloprost,unknown
+Enoxaparin natri,Imipenem + Cilasatin,unknown
+Enoxaparin natri,Immune globulin,unknown
+Enoxaparin natri,Insulin aspart,unknown
+Enoxaparin natri,Iohexol,unknown
+Enoxaparin natri,Iopromide,unknown
+Enoxaparin natri,Ketamine,unknown
+Enoxaparin natri,Ketorolac Tromethamol,unknown
+Enoxaparin natri,Levobupivacain,unknown
+Enoxaparin natri,Levofloxacin,unknown
+Enoxaparin natri,Lidocain hydroclorid,unknown
+Enoxaparin natri,Linezolid,unknown
+Enoxaparin natri,Magie Chlorid,unknown
+Enoxaparin natri,Magie sulfat,unknown
+Enoxaparin natri,Manitol,unknown
+Enoxaparin natri,Meropenem,unknown
+Enoxaparin natri,Methotrexat,unknown
+Enoxaparin natri,Methylprednisolon,unknown
+Enoxaparin natri,Metronidazol,unknown
+Enoxaparin natri,Micafungin natri,unknown
+Enoxaparin natri,Midazolam,unknown
+Enoxaparin natri,Milrinone,unknown
+Enoxaparin natri,Morphin sulfat,unknown
+Enoxaparin natri,Kali chlorid,unknown
+Esomeprazol,Fentanyl,compatible
+Esomeprazol,Filgrastim,unknown
+Esomeprazol,Fluconazol,unknown
+Esomeprazol,Fosfomycin Sodium,controversial
+Esomeprazol,Furosemid,compatible
+Esomeprazol,Ganciclovir,unknown
+Esomeprazol,Gentamicin,unknown
+Esomeprazol,Heparin natri,unknown
+Esomeprazol,Gelatin,unknown
+Esomeprazol,Natri colistimethat,unknown
+Esomeprazol,Recombinant Human Erythropoietin alfa,unknown
+Esomeprazol,Naloxon hydroclorid,unknown
+Esomeprazol,Neostigmin methylsulfat,unknown
+Esomeprazol,Nicardipin hydrochlorid,unknown
+Esomeprazol,Noradrenalin,unknown
+Esomeprazol,Octreotide,unknown
+Esomeprazol,Omeprazol,unknown
+Esomeprazol,Ondansetron,unknown
+Esomeprazol,Oxacilin,unknown
+Esomeprazol,Pantoprazol,unknown
+Esomeprazol,Phenobarbital,unknown
+Esomeprazol,Phytomenadion,unknown
+Esomeprazol,Piperacilin + Tazobactam,unknown
+Esomeprazol,Propofol,unknown
+Esomeprazol,Rocuronium Bromid,unknown
+Esomeprazol,Natri bicarbonat,unknown
+Esomeprazol,Natri Chlorid,unknown
+Esomeprazol,Natri lactat,unknown
+Esomeprazol,Sugammadex,unknown
+Esomeprazol,Terbutalin sulfat,unknown
+Esomeprazol,Tinidazol,unknown
+Esomeprazol,Tobramycin sulfat,unknown
+Esomeprazol,Vancomycin,unknown
+Esomeprazol,Voriconazol,unknown
+Esomeprazol,Hydrocortison,compatible
+Esomeprazol,Iloprost,unknown
+Esomeprazol,Imipenem + Cilasatin,unknown
+Esomeprazol,Immune globulin,unknown
+Esomeprazol,Insulin aspart,compatible
+Esomeprazol,Iohexol,unknown
+Esomeprazol,Iopromide,unknown
+Esomeprazol,Ketamine,unknown
+Esomeprazol,Ketorolac Tromethamol,unknown
+Esomeprazol,Levobupivacain,unknown
+Esomeprazol,Levofloxacin,unknown
+Esomeprazol,Lidocain hydroclorid,unknown
+Esomeprazol,Linezolid,unknown
+Esomeprazol,Magie Chlorid,unknown
+Esomeprazol,Magie sulfat,unknown
+Esomeprazol,Manitol,unknown
+Esomeprazol,Meropenem,unknown
+Esomeprazol,Methotrexat,unknown
+Esomeprazol,Methylprednisolon,unknown
+Esomeprazol,Metronidazol,unknown
+Esomeprazol,Micafungin natri,unknown
+Esomeprazol,Midazolam,incompatible
+Esomeprazol,Milrinone,unknown
+Esomeprazol,Morphin sulfat,unknown
+Esomeprazol,Kali chlorid,unknown
+Fentanyl,Filgrastim,unknown
+Fentanyl,Fluconazol,compatible
+Fentanyl,Fosfomycin Sodium,compatible
+Fentanyl,Furosemid,compatible
+Fentanyl,Ganciclovir,compatible
+Fentanyl,Gentamicin,compatible
+Fentanyl,Heparin natri,compatible
+Fentanyl,Gelatin,unknown
+Fentanyl,Natri colistimethat,unknown
+Fentanyl,Recombinant Human Erythropoietin alfa,compatible
+Fentanyl,Naloxon hydroclorid,compatible
+Fentanyl,Neostigmin methylsulfat,unknown
+Fentanyl,Nicardipin hydrochlorid,compatible
+Fentanyl,Noradrenalin,unknown
+Fentanyl,Octreotide,compatible
+Fentanyl,Omeprazol,unknown
+Fentanyl,Ondansetron,compatible
+Fentanyl,Oxacilin,compatible
+Fentanyl,Pantoprazol,incompatible
+Fentanyl,Phenobarbital,compatible
+Fentanyl,Phytomenadion,compatible
+Fentanyl,Piperacilin + Tazobactam,compatible
+Fentanyl,Propofol,compatible
+Fentanyl,Rocuronium Bromid,compatible
+Fentanyl,Natri bicarbonat,compatible
+Fentanyl,Natri Chlorid,unknown
+Fentanyl,Natri lactat,unknown
+Fentanyl,Sugammadex,unknown
+Fentanyl,Terbutalin sulfat,unknown
+Fentanyl,Tinidazol,unknown
+Fentanyl,Tobramycin sulfat,compatible
+Fentanyl,Vancomycin,compatible
+Fentanyl,Voriconazol,compatible
+Fentanyl,Hydrocortison,unknown
+Fentanyl,Iloprost,unknown
+Fentanyl,Imipenem + Cilasatin,compatible
+Fentanyl,Immune globulin,unknown
+Fentanyl,Insulin aspart,compatible
+Fentanyl,Iohexol,unknown
+Fentanyl,Iopromide,unknown
+Fentanyl,Ketamine,unknown
+Fentanyl,Ketorolac Tromethamol,compatible
+Fentanyl,Levobupivacain,unknown
+Fentanyl,Levofloxacin,compatible
+Fentanyl,Lidocain hydroclorid,compatible
+Fentanyl,Linezolid,compatible
+Fentanyl,Magie Chlorid,unknown
+Fentanyl,Magie sulfat,compatible
+Fentanyl,Manitol,compatible
+Fentanyl,Meropenem,compatible
+Fentanyl,Methotrexat,compatible
+Fentanyl,Methylprednisolon,unknown
+Fentanyl,Metronidazol,compatible
+Fentanyl,Micafungin natri,unknown
+Fentanyl,Midazolam,compatible
+Fentanyl,Milrinone,compatible
+Fentanyl,Morphin sulfat,compatible
+Fentanyl,Kali chlorid,compatible
+Filgrastim,Fluconazol,compatible
+Filgrastim,Fosfomycin Sodium,compatible
+Filgrastim,Furosemid,incompatible
+Filgrastim,Ganciclovir,compatible
+Filgrastim,Gentamicin,controversial
+Filgrastim,Heparin natri,incompatible
+Filgrastim,Gelatin,unknown
+Filgrastim,Natri colistimethat,unknown
+Filgrastim,Recombinant Human Erythropoietin alfa,unknown
+Filgrastim,Naloxon hydroclorid,unknown
+Filgrastim,Neostigmin methylsulfat,unknown
+Filgrastim,Nicardipin hydrochlorid,unknown
+Filgrastim,Noradrenalin,unknown
+Filgrastim,Octreotide,unknown
+Filgrastim,Omeprazol,unknown
+Filgrastim,Ondansetron,compatible
+Filgrastim,Oxacilin,unknown
+Filgrastim,Pantoprazol,unknown
+Filgrastim,Phenobarbital,unknown
+Filgrastim,Phytomenadion,unknown
+Filgrastim,Piperacilin + Tazobactam,unknown
+Filgrastim,Propofol,unknown
+Filgrastim,Rocuronium Bromid,unknown
+Filgrastim,Natri bicarbonat,compatible
+Filgrastim,Natri Chlorid,unknown
+Filgrastim,Natri lactat,unknown
+Filgrastim,Sugammadex,unknown
+Filgrastim,Terbutalin sulfat,unknown
+Filgrastim,Tinidazol,unknown
+Filgrastim,Tobramycin sulfat,compatible
+Filgrastim,Vancomycin,compatible
+Filgrastim,Voriconazol,unknown
+Filgrastim,Hydrocortison,unknown
+Filgrastim,Iloprost,unknown
+Filgrastim,Imipenem + Cilasatin,controversial
+Filgrastim,Immune globulin,unknown
+Filgrastim,Insulin aspart,unknown
+Filgrastim,Iohexol,unknown
+Filgrastim,Iopromide,unknown
+Filgrastim,Ketamine,unknown
+Filgrastim,Ketorolac Tromethamol,unknown
+Filgrastim,Levobupivacain,unknown
+Filgrastim,Levofloxacin,compatible
+Filgrastim,Lidocain hydroclorid,unknown
+Filgrastim,Linezolid,unknown
+Filgrastim,Magie Chlorid,unknown
+Filgrastim,Magie sulfat,unknown
+Filgrastim,Manitol,incompatible
+Filgrastim,Meropenem,unknown
+Filgrastim,Methotrexat,compatible
+Filgrastim,Methylprednisolon,unknown
+Filgrastim,Metronidazol,incompatible
+Filgrastim,Micafungin natri,unknown
+Filgrastim,Midazolam,unknown
+Filgrastim,Milrinone,unknown
+Filgrastim,Morphin sulfat,compatible
+Filgrastim,Kali chlorid,compatible
+Fluconazol,Fosfomycin Sodium,unknown
+Fluconazol,Furosemid,controversial
+Fluconazol,Ganciclovir,compatible
+Fluconazol,Gentamicin,compatible
+Fluconazol,Heparin natri,compatible
+Fluconazol,Gelatin,unknown
+Fluconazol,Natri colistimethat,unknown
+Fluconazol,Recombinant Human Erythropoietin alfa,compatible
+Fluconazol,Naloxon hydroclorid,compatible
+Fluconazol,Neostigmin methylsulfat,unknown
+Fluconazol,Nicardipin hydrochlorid,compatible
+Fluconazol,Noradrenalin,unknown
+Fluconazol,Octreotide,compatible
+Fluconazol,Omeprazol,unknown
+Fluconazol,Ondansetron,compatible
+Fluconazol,Oxacilin,compatible
+Fluconazol,Pantoprazol,incompatible
+Fluconazol,Phenobarbital,compatible
+Fluconazol,Phytomenadion,compatible
+Fluconazol,Piperacilin + Tazobactam,compatible
+Fluconazol,Propofol,compatible
+Fluconazol,Rocuronium Bromid,compatible
+Fluconazol,Natri bicarbonat,compatible
+Fluconazol,Natri Chlorid,unknown
+Fluconazol,Natri lactat,unknown
+Fluconazol,Sugammadex,unknown
+Fluconazol,Terbutalin sulfat,unknown
+Fluconazol,Tinidazol,unknown
+Fluconazol,Tobramycin sulfat,compatible
+Fluconazol,Vancomycin,compatible
+Fluconazol,Voriconazol,compatible
+Fluconazol,Hydrocortison,unknown
+Fluconazol,Iloprost,unknown
+Fluconazol,Imipenem + Cilasatin,controversial
+Fluconazol,Immune globulin,compatible
+Fluconazol,Insulin aspart,unknown
+Fluconazol,Iohexol,unknown
+Fluconazol,Iopromide,unknown
+Fluconazol,Ketamine,unknown
+Fluconazol,Ketorolac Tromethamol,compatible
+Fluconazol,Levobupivacain,unknown
+Fluconazol,Levofloxacin,compatible
+Fluconazol,Lidocain hydroclorid,compatible
+Fluconazol,Linezolid,compatible
+Fluconazol,Magie Chlorid,unknown
+Fluconazol,Magie sulfat,compatible
+Fluconazol,Manitol,compatible
+Fluconazol,Meropenem,compatible
+Fluconazol,Methotrexat,compatible
+Fluconazol,Methylprednisolon,unknown
+Fluconazol,Metronidazol,compatible
+Fluconazol,Micafungin natri,unknown
+Fluconazol,Midazolam,compatible
+Fluconazol,Milrinone,compatible
+Fluconazol,Morphin sulfat,compatible
+Fluconazol,Kali chlorid,compatible
+Fosfomycin Sodium,Furosemid,compatible
+Fosfomycin Sodium,Ganciclovir,unknown
+Fosfomycin Sodium,Gentamicin,compatible
+Fosfomycin Sodium,Heparin natri,compatible
+Fosfomycin Sodium,Gelatin,unknown
+Fosfomycin Sodium,Natri colistimethat,compatible
+Fosfomycin Sodium,Recombinant Human Erythropoietin alfa,unknown
+Fosfomycin Sodium,Naloxon hydroclorid,compatible
+Fosfomycin Sodium,Neostigmin methylsulfat,unknown
+Fosfomycin Sodium,Nicardipin hydrochlorid,incompatible
+Fosfomycin Sodium,Noradrenalin,unknown
+Fosfomycin Sodium,Octreotide,compatible
+Fosfomycin Sodium,Omeprazol,unknown
+Fosfomycin Sodium,Ondansetron,incompatible
+Fosfomycin Sodium,Oxacilin,unknown
+Fosfomycin Sodium,Pantoprazol,compatible
+Fosfomycin Sodium,Phenobarbital,unknown
+Fosfomycin Sodium,Phytomenadion,unknown
+Fosfomycin Sodium,Piperacilin + Tazobactam,compatible
+Fosfomycin Sodium,Propofol,incompatible
+Fosfomycin Sodium,Rocuronium Bromid,compatible
+Fosfomycin Sodium,Natri bicarbonat,compatible
+Fosfomycin Sodium,Natri Chlorid,unknown
+Fosfomycin Sodium,Natri lactat,unknown
+Fosfomycin Sodium,Sugammadex,unknown
+Fosfomycin Sodium,Terbutalin sulfat,unknown
+Fosfomycin Sodium,Tinidazol,unknown
+Fosfomycin Sodium,Tobramycin sulfat,compatible
+Fosfomycin Sodium,Vancomycin,compatible
+Fosfomycin Sodium,Voriconazol,unknown
+Fosfomycin Sodium,Hydrocortison,unknown
+Fosfomycin Sodium,Iloprost,unknown
+Fosfomycin Sodium,Imipenem + Cilasatin,compatible
+Fosfomycin Sodium,Immune globulin,unknown
+Fosfomycin Sodium,Insulin aspart,unknown
+Fosfomycin Sodium,Iohexol,unknown
+Fosfomycin Sodium,Iopromide,unknown
+Fosfomycin Sodium,Ketamine,unknown
+Fosfomycin Sodium,Ketorolac Tromethamol,unknown
+Fosfomycin Sodium,Levobupivacain,unknown
+Fosfomycin Sodium,Levofloxacin,compatible
+Fosfomycin Sodium,Lidocain hydroclorid,compatible
+Fosfomycin Sodium,Linezolid,compatible
+Fosfomycin Sodium,Magie Chlorid,unknown
+Fosfomycin Sodium,Magie sulfat,compatible
+Fosfomycin Sodium,Manitol,compatible
+Fosfomycin Sodium,Meropenem,compatible
+Fosfomycin Sodium,Methotrexat,unknown
+Fosfomycin Sodium,Methylprednisolon,unknown
+Fosfomycin Sodium,Metronidazol,unknown
+Fosfomycin Sodium,Micafungin natri,compatible
+Fosfomycin Sodium,Midazolam,incompatible
+Fosfomycin Sodium,Milrinone,compatible
+Fosfomycin Sodium,Morphin sulfat,compatible
+Fosfomycin Sodium,Kali chlorid,compatible
+Furosemid,Ganciclovir,compatible
+Furosemid,Gentamicin,controversial
+Furosemid,Heparin natri,compatible
+Furosemid,Gelatin,unknown
+Furosemid,Natri colistimethat,compatible
+Furosemid,Recombinant Human Erythropoietin alfa,compatible
+Furosemid,Naloxon hydroclorid,compatible
+Furosemid,Neostigmin methylsulfat,unknown
+Furosemid,Nicardipin hydrochlorid,incompatible
+Furosemid,Noradrenalin,unknown
+Furosemid,Octreotide,compatible
+Furosemid,Omeprazol,unknown
+Furosemid,Ondansetron,incompatible
+Furosemid,Oxacilin,compatible
+Furosemid,Pantoprazol,controversial
+Furosemid,Phenobarbital,compatible
+Furosemid,Phytomenadion,compatible
+Furosemid,Piperacilin + Tazobactam,compatible
+Furosemid,Propofol,compatible
+Furosemid,Rocuronium Bromid,incompatible
+Furosemid,Natri bicarbonat,compatible
+Furosemid,Natri Chlorid,unknown
+Furosemid,Natri lactat,unknown
+Furosemid,Sugammadex,unknown
+Furosemid,Terbutalin sulfat,unknown
+Furosemid,Tinidazol,unknown
+Furosemid,Tobramycin sulfat,compatible
+Furosemid,Vancomycin,incompatible
+Furosemid,Voriconazol,compatible
+Furosemid,Hydrocortison,unknown
+Furosemid,Iloprost,unknown
+Furosemid,Imipenem + Cilasatin,compatible
+Furosemid,Immune globulin,unknown
+Furosemid,Insulin aspart,compatible
+Furosemid,Iohexol,unknown
+Furosemid,Iopromide,unknown
+Furosemid,Ketamine,incompatible
+Furosemid,Ketorolac Tromethamol,compatible
+Furosemid,Levobupivacain,unknown
+Furosemid,Levofloxacin,incompatible
+Furosemid,Lidocain hydroclorid,compatible
+Furosemid,Linezolid,compatible
+Furosemid,Magie Chlorid,unknown
+Furosemid,Magie sulfat,controversial
+Furosemid,Manitol,compatible
+Furosemid,Meropenem,compatible
+Furosemid,Methotrexat,compatible
+Furosemid,Methylprednisolon,unknown
+Furosemid,Metronidazol,compatible
+Furosemid,Micafungin natri,compatible
+Furosemid,Midazolam,controversial
+Furosemid,Milrinone,incompatible
+Furosemid,Morphin sulfat,controversial
+Furosemid,Kali chlorid,compatible
+Ganciclovir,Gentamicin,incompatible
+Ganciclovir,Heparin natri,compatible
+Ganciclovir,Gelatin,unknown
+Ganciclovir,Natri colistimethat,unknown
+Ganciclovir,Recombinant Human Erythropoietin alfa,compatible
+Ganciclovir,Naloxon hydroclorid,compatible
+Ganciclovir,Neostigmin methylsulfat,unknown
+Ganciclovir,Nicardipin hydrochlorid,incompatible
+Ganciclovir,Noradrenalin,unknown
+Ganciclovir,Octreotide,compatible
+Ganciclovir,Omeprazol,unknown
+Ganciclovir,Ondansetron,incompatible
+Ganciclovir,Oxacilin,incompatible
+Ganciclovir,Pantoprazol,compatible
+Ganciclovir,Phenobarbital,compatible
+Ganciclovir,Phytomenadion,compatible
+Ganciclovir,Piperacilin + Tazobactam,incompatible
+Ganciclovir,Propofol,controversial
+Ganciclovir,Rocuronium Bromid,compatible
+Ganciclovir,Natri bicarbonat,incompatible
+Ganciclovir,Natri Chlorid,unknown
+Ganciclovir,Natri lactat,unknown
+Ganciclovir,Sugammadex,unknown
+Ganciclovir,Terbutalin sulfat,unknown
+Ganciclovir,Tinidazol,unknown
+Ganciclovir,Tobramycin sulfat,incompatible
+Ganciclovir,Vancomycin,incompatible
+Ganciclovir,Voriconazol,compatible
+Ganciclovir,Hydrocortison,unknown
+Ganciclovir,Iloprost,unknown
+Ganciclovir,Imipenem + Cilasatin,incompatible
+Ganciclovir,Immune globulin,unknown
+Ganciclovir,Insulin aspart,unknown
+Ganciclovir,Iohexol,unknown
+Ganciclovir,Iopromide,unknown
+Ganciclovir,Ketamine,unknown
+Ganciclovir,Ketorolac Tromethamol,incompatible
+Ganciclovir,Levobupivacain,unknown
+Ganciclovir,Levofloxacin,incompatible
+Ganciclovir,Lidocain hydroclorid,incompatible
+Ganciclovir,Linezolid,compatible
+Ganciclovir,Magie Chlorid,unknown
+Ganciclovir,Magie sulfat,incompatible
+Ganciclovir,Manitol,compatible
+Ganciclovir,Meropenem,unknown
+Ganciclovir,Methotrexat,compatible
+Ganciclovir,Methylprednisolon,unknown
+Ganciclovir,Metronidazol,incompatible
+Ganciclovir,Micafungin natri,unknown
+Ganciclovir,Midazolam,incompatible
+Ganciclovir,Milrinone,compatible
+Ganciclovir,Morphin sulfat,incompatible
+Ganciclovir,Kali chlorid,compatible
+Gelatin,Gentamicin,unknown
+Gelatin,Heparin natri,unknown
+Gelatin,Natri colistimethat,unknown
+Gelatin,Recombinant Human Erythropoietin alfa,unknown
+Gelatin,Naloxon hydroclorid,unknown
+Gelatin,Neostigmin methylsulfat,unknown
+Gelatin,Nicardipin hydrochlorid,unknown
+Gelatin,Noradrenalin,unknown
+Gelatin,Octreotide,unknown
+Gelatin,Omeprazol,unknown
+Gelatin,Ondansetron,unknown
+Gelatin,Oxacilin,unknown
+Gelatin,Pantoprazol,unknown
+Gelatin,Phenobarbital,unknown
+Gelatin,Phytomenadion,unknown
+Gelatin,Piperacilin + Tazobactam,unknown
+Gelatin,Propofol,unknown
+Gelatin,Rocuronium Bromid,unknown
+Gelatin,Natri bicarbonat,unknown
+Gelatin,Natri Chlorid,unknown
+Gelatin,Natri lactat,unknown
+Gelatin,Sugammadex,unknown
+Gelatin,Terbutalin sulfat,unknown
+Gelatin,Tinidazol,unknown
+Gelatin,Tobramycin sulfat,unknown
+Gelatin,Vancomycin,unknown
+Gelatin,Voriconazol,unknown
+Gelatin,Hydrocortison,unknown
+Gelatin,Iloprost,unknown
+Gelatin,Imipenem + Cilasatin,unknown
+Gelatin,Immune globulin,unknown
+Gelatin,Insulin aspart,unknown
+Gelatin,Iohexol,unknown
+Gelatin,Iopromide,unknown
+Gelatin,Ketamine,unknown
+Gelatin,Ketorolac Tromethamol,unknown
+Gelatin,Levobupivacain,unknown
+Gelatin,Levofloxacin,unknown
+Gelatin,Lidocain hydroclorid,unknown
+Gelatin,Linezolid,unknown
+Gelatin,Magie Chlorid,unknown
+Gelatin,Magie sulfat,unknown
+Gelatin,Manitol,unknown
+Gelatin,Meropenem,unknown
+Gelatin,Methotrexat,unknown
+Gelatin,Methylprednisolon,unknown
+Gelatin,Metronidazol,unknown
+Gelatin,Micafungin natri,unknown
+Gelatin,Midazolam,unknown
+Gelatin,Milrinone,unknown
+Gelatin,Morphin sulfat,unknown
+Gelatin,Kali chlorid,unknown
+Gentamicin,Heparin natri,controversial
+Gentamicin,Natri colistimethat,compatible
+Gentamicin,Recombinant Human Erythropoietin alfa,compatible
+Gentamicin,Naloxon hydroclorid,compatible
+Gentamicin,Neostigmin methylsulfat,unknown
+Gentamicin,Nicardipin hydrochlorid,compatible
+Gentamicin,Noradrenalin,unknown
+Gentamicin,Octreotide,compatible
+Gentamicin,Omeprazol,unknown
+Gentamicin,Ondansetron,compatible
+Gentamicin,Oxacilin,incompatible
+Gentamicin,Pantoprazol,controversial
+Gentamicin,Phenobarbital,compatible
+Gentamicin,Phytomenadion,compatible
+Gentamicin,Piperacilin + Tazobactam,controversial
+Gentamicin,Propofol,incompatible
+Gentamicin,Rocuronium Bromid,compatible
+Gentamicin,Natri bicarbonat,compatible
+Gentamicin,Natri Chlorid,unknown
+Gentamicin,Natri lactat,unknown
+Gentamicin,Sugammadex,unknown
+Gentamicin,Terbutalin sulfat,unknown
+Gentamicin,Tinidazol,unknown
+Gentamicin,Tobramycin sulfat,compatible
+Gentamicin,Vancomycin,compatible
+Gentamicin,Voriconazol,compatible
+Gentamicin,Hydrocortison,unknown
+Gentamicin,Iloprost,unknown
+Gentamicin,Imipenem + Cilasatin,compatible
+Gentamicin,Immune globulin,unknown
+Gentamicin,Insulin aspart,unknown
+Gentamicin,Iohexol,unknown
+Gentamicin,Iopromide,unknown
+Gentamicin,Ketamine,compatible
+Gentamicin,Ketorolac Tromethamol,compatible
+Gentamicin,Levobupivacain,unknown
+Gentamicin,Levofloxacin,compatible
+Gentamicin,Lidocain hydroclorid,compatible
+Gentamicin,Linezolid,compatible
+Gentamicin,Magie Chlorid,unknown
+Gentamicin,Magie sulfat,compatible
+Gentamicin,Manitol,compatible
+Gentamicin,Meropenem,compatible
+Gentamicin,Methotrexat,incompatible
+Gentamicin,Methylprednisolon,unknown
+Gentamicin,Metronidazol,compatible
+Gentamicin,Micafungin natri,unknown
+Gentamicin,Midazolam,compatible
+Gentamicin,Milrinone,compatible
+Gentamicin,Morphin sulfat,compatible
+Gentamicin,Kali chlorid,compatible
+Heparin natri,Natri colistimethat,compatible
+Heparin natri,Recombinant Human Erythropoietin alfa,compatible
+Heparin natri,Naloxon hydroclorid,compatible
+Heparin natri,Neostigmin methylsulfat,unknown
+Heparin natri,Nicardipin hydrochlorid,controversial
+Heparin natri,Noradrenalin,unknown
+Heparin natri,Octreotide,compatible
+Heparin natri,Omeprazol,unknown
+Heparin natri,Ondansetron,compatible
+Heparin natri,Oxacilin,compatible
+Heparin natri,Pantoprazol,controversial
+Heparin natri,Phenobarbital,compatible
+Heparin natri,Phytomenadion,compatible
+Heparin natri,Piperacilin + Tazobactam,compatible
+Heparin natri,Propofol,compatible
+Heparin natri,Rocuronium Bromid,compatible
+Heparin natri,Natri bicarbonat,compatible
+Heparin natri,Natri Chlorid,unknown
+Heparin natri,Natri lactat,unknown
+Heparin natri,Sugammadex,unknown
+Heparin natri,Terbutalin sulfat,unknown
+Heparin natri,Tinidazol,unknown
+Heparin natri,Tobramycin sulfat,controversial
+Heparin natri,Vancomycin,controversial
+Heparin natri,Voriconazol,compatible
+Heparin natri,Hydrocortison,unknown
+Heparin natri,Iloprost,unknown
+Heparin natri,Imipenem + Cilasatin,compatible
+Heparin natri,Immune globulin,unknown
+Heparin natri,Insulin aspart,compatible
+Heparin natri,Iohexol,unknown
+Heparin natri,Iopromide,unknown
+Heparin natri,Ketamine,incompatible
+Heparin natri,Ketorolac Tromethamol,compatible
+Heparin natri,Levobupivacain,unknown
+Heparin natri,Levofloxacin,incompatible
+Heparin natri,Lidocain hydroclorid,compatible
+Heparin natri,Linezolid,compatible
+Heparin natri,Magie Chlorid,unknown
+Heparin natri,Magie sulfat,compatible
+Heparin natri,Manitol,compatible
+Heparin natri,Meropenem,compatible
+Heparin natri,Methotrexat,compatible
+Heparin natri,Methylprednisolon,unknown
+Heparin natri,Metronidazol,compatible
+Heparin natri,Micafungin natri,compatible
+Heparin natri,Midazolam,compatible
+Heparin natri,Milrinone,compatible
+Heparin natri,Morphin sulfat,compatible
+Heparin natri,Kali chlorid,compatible
+Hydrocortison,Iloprost,unknown
+Hydrocortison,Imipenem + Cilasatin,unknown
+Hydrocortison,Immune globulin,unknown
+Hydrocortison,Insulin aspart,unknown
+Hydrocortison,Iohexol,unknown
+Hydrocortison,Iopromide,unknown
+Hydrocortison,Ketamine,unknown
+Hydrocortison,Ketorolac Tromethamol,unknown
+Hydrocortison,Levobupivacain,unknown
+Hydrocortison,Levofloxacin,compatible
+Hydrocortison,Lidocain hydroclorid,unknown
+Hydrocortison,Linezolid,unknown
+Hydrocortison,Magie Chlorid,unknown
+Hydrocortison,Magie sulfat,unknown
+Hydrocortison,Manitol,unknown
+Hydrocortison,Meropenem,compatible
+Hydrocortison,Methotrexat,unknown
+Hydrocortison,Methylprednisolon,unknown
+Hydrocortison,Metronidazol,unknown
+Hydrocortison,Micafungin natri,unknown
+Hydrocortison,Midazolam,unknown
+Hydrocortison,Milrinone,unknown
+Hydrocortison,Morphin sulfat,unknown
+Hydrocortison,Kali chlorid,unknown
+Hydrocortison,Natri colistimethat,unknown
+Hydrocortison,Recombinant Human Erythropoietin alfa,unknown
+Hydrocortison,Naloxon hydroclorid,unknown
+Hydrocortison,Neostigmin methylsulfat,unknown
+Hydrocortison,Nicardipin hydrochlorid,unknown
+Hydrocortison,Noradrenalin,unknown
+Hydrocortison,Octreotide,unknown
+Hydrocortison,Omeprazol,unknown
+Hydrocortison,Ondansetron,unknown
+Hydrocortison,Oxacilin,unknown
+Hydrocortison,Pantoprazol,unknown
+Hydrocortison,Phenobarbital,unknown
+Hydrocortison,Phytomenadion,unknown
+Hydrocortison,Piperacilin + Tazobactam,unknown
+Hydrocortison,Propofol,unknown
+Hydrocortison,Rocuronium Bromid,unknown
+Hydrocortison,Natri bicarbonat,unknown
+Hydrocortison,Natri Chlorid,unknown
+Hydrocortison,Natri lactat,unknown
+Hydrocortison,Sugammadex,unknown
+Hydrocortison,Terbutalin sulfat,unknown
+Hydrocortison,Tinidazol,unknown
+Hydrocortison,Tobramycin sulfat,unknown
+Hydrocortison,Vancomycin,unknown
+Hydrocortison,Voriconazol,unknown
+Iloprost,Imipenem + Cilasatin,unknown
+Iloprost,Immune globulin,unknown
+Iloprost,Insulin aspart,unknown
+Iloprost,Iohexol,unknown
+Iloprost,Iopromide,unknown
+Iloprost,Ketamine,unknown
+Iloprost,Ketorolac Tromethamol,unknown
+Iloprost,Levobupivacain,unknown
+Iloprost,Levofloxacin,unknown
+Iloprost,Lidocain hydroclorid,unknown
+Iloprost,Linezolid,unknown
+Iloprost,Magie Chlorid,unknown
+Iloprost,Magie sulfat,unknown
+Iloprost,Manitol,unknown
+Iloprost,Meropenem,unknown
+Iloprost,Methotrexat,unknown
+Iloprost,Methylprednisolon,unknown
+Iloprost,Metronidazol,unknown
+Iloprost,Micafungin natri,unknown
+Iloprost,Midazolam,unknown
+Iloprost,Milrinone,unknown
+Iloprost,Morphin sulfat,unknown
+Iloprost,Kali chlorid,unknown
+Iloprost,Natri colistimethat,unknown
+Iloprost,Recombinant Human Erythropoietin alfa,unknown
+Iloprost,Naloxon hydroclorid,unknown
+Iloprost,Neostigmin methylsulfat,unknown
+Iloprost,Nicardipin hydrochlorid,unknown
+Iloprost,Noradrenalin,unknown
+Iloprost,Octreotide,unknown
+Iloprost,Omeprazol,unknown
+Iloprost,Ondansetron,unknown
+Iloprost,Oxacilin,unknown
+Iloprost,Pantoprazol,unknown
+Iloprost,Phenobarbital,unknown
+Iloprost,Phytomenadion,unknown
+Iloprost,Piperacilin + Tazobactam,unknown
+Iloprost,Propofol,unknown
+Iloprost,Rocuronium Bromid,unknown
+Iloprost,Natri bicarbonat,unknown
+Iloprost,Natri Chlorid,unknown
+Iloprost,Natri lactat,unknown
+Iloprost,Sugammadex,unknown
+Iloprost,Terbutalin sulfat,unknown
+Iloprost,Tinidazol,unknown
+Iloprost,Tobramycin sulfat,unknown
+Iloprost,Vancomycin,unknown
+Iloprost,Voriconazol,unknown
+Imipenem + Cilasatin,Immune globulin,unknown
+Imipenem + Cilasatin,Insulin aspart,compatible
+Imipenem + Cilasatin,Iohexol,unknown
+Imipenem + Cilasatin,Iopromide,unknown
+Imipenem + Cilasatin,Ketamine,unknown
+Imipenem + Cilasatin,Ketorolac Tromethamol,compatible
+Imipenem + Cilasatin,Levobupivacain,unknown
+Imipenem + Cilasatin,Levofloxacin,compatible
+Imipenem + Cilasatin,Lidocain hydroclorid,compatible
+Imipenem + Cilasatin,Linezolid,compatible
+Imipenem + Cilasatin,Magie Chlorid,unknown
+Imipenem + Cilasatin,Magie sulfat,compatible
+Imipenem + Cilasatin,Manitol,incompatible
+Imipenem + Cilasatin,Meropenem,compatible
+Imipenem + Cilasatin,Methotrexat,compatible
+Imipenem + Cilasatin,Methylprednisolon,unknown
+Imipenem + Cilasatin,Metronidazol,compatible
+Imipenem + Cilasatin,Micafungin natri,unknown
+Imipenem + Cilasatin,Midazolam,controversial
+Imipenem + Cilasatin,Milrinone,incompatible
+Imipenem + Cilasatin,Morphin sulfat,compatible
+Imipenem + Cilasatin,Kali chlorid,compatible
+Imipenem + Cilasatin,Natri colistimethat,compatible
+Imipenem + Cilasatin,Recombinant Human Erythropoietin alfa,compatible
+Imipenem + Cilasatin,Naloxon hydroclorid,compatible
+Imipenem + Cilasatin,Neostigmin methylsulfat,unknown
+Imipenem + Cilasatin,Nicardipin hydrochlorid,incompatible
+Imipenem + Cilasatin,Noradrenalin,unknown
+Imipenem + Cilasatin,Octreotide,compatible
+Imipenem + Cilasatin,Omeprazol,unknown
+Imipenem + Cilasatin,Ondansetron,compatible
+Imipenem + Cilasatin,Oxacilin,compatible
+Imipenem + Cilasatin,Pantoprazol,compatible
+Imipenem + Cilasatin,Phenobarbital,controversial
+Imipenem + Cilasatin,Phytomenadion,compatible
+Imipenem + Cilasatin,Piperacilin + Tazobactam,unknown
+Imipenem + Cilasatin,Propofol,compatible
+Imipenem + Cilasatin,Rocuronium Bromid,compatible
+Imipenem + Cilasatin,Natri bicarbonat,incompatible
+Imipenem + Cilasatin,Natri Chlorid,unknown
+Imipenem + Cilasatin,Natri lactat,unknown
+Imipenem + Cilasatin,Sugammadex,unknown
+Imipenem + Cilasatin,Terbutalin sulfat,unknown
+Imipenem + Cilasatin,Tinidazol,unknown
+Imipenem + Cilasatin,Tobramycin sulfat,compatible
+Imipenem + Cilasatin,Vancomycin,controversial
+Imipenem + Cilasatin,Voriconazol,compatible
+Immune globulin,Insulin aspart,unknown
+Immune globulin,Iohexol,unknown
+Immune globulin,Iopromide,unknown
+Immune globulin,Ketamine,unknown
+Immune globulin,Ketorolac Tromethamol,unknown
+Immune globulin,Levobupivacain,unknown
+Immune globulin,Levofloxacin,unknown
+Immune globulin,Lidocain hydroclorid,unknown
+Immune globulin,Linezolid,unknown
+Immune globulin,Magie Chlorid,unknown
+Immune globulin,Magie sulfat,unknown
+Immune globulin,Manitol,unknown
+Immune globulin,Meropenem,unknown
+Immune globulin,Methotrexat,unknown
+Immune globulin,Methylprednisolon,unknown
+Immune globulin,Metronidazol,unknown
+Immune globulin,Micafungin natri,unknown
+Immune globulin,Midazolam,unknown
+Immune globulin,Milrinone,unknown
+Immune globulin,Morphin sulfat,unknown
+Immune globulin,Kali chlorid,unknown
+Immune globulin,Natri colistimethat,unknown
+Immune globulin,Recombinant Human Erythropoietin alfa,unknown
+Immune globulin,Naloxon hydroclorid,unknown
+Immune globulin,Neostigmin methylsulfat,unknown
+Immune globulin,Nicardipin hydrochlorid,unknown
+Immune globulin,Noradrenalin,unknown
+Immune globulin,Octreotide,unknown
+Immune globulin,Omeprazol,unknown
+Immune globulin,Ondansetron,unknown
+Immune globulin,Oxacilin,unknown
+Immune globulin,Pantoprazol,unknown
+Immune globulin,Phenobarbital,unknown
+Immune globulin,Phytomenadion,unknown
+Immune globulin,Piperacilin + Tazobactam,unknown
+Immune globulin,Propofol,unknown
+Immune globulin,Rocuronium Bromid,unknown
+Immune globulin,Natri bicarbonat,unknown
+Immune globulin,Natri Chlorid,unknown
+Immune globulin,Natri lactat,unknown
+Immune globulin,Sugammadex,unknown
+Immune globulin,Terbutalin sulfat,unknown
+Immune globulin,Tinidazol,unknown
+Immune globulin,Tobramycin sulfat,unknown
+Immune globulin,Vancomycin,unknown
+Immune globulin,Voriconazol,unknown
+Insulin aspart,Iohexol,unknown
+Insulin aspart,Iopromide,unknown
+Insulin aspart,Ketamine,unknown
+Insulin aspart,Ketorolac Tromethamol,unknown
+Insulin aspart,Levobupivacain,unknown
+Insulin aspart,Levofloxacin,unknown
+Insulin aspart,Lidocain hydroclorid,unknown
+Insulin aspart,Linezolid,unknown
+Insulin aspart,Magie Chlorid,unknown
+Insulin aspart,Magie sulfat,compatible
+Insulin aspart,Manitol,unknown
+Insulin aspart,Meropenem,compatible
+Insulin aspart,Methotrexat,unknown
+Insulin aspart,Methylprednisolon,unknown
+Insulin aspart,Metronidazol,unknown
+Insulin aspart,Micafungin natri,unknown
+Insulin aspart,Midazolam,compatible
+Insulin aspart,Milrinone,compatible
+Insulin aspart,Morphin sulfat,unknown
+Insulin aspart,Kali chlorid,compatible
+Insulin aspart,Natri colistimethat,unknown
+Insulin aspart,Recombinant Human Erythropoietin alfa,unknown
+Insulin aspart,Naloxon hydroclorid,unknown
+Insulin aspart,Neostigmin methylsulfat,unknown
+Insulin aspart,Nicardipin hydrochlorid,unknown
+Insulin aspart,Noradrenalin,unknown
+Insulin aspart,Octreotide,compatible
+Insulin aspart,Omeprazol,unknown
+Insulin aspart,Ondansetron,unknown
+Insulin aspart,Oxacilin,unknown
+Insulin aspart,Pantoprazol,compatible
+Insulin aspart,Phenobarbital,unknown
+Insulin aspart,Phytomenadion,unknown
+Insulin aspart,Piperacilin + Tazobactam,compatible
+Insulin aspart,Rocuronium Bromid,unknown
+Insulin aspart,Natri bicarbonat,unknown
+Insulin aspart,Natri Chlorid,unknown
+Insulin aspart,Natri lactat,unknown
+Insulin aspart,Sugammadex,unknown
+Insulin aspart,Terbutalin sulfat,unknown
+Insulin aspart,Tinidazol,unknown
+Insulin aspart,Tobramycin sulfat,unknown
+Insulin aspart,Vancomycin,compatible
+Insulin aspart,Voriconazol,unknown
+Iohexol,Iopromide,unknown
+Iohexol,Ketamine,unknown
+Iohexol,Ketorolac Tromethamol,unknown
+Iohexol,Levobupivacain,unknown
+Iohexol,Levofloxacin,unknown
+Iohexol,Lidocain hydroclorid,unknown
+Iohexol,Linezolid,unknown
+Iohexol,Magie Chlorid,unknown
+Iohexol,Magie sulfat,unknown
+Iohexol,Manitol,unknown
+Iohexol,Meropenem,unknown
+Iohexol,Methotrexat,unknown
+Iohexol,Methylprednisolon,unknown
+Iohexol,Metronidazol,unknown
+Iohexol,Micafungin natri,unknown
+Iohexol,Midazolam,unknown
+Iohexol,Milrinone,unknown
+Iohexol,Morphin sulfat,unknown
+Iohexol,Kali chlorid,unknown
+Iohexol,Natri colistimethat,unknown
+Iohexol,Recombinant Human Erythropoietin alfa,unknown
+Iohexol,Naloxon hydroclorid,unknown
+Iohexol,Neostigmin methylsulfat,unknown
+Iohexol,Nicardipin hydrochlorid,unknown
+Iohexol,Noradrenalin,unknown
+Iohexol,Octreotide,unknown
+Iohexol,Omeprazol,unknown
+Iohexol,Ondansetron,unknown
+Iohexol,Oxacilin,unknown
+Iohexol,Pantoprazol,unknown
+Iohexol,Phenobarbital,unknown
+Iohexol,Phytomenadion,unknown
+Iohexol,Piperacilin + Tazobactam,unknown
+Iohexol,Propofol,unknown
+Iohexol,Rocuronium Bromid,unknown
+Iohexol,Natri bicarbonat,unknown
+Iohexol,Natri Chlorid,unknown
+Iohexol,Natri lactat,unknown
+Iohexol,Sugammadex,unknown
+Iohexol,Terbutalin sulfat,unknown
+Iohexol,Tinidazol,unknown
+Iohexol,Tobramycin sulfat,unknown
+Iohexol,Vancomycin,unknown
+Iohexol,Voriconazol,unknown
+Iopromide,Ketamine,unknown
+Iopromide,Ketorolac Tromethamol,unknown
+Iopromide,Levobupivacain,unknown
+Iopromide,Levofloxacin,unknown
+Iopromide,Lidocain hydroclorid,unknown
+Iopromide,Linezolid,unknown
+Iopromide,Magie Chlorid,unknown
+Iopromide,Magie sulfat,unknown
+Iopromide,Manitol,unknown
+Iopromide,Meropenem,unknown
+Iopromide,Methotrexat,unknown
+Iopromide,Methylprednisolon,unknown
+Iopromide,Metronidazol,unknown
+Iopromide,Micafungin natri,unknown
+Iopromide,Midazolam,unknown
+Iopromide,Milrinone,unknown
+Iopromide,Morphin sulfat,unknown
+Iopromide,Kali chlorid,unknown
+Iopromide,Natri colistimethat,unknown
+Iopromide,Recombinant Human Erythropoietin alfa,unknown
+Iopromide,Naloxon hydroclorid,unknown
+Iopromide,Neostigmin methylsulfat,unknown
+Iopromide,Nicardipin hydrochlorid,unknown
+Iopromide,Noradrenalin,unknown
+Iopromide,Octreotide,unknown
+Iopromide,Omeprazol,unknown
+Iopromide,Ondansetron,unknown
+Iopromide,Oxacilin,unknown
+Iopromide,Pantoprazol,unknown
+Iopromide,Phenobarbital,unknown
+Iopromide,Phytomenadion,unknown
+Iopromide,Piperacilin + Tazobactam,unknown
+Iopromide,Propofol,unknown
+Iopromide,Rocuronium Bromid,unknown
+Iopromide,Natri bicarbonat,unknown
+Iopromide,Natri Chlorid,unknown
+Iopromide,Natri lactat,unknown
+Iopromide,Sugammadex,unknown
+Iopromide,Terbutalin sulfat,unknown
+Iopromide,Tinidazol,unknown
+Iopromide,Tobramycin sulfat,unknown
+Iopromide,Vancomycin,unknown
+Iopromide,Voriconazol,unknown
+Kali chlorid,Ketamine,compatible
+Kali chlorid,Ketorolac Tromethamol,compatible
+Kali chlorid,Levobupivacain,unknown
+Kali chlorid,Levofloxacin,compatible
+Kali chlorid,Lidocain hydroclorid,compatible
+Kali chlorid,Linezolid,compatible
+Kali chlorid,Magie Chlorid,unknown
+Kali chlorid,Magie sulfat,compatible
+Kali chlorid,Manitol,compatible
+Kali chlorid,Meropenem,compatible
+Kali chlorid,Methotrexat,compatible
+Kali chlorid,Methylprednisolon,unknown
+Kali chlorid,Metronidazol,compatible
+Kali chlorid,Micafungin natri,compatible
+Kali chlorid,Midazolam,compatible
+Kali chlorid,Milrinone,compatible
+Kali chlorid,Morphin sulfat,compatible
+Kali chlorid,Natri colistimethat,compatible
+Kali chlorid,Recombinant Human Erythropoietin alfa,compatible
+Kali chlorid,Naloxon hydroclorid,compatible
+Kali chlorid,Neostigmin methylsulfat,unknown
+Kali chlorid,Nicardipin hydrochlorid,compatible
+Kali chlorid,Noradrenalin,unknown
+Kali chlorid,Octreotide,compatible
+Kali chlorid,Omeprazol,unknown
+Kali chlorid,Ondansetron,compatible
+Kali chlorid,Oxacilin,compatible
+Kali chlorid,Pantoprazol,compatible
+Kali chlorid,Phenobarbital,compatible
+Kali chlorid,Phytomenadion,compatible
+Kali chlorid,Piperacilin + Tazobactam,compatible
+Kali chlorid,Propofol,compatible
+Kali chlorid,Rocuronium Bromid,compatible
+Kali chlorid,Natri bicarbonat,compatible
+Kali chlorid,Natri Chlorid,unknown
+Kali chlorid,Natri lactat,unknown
+Kali chlorid,Sugammadex,unknown
+Kali chlorid,Terbutalin sulfat,unknown
+Kali chlorid,Tinidazol,unknown
+Kali chlorid,Tobramycin sulfat,compatible
+Kali chlorid,Vancomycin,compatible
+Kali chlorid,Voriconazol,compatible
+Ketamine,Ketorolac Tromethamol,unknown
+Ketamine,Levobupivacain,unknown
+Ketamine,Levofloxacin,unknown
+Ketamine,Lidocain hydroclorid,unknown
+Ketamine,Linezolid,unknown
+Ketamine,Magie Chlorid,unknown
+Ketamine,Magie sulfat,compatible
+Ketamine,Manitol,unknown
+Ketamine,Meropenem,incompatible
+Ketamine,Methotrexat,unknown
+Ketamine,Methylprednisolon,unknown
+Ketamine,Metronidazol,compatible
+Ketamine,Micafungin natri,unknown
+Ketamine,Midazolam,compatible
+Ketamine,Milrinone,compatible
+Ketamine,Morphin sulfat,unknown
+Ketamine,Natri colistimethat,unknown
+Ketamine,Recombinant Human Erythropoietin alfa,unknown
+Ketamine,Naloxon hydroclorid,compatible
+Ketamine,Neostigmin methylsulfat,unknown
+Ketamine,Nicardipin hydrochlorid,compatible
+Ketamine,Noradrenalin,unknown
+Ketamine,Octreotide,unknown
+Ketamine,Omeprazol,unknown
+Ketamine,Ondansetron,compatible
+Ketamine,Oxacilin,unknown
+Ketamine,Pantoprazol,unknown
+Ketamine,Phenobarbital,unknown
+Ketamine,Phytomenadion,unknown
+Ketamine,Piperacilin + Tazobactam,compatible
+Ketamine,Propofol,compatible
+Ketamine,Rocuronium Bromid,incompatible
+Ketamine,Natri bicarbonat,incompatible
+Ketamine,Natri Chlorid,unknown
+Ketamine,Natri lactat,unknown
+Ketamine,Sugammadex,unknown
+Ketamine,Terbutalin sulfat,unknown
+Ketamine,Tinidazol,unknown
+Ketamine,Tobramycin sulfat,compatible
+Ketamine,Vancomycin,compatible
+Ketamine,Voriconazol,unknown
+Ketorolac Tromethamol,Levobupivacain,unknown
+Ketorolac Tromethamol,Levofloxacin,incompatible
+Ketorolac Tromethamol,Lidocain hydroclorid,compatible
+Ketorolac Tromethamol,Linezolid,compatible
+Ketorolac Tromethamol,Magie Chlorid,unknown
+Ketorolac Tromethamol,Magie sulfat,compatible
+Ketorolac Tromethamol,Manitol,compatible
+Ketorolac Tromethamol,Meropenem,unknown
+Ketorolac Tromethamol,Methotrexat,compatible
+Ketorolac Tromethamol,Methylprednisolon,unknown
+Ketorolac Tromethamol,Metronidazol,compatible
+Ketorolac Tromethamol,Micafungin natri,unknown
+Ketorolac Tromethamol,Midazolam,incompatible
+Ketorolac Tromethamol,Milrinone,compatible
+Ketorolac Tromethamol,Morphin sulfat,compatible
+Ketorolac Tromethamol,Natri colistimethat,unknown
+Ketorolac Tromethamol,Recombinant Human Erythropoietin alfa,compatible
+Ketorolac Tromethamol,Naloxon hydroclorid,compatible
+Ketorolac Tromethamol,Neostigmin methylsulfat,unknown
+Ketorolac Tromethamol,Nicardipin hydrochlorid,incompatible
+Ketorolac Tromethamol,Noradrenalin,unknown
+Ketorolac Tromethamol,Octreotide,compatible
+Ketorolac Tromethamol,Omeprazol,unknown
+Ketorolac Tromethamol,Ondansetron,compatible
+Ketorolac Tromethamol,Oxacilin,compatible
+Ketorolac Tromethamol,Pantoprazol,incompatible
+Ketorolac Tromethamol,Phenobarbital,compatible
+Ketorolac Tromethamol,Phytomenadion,compatible
+Ketorolac Tromethamol,Piperacilin + Tazobactam,compatible
+Ketorolac Tromethamol,Propofol,unknown
+Ketorolac Tromethamol,Rocuronium Bromid,incompatible
+Ketorolac Tromethamol,Natri bicarbonat,compatible
+Ketorolac Tromethamol,Natri Chlorid,unknown
+Ketorolac Tromethamol,Natri lactat,unknown
+Ketorolac Tromethamol,Sugammadex,unknown
+Ketorolac Tromethamol,Terbutalin sulfat,unknown
+Ketorolac Tromethamol,Tinidazol,unknown
+Ketorolac Tromethamol,Tobramycin sulfat,compatible
+Ketorolac Tromethamol,Vancomycin,incompatible
+Ketorolac Tromethamol,Voriconazol,compatible
+Levobupivacain,Levofloxacin,unknown
+Levobupivacain,Lidocain hydroclorid,unknown
+Levobupivacain,Linezolid,unknown
+Levobupivacain,Magie Chlorid,unknown
+Levobupivacain,Magie sulfat,unknown
+Levobupivacain,Manitol,unknown
+Levobupivacain,Meropenem,unknown
+Levobupivacain,Methotrexat,unknown
+Levobupivacain,Methylprednisolon,unknown
+Levobupivacain,Metronidazol,unknown
+Levobupivacain,Micafungin natri,unknown
+Levobupivacain,Midazolam,unknown
+Levobupivacain,Milrinone,unknown
+Levobupivacain,Morphin sulfat,unknown
+Levobupivacain,Natri colistimethat,unknown
+Levobupivacain,Recombinant Human Erythropoietin alfa,unknown
+Levobupivacain,Naloxon hydroclorid,unknown
+Levobupivacain,Neostigmin methylsulfat,unknown
+Levobupivacain,Nicardipin hydrochlorid,unknown
+Levobupivacain,Noradrenalin,unknown
+Levobupivacain,Octreotide,unknown
+Levobupivacain,Omeprazol,unknown
+Levobupivacain,Ondansetron,unknown
+Levobupivacain,Oxacilin,unknown
+Levobupivacain,Pantoprazol,unknown
+Levobupivacain,Phenobarbital,unknown
+Levobupivacain,Phytomenadion,unknown
+Levobupivacain,Piperacilin + Tazobactam,unknown
+Levobupivacain,Propofol,unknown
+Levobupivacain,Rocuronium Bromid,unknown
+Levobupivacain,Natri bicarbonat,unknown
+Levobupivacain,Natri Chlorid,unknown
+Levobupivacain,Natri lactat,unknown
+Levobupivacain,Sugammadex,unknown
+Levobupivacain,Terbutalin sulfat,unknown
+Levobupivacain,Tinidazol,unknown
+Levobupivacain,Tobramycin sulfat,unknown
+Levobupivacain,Vancomycin,unknown
+Levobupivacain,Voriconazol,unknown
+Levofloxacin,Lidocain hydroclorid,compatible
+Levofloxacin,Linezolid,compatible
+Levofloxacin,Magie Chlorid,unknown
+Levofloxacin,Manitol,compatible
+Levofloxacin,Meropenem,unknown
+Levofloxacin,Methotrexat,incompatible
+Levofloxacin,Methylprednisolon,unknown
+Levofloxacin,Metronidazol,compatible
+Levofloxacin,Micafungin natri,incompatible
+Levofloxacin,Midazolam,compatible
+Levofloxacin,Milrinone,compatible
+Levofloxacin,Morphin sulfat,controversial
+Levofloxacin,Natri colistimethat,unknown
+Levofloxacin,Recombinant Human Erythropoietin alfa,unknown
+Levofloxacin,Naloxon hydroclorid,compatible
+Levofloxacin,Neostigmin methylsulfat,unknown
+Levofloxacin,Nicardipin hydrochlorid,compatible
+Levofloxacin,Noradrenalin,unknown
+Levofloxacin,Octreotide,compatible
+Levofloxacin,Omeprazol,unknown
+Levofloxacin,Ondansetron,compatible
+Levofloxacin,Oxacilin,compatible
+Levofloxacin,Pantoprazol,incompatible
+Levofloxacin,Phenobarbital,controversial
+Levofloxacin,Phytomenadion,unknown
+Levofloxacin,Piperacilin + Tazobactam,incompatible
+Levofloxacin,Propofol,incompatible
+Levofloxacin,Rocuronium Bromid,compatible
+Levofloxacin,Natri bicarbonat,compatible
+Levofloxacin,Natri Chlorid,unknown
+Levofloxacin,Natri lactat,unknown
+Levofloxacin,Sugammadex,unknown
+Levofloxacin,Terbutalin sulfat,unknown
+Levofloxacin,Tinidazol,unknown
+Levofloxacin,Tobramycin sulfat,compatible
+Levofloxacin,Vancomycin,compatible
+Levofloxacin,Voriconazol,compatible
+Lidocain hydroclorid,Linezolid,compatible
+Lidocain hydroclorid,Magie Chlorid,unknown
+Lidocain hydroclorid,Magie sulfat,compatible
+Lidocain hydroclorid,Manitol,compatible
+Lidocain hydroclorid,Meropenem,compatible
+Lidocain hydroclorid,Methotrexat,compatible
+Lidocain hydroclorid,Methylprednisolon,unknown
+Lidocain hydroclorid,Metronidazol,compatible
+Lidocain hydroclorid,Micafungin natri,compatible
+Lidocain hydroclorid,Midazolam,compatible
+Lidocain hydroclorid,Milrinone,incompatible
+Lidocain hydroclorid,Morphin sulfat,compatible
+Lidocain hydroclorid,Natri colistimethat,compatible
+Lidocain hydroclorid,Recombinant Human Erythropoietin alfa,compatible
+Lidocain hydroclorid,Naloxon hydroclorid,compatible
+Lidocain hydroclorid,Neostigmin methylsulfat,unknown
+Lidocain hydroclorid,Nicardipin hydrochlorid,compatible
+Lidocain hydroclorid,Noradrenalin,unknown
+Lidocain hydroclorid,Octreotide,compatible
+Lidocain hydroclorid,Omeprazol,unknown
+Lidocain hydroclorid,Ondansetron,compatible
+Lidocain hydroclorid,Oxacilin,compatible
+Lidocain hydroclorid,Pantoprazol,incompatible
+Lidocain hydroclorid,Phenobarbital,controversial
+Lidocain hydroclorid,Phytomenadion,compatible
+Lidocain hydroclorid,Piperacilin + Tazobactam,compatible
+Lidocain hydroclorid,Propofol,controversial
+Lidocain hydroclorid,Rocuronium Bromid,compatible
+Lidocain hydroclorid,Natri bicarbonat,compatible
+Lidocain hydroclorid,Natri Chlorid,unknown
+Lidocain hydroclorid,Natri lactat,unknown
+Lidocain hydroclorid,Sugammadex,unknown
+Lidocain hydroclorid,Terbutalin sulfat,unknown
+Lidocain hydroclorid,Tinidazol,unknown
+Lidocain hydroclorid,Tobramycin sulfat,compatible
+Lidocain hydroclorid,Vancomycin,compatible
+Lidocain hydroclorid,Voriconazol,compatible
+Linezolid,Magie Chlorid,unknown
+Linezolid,Magie sulfat,compatible
+Linezolid,Manitol,compatible
+Linezolid,Meropenem,compatible
+Linezolid,Methotrexat,compatible
+Linezolid,Methylprednisolon,unknown
+Linezolid,Metronidazol,compatible
+Linezolid,Micafungin natri,unknown
+Linezolid,Midazolam,compatible
+Linezolid,Milrinone,compatible
+Linezolid,Morphin sulfat,compatible
+Linezolid,Natri colistimethat,compatible
+Linezolid,Recombinant Human Erythropoietin alfa,unknown
+Linezolid,Naloxon hydroclorid,compatible
+Linezolid,Neostigmin methylsulfat,unknown
+Linezolid,Nicardipin hydrochlorid,compatible
+Linezolid,Noradrenalin,unknown
+Linezolid,Octreotide,compatible
+Linezolid,Omeprazol,unknown
+Linezolid,Ondansetron,compatible
+Linezolid,Oxacilin,unknown
+Linezolid,Pantoprazol,incompatible
+Linezolid,Phenobarbital,compatible
+Linezolid,Phytomenadion,unknown
+Linezolid,Piperacilin + Tazobactam,compatible
+Linezolid,Propofol,unknown
+Linezolid,Rocuronium Bromid,compatible
+Linezolid,Natri bicarbonat,compatible
+Linezolid,Natri Chlorid,unknown
+Linezolid,Natri lactat,unknown
+Linezolid,Sugammadex,unknown
+Linezolid,Terbutalin sulfat,unknown
+Linezolid,Tinidazol,unknown
+Linezolid,Tobramycin sulfat,compatible
+Linezolid,Vancomycin,compatible
+Linezolid,Voriconazol,compatible
+Magie Chlorid,Magie sulfat,unknown
+Magie Chlorid,Manitol,unknown
+Magie Chlorid,Meropenem,unknown
+Magie Chlorid,Methotrexat,unknown
+Magie Chlorid,Methylprednisolon,unknown
+Magie Chlorid,Metronidazol,unknown
+Magie Chlorid,Micafungin natri,unknown
+Magie Chlorid,Midazolam,unknown
+Magie Chlorid,Milrinone,unknown
+Magie Chlorid,Morphin sulfat,unknown
+Magie Chlorid,Natri colistimethat,unknown
+Magie Chlorid,Recombinant Human Erythropoietin alfa,unknown
+Magie Chlorid,Naloxon hydroclorid,unknown
+Magie Chlorid,Neostigmin methylsulfat,unknown
+Magie Chlorid,Nicardipin hydrochlorid,unknown
+Magie Chlorid,Noradrenalin,unknown
+Magie Chlorid,Octreotide,unknown
+Magie Chlorid,Omeprazol,unknown
+Magie Chlorid,Ondansetron,unknown
+Magie Chlorid,Oxacilin,unknown
+Magie Chlorid,Pantoprazol,unknown
+Magie Chlorid,Phenobarbital,unknown
+Magie Chlorid,Phytomenadion,unknown
+Magie Chlorid,Piperacilin + Tazobactam,unknown
+Magie Chlorid,Propofol,unknown
+Magie Chlorid,Rocuronium Bromid,unknown
+Magie Chlorid,Natri bicarbonat,unknown
+Magie Chlorid,Natri Chlorid,unknown
+Magie Chlorid,Natri lactat,unknown
+Magie Chlorid,Sugammadex,unknown
+Magie Chlorid,Terbutalin sulfat,unknown
+Magie Chlorid,Tinidazol,unknown
+Magie Chlorid,Tobramycin sulfat,unknown
+Magie Chlorid,Vancomycin,unknown
+Magie Chlorid,Voriconazol,unknown
+Magie sulfat,Manitol,compatible
+Magie sulfat,Meropenem,compatible
+Magie sulfat,Methotrexat,compatible
+Magie sulfat,Methylprednisolon,unknown
+Magie sulfat,Metronidazol,compatible
+Magie sulfat,Micafungin natri,compatible
+Magie sulfat,Midazolam,compatible
+Magie sulfat,Milrinone,compatible
+Magie sulfat,Morphin sulfat,compatible
+Magie sulfat,Natri colistimethat,unknown
+Magie sulfat,Recombinant Human Erythropoietin alfa,compatible
+Magie sulfat,Naloxon hydroclorid,controversial
+Magie sulfat,Neostigmin methylsulfat,unknown
+Magie sulfat,Nicardipin hydrochlorid,compatible
+Magie sulfat,Noradrenalin,unknown
+Magie sulfat,Octreotide,compatible
+Magie sulfat,Omeprazol,unknown
+Magie sulfat,Ondansetron,compatible
+Magie sulfat,Oxacilin,controversial
+Magie sulfat,Pantoprazol,controversial
+Magie sulfat,Phenobarbital,compatible
+Magie sulfat,Phytomenadion,incompatible
+Magie sulfat,Piperacilin + Tazobactam,compatible
+Magie sulfat,Propofol,controversial
+Magie sulfat,Rocuronium Bromid,compatible
+Magie sulfat,Natri bicarbonat,compatible
+Magie sulfat,Natri Chlorid,unknown
+Magie sulfat,Natri lactat,unknown
+Magie sulfat,Sugammadex,unknown
+Magie sulfat,Terbutalin sulfat,unknown
+Magie sulfat,Tinidazol,unknown
+Magie sulfat,Tobramycin sulfat,compatible
+Magie sulfat,Vancomycin,compatible
+Magie sulfat,Voriconazol,compatible
+Manitol,Meropenem,compatible
+Manitol,Methotrexat,compatible
+Manitol,Methylprednisolon,unknown
+Manitol,Metronidazol,compatible
+Manitol,Micafungin natri,unknown
+Manitol,Midazolam,compatible
+Manitol,Milrinone,compatible
+Manitol,Morphin sulfat,compatible
+Manitol,Natri colistimethat,unknown
+Manitol,Recombinant Human Erythropoietin alfa,compatible
+Manitol,Naloxon hydroclorid,compatible
+Manitol,Neostigmin methylsulfat,unknown
+Manitol,Nicardipin hydrochlorid,compatible
+Manitol,Noradrenalin,unknown
+Manitol,Octreotide,compatible
+Manitol,Omeprazol,unknown
+Manitol,Ondansetron,compatible
+Manitol,Oxacilin,compatible
+Manitol,Pantoprazol,controversial
+Manitol,Phenobarbital,compatible
+Manitol,Phytomenadion,compatible
+Manitol,Piperacilin + Tazobactam,compatible
+Manitol,Propofol,compatible
+Manitol,Rocuronium Bromid,compatible
+Manitol,Natri bicarbonat,compatible
+Manitol,Natri Chlorid,unknown
+Manitol,Natri lactat,unknown
+Manitol,Sugammadex,unknown
+Manitol,Terbutalin sulfat,unknown
+Manitol,Tinidazol,unknown
+Manitol,Tobramycin sulfat,compatible
+Manitol,Vancomycin,compatible
+Manitol,Voriconazol,compatible
+Meropenem,Methotrexat,compatible
+Meropenem,Methylprednisolon,unknown
+Meropenem,Metronidazol,compatible
+Meropenem,Micafungin natri,unknown
+Meropenem,Midazolam,incompatible
+Meropenem,Milrinone,compatible
+Meropenem,Morphin sulfat,compatible
+Meropenem,Natri colistimethat,compatible
+Meropenem,Recombinant Human Erythropoietin alfa,unknown
+Meropenem,Naloxon hydroclorid,compatible
+Meropenem,Neostigmin methylsulfat,unknown
+Meropenem,Nicardipin hydrochlorid,incompatible
+Meropenem,Noradrenalin,unknown
+Meropenem,Octreotide,compatible
+Meropenem,Omeprazol,unknown
+Meropenem,Ondansetron,controversial
+Meropenem,Oxacilin,unknown
+Meropenem,Pantoprazol,controversial
+Meropenem,Phenobarbital,compatible
+Meropenem,Phytomenadion,unknown
+Meropenem,Piperacilin + Tazobactam,compatible
+Meropenem,Rocuronium Bromid,compatible
+Meropenem,Natri bicarbonat,compatible
+Meropenem,Natri Chlorid,unknown
+Meropenem,Natri lactat,unknown
+Meropenem,Sugammadex,unknown
+Meropenem,Terbutalin sulfat,unknown
+Meropenem,Tinidazol,unknown
+Meropenem,Tobramycin sulfat,compatible
+Meropenem,Vancomycin,controversial
+Meropenem,Voriconazol,compatible
+Methotrexat,Methylprednisolon,unknown
+Methotrexat,Metronidazol,compatible
+Methotrexat,Micafungin natri,unknown
+Methotrexat,Midazolam,incompatible
+Methotrexat,Milrinone,compatible
+Methotrexat,Morphin sulfat,compatible
+Methotrexat,Natri colistimethat,unknown
+Methotrexat,Recombinant Human Erythropoietin alfa,unknown
+Methotrexat,Naloxon hydroclorid,compatible
+Methotrexat,Neostigmin methylsulfat,unknown
+Methotrexat,Nicardipin hydrochlorid,incompatible
+Methotrexat,Noradrenalin,unknown
+Methotrexat,Octreotide,compatible
+Methotrexat,Omeprazol,unknown
+Methotrexat,Ondansetron,compatible
+Methotrexat,Oxacilin,compatible
+Methotrexat,Pantoprazol,incompatible
+Methotrexat,Phenobarbital,compatible
+Methotrexat,Phytomenadion,unknown
+Methotrexat,Piperacilin + Tazobactam,compatible
+Methotrexat,Propofol,incompatible
+Methotrexat,Rocuronium Bromid,compatible
+Methotrexat,Natri bicarbonat,compatible
+Methotrexat,Natri Chlorid,unknown
+Methotrexat,Natri lactat,unknown
+Methotrexat,Sugammadex,unknown
+Methotrexat,Terbutalin sulfat,unknown
+Methotrexat,Tinidazol,unknown
+Methotrexat,Tobramycin sulfat,compatible
+Methotrexat,Vancomycin,controversial
+Methotrexat,Voriconazol,compatible
+Methylprednisolon,Metronidazol,unknown
+Methylprednisolon,Micafungin natri,unknown
+Methylprednisolon,Midazolam,unknown
+Methylprednisolon,Milrinone,unknown
+Methylprednisolon,Morphin sulfat,unknown
+Methylprednisolon,Natri colistimethat,unknown
+Methylprednisolon,Recombinant Human Erythropoietin alfa,unknown
+Methylprednisolon,Naloxon hydroclorid,unknown
+Methylprednisolon,Neostigmin methylsulfat,unknown
+Methylprednisolon,Nicardipin hydrochlorid,unknown
+Methylprednisolon,Noradrenalin,unknown
+Methylprednisolon,Octreotide,unknown
+Methylprednisolon,Omeprazol,unknown
+Methylprednisolon,Ondansetron,unknown
+Methylprednisolon,Oxacilin,unknown
+Methylprednisolon,Pantoprazol,unknown
+Methylprednisolon,Phenobarbital,unknown
+Methylprednisolon,Phytomenadion,unknown
+Methylprednisolon,Piperacilin + Tazobactam,unknown
+Methylprednisolon,Propofol,unknown
+Methylprednisolon,Rocuronium Bromid,unknown
+Methylprednisolon,Natri bicarbonat,unknown
+Methylprednisolon,Natri Chlorid,unknown
+Methylprednisolon,Natri lactat,unknown
+Methylprednisolon,Sugammadex,unknown
+Methylprednisolon,Terbutalin sulfat,unknown
+Methylprednisolon,Tinidazol,unknown
+Methylprednisolon,Tobramycin sulfat,unknown
+Methylprednisolon,Vancomycin,unknown
+Methylprednisolon,Voriconazol,unknown
+Metronidazol,Micafungin natri,unknown
+Metronidazol,Midazolam,compatible
+Metronidazol,Milrinone,compatible
+Metronidazol,Morphin sulfat,compatible
+Metronidazol,Natri colistimethat,unknown
+Metronidazol,Recombinant Human Erythropoietin alfa,unknown
+Metronidazol,Naloxon hydroclorid,compatible
+Metronidazol,Neostigmin methylsulfat,unknown
+Metronidazol,Nicardipin hydrochlorid,compatible
+Metronidazol,Noradrenalin,unknown
+Metronidazol,Octreotide,compatible
+Metronidazol,Omeprazol,unknown
+Metronidazol,Ondansetron,compatible
+Metronidazol,Oxacilin,unknown
+Metronidazol,Pantoprazol,incompatible
+Metronidazol,Phenobarbital,compatible
+Metronidazol,Phytomenadion,unknown
+Metronidazol,Piperacilin + Tazobactam,compatible
+Metronidazol,Propofol,incompatible
+Metronidazol,Rocuronium Bromid,compatible
+Metronidazol,Natri bicarbonat,compatible
+Metronidazol,Natri Chlorid,unknown
+Metronidazol,Natri lactat,unknown
+Metronidazol,Sugammadex,unknown
+Metronidazol,Terbutalin sulfat,unknown
+Metronidazol,Tinidazol,unknown
+Metronidazol,Tobramycin sulfat,compatible
+Metronidazol,Vancomycin,compatible
+Metronidazol,Voriconazol,compatible
+Micafungin natri,Midazolam,incompatible
+Micafungin natri,Milrinone,compatible
+Micafungin natri,Morphin sulfat,incompatible
+Micafungin natri,Natri colistimethat,unknown
+Micafungin natri,Recombinant Human Erythropoietin alfa,unknown
+Micafungin natri,Naloxon hydroclorid,unknown
+Micafungin natri,Neostigmin methylsulfat,unknown
+Micafungin natri,Nicardipin hydrochlorid,incompatible
+Micafungin natri,Noradrenalin,unknown
+Micafungin natri,Octreotide,incompatible
+Micafungin natri,Omeprazol,unknown
+Micafungin natri,Ondansetron,incompatible
+Micafungin natri,Oxacilin,unknown
+Micafungin natri,Pantoprazol,unknown
+Micafungin natri,Phenobarbital,unknown
+Micafungin natri,Phytomenadion,unknown
+Micafungin natri,Piperacilin + Tazobactam,unknown
+Micafungin natri,Propofol,unknown
+Micafungin natri,Rocuronium Bromid,incompatible
+Micafungin natri,Natri bicarbonat,unknown
+Micafungin natri,Natri Chlorid,unknown
+Micafungin natri,Natri lactat,unknown
+Micafungin natri,Sugammadex,unknown
+Micafungin natri,Terbutalin sulfat,unknown
+Micafungin natri,Tinidazol,unknown
+Micafungin natri,Tobramycin sulfat,unknown
+Micafungin natri,Vancomycin,unknown
+Micafungin natri,Voriconazol,unknown
+Midazolam,Milrinone,compatible
+Midazolam,Morphin sulfat,compatible
+Midazolam,Natri colistimethat,unknown
+Midazolam,Recombinant Human Erythropoietin alfa,incompatible
+Midazolam,Naloxon hydroclorid,compatible
+Midazolam,Neostigmin methylsulfat,unknown
+Midazolam,Nicardipin hydrochlorid,compatible
+Midazolam,Noradrenalin,unknown
+Midazolam,Octreotide,compatible
+Midazolam,Omeprazol,incompatible
+Midazolam,Ondansetron,compatible
+Midazolam,Oxacilin,compatible
+Midazolam,Pantoprazol,controversial
+Midazolam,Phenobarbital,incompatible
+Midazolam,Phytomenadion,compatible
+Midazolam,Piperacilin + Tazobactam,incompatible
+Midazolam,Propofol,controversial
+Midazolam,Rocuronium Bromid,compatible
+Midazolam,Natri bicarbonat,incompatible
+Midazolam,Natri Chlorid,unknown
+Midazolam,Natri lactat,unknown
+Midazolam,Sugammadex,unknown
+Midazolam,Terbutalin sulfat,unknown
+Midazolam,Tinidazol,unknown
+Midazolam,Tobramycin sulfat,compatible
+Midazolam,Vancomycin,compatible
+Midazolam,Voriconazol,compatible
+Milrinone,Morphin sulfat,compatible
+Milrinone,Natri colistimethat,unknown
+Milrinone,Recombinant Human Erythropoietin alfa,unknown
+Milrinone,Naloxon hydroclorid,compatible
+Milrinone,Neostigmin methylsulfat,unknown
+Milrinone,Nicardipin hydrochlorid,compatible
+Milrinone,Noradrenalin,unknown
+Milrinone,Octreotide,compatible
+Milrinone,Omeprazol,unknown
+Milrinone,Ondansetron,incompatible
+Milrinone,Oxacilin,compatible
+Milrinone,Pantoprazol,incompatible
+Milrinone,Phenobarbital,compatible
+Milrinone,Phytomenadion,unknown
+Milrinone,Piperacilin + Tazobactam,compatible
+Milrinone,Propofol,compatible
+Milrinone,Rocuronium Bromid,compatible
+Milrinone,Natri bicarbonat,compatible
+Milrinone,Natri Chlorid,unknown
+Milrinone,Natri lactat,unknown
+Milrinone,Sugammadex,unknown
+Milrinone,Terbutalin sulfat,unknown
+Milrinone,Tinidazol,unknown
+Milrinone,Tobramycin sulfat,compatible
+Milrinone,Vancomycin,compatible
+Milrinone,Voriconazol,compatible
+Morphin sulfat,Natri colistimethat,incompatible
+Morphin sulfat,Recombinant Human Erythropoietin alfa,compatible
+Morphin sulfat,Naloxon hydroclorid,compatible
+Morphin sulfat,Neostigmin methylsulfat,unknown
+Morphin sulfat,Nicardipin hydrochlorid,compatible
+Morphin sulfat,Noradrenalin,unknown
+Morphin sulfat,Octreotide,compatible
+Morphin sulfat,Omeprazol,unknown
+Morphin sulfat,Ondansetron,compatible
+Morphin sulfat,Oxacilin,compatible
+Morphin sulfat,Pantoprazol,controversial
+Morphin sulfat,Phenobarbital,compatible
+Morphin sulfat,Phytomenadion,compatible
+Morphin sulfat,Piperacilin + Tazobactam,compatible
+Morphin sulfat,Propofol,controversial
+Morphin sulfat,Rocuronium Bromid,compatible
+Morphin sulfat,Natri bicarbonat,compatible
+Morphin sulfat,Natri Chlorid,unknown
+Morphin sulfat,Natri lactat,unknown
+Morphin sulfat,Sugammadex,unknown
+Morphin sulfat,Terbutalin sulfat,unknown
+Morphin sulfat,Tinidazol,unknown
+Morphin sulfat,Tobramycin sulfat,compatible
+Morphin sulfat,Vancomycin,compatible
+Morphin sulfat,Voriconazol,compatible
+Naloxon hydroclorid,Natri colistimethat,unknown
+Naloxon hydroclorid,Recombinant Human Erythropoietin alfa,compatible
+Naloxon hydroclorid,Neostigmin methylsulfat,unknown
+Naloxon hydroclorid,Nicardipin hydrochlorid,compatible
+Naloxon hydroclorid,Noradrenalin,unknown
+Naloxon hydroclorid,Octreotide,compatible
+Naloxon hydroclorid,Omeprazol,unknown
+Naloxon hydroclorid,Ondansetron,compatible
+Naloxon hydroclorid,Oxacilin,compatible
+Naloxon hydroclorid,Pantoprazol,incompatible
+Naloxon hydroclorid,Phenobarbital,compatible
+Naloxon hydroclorid,Phytomenadion,compatible
+Naloxon hydroclorid,Piperacilin + Tazobactam,compatible
+Naloxon hydroclorid,Propofol,compatible
+Naloxon hydroclorid,Rocuronium Bromid,compatible
+Naloxon hydroclorid,Natri bicarbonat,compatible
+Naloxon hydroclorid,Natri Chlorid,unknown
+Naloxon hydroclorid,Natri lactat,unknown
+Naloxon hydroclorid,Sugammadex,unknown
+Naloxon hydroclorid,Terbutalin sulfat,unknown
+Naloxon hydroclorid,Tinidazol,unknown
+Naloxon hydroclorid,Tobramycin sulfat,compatible
+Naloxon hydroclorid,Vancomycin,compatible
+Naloxon hydroclorid,Voriconazol,compatible
+Natri bicarbonat,Natri colistimethat,unknown
+Natri bicarbonat,Recombinant Human Erythropoietin alfa,compatible
+Natri bicarbonat,Neostigmin methylsulfat,unknown
+Natri bicarbonat,Nicardipin hydrochlorid,incompatible
+Natri bicarbonat,Noradrenalin,unknown
+Natri bicarbonat,Octreotide,compatible
+Natri bicarbonat,Omeprazol,unknown
+Natri bicarbonat,Ondansetron,incompatible
+Natri bicarbonat,Oxacilin,controversial
+Natri bicarbonat,Pantoprazol,controversial
+Natri bicarbonat,Phenobarbital,compatible
+Natri bicarbonat,Phytomenadion,compatible
+Natri bicarbonat,Piperacilin + Tazobactam,compatible
+Natri bicarbonat,Propofol,compatible
+Natri bicarbonat,Rocuronium Bromid,compatible
+Natri bicarbonat,Natri Chlorid,unknown
+Natri bicarbonat,Natri lactat,unknown
+Natri bicarbonat,Sugammadex,unknown
+Natri bicarbonat,Terbutalin sulfat,unknown
+Natri bicarbonat,Tinidazol,unknown
+Natri bicarbonat,Tobramycin sulfat,compatible
+Natri bicarbonat,Vancomycin,compatible
+Natri bicarbonat,Voriconazol,compatible
+Natri colistimethat,Recombinant Human Erythropoietin alfa,unknown
+Natri colistimethat,Neostigmin methylsulfat,unknown
+Natri colistimethat,Nicardipin hydrochlorid,unknown
+Natri colistimethat,Noradrenalin,unknown
+Natri colistimethat,Octreotide,unknown
+Natri colistimethat,Omeprazol,unknown
+Natri colistimethat,Ondansetron,unknown
+Natri colistimethat,Oxacilin,unknown
+Natri colistimethat,Pantoprazol,unknown
+Natri colistimethat,Phenobarbital,compatible
+Natri colistimethat,Phytomenadion,unknown
+Natri colistimethat,Piperacilin + Tazobactam,compatible
+Natri colistimethat,Propofol,unknown
+Natri colistimethat,Rocuronium Bromid,unknown
+Natri colistimethat,Natri Chlorid,unknown
+Natri colistimethat,Natri lactat,unknown
+Natri colistimethat,Sugammadex,unknown
+Natri colistimethat,Terbutalin sulfat,unknown
+Natri colistimethat,Tinidazol,unknown
+Natri colistimethat,Tobramycin sulfat,unknown
+Natri colistimethat,Vancomycin,compatible
+Natri colistimethat,Voriconazol,unknown
+Natri Chlorid,Recombinant Human Erythropoietin alfa,unknown
+Natri Chlorid,Neostigmin methylsulfat,unknown
+Natri Chlorid,Nicardipin hydrochlorid,unknown
+Natri Chlorid,Noradrenalin,unknown
+Natri Chlorid,Octreotide,unknown
+Natri Chlorid,Omeprazol,unknown
+Natri Chlorid,Ondansetron,unknown
+Natri Chlorid,Oxacilin,unknown
+Natri Chlorid,Pantoprazol,unknown
+Natri Chlorid,Phenobarbital,unknown
+Natri Chlorid,Phytomenadion,unknown
+Natri Chlorid,Piperacilin + Tazobactam,unknown
+Natri Chlorid,Propofol,unknown
+Natri Chlorid,Rocuronium Bromid,unknown
+Natri Chlorid,Natri lactat,unknown
+Natri Chlorid,Sugammadex,unknown
+Natri Chlorid,Terbutalin sulfat,unknown
+Natri Chlorid,Tinidazol,unknown
+Natri Chlorid,Tobramycin sulfat,unknown
+Natri Chlorid,Vancomycin,unknown
+Natri Chlorid,Voriconazol,unknown
+Natri lactat,Recombinant Human Erythropoietin alfa,unknown
+Natri lactat,Neostigmin methylsulfat,unknown
+Natri lactat,Nicardipin hydrochlorid,unknown
+Natri lactat,Noradrenalin,unknown
+Natri lactat,Octreotide,unknown
+Natri lactat,Omeprazol,unknown
+Natri lactat,Ondansetron,unknown
+Natri lactat,Oxacilin,unknown
+Natri lactat,Pantoprazol,unknown
+Natri lactat,Phenobarbital,unknown
+Natri lactat,Phytomenadion,unknown
+Natri lactat,Piperacilin + Tazobactam,unknown
+Natri lactat,Propofol,unknown
+Natri lactat,Rocuronium Bromid,unknown
+Natri lactat,Sugammadex,unknown
+Natri lactat,Terbutalin sulfat,unknown
+Natri lactat,Tinidazol,unknown
+Natri lactat,Tobramycin sulfat,unknown
+Natri lactat,Vancomycin,unknown
+Natri lactat,Voriconazol,unknown
+Neostigmin methylsulfat,Recombinant Human Erythropoietin alfa,unknown
+Neostigmin methylsulfat,Nicardipin hydrochlorid,unknown
+Neostigmin methylsulfat,Noradrenalin,unknown
+Neostigmin methylsulfat,Octreotide,unknown
+Neostigmin methylsulfat,Omeprazol,unknown
+Neostigmin methylsulfat,Ondansetron,unknown
+Neostigmin methylsulfat,Oxacilin,unknown
+Neostigmin methylsulfat,Pantoprazol,unknown
+Neostigmin methylsulfat,Phenobarbital,unknown
+Neostigmin methylsulfat,Phytomenadion,unknown
+Neostigmin methylsulfat,Piperacilin + Tazobactam,unknown
+Neostigmin methylsulfat,Propofol,unknown
+Neostigmin methylsulfat,Rocuronium Bromid,unknown
+Neostigmin methylsulfat,Sugammadex,unknown
+Neostigmin methylsulfat,Terbutalin sulfat,unknown
+Neostigmin methylsulfat,Tinidazol,unknown
+Neostigmin methylsulfat,Tobramycin sulfat,unknown
+Neostigmin methylsulfat,Vancomycin,unknown
+Neostigmin methylsulfat,Voriconazol,unknown
+Nicardipin hydrochlorid,Recombinant Human Erythropoietin alfa,unknown
+Nicardipin hydrochlorid,Noradrenalin,unknown
+Nicardipin hydrochlorid,Octreotide,compatible
+Nicardipin hydrochlorid,Omeprazol,unknown
+Nicardipin hydrochlorid,Ondansetron,compatible
+Nicardipin hydrochlorid,Oxacilin,unknown
+Nicardipin hydrochlorid,Pantoprazol,incompatible
+Nicardipin hydrochlorid,Phenobarbital,incompatible
+Nicardipin hydrochlorid,Phytomenadion,unknown
+Nicardipin hydrochlorid,Piperacilin + Tazobactam,incompatible
+Nicardipin hydrochlorid,Propofol,unknown
+Nicardipin hydrochlorid,Rocuronium Bromid,compatible
+Nicardipin hydrochlorid,Sugammadex,unknown
+Nicardipin hydrochlorid,Terbutalin sulfat,unknown
+Nicardipin hydrochlorid,Tinidazol,unknown
+Nicardipin hydrochlorid,Tobramycin sulfat,compatible
+Nicardipin hydrochlorid,Vancomycin,compatible
+Nicardipin hydrochlorid,Voriconazol,compatible
+Noradrenalin,Recombinant Human Erythropoietin alfa,unknown
+Noradrenalin,Octreotide,unknown
+Noradrenalin,Omeprazol,unknown
+Noradrenalin,Ondansetron,unknown
+Noradrenalin,Oxacilin,unknown
+Noradrenalin,Pantoprazol,unknown
+Noradrenalin,Phenobarbital,unknown
+Noradrenalin,Phytomenadion,unknown
+Noradrenalin,Piperacilin + Tazobactam,unknown
+Noradrenalin,Propofol,unknown
+Noradrenalin,Rocuronium Bromid,unknown
+Noradrenalin,Sugammadex,unknown
+Noradrenalin,Terbutalin sulfat,unknown
+Noradrenalin,Tinidazol,unknown
+Noradrenalin,Tobramycin sulfat,unknown
+Noradrenalin,Vancomycin,unknown
+Noradrenalin,Voriconazol,unknown
+Octreotide,Recombinant Human Erythropoietin alfa,unknown
+Octreotide,Omeprazol,unknown
+Octreotide,Ondansetron,compatible
+Octreotide,Oxacilin,unknown
+Octreotide,Pantoprazol,controversial
+Octreotide,Phenobarbital,compatible
+Octreotide,Phytomenadion,unknown
+Octreotide,Piperacilin + Tazobactam,compatible
+Octreotide,Propofol,unknown
+Octreotide,Rocuronium Bromid,compatible
+Octreotide,Sugammadex,unknown
+Octreotide,Terbutalin sulfat,unknown
+Octreotide,Tinidazol,unknown
+Octreotide,Tobramycin sulfat,compatible
+Octreotide,Vancomycin,compatible
+Octreotide,Voriconazol,compatible
+Omeprazol,Recombinant Human Erythropoietin alfa,unknown
+Omeprazol,Ondansetron,unknown
+Omeprazol,Oxacilin,unknown
+Omeprazol,Pantoprazol,unknown
+Omeprazol,Phenobarbital,unknown
+Omeprazol,Phytomenadion,unknown
+Omeprazol,Piperacilin + Tazobactam,unknown
+Omeprazol,Propofol,unknown
+Omeprazol,Rocuronium Bromid,unknown
+Omeprazol,Sugammadex,unknown
+Omeprazol,Terbutalin sulfat,unknown
+Omeprazol,Tinidazol,unknown
+Omeprazol,Tobramycin sulfat,unknown
+Omeprazol,Vancomycin,incompatible
+Omeprazol,Voriconazol,unknown
+Ondansetron,Recombinant Human Erythropoietin alfa,compatible
+Ondansetron,Oxacilin,compatible
+Ondansetron,Pantoprazol,incompatible
+Ondansetron,Phenobarbital,incompatible
+Ondansetron,Phytomenadion,compatible
+Ondansetron,Piperacilin + Tazobactam,compatible
+Ondansetron,Propofol,unknown
+Ondansetron,Rocuronium Bromid,compatible
+Ondansetron,Sugammadex,unknown
+Ondansetron,Terbutalin sulfat,unknown
+Ondansetron,Tinidazol,unknown
+Ondansetron,Tobramycin sulfat,compatible
+Ondansetron,Vancomycin,compatible
+Ondansetron,Voriconazol,compatible
+Oxacilin,Recombinant Human Erythropoietin alfa,compatible
+Oxacilin,Pantoprazol,unknown
+Oxacilin,Phenobarbital,compatible
+Oxacilin,Phytomenadion,compatible
+Oxacilin,Piperacilin + Tazobactam,unknown
+Oxacilin,Propofol,unknown
+Oxacilin,Rocuronium Bromid,unknown
+Oxacilin,Sugammadex,unknown
+Oxacilin,Terbutalin sulfat,unknown
+Oxacilin,Tinidazol,unknown
+Oxacilin,Tobramycin sulfat,incompatible
+Oxacilin,Vancomycin,controversial
+Oxacilin,Voriconazol,unknown
+Pantoprazol,Recombinant Human Erythropoietin alfa,unknown
+Pantoprazol,Phenobarbital,controversial
+Pantoprazol,Phytomenadion,unknown
+Pantoprazol,Piperacilin + Tazobactam,controversial
+Pantoprazol,Rocuronium Bromid,incompatible
+Pantoprazol,Sugammadex,unknown
+Pantoprazol,Terbutalin sulfat,unknown
+Pantoprazol,Tinidazol,unknown
+Pantoprazol,Tobramycin sulfat,controversial
+Pantoprazol,Vancomycin,controversial
+Pantoprazol,Voriconazol,incompatible
+Piperacilin + Tazobactam,Recombinant Human Erythropoietin alfa,unknown
+Piperacilin + Tazobactam,Phenobarbital,compatible
+Piperacilin + Tazobactam,Phytomenadion,unknown
+Piperacilin + Tazobactam,Propofol,unknown
+Piperacilin + Tazobactam,Rocuronium Bromid,incompatible
+Piperacilin + Tazobactam,Sugammadex,unknown
+Piperacilin + Tazobactam,Terbutalin sulfat,unknown
+Piperacilin + Tazobactam,Tinidazol,unknown
+Piperacilin + Tazobactam,Tobramycin sulfat,incompatible
+Piperacilin + Tazobactam,Vancomycin,controversial
+Piperacilin + Tazobactam,Voriconazol,compatible
+Propofol,Recombinant Human Erythropoietin alfa,unknown
+Propofol,Phenobarbital,compatible
+Propofol,Phytomenadion,unknown
+Propofol,Rocuronium Bromid,unknown
+Propofol,Sugammadex,unknown
+Propofol,Terbutalin sulfat,unknown
+Propofol,Tinidazol,unknown
+Propofol,Tobramycin sulfat,incompatible
+Propofol,Vancomycin,controversial
+Propofol,Voriconazol,unknown
+Phenobarbital,Recombinant Human Erythropoietin alfa,compatible
+Phenobarbital,Phytomenadion,compatible
+Phenobarbital,Rocuronium Bromid,compatible
+Phenobarbital,Sugammadex,unknown
+Phenobarbital,Terbutalin sulfat,unknown
+Phenobarbital,Tinidazol,unknown
+Phenobarbital,Tobramycin sulfat,compatible
+Phenobarbital,Vancomycin,compatible
+Phenobarbital,Voriconazol,compatible
+Phytomenadion,Recombinant Human Erythropoietin alfa,compatible
+Phytomenadion,Rocuronium Bromid,unknown
+Phytomenadion,Sugammadex,unknown
+Phytomenadion,Terbutalin sulfat,unknown
+Phytomenadion,Tinidazol,unknown
+Phytomenadion,Tobramycin sulfat,compatible
+Phytomenadion,Vancomycin,compatible
+Phytomenadion,Voriconazol,unknown
+Recombinant Human Erythropoietin alfa,Rocuronium Bromid,unknown
+Recombinant Human Erythropoietin alfa,Sugammadex,unknown
+Recombinant Human Erythropoietin alfa,Terbutalin sulfat,unknown
+Recombinant Human Erythropoietin alfa,Tinidazol,unknown
+Recombinant Human Erythropoietin alfa,Tobramycin sulfat,compatible
+Recombinant Human Erythropoietin alfa,Vancomycin,incompatible
+Recombinant Human Erythropoietin alfa,Voriconazol,unknown
+Rocuronium Bromid,Sugammadex,unknown
+Rocuronium Bromid,Terbutalin sulfat,unknown
+Rocuronium Bromid,Tinidazol,unknown
+Rocuronium Bromid,Tobramycin sulfat,compatible
+Rocuronium Bromid,Vancomycin,controversial
+Rocuronium Bromid,Voriconazol,compatible
+Sugammadex,Terbutalin sulfat,unknown
+Sugammadex,Tinidazol,unknown
+Sugammadex,Tobramycin sulfat,unknown
+Sugammadex,Vancomycin,unknown
+Sugammadex,Voriconazol,unknown
+Terbutalin sulfat,Tinidazol,unknown
+Terbutalin sulfat,Tobramycin sulfat,unknown
+Terbutalin sulfat,Vancomycin,unknown
+Terbutalin sulfat,Voriconazol,unknown
+Tinidazol,Tobramycin sulfat,unknown
+Tinidazol,Vancomycin,unknown
+Tinidazol,Voriconazol,unknown
+Tobramycin sulfat,Vancomycin,compatible
+Tobramycin sulfat,Voriconazol,compatible
+Vancomycin,Voriconazol,compatible

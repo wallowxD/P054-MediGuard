@@ -1,0 +1,22 @@
+[
+  {
+    "line": 22,
+    "corrected": "22: Tá dược: Cellulosi vi tinh thể, tinh bột gelatin hóa, natri <!-- NEED_REVIEW: Dòng thông tin về tá dược bị cụt/thiếu thành phần phía sau -->"
+  },
+  {
+    "line": 42,
+    "corrected": "42: | | Hoa mắt chóng mặt | <!-- NEED_REVIEW: Dòng bảng bị thiếu dữ liệu ở các cột tiếp theo -->"
+  },
+  {
+    "line": 55,
+    "corrected": "55: Thức ăn làm hạn chế chuyển hóa sang perindoprilat, tức hạn chế sinh khả dụng. Vì vậy cần uống perindopril arginine làm 1 liều duy nhất trong ngày vào buổi sáng trước bữa ăn. <!-- NEED_REVIEW: Hoạt chất trong viên là perindopril tert-butylamine nhưng văn bản lại nhắc đến perindopril arginine -->"
+  },
+  {
+    "line": 57,
+    "corrected": "57: Đã chứng minh có mối quan tuyến tính giữa liều dùng perindopril với diện tích dưới đường cong (AUC)."
+  },
+  {
+    "line": 77,
+    "corrected": "77: Với người bệnh thận amlodipin có thể dùng được cho bệnh nhân có độ thanh lọc creatinin (ClCr) ≥ 60ml/phút, và không thích hợp khi dùng cho bệnh nhân có độ thanh lọc creatinin (ClCr) < 60ml/phút. Với những bệnh nhân này, khuyến cáo nên chỉnh liều theo từng cá thể với mỗi thành phần của amlessa. Những thay đổi nồng độ amlodipin không tương quan với mức độ suy thận. <!-- NEED_REVIEW: Ngưỡng ClCr chống chỉ định/thận trọng đối với amlodipin và perindopril trong phối hợp này cần xem lại theo tờ hướng dẫn sử dụng gốc -->"
+  }
+]

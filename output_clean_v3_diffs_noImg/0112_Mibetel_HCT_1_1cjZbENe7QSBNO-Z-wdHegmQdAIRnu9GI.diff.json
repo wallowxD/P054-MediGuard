@@ -1,0 +1,14 @@
+[
+  {
+    "line": 56,
+    "corrected": "- <!-- NEED_REVIEW: Dòng nội dung bị thiếu hoặc ngắt quãng bất thường -->"
+  },
+  {
+    "line": 58,
+    "corrected": "u nhau. <!-- NEED_REVIEW: Dòng văn bản bị cụt đầu hoặc sai sót OCR nghiêm trọng -->"
+  },
+  {
+    "line": 69,
+    "corrected": "- Telmisartan có đặc tính dược động học phân hủy theo hàm số mũ kép với thời gian bán thải cuối cùng > 20 giờ. Nồng độ đỉnh trong huyết tương ($\text{C}_{max}$) và ở mức độ nhỏ hơn là AUC tăng không tỷ lệ <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

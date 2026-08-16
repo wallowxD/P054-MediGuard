@@ -1,0 +1,22 @@
+[
+  {
+    "line": 26,
+    "corrected": "- Bệnh khí thủng phổi. <!-- NEED_REVIEW: Thuật ngữ 'khí thủng phổi' thường được gọi chính xác hơn là 'khí thũng phổi' trong y khoa Việt Nam -->"
+  },
+  {
+    "line": 50,
+    "corrected": "Những bệnh nhân có vấn đề về di truyền hiếm gặp là không dung nạp galactose, thiếu hụt lactase hoặc kém hấp thu glucose-galactose không nên sử dụng thuốc này. Các tác nhân làm giãn phế quản không chỉ là phương pháp điều trị duy nhất ở những bệnh nhân bị hen nặng hoặc không ổn định. Việc tăng sử dụng tác nhân giãn phế quản đặc biệt là thuốc hít có tác dụng ngắn của chất chủ vận beta₂ để giảm các triệu chứng nhằm kiểm soát bệnh hen. Nếu bệnh nhân cảm thấy rằng việc điều trị bằng chế phẩm tác dụng ngắn để điều trị giãn phế quản ngày càng giảm tác dụng hoặc là họ phải sử dụng nhiều hơn trước để có tác dụng thì cần phải trợ giúp về y tế ngay. Sabutamol gây giãn mạch ngoại vi nên có thể gây ra nhịp tim nhanh phản xạ và tăng cung lượng tim. <!-- NEED_REVIEW: Tên hoạt chất 'Sabutamol' viết sai chính tả, đúng phải là 'Salbutamol' -->"
+  },
+  {
+    "line": 54,
+    "corrected": "Sabutamol cần được sử dụng thận trọng ở bệnh nhân đau do nhiễm độc giáp sau khi được đánh giá cẩn thận về lợi ích và rủi ro điều trị. Việc giám sát liên tục nồng độ kali ở bệnh nhân hen nặng là rất cần thiết, việc hạ kali máu nghiêm trọng có thể là hệ quả của việc sử dụng liệu pháp chất chủ vận beta-2. <!-- NEED_REVIEW: Tên hoạt chất 'Sabutamol' viết sai chính tả, đúng phải là 'Salbutamol'; cụm 'đau do nhiễm độc giáp' có thể do dịch lỗi từ 'thyrotoxic pain' hoặc 'thyrotoxicosis' -->"
+  },
+  {
+    "line": 110,
+    "corrected": "**ĐẶC TÍNH DƯỢC ĐỘNG HỌC:**"
+  },
+  {
+    "line": 111,
+    "corrected": "Salbutamol được hấp thu dễ dàng qua đường tiêu hóa. Tác dụng của salbutamol xảy ra trong vòng 15 phút và kéo dài khoảng 14 giờ. <!-- NEED_REVIEW: Thời gian kéo dài tác dụng 14 giờ của salbutamol uống là bất thường, thông thường dạng uống kéo dài khoảng 4-6 giờ -->"
+  }
+]
