@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /**
  * Avatar bác sĩ (animated SVG tải từ LottieFiles) cắt tròn.
  *
@@ -8,12 +10,13 @@
 export default function DoctorAvatar({ className = "" }: { className?: string }) {
   return (
     <span className={`relative block overflow-hidden rounded-full ${className}`}>
-      <img
+      <Image
         src="/icons/Doctor.svg"
-        alt=""
-        aria-hidden
+        alt="Bác sĩ AI MedSafe"
+        width={1080}
+        height={1920}
         draggable={false}
-        className="pointer-events-none absolute left-1/2 top-0 w-[135%] max-w-none -translate-x-1/2 -translate-y-[34.4%] select-none"
+        className="pointer-events-none absolute left-1/2 top-0 w-[135%] max-w-none -translate-x-1/2 -translate-y-[34.4%] select-none h-auto"
       />
     </span>
   );

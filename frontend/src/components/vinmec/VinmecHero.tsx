@@ -66,13 +66,6 @@ export default function VinmecHero() {
                 <span>Trải nghiệm Trợ lý An toàn Thuốc</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
-
-              <Link
-                href={ROUTES.ABOUT}
-                className="inline-flex items-center gap-2 rounded-full liquid-glass-button px-5 py-3.5 text-sm font-semibold text-foreground-secondary hover:text-foreground"
-              >
-                <span>Về Hệ thống Vinmec</span>
-              </Link>
             </div>
 
             {/* Key Trust Highlights */}

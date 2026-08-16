@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, ShieldAlert, Sparkles } from "lucide-react";
+import { ShieldAlert, Sparkles } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 export default function WelcomeHero() {

@@ -1,5 +1,4 @@
 import { Award, BrainCircuit, HeartHandshake, ShieldCheck } from "lucide-react";
-import Image from "next/image";
 import { VINMEC_WHY_US } from "./vinmec-content";
 
 const FEATURE_ICONS = [HeartHandshake, ShieldCheck, BrainCircuit, Award];
@@ -18,23 +17,20 @@ export default function VinmecWhyUs() {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {VINMEC_WHY_US.map((item, idx) => {
             const Icon = FEATURE_ICONS[idx % FEATURE_ICONS.length];
             return (
               <div
                 key={item.title}
-                className="group relative rounded-3xl liquid-glass p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                className="group relative flex flex-col items-center justify-center text-center rounded-2xl liquid-glass px-4 py-6 sm:px-5 sm:py-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
+                <div className="mb-3.5 flex h-12 w-12 sm:h-13 sm:w-13 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground shadow-sm">
                   <Icon className="h-6 w-6" />
                 </div>
-                <h3 className="font-heading text-lg font-bold text-foreground mb-2">
+                <h3 className="font-heading text-sm sm:text-[15px] xl:text-base font-bold text-foreground tracking-tight whitespace-nowrap">
                   {item.title}
                 </h3>
-                <p className="text-xs leading-relaxed text-foreground-secondary">
-                  {item.desc}
-                </p>
               </div>
             );
           })}
