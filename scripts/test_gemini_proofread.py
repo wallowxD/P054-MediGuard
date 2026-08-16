@@ -9,7 +9,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src
 import requests
 from medsafe.config import get_settings
 
-
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s]: %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -84,6 +83,12 @@ DANH SÁCH CÁC DÒNG VĂN BẢN (dạng `số_dòng: nội_dung`):
         sys.exit(1)
 
     result = response.json()
+    usage = result.get("usageMetadata", {})
+    in_tok = usage.get("promptTokenCount", 0)
+    out_tok = usage.get("candidatesTokenCount", 0)
+    total_tok = usage.get("totalTokenCount", 0)
+    logger.info(f"Gemini Token Usage -> Input: {in_tok:,} tokens | Output: {out_tok:,} tokens | Total: {total_tok:,} tokens")
+
     json_text = result["candidates"][0]["content"]["parts"][0]["text"]
     corrections = json.loads(json_text)
 

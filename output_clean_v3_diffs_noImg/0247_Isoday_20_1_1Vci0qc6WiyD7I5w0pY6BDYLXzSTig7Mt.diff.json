@@ -1,0 +1,10 @@
+[
+  {
+    "line": 189,
+    "corrected": "- Tăng huyết áp nếu huyết áp rất thấp. <!-- NEED_REVIEW: Trợ huyết áp/nâng huyết áp chính xác hơn từ 'Tăng huyết áp' trong xử trí hạ huyết áp do nitrate -->"
+  },
+  {
+    "line": 232,
+    "corrected": "Sau khi uống, sinh khả dụng của isosrbide mononitrate là 100%. Thuốc này không bị chuyển hóa trong giai đoạn đầu. <!-- NEED_REVIEW: Sai chính tả 'isosrbide' (isosorbide) và thông tin sinh khả dụng đường uống 100% cùng việc không chuyển hóa qua gan lần đầu (first-pass metabolism) cần kiểm tra lại với thông tin gốc -->"
+  }
+]

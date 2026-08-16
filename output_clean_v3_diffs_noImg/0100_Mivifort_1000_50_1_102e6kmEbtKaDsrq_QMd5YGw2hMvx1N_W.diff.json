@@ -1,0 +1,18 @@
+[
+  {
+    "line": 63,
+    "corrected": "- Bệnh nhân toàn chuyển hóa cấp tính hoặc mãn tính, bao gồm cả nhiễm toan ceton do tiểu đường. <!-- NEED_REVIEW: Cụm từ 'toàn chuyển hóa' bất thường, có thể là lỗi OCR của 'toàn thân chuyển hóa' hoặc 'tình trạng chuyển hóa' -->"
+  },
+  {
+    "line": 75,
+    "corrected": "  Quá trình giám sát hậu mãi đã ghi nhận những ca nhiễm toan lactic liên quan đến metformin, bao gồm cả trường hợp tử vong, giảm thân nhiệt, tụt huyết áp, loạn nhịp chậm kéo dài. Khởi"
+  },
+  {
+    "line": 77,
+    "corrected": "thuốc chống tăng đường huyết trong khi điều trị với các thuốc khác hoặc ngừng dùng thuốc. <!-- NEED_REVIEW: Dòng văn bản bị đứt quãng, thiếu nội dung logic giữa câu 75 và 77 -->"
+  },
+  {
+    "line": 161,
+    "corrected": "- *Rối loạn cơ xương và mô liên kết:* đau cơ ( <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

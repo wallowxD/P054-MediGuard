@@ -1,0 +1,243 @@
+{
+  "total_paired_files": 756,
+  "qwen_metrics": {
+    "total_tables": 1316,
+    "section_completeness": {
+      "thành phần": 745,
+      "chỉ định": 753,
+      "liều dùng": 681,
+      "cách dùng": 732,
+      "chống chỉ định": 748,
+      "tương tác": 724,
+      "tác dụng phụ": 386,
+      "thận trọng": 740,
+      "quá liều": 674,
+      "bảo quản": 727
+    },
+    "repetition_loops_found": 3294,
+    "garbage_characters": 10,
+    "total_characters": 16281350,
+    "avg_file_length": 21536.2
+  },
+  "gemini_metrics": {
+    "total_tables": 1191,
+    "section_completeness": {
+      "thành phần": 739,
+      "chỉ định": 739,
+      "liều dùng": 654,
+      "cách dùng": 688,
+      "chống chỉ định": 708,
+      "tương tác": 702,
+      "tác dụng phụ": 304,
+      "thận trọng": 719,
+      "quá liều": 686,
+      "bảo quản": 665
+    },
+    "repetition_loops_found": 308,
+    "garbage_characters": 0,
+    "total_characters": 13535652,
+    "avg_file_length": 17904.3
+  },
+  "top_diff_cases": [
+    {
+      "filename": "0204_Telorssa_100mg_5mg_film-coated_tablets_1_1HfSpKeb2mbb9YxCYOPF829Zc8jDYNZbC.md",
+      "qwen_tables": 24,
+      "gemini_tables": 7,
+      "qwen_char_len": 46800,
+      "gemini_char_len": 44530,
+      "qwen_loops": 17,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.034
+    },
+    {
+      "filename": "0084_RIOSART_HCT_80_12_5MG_1_1YV24A0Imoxs340eKJ0WKsvrHA4AGQT9I.md",
+      "qwen_tables": 19,
+      "gemini_tables": 4,
+      "qwen_char_len": 44853,
+      "gemini_char_len": 43801,
+      "qwen_loops": 6,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.061
+    },
+    {
+      "filename": "0046_NDP-Saxa_5_1_1_DrzBl3ylSwNrSHg0nvmN0E4kfoiigVe.md",
+      "qwen_tables": 13,
+      "gemini_tables": 1,
+      "qwen_char_len": 34633,
+      "gemini_char_len": 19468,
+      "qwen_loops": 118,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.062
+    },
+    {
+      "filename": "0626_Imipenem_Cilastatin_Kabi_500mg_500mg_1_1McScr6VLpEpsn_qdoOZ8rkhzsTJ8GD_w.md",
+      "qwen_tables": 17,
+      "gemini_tables": 5,
+      "qwen_char_len": 35693,
+      "gemini_char_len": 32940,
+      "qwen_loops": 0,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.049
+    },
+    {
+      "filename": "0043_Tardyferon_B9_1_1wVj7mWO_MIA_HdfmkmrzsubjmznDv81w.md",
+      "qwen_tables": 0,
+      "gemini_tables": 11,
+      "qwen_char_len": 27556,
+      "gemini_char_len": 16248,
+      "qwen_loops": 49,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.04
+    },
+    {
+      "filename": "0352_Bifitacine_1_1KXpaVteEr4WdT6RhztfMztp14zIqMWQx.md",
+      "qwen_tables": 14,
+      "gemini_tables": 4,
+      "qwen_char_len": 16826,
+      "gemini_char_len": 14937,
+      "qwen_loops": 14,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.073
+    },
+    {
+      "filename": "0089_Mydrin-P_1_1VEBEDGsQxMP8Zr3Dqy_tjFFN8gnvNdFV.md",
+      "qwen_tables": 4,
+      "gemini_tables": 14,
+      "qwen_char_len": 27316,
+      "gemini_char_len": 24403,
+      "qwen_loops": 5,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.049
+    },
+    {
+      "filename": "0319_Dopegyt_1_1WwV0ErMnz5j2Ma9g6FVSs-I2lwA1liy-.md",
+      "qwen_tables": 1,
+      "gemini_tables": 11,
+      "qwen_char_len": 46042,
+      "gemini_char_len": 40456,
+      "qwen_loops": 0,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.0745
+    },
+    {
+      "filename": "0851_Augmentin_625mg_1_1PrNI-MN0y_Yj7kddQnV-U5jam2cABEZt.md",
+      "qwen_tables": 13,
+      "gemini_tables": 3,
+      "qwen_char_len": 21334,
+      "gemini_char_len": 21241,
+      "qwen_loops": 0,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.9365
+    },
+    {
+      "filename": "0216_Kamelox_ODT_7_5_1_1keyd09ax8ezOFu1tmj031ABHEUybixEP.md",
+      "qwen_tables": 4,
+      "gemini_tables": 13,
+      "qwen_char_len": 23056,
+      "gemini_char_len": 20175,
+      "qwen_loops": 30,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.021
+    },
+    {
+      "filename": "0293_Bivitanpo_100_1_1tX6DqjicwMcJxXiL7FOoBeDONfx_8hUm.md",
+      "qwen_tables": 10,
+      "gemini_tables": 2,
+      "qwen_char_len": 26560,
+      "gemini_char_len": 22565,
+      "qwen_loops": 7,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.077
+    },
+    {
+      "filename": "0923_AUROPENNZ_1_5_1_1OPwsVaxJ-ViGI9YJrM1JOhy_Q2vxwGF2.md",
+      "qwen_tables": 15,
+      "gemini_tables": 7,
+      "qwen_char_len": 26978,
+      "gemini_char_len": 21742,
+      "qwen_loops": 0,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.0485
+    },
+    {
+      "filename": "0371_Decebal_50_1_1QE-mwWLVn3CUhW8DbqQp7F1ZFL54pN6X.md",
+      "qwen_tables": 12,
+      "gemini_tables": 4,
+      "qwen_char_len": 32180,
+      "gemini_char_len": 31066,
+      "qwen_loops": 0,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.269
+    },
+    {
+      "filename": "0794_NovoMix_30_FlexPen_1_1NKyJbCIOcpiiWyh9jyVxjVFcP_R7LPvm.md",
+      "qwen_tables": 9,
+      "gemini_tables": 1,
+      "qwen_char_len": 28055,
+      "gemini_char_len": 15695,
+      "qwen_loops": 0,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.487
+    },
+    {
+      "filename": "0136_Metsav_750_XR_1_1ByOZQVHSufJcGLEmiq8R22_IHnGzKlRm.md",
+      "qwen_tables": 8,
+      "gemini_tables": 1,
+      "qwen_char_len": 28955,
+      "gemini_char_len": 25441,
+      "qwen_loops": 13,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.0495
+    },
+    {
+      "filename": "0276_Amitriptylin_25mg_1_1SYKP_SOj4o3lTtGSpwx6x15IUSfF1pZl.md",
+      "qwen_tables": 9,
+      "gemini_tables": 2,
+      "qwen_char_len": 28667,
+      "gemini_char_len": 25349,
+      "qwen_loops": 1,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.0375
+    },
+    {
+      "filename": "0582_Glucophage_850_Mg_Metformin_1_1dS4-t1pM8ukIyC9TgfhQkTNWP2AvkKQM.md",
+      "qwen_tables": 7,
+      "gemini_tables": 0,
+      "qwen_char_len": 28074,
+      "gemini_char_len": 24839,
+      "qwen_loops": 0,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.0635
+    },
+    {
+      "filename": "0899_Amlessa_4mg_5mg_-_hạ_huyết_áp_và_bệnh_mạch_vành_1_147UJyr2TsxSrjAuKONGKxQIx3m1lyvnd.md",
+      "qwen_tables": 10,
+      "gemini_tables": 3,
+      "qwen_char_len": 35279,
+      "gemini_char_len": 33977,
+      "qwen_loops": 0,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.894
+    },
+    {
+      "filename": "0097_Moxilen_500mg_1_1ODf_6ddXtQNpmdAjal82RndIb3dlxu-u.md",
+      "qwen_tables": 4,
+      "gemini_tables": 10,
+      "qwen_char_len": 35328,
+      "gemini_char_len": 33316,
+      "qwen_loops": 2,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.0485
+    },
+    {
+      "filename": "0629_Seretide_Accuhaler_50_500mcg_1_1sWFyJ-6UtxQk-LbglbaK_hK9uESQ4Tb9.md",
+      "qwen_tables": 10,
+      "gemini_tables": 4,
+      "qwen_char_len": 58529,
+      "gemini_char_len": 50279,
+      "qwen_loops": 0,
+      "qwen_garbage": 0,
+      "similarity_ratio": 0.0275
+    }
+  ]
+}

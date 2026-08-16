@@ -1,0 +1,22 @@
+[
+  {
+    "line": 109,
+    "corrected": "<u>Bệnh mạch vành và bệnh mạch máu nào</u> <!-- NEED_REVIEW: Từ 'nào' có vẻ là lỗi OCR của từ 'não' (bệnh mạch máu não) -->"
+  },
+  {
+    "line": 111,
+    "corrected": "Với bất kì tác nhân hạ huyết áp nào, hạ huyết áp quá mức trên bệnh nhân bị thiếu máu cục bộ và có bệnh mạch máu nào có thể dẫn tới nhồi máu cơ tim hoặc đột quỵ. <!-- NEED_REVIEW: Từ 'nào' có vẻ là lỗi OCR của từ 'não' (bệnh mạch máu não) -->"
+  },
+  {
+    "line": 292,
+    "corrected": "| Rối loạn thính lực và đường rối tai trong | Chóng mặt | - | Thường gặp | <!-- NEED_REVIEW: Cụm từ 'đường rối tai trong' có thể là lỗi OCR, thường dùng 'rối loạn tai trong' hoặc 'tai trong' -->"
+  },
+  {
+    "line": 379,
+    "corrected": "| **Rối loạn thính lực và đường rối tai trong** | | | | | <!-- NEED_REVIEW: Cụm từ 'đường rối tai trong' có thể là lỗi OCR -->"
+  },
+  {
+    "line": 530,
+    "corrected": "Hiệu quả của amlodipin trong việc phòng ngừa các biến cố lâm sàng trên bệnh nhân có bệnh mạch vành (CAD) đã được đánh giá trong nghiên cứu CAMELOT (Comparison of Amlodipin vs. Enalapril to Limit Occurences of Thrombosis) là một nghiên cứu độc lập, đa trung tâm, ngẫu nhiên, mù đôi, có đối chứng với giả dược, tiến hành trên 1997 bệnh nhân. Trong đó, 663 bệnh nhân sử dụng amlodipin 5 – 10 mg, 673 bệnh nhân sử dụng enalapril 10 – 20 mg, và 655 bệnh nhân sử dụng giả dược, bên cạnh điều trị chuẩn bằng statins, chẹn beta, lợi tiểu và aspirin, khoảng 2 năm. Các hiệu quả chính được thể hiện trong bảng 1. Kết quả cho thấy rằng sử dụng amlodipin có số trường hợp nhập viện do đau thắt ngực và quá trình tái thông mạch máu ít hơn trên bệnh nhân với CAD. <!-- NEED_REVIEW: Từ 'Occurences' có lỗi chính tả tiếng Anh, chuẩn là 'Occurrences' -->"
+  }
+]

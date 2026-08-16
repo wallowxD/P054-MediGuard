@@ -24,17 +24,14 @@ import re
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import List, Tuple, Optional
 
 # Add backend/src to sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
-from tqdm import tqdm
-
 from medsafe.config import get_settings
 from medsafe.ocr.gemini_client import GeminiVLClient
 from medsafe.prompts.ocr_prompts import GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
-
+from tqdm import tqdm
 
 # Configure logging
 logging.basicConfig(
@@ -48,12 +45,12 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8")
 
 
-def natural_sort_key(s: str) -> List:
+def natural_sort_key(s: str) -> list:
     """Sort strings containing numbers in natural order (page_1, page_2, page_10)."""
     return [int(text) if text.isdigit() else text.lower() for text in re.split(r"(\d+)", str(s))]
 
 
-def find_drug_image_folders(input_dir: Path) -> List[Tuple[Path, List[Path]]]:
+def find_drug_image_folders(input_dir: Path) -> list[tuple[Path, list[Path]]]:
     """Recursively discover all drug leaf directories containing image files.
 
     Returns:
@@ -79,11 +76,11 @@ def find_drug_image_folders(input_dir: Path) -> List[Tuple[Path, List[Path]]]:
 
 def process_single_drug_folder(
     drug_folder: Path,
-    image_files: List[Path],
+    image_files: list[Path],
     output_dir: Path,
     client: GeminiVLClient,
     skip_existing: bool = True,
-) -> Tuple[str, bool, str, int, int]:
+) -> tuple[str, bool, str, int, int]:
     """Process all images in a single drug folder and save combined Markdown output.
 
     Returns:
@@ -99,6 +96,9 @@ def process_single_drug_folder(
     total_images = len(image_files)
 
     for img_path in image_files:
+        if not img_path.exists() or img_path.stat().st_size == 0:
+            logger.warning(f"Skipping zero-byte or missing image file: {img_path.name} in {folder_name}")
+            continue
         try:
             page_md = client.process_image_file(
                 image_path=img_path,
@@ -115,7 +115,7 @@ def process_single_drug_folder(
 
     if not valid_page_markdowns:
         logger.warning(f"All {total_images} pages in {folder_name} were filtered out (packaging/label images).")
-        return (folder_name, True, f"All pages filtered (packaging/label)", 0, total_images)
+        return (folder_name, True, "All pages filtered (packaging/label)", 0, total_images)
 
     # Combine valid page Markdowns with double newlines & add model metadata comment at top
     metadata_header = f"<!-- metadata: model={getattr(client, 'model', 'gemini-3.6-flash')}, provider=vertexai -->\n\n"
@@ -272,7 +272,7 @@ def main():
     failed_count = 0
 
     print("\n" + "=" * 80)
-    print(f"Starting Production Medical OCR Engine v3")
+    print("Starting Production Medical OCR Engine v3")
     print(f"Model          : {client.model}")
     print(f"Mode           : {'Vertex AI' if client.use_vertex else 'Google AI Studio / Gemini API'}")
     print(f"Total Folders  : {total_folders}")
@@ -280,7 +280,7 @@ def main():
     print(f"Output Directory: {output_path.resolve()}")
     print("=" * 80 + "\n")
 
-    def _worker_task(folder_info: Tuple[Path, List[Path]]):
+    def _worker_task(folder_info: tuple[Path, list[Path]]):
         drug_folder, image_files = folder_info
         try:
             return process_single_drug_folder(

@@ -1,0 +1,26 @@
+[
+  {
+    "line": 21,
+    "corrected": "Vinpocetin là một hợp chất có các tác dụng tốt lên các quá trình như chuyển hóa các tế bào thần kinh nào, tuần hoàn máu và đặc tính lưu biến của máu. <!-- NEED_REVIEW: Từ 'nào' có vẻ là lỗi OCR của từ 'não' -->"
+  },
+  {
+    "line": 25,
+    "corrected": "*Vinpocetin kích thích chuyển hóa não:* Vinpocetin có tác dụng tăng tiếp nhận glucose và oxy tại mô nào, cải thiện sức chịu đựng tình trạng thiếu oxy trong máu nào; tăng nồng độ ATP và tỷ số ATP/AMP; làm tăng luân chuyển norepinephrin và serotonin của tế bào thần kinh; kích thích hệ noradrenergic hướng lên. <!-- NEED_REVIEW: Các từ 'nào' lặp lại có khả năng là lỗi OCR của từ 'não' -->"
+  },
+  {
+    "line": 27,
+    "corrected": "*Vinpocetin làm tăng vi tuần hoàn nào:* Ức chế kết tập tiểu cầu; làm giảm sự tăng độ nhớt máu bệnh lý; tăng độ biến dạng hồng cầu và làm giảm ái lực đối với oxy của hồng cầu, làm tăng sự vận chuyển oxy trong mô; ức chế lấy adenosine của hồng cầu. <!-- NEED_REVIEW: Từ 'nào' có vẻ là lỗi OCR của từ 'não' -->"
+  },
+  {
+    "line": 29,
+    "corrected": "*Vinpocetin làm tăng tuần hoàn nào một cách chọn lọc:* Làm tăng cung cấp máu cho nào; làm giảm sức đề kháng mạch máu nào mà không ảnh hưởng đến những tham số tuần hoàn toàn thân (huyết áp; cung lượng tim, mạch, sức kháng ngoại biên toàn phần), không gây tác dụng chiếm đoạt máu của vùng khác. Ngoài ra trong khi dùng thuốc, vinpocetin cải thiện cung cấp máu cho vùng thiếu máu có sự lan tỏa máu thấp (tác dụng chiếm đoạt máu đảo ngược) đã bị tổn thương (nhưng chưa hoại tử). <!-- NEED_REVIEW: Các từ 'nào' lặp lại có khả năng là lỗi OCR của từ 'não' -->"
+  },
+  {
+    "line": 51,
+    "corrected": "Không dùng cho tiêm bắp và tiêm tĩnh mạch <!-- NEED_REVIEW: Dung dịch tiêm truyền tĩnh mạch chậm nhưng lại ghi 'Không dùng cho tiêm bắp và tiêm tĩnh mạch' là mâu thuẫn về đường dùng -->"
+  },
+  {
+    "line": 150,
+    "corrected": "Không dùng cho tiêm bắp và tiêm tĩnh mạch <!-- NEED_REVIEW: Mâu thuẫn với đường truyền tĩnh mạch chậm ở dòng trên -->"
+  }
+]

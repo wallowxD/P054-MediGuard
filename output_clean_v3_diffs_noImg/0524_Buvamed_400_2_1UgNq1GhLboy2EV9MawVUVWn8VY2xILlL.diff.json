@@ -1,0 +1,18 @@
+[
+  {
+    "line": 98,
+    "corrected": "Nguy cơ loét, thủng dạ dày, xuất huyết tiêu hóa cao hơn khi tăng liều NSAID, ở bệnh nhân có tiền sử loét, đặc biệt là xuất huyết hoặc thủng phức tạp, nghiện rượu hoặc người già. Những bệnh nhân nên điều trị với liều thấp nhất có thể. Cùng với những bệnh nhân đang điều trị đồng thời với acetylsalisylic liều thấp hoặc đang điều trị với các thuốc khác có thể làm tăng nguy cơ đường tiêu hóa, cần xem xét điều trị kết hợp với các thuốc bảo vệ dạ dày (như misoprostol, thuốc ức chế bơm proton). <!-- NEED_REVIEW: Sai chính tả hoạt chất: acetylsalisylic -> acid acetylsalicylic hoặc aspirin -->"
+  },
+  {
+    "line": 100,
+    "corrected": "Bệnh nhân có tiền sử nhiễm độc đường tiêu hóa, đặc biệt là người cao tuổi, nên báo cáo tất cả các triệu chứng ở bụng (đặc biệt là xuất huyết tiêu hóa), đặc biệt là khi bắt đầu điều trị. Cần thận trọng ở những bệnh nhân dùng thuốc đồng thời có thể làm tăng nguy cơ loét hoặc chảy máu, chẳng hạn như corticosteroid đường uống, thuốc chống đông máu như warfarin, thuốc ức chế tái hấp thu serotonin có chọn lọc hoặc thuốc ức chế kết tập tiểu cầu như acid cetylsalicylic. <!-- NEED_REVIEW: Tên hoạt chất chưa chuẩn xác: acid cetylsalicylic -> acid acetylsalicylic -->"
+  },
+  {
+    "line": 123,
+    "corrected": "Giống như các NSAID khác, dexibuprofen có thể liên quan đến các tác dụng phụ trên thận như viêm cầu thận, viên thận kẽ, hoại tử nhú thận, hội chứng thận hư và suy thận cấp. <!-- NEED_REVIEW: Lỗi chính tả OCR: viên thận kẽ -> viêm thận kẽ -->"
+  },
+  {
+    "line": 222,
+    "corrected": "<u>Methotrexate với liều dưới 15 mg/tuần</u>: Dexibuprofen có thể làm tăng nồng độ methotrexate. Khi dexibuprofen được sử dụng với methotrexate liều thấp, cần kiểm tra cẩn thận nồng độ mehtorextae trong huyết tương của bệnh nhân, đặc biệt là trong vài tuần đầu điều trị kết hợp. Cần theo dõi chặt chẽ, đặc biệt trên bệnh nhân rối loạn chức năng thận nhẹ và người cao tuổi. <!-- NEED_REVIEW: Lỗi chính tả OCR: mehtorextae -> methotrexate -->"
+  }
+]

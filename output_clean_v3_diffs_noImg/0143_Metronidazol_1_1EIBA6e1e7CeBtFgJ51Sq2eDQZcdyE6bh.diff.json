@@ -1,0 +1,10 @@
+[
+  {
+    "line": 10,
+    "corrected": "Metronidazol.........................................................................................1 viên <!-- NEED_REVIEW: Mâu thuẫn định lượng hàm lượng hoạt chất giữa dòng 10 (1 viên) và dòng 12 (250 mg) trong mục thành phần. -->"
+  },
+  {
+    "line": 57,
+    "corrected": "    • Viêm loét dạ <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

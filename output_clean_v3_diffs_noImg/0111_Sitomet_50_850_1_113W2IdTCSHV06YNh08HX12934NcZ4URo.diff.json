@@ -1,0 +1,22 @@
+[
+  {
+    "line": 82,
+    "corrected": "50 mg sltagliptin/850 mg metformin hydrochlorid. <!-- NEED_REVIEW: Từ 'sltagliptin' có thể là lỗi chính tả OCR của 'sitagliptin' -->"
+  },
+  {
+    "line": 84,
+    "corrected": "50 mg sltagliptin/1000 mg metformin hydrochlorid. <!-- NEED_REVIEW: Từ 'sltagliptin' có thể là lỗi chính tả OCR của 'sitagliptin' -->"
+  },
+  {
+    "line": 164,
+    "corrected": "– Đái tháo đường không phụ thuộc insulin và/hoặc đái thái đường không ổn định. <!-- NEED_REVIEW: Từ 'đái thái đường' có thể là lỗi chính tả của 'đái tháo đường' -->"
+  },
+  {
+    "line": 341,
+    "corrected": "glibencalmid <!-- NEED_REVIEW: Từ 'glibencalmid' có thể là lỗi chính tả của 'glibenclamid' -->"
+  },
+  {
+    "line": 347,
+    "corrected": "(multidrug ang toxin extrusion) <!-- NEED_REVIEW: Cụm từ 'multidrug ang toxin extrusion' có thể là lỗi OCR của 'multidrug and toxin extrusion' -->"
+  }
+]

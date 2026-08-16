@@ -129,6 +129,7 @@ def main():
                 return (pdf_file.name, False, str(e))
 
         from concurrent.futures import ThreadPoolExecutor, as_completed
+
         from tqdm import tqdm
 
         success_count = 0

@@ -5,6 +5,7 @@ Hỗ trợ cả hai chế độ Vertex AI và Google AI Studio.
 """
 
 import base64
+import io
 import logging
 import os
 import random
@@ -16,6 +17,13 @@ import requests
 
 from medsafe.config import get_settings
 from medsafe.prompts.ocr_prompts import GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
+
+try:
+    from PIL import Image
+
+    Image.MAX_IMAGE_PIXELS = None
+except ImportError:
+    Image = None
 
 try:
     from google import genai
@@ -132,6 +140,87 @@ class GeminiVLClient:
         cleaned = re.sub(r"\n?```\s*$", "", cleaned)
         return cleaned.strip()
 
+    def _prepare_image_payload(
+        self,
+        image_input: str | Path | bytes,
+        max_dimension: int = 3584,
+        max_bytes: int = 10 * 1024 * 1024,
+    ) -> tuple[bytes, str]:
+        """Preprocesses image file or bytes for Gemini API.
+
+        Resizes images if max dimension > max_dimension (default 3584) or raw size > max_bytes,
+        converting RGBA/P palette images to RGB JPEG to ensure compatibility with Gemini API decoder limits.
+
+        Returns:
+            (image_bytes, mime_type)
+        """
+        if Image is None:
+            if isinstance(image_input, (str, Path)):
+                p = Path(image_input)
+                ext = p.suffix.lower().lstrip(".")
+                mime = "image/png" if ext == "png" else ("image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}")
+                return p.read_bytes(), mime
+            elif isinstance(image_input, bytes):
+                return image_input, "image/jpeg"
+
+        try:
+            Image.MAX_IMAGE_PIXELS = None
+            if isinstance(image_input, (str, Path)):
+                img_path = Path(image_input)
+                raw_bytes = img_path.read_bytes()
+                if len(raw_bytes) == 0:
+                    raise ValueError(f"Image file is empty (0 bytes): {img_path}")
+                ext = img_path.suffix.lower().lstrip(".")
+                default_mime = (
+                    "image/png" if ext == "png" else ("image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}")
+                )
+            elif isinstance(image_input, bytes):
+                raw_bytes = image_input
+                if len(raw_bytes) == 0:
+                    raise ValueError("Image input bytes is empty (0 bytes)")
+                default_mime = "image/jpeg"
+            else:
+                raise ValueError(f"Unsupported image input type: {type(image_input)}")
+
+            with Image.open(io.BytesIO(raw_bytes)) as img:
+                w, h = img.size
+                needs_resize = (
+                    max(w, h) > max_dimension or len(raw_bytes) > max_bytes or img.mode in ("RGBA", "P", "LA")
+                )
+
+                if not needs_resize:
+                    return raw_bytes, default_mime
+
+                logger.info(
+                    f"Preprocessing oversized image (dims={w}x{h}, size={len(raw_bytes) / 1024 / 1024:.1f}MB, mode={img.mode}). Resizing to max side {max_dimension}px."
+                )
+                scale = max_dimension / float(max(w, h)) if max(w, h) > max_dimension else 1.0
+                new_w, new_h = max(1, int(w * scale)), max(1, int(h * scale))
+
+                if (new_w, new_h) != (w, h):
+                    resample_fn = getattr(Image, "Resampling", Image).LANCZOS
+                    img = img.resize((new_w, new_h), resample_fn)
+
+                if img.mode in ("RGBA", "P", "LA"):
+                    img = img.convert("RGB")
+
+                buf = io.BytesIO()
+                img.save(buf, format="JPEG", quality=90)
+                return buf.getvalue(), "image/jpeg"
+
+        except Exception as e:
+            if isinstance(e, ValueError) and "empty (0 bytes)" in str(e):
+                raise e
+            logger.warning(f"Image preprocessing warning: {e}. Falling back to raw bytes.")
+            if isinstance(image_input, (str, Path)):
+                data = Path(image_input).read_bytes()
+                if len(data) == 0:
+                    raise ValueError(f"Image file is empty (0 bytes): {image_input}")
+                return data, "image/png"
+            if len(image_input) == 0:
+                raise ValueError("Image input bytes is empty (0 bytes)")
+            return image_input, "image/jpeg"
+
     def process_image_file(
         self,
         image_path: str | Path,
@@ -146,9 +235,7 @@ class GeminiVLClient:
         if self._genai_client is not None:
             return self._process_image_sdk(image_path, prompt_text)
 
-        image_bytes = image_path.read_bytes()
-        ext = image_path.suffix.lower().lstrip(".")
-        mime_type = f"image/{ext}" if ext in ("png", "jpg", "jpeg", "webp") else "image/png"
+        image_bytes, mime_type = self._prepare_image_payload(image_path)
         b64_str = base64.b64encode(image_bytes).decode("utf-8")
         image_b64_uri = f"data:{mime_type};base64,{b64_str}"
 
@@ -161,10 +248,7 @@ class GeminiVLClient:
     ) -> str:
         from google.genai import types
 
-        image_bytes = image_path.read_bytes()
-        ext = image_path.suffix.lower().lstrip(".")
-        mime_type = "image/png" if ext == "png" else ("image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}")
-
+        image_bytes, mime_type = self._prepare_image_payload(image_path)
         image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
 
         attempt = 0
@@ -191,6 +275,15 @@ class GeminiVLClient:
                 )
 
                 content = response.text or ""
+                usage = getattr(response, "usage_metadata", None)
+                if usage:
+                    in_tok = getattr(usage, "prompt_token_count", 0)
+                    out_tok = getattr(usage, "candidates_token_count", 0)
+                    total_tok = getattr(usage, "total_token_count", 0)
+                    logger.info(
+                        f"Gemini OCR Token Usage [{image_path.name}] -> Input: {in_tok:,} tokens | Output: {out_tok:,} tokens | Total: {total_tok:,} tokens"
+                    )
+
                 cleaned = self._clean_markdown_fences(content)
                 return cleaned
 
@@ -199,8 +292,14 @@ class GeminiVLClient:
                 logger.warning(f"SDK request exception on attempt {attempt} for {image_path.name}: {err_str}")
                 last_error = err_str
 
-                if "invalid_argument" in err_str.lower() or "unauthorized" in err_str.lower():
+                err_lower = err_str.lower()
+                if any(
+                    k in err_lower
+                    for k in ("unauthorized", "unauthenticated", "permissiondenied", "invalid_api_key", "401", "403")
+                ):
                     raise ValueError(f"Gemini API Authentication Failed: {err_str}") from e
+                elif "invalid_argument" in err_lower or "400" in err_lower:
+                    raise ValueError(f"Gemini API Invalid Argument / Bad Request: {err_str}") from e
 
                 wait_time = calculate_backoff_with_jitter(attempt)
                 logger.warning(
@@ -217,19 +316,19 @@ class GeminiVLClient:
     def process_page_image(self, image_b64_uri: str, system_prompt: str | None = None) -> str:
         prompt_text = system_prompt or GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
 
+        if "," in image_b64_uri:
+            _, b64_data = image_b64_uri.split(",", 1)
+        else:
+            b64_data = image_b64_uri
+
+        raw_bytes = base64.b64decode(b64_data)
+        prepared_bytes, mime_type = self._prepare_image_payload(raw_bytes)
+
         # Nếu có _genai_client (SDK Vertex AI / AI Studio), ưu tiên sử dụng SDK
         if self._genai_client is not None:
             from google.genai import types
 
-            if "," in image_b64_uri:
-                header, b64_data = image_b64_uri.split(",", 1)
-                mime_type = header.split(";")[0].replace("data:", "") if "data:" in header else "image/jpeg"
-            else:
-                b64_data = image_b64_uri
-                mime_type = "image/jpeg"
-
-            img_bytes = base64.b64decode(b64_data)
-            image_part = types.Part.from_bytes(data=img_bytes, mime_type=mime_type)
+            image_part = types.Part.from_bytes(data=prepared_bytes, mime_type=mime_type)
 
             attempt = 0
             last_error = None
@@ -256,8 +355,21 @@ class GeminiVLClient:
                 except Exception as e:
                     err_str = str(e)
                     last_error = err_str
-                    if "invalid_argument" in err_str.lower() or "unauthorized" in err_str.lower():
+                    err_lower = err_str.lower()
+                    if any(
+                        k in err_lower
+                        for k in (
+                            "unauthorized",
+                            "unauthenticated",
+                            "permissiondenied",
+                            "invalid_api_key",
+                            "401",
+                            "403",
+                        )
+                    ):
                         raise ValueError(f"Gemini API Authentication Failed: {err_str}") from e
+                    elif "invalid_argument" in err_lower or "400" in err_lower:
+                        raise ValueError(f"Gemini API Invalid Argument / Bad Request: {err_str}") from e
 
                     wait_time = calculate_backoff_with_jitter(attempt)
                     logger.warning(
@@ -274,9 +386,10 @@ class GeminiVLClient:
                 "GEMINI_API_KEY, GOOGLE_API_KEY or VERTEX_API_KEY is not set. Please provide API Key or set environment variables."
             )
 
-        endpoint = f"{self.base_url}/chat/completions"
+        prepared_b64 = base64.b64encode(prepared_bytes).decode("utf-8")
+        prepared_b64_uri = f"data:{mime_type};base64,{prepared_b64}"
 
-        prompt_text = system_prompt or GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
+        endpoint = f"{self.base_url}/chat/completions"
 
         headers = {
             "Authorization": f"Bearer {self.api_key}",
@@ -291,7 +404,7 @@ class GeminiVLClient:
                     "content": [
                         {
                             "type": "image_url",
-                            "image_url": {"url": image_b64_uri},
+                            "image_url": {"url": prepared_b64_uri},
                         },
                         {
                             "type": "text",

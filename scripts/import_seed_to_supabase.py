@@ -8,17 +8,20 @@ Bao gồm:
 import argparse
 import json
 import os
-from pathlib import Path
 import re
 import sys
 import urllib.parse
+from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
 # Thêm backend/src vào sys.path
 sys.path.insert(0, str(Path(__file__).parent.parent / "backend" / "src"))
 
-from medsafe.domain.normalization import normalize_for_matching, remove_vietnamese_accents
+from medsafe.domain.normalization import (
+    normalize_for_matching,
+    remove_vietnamese_accents,
+)
 from medsafe.domain.severity import classify_severity
 from medsafe.ingestion.loader import load_drug_list
 
@@ -108,7 +111,7 @@ def execute_import_postgres(db_url: str, raw_drugs, d2d_pairs):
         return False
 
     fixed_url = fix_db_url_password_encoding(db_url)
-    print(f"--> Đang kết nối tới PostgreSQL Supabase...")
+    print("--> Đang kết nối tới PostgreSQL Supabase...")
 
     try:
         conn = psycopg2.connect(fixed_url)

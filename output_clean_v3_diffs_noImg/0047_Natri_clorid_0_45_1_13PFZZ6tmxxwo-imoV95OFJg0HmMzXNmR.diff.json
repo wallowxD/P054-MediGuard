@@ -1,0 +1,18 @@
+[
+  {
+    "line": 41,
+    "corrected": "Dung dịch tiêm truyền Natri Clorid 0,45% có nồng độ thẩm thấu xấp xỉ 154 mOsm/l."
+  },
+  {
+    "line": 46,
+    "corrected": "- Người lớn, người cao tuổi và thanh thiếu niên: 500 ml đến 3 L/ 24 giờ."
+  },
+  {
+    "line": 76,
+    "corrected": "Suy tim không mất bù, <!-- NEED_REVIEW: Thuật ngữ bất thường, nghi ngờ dịch sai từ 'decompensated heart failure' (Suy tim mất bù) -->"
+  },
+  {
+    "line": 204,
+    "corrected": "Thận trọng ở những bệnh nhân được điều trị bằng lithi. Có thể tăng độ thanh thải natri và lithi ở thận khi dùng Natri Clorid 0,45%. Sử dụng dung dịch tiêm truyền Natri Clorid 0,45% có thể làm tăng nồng độ lithi. <!-- NEED_REVIEW: Mâu thuẫn logic y khoa (tăng độ thanh thải lithi nhưng lại làm tăng nồng độ lithi) -->"
+  }
+]

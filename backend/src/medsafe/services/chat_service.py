@@ -65,7 +65,7 @@ GENERAL_SUGGESTIONS = [
 
 GENERAL_FOLLOW_UPS = [
     "Mức độ nghiêm trọng được phân loại thế nào?",
-    "\"Đang chờ xác nhận chuyên môn\" nghĩa là gì?",
+    '"Đang chờ xác nhận chuyên môn" nghĩa là gì?',
 ]
 
 
@@ -131,9 +131,7 @@ class ChatService:
 
     # -- scope: interaction --------------------------------------------------
 
-    async def _generate_initial_greeting(
-        self, payload: ChatRequest, context: ChatContextSummary
-    ) -> ChatResponse:
+    async def _generate_initial_greeting(self, payload: ChatRequest, context: ChatContextSummary) -> ChatResponse:
         del payload  # lời chào chỉ cần ngữ cảnh, không cần lịch sử hội thoại
         context_json = context.model_dump_json(by_alias=True, indent=2)
 
@@ -211,8 +209,8 @@ class ChatService:
 
     async def _answer_general_query(self, payload: ChatRequest) -> ChatResponse:
         fallback_reply = (
-            "Hiện tại hệ thống AI đang bận. Trong lúc chờ, bạn có thể mở \"Tra cứu thông tin thuốc\" để xem "
-            "tờ HDSD của một thuốc, hoặc \"Tra cứu tương tác thuốc\" để đối chiếu nhiều thuốc với nhau."
+            'Hiện tại hệ thống AI đang bận. Trong lúc chờ, bạn có thể mở "Tra cứu thông tin thuốc" để xem '
+            'tờ HDSD của một thuốc, hoặc "Tra cứu tương tác thuốc" để đối chiếu nhiều thuốc với nhau.'
         )
 
         reply = await self._complete(

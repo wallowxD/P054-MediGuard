@@ -1,0 +1,34 @@
+[
+  {
+    "line": 34,
+    "corrected": ": Hộp 10 vỉ (PVC - Nhôm) x 10 viên. <!-- NEED_REVIEW: Dòng quy cách đóng gói bị thiếu tên thuốc và nhãn ở đầu dòng -->"
+  },
+  {
+    "line": 36,
+    "corrected": ": Hộp 6 vỉ (PVC - Nhôm) x 10 viên. <!-- NEED_REVIEW: Dòng quy cách đóng gói bị thiếu tên thuốc và nhãn ở đầu dòng -->"
+  },
+  {
+    "line": 37,
+    "corrected": ": Hộp 10 vỉ (PVC - Nhôm) x 10 viên. <!-- NEED_REVIEW: Dòng quy cách đóng gói bị thiếu tên thuốc và nhãn ở đầu dòng -->"
+  },
+  {
+    "line": 87,
+    "corrected": "Như các thuốc khác, risedronat natri có thể gây tác dụng không mong muốn, nhưng không phải ai cũng gặp phải. <!-- NEED_REVIEW: Tên hoạt chất risedronat natri không khớp với thuốc Olanzapin trong tờ hướng dẫn -->"
+  },
+  {
+    "line": 323,
+    "corrected": "Thanh thiếu niên (từ 13 - 17 tuổi): Dược động học của olanzapin ở thanh thiếu niên tương tự như người lớn. Trong nghiên cứu lâm sàng, AUC trung bình olanzapin ở thanh thiếu niên cao hơn khoảng 27%. Các yếu tố khác biệt về nhân khẩu học giữa thanh thiếu niên và"
+  },
+  {
+    "line": 373,
+    "corrected": "*Tự tử:* Nguy cơ tử tự vốn có ở bệnh nhân tâm thần phân liệt và bệnh lưỡng cực, cần theo dõi chặt chẽ bệnh nhân có nguy cơ cao trong quá trình dùng thuốc. Nên viết chỉ định olanzapin với lượng viên nén ít nhất phù hợp với tuần trị tốt của bệnh nhân để tránh tình trạng quá liều. <!-- NEED_REVIEW: Lỗi chính tả từ 'tử tự' và cụm từ 'tuần trị tốt' khó hiểu trong ngữ cảnh y khoa -->"
+  },
+  {
+    "line": 480,
+    "corrected": "Chuyển hóa và dinh dưỡng: Tăng nồng độ cholesterol, tăng nồng độ glucose, tặc nồng độ triglycerid, glucose niệu, tăng cảm giác ngon miệng. <!-- NEED_REVIEW: Từ 'tặc' có khả năng là lỗi OCR của từ 'tăng' nhưng cần kiểm tra lại -->"
+  },
+  {
+    "line": 563,
+    "corrected": "12. NGÀY XEM XÉT SỬA ĐỔI, CẬP NHẬT LẠI NỘI DUNG HƯỚNG DẪN SỬ DỤNG THUỐC <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

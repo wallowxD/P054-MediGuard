@@ -9,20 +9,15 @@ Usage:
 """
 
 import argparse
-import json
 import logging
 import sys
-import tempfile
-import time
 from pathlib import Path
 
 # Add backend/src to sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
 from google import genai
-from google.genai import types
 from medsafe.config import get_settings
-
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -106,18 +101,18 @@ def main():
 
     client = genai.Client(api_key=api_key)
 
-    logger.info(f"Submitting Batch Job to Gemini API (50% Discount Mode)...")
+    logger.info("Submitting Batch Job to Gemini API (50% Discount Mode)...")
     try:
         job = client.batches.create(
             model=args.model,
             src=inline_requests,
             config={"display_name": f"proofread_batch_{len(md_files)}_files"}
         )
-        logger.info(f"Batch Job Created Successfully!")
+        logger.info("Batch Job Created Successfully!")
         logger.info(f"Job Name: {job.name}")
         logger.info(f"Current State: {job.state}")
         print("\n" + "="*80)
-        print(f"Gemini Batch Job Submitted! (50% Discount Applied)")
+        print("Gemini Batch Job Submitted! (50% Discount Applied)")
         print(f"Job Name: {job.name}")
         print(f"Total Files in Batch: {len(md_files)}")
         print("="*80)

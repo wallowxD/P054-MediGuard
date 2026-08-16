@@ -1,0 +1,14 @@
+[
+  {
+    "line": 25,
+    "corrected": "*Tá dược: Lactose monohydrat, povidon (kollidon 30), croscarmellose natri, megnesi stearat, talc, silicon dioxyd.* <!-- NEED_REVIEW: Từ 'megnesi' có thể là lỗi chính tả của 'magnesi' -->"
+  },
+  {
+    "line": 28,
+    "corrected": "*Tá dược: Lactose monohydrat, cellulose vi tinh thể M101, croscarmellose natri, povidon (kollidon 30), megnesi stearat, talc, natri lauryl sulfat.* <!-- NEED_REVIEW: Từ 'megnesi' có thể là lỗi chính tả của 'magnesi' -->"
+  },
+  {
+    "line": 30,
+    "corrected": "**2. Mô<!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

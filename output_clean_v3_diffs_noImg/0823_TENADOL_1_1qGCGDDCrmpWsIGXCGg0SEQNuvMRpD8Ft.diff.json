@@ -1,0 +1,26 @@
+[
+  {
+    "line": 34,
+    "corrected": "*Dự phòng phẫu thuật:* <!-- NEED_REVIEW: Tiêu đề mục dự phòng phẫu thuật bị cụt ý ở dòng tiếp theo -->"
+  },
+  {
+    "line": 35,
+    "corrected": "Dự phòng nhiễm khuẩn trước và sau phẫu thuật: Sử dụng cefamandole trong phẫu thuật có thể làm giảm tỉ lệ mắc nhiễm khuẩn hậu phẫu ở bệnh nhân trải qua các cuộc phẫu thuật có khả năng cao bị nhiễm khuẩn (ví dụ như mổ lấy thai, cắt tử cung âm đạo và cắt túi <!-- NEED_REVIEW: Câu bị cắt lửng cuối dòng, thiếu tên cơ quan (ví dụ: cắt túi mật) -->"
+  },
+  {
+    "line": 67,
+    "corrected": "*Phản ứng quá mẫn:* <!-- NEED_REVIEW: Mục này bị ngắt quãng nội dung và tiếp tục bị lệch vị trí ở dòng 97 -->"
+  },
+  {
+    "line": 68,
+    "corrected": "Đã có dấu hiệu cho thấy có dị ứng chéo một phần (5 <!-- NEED_REVIEW: Dữ liệu phần trăm bị cắt cụt và câu bị đứt đoạn -->"
+  },
+  {
+    "line": 95,
+    "corrected": "Cần giảm liều cho người suy thận. Tuy nhiên mức giảm liều có nhiều khuyến cáo khác nhau. Liều giảm dựa trên mức độ suy thận. Sau liều đầu tiên 1-2 g, các liều duy trì như sau: <!-- NEED_REVIEW: Bảng hiệu chỉnh liều cho suy thận bị mất phần thân bảng, chuyển nhầm nội dung sang dòng 97 -->"
+  },
+  {
+    "line": 97,
+    "corrected": "- 10%) giữa các kháng sinh beta-lactam bao gồm penicillin, cephalosporin, cephamycin và carbapenem. Trước khi bắt đầu điều trị bằng cefamandole, phải điều tra kỹ về tiền sử dị ứng của người bệnh với cephalosporin, penicillin hoặc thuốc khác. <!-- NEED_REVIEW: Dòng này bắt đầu bằng '- 10%)' là phần bị sót từ dòng 68 (dị ứng chéo) -->"
+  }
+]

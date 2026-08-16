@@ -1,0 +1,10 @@
+[
+  {
+    "line": 29,
+    "corrected": "Clopidogrel (dưới dạng Clopidogrel bisulfat)..........................................................................1 viên <!-- NEED_REVIEW: Thành phần hàm lượng bị tách dòng và nhầm lẫn với dòng 30 -->"
+  },
+  {
+    "line": 30,
+    "corrected": "75mg <!-- NEED_REVIEW: Hàm lượng 75mg bị tách rời khỏi tên hoạt chất ở dòng 29 -->"
+  }
+]

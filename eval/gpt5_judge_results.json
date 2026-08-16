@@ -1,0 +1,186 @@
+{
+  "total_judged": 20,
+  "judge_model": "gpt-5",
+  "results": [
+    {
+      "tc_id": "TC-OCR-001",
+      "filename": "0204_Telorssa_100mg_5mg_film-coated_tablets_1_1HfSpKeb2mbb9YxCYOPF829Zc8jDYNZbC.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-002",
+      "filename": "0084_RIOSART_HCT_80_12_5MG_1_1YV24A0Imoxs340eKJ0WKsvrHA4AGQT9I.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-003",
+      "filename": "0046_NDP-Saxa_5_1_1_DrzBl3ylSwNrSHg0nvmN0E4kfoiigVe.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-004",
+      "filename": "0626_Imipenem_Cilastatin_Kabi_500mg_500mg_1_1McScr6VLpEpsn_qdoOZ8rkhzsTJ8GD_w.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-005",
+      "filename": "0043_Tardyferon_B9_1_1wVj7mWO_MIA_HdfmkmrzsubjmznDv81w.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-006",
+      "filename": "0352_Bifitacine_1_1KXpaVteEr4WdT6RhztfMztp14zIqMWQx.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-007",
+      "filename": "0089_Mydrin-P_1_1VEBEDGsQxMP8Zr3Dqy_tjFFN8gnvNdFV.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-008",
+      "filename": "0319_Dopegyt_1_1WwV0ErMnz5j2Ma9g6FVSs-I2lwA1liy-.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-009",
+      "filename": "0851_Augmentin_625mg_1_1PrNI-MN0y_Yj7kddQnV-U5jam2cABEZt.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-010",
+      "filename": "0216_Kamelox_ODT_7_5_1_1keyd09ax8ezOFu1tmj031ABHEUybixEP.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-011",
+      "filename": "0293_Bivitanpo_100_1_1tX6DqjicwMcJxXiL7FOoBeDONfx_8hUm.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-012",
+      "filename": "0923_AUROPENNZ_1_5_1_1OPwsVaxJ-ViGI9YJrM1JOhy_Q2vxwGF2.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-013",
+      "filename": "0371_Decebal_50_1_1QE-mwWLVn3CUhW8DbqQp7F1ZFL54pN6X.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-014",
+      "filename": "0794_NovoMix_30_FlexPen_1_1NKyJbCIOcpiiWyh9jyVxjVFcP_R7LPvm.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-015",
+      "filename": "0136_Metsav_750_XR_1_1ByOZQVHSufJcGLEmiq8R22_IHnGzKlRm.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-016",
+      "filename": "0276_Amitriptylin_25mg_1_1SYKP_SOj4o3lTtGSpwx6x15IUSfF1pZl.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-017",
+      "filename": "0582_Glucophage_850_Mg_Metformin_1_1dS4-t1pM8ukIyC9TgfhQkTNWP2AvkKQM.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-018",
+      "filename": "0899_Amlessa_4mg_5mg_-_hạ_huyết_áp_và_bệnh_mạch_vành_1_147UJyr2TsxSrjAuKONGKxQIx3m1lyvnd.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-019",
+      "filename": "0097_Moxilen_500mg_1_1ODf_6ddXtQNpmdAjal82RndIb3dlxu-u.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    },
+    {
+      "tc_id": "TC-OCR-020",
+      "filename": "0629_Seretide_Accuhaler_50_500mcg_1_1sWFyJ-6UtxQk-LbglbaK_hK9uESQ4Tb9.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash tái lập cấu trúc bảng chuẩn xác, không bị rác lặp từ như Qwen.",
+      "judge_model": "gpt-5"
+    }
+  ]
+}

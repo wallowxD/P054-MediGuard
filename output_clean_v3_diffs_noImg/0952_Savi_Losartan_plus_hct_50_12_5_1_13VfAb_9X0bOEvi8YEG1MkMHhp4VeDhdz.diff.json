@@ -1,0 +1,18 @@
+[
+  {
+    "line": 40,
+    "corrected": "Liều khởi đầu thông thường là 50 mg(*) losartan mỗi ngày uống một lần. Nếu không đạt được mức huyết áp mục tiêu với liều losartan 50 mg, thì có thể điều chỉnh bằng cách sử dụng phối hợp losartan với hydrochlorothiazide liều thấp (12,5 mg) và nếu cần thiết có thể tăng liều lên mức losartan 100 mg/hydrochlorothiazide 12,5 mg(*) mỗi ngày uống một lần."
+  },
+  {
+    "line": 322,
+    "corrected": "Người có bệnh mạch vành, bệnh tim thiếu máu cục bộ rất nhạy cảm với mất kali và có nguy cơ loạn nhịp. Nồng độ kali huyết thanh dưới 3,0 mEq/lít là có nguy cơ cao. <!-- NEED_REVIEW: Giá trị kali huyết thanh dưới 30 mEq/lít là vô lý, có thể lỗi OCR thiếu dấu phẩy thành dưới 3,0 mEq/lít -->"
+  },
+  {
+    "line": 374,
+    "corrected": "Hydrochlorothiazide đi qua nhau thai nhưng không qua hàng rào máu não và được bài tiết qua sữa mẹ. <!-- NEED_REVIEW: Từ 'máu nào' có vẻ là lỗi OCR của 'máu não' -->"
+  },
+  {
+    "line": 397,
+    "corrected": "Các nghiên cứu dược động học cho thấy AUC của losartan ở những người nam tình nguyện khỏe mạnh người Nhật Bản và không phải người Nhật Bản không có sự khác biệt. Tuy nhiên, AUC của chất chuyển hóa acid carboxylic (E-3174) có sự khác nhau giữa hai nhóm, với độ phơi nhiễm cao hơn khoảng 1,5 lần ở các tình nguyện viên người Nhật Bản so với các tình nguyện viên không phải người Nhật Bản. Ý nghĩa lâm sàng của những kết quả này chưa được xác định. <!-- NEED_REVIEW: Hoạt chất chuyển hóa E-3174 xuất hiện ở đây khác với E-137 ở dòng 352, cần kiểm tra lại mã định danh chính xác -->"
+  }
+]

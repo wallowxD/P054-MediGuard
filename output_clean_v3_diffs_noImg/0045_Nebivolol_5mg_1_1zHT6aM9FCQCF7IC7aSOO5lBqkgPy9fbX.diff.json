@@ -1,0 +1,38 @@
+[
+  {
+    "line": 34,
+    "corrected": "Liều khởi đầu khuyến cáo ở bệnh nhân trên 65 tuổi là 2,5 mg/ngày. Nếu cần, có thể tăng liều hàng ngày lên 5 mg. Tuy nhiên, do kinh nghiệm ở bệnh nhân trên 75 tuổi còn hạn chế, thận trọng khi sử dụng thuốc và theo dõi bệnh nhân chặt chẽ."
+  },
+  {
+    "line": 48,
+    "corrected": "Việc bắt đầu điều trị và tất cả các lần tăng liều nên được thực hiện dưới sự giám sát của bác sĩ có kinh nghiệm trong vòng ít nhất 2 tuần để đảm bảo các trạng thái lâm sàng đều ổn định (đặc biệt là huyết áp, nhịp tim, rối loạn dẫn truyền, dấu hiệu thể hiện suy tim tiến triển nặng lên)."
+  },
+  {
+    "line": 110,
+    "corrected": "Các thuốc phong bế beta-adrenergic có thể che giấu các triệu chứng nhịp tim nhanh trong bệnh cường giáp. Dừng thuốc đột ngột có thể làm các triệu chứng nặng lên."
+  },
+  {
+    "line": 141,
+    "corrected": "Bảng tóm tắt các phản ứng có hại được phân nhóm theo tần suất: rất thường gặp (ADR ≥ 1/10), thường gặp (1/100 ≤ ADR < 1/10), ít gặp (1/1000 ≤ ADR < 1/100), hiếm gặp (1/10000 ≤ ADR < 1/1000), rất hiếm gặp (ADR < 1/10000) và chưa rõ (không thể ước lượng từ dữ liệu sẵn có) <!-- NEED_REVIEW: Bất thường khoảng tần suất ADR của nhóm hiếm gặp (1/1000 <= ADR < 1/10000 bị sai thứ tự toán học) -->"
+  },
+  {
+    "line": 189,
+    "corrected": "Baclofen (thuốc chống co thắt), amifostin (thuốc điều trị ung thư): Có thể làm tăng huyết áp, do đó nên hiệu chỉnh liều thuốc hạ huyết áp. <!-- NEED_REVIEW: Tương tác thuốc nghi ngờ diễn đạt sai, thông thường baclofen/amifostin làm tăng tác dụng hạ huyết áp chứ không phải tăng huyết áp -->"
+  },
+  {
+    "line": 245,
+    "corrected": "Nebivolol chuyển hóa mạnh, một phần thành các chất chuyển hóa hydroxy có hoạt tính. Chuyển hóa nebivolol phụ thuộc đa hình CYP2D6. Sinh khả dụng đường uống của nebivolol trung bình 12% ở những bệnh nhân chuyển hóa nhanh và hầu như hoàn toàn ở những người chuyển hóa chậm. Ở trạng thái ổn định và cùng một mức liều, nồng độ đỉnh của nebivolol dạng không đổi trong huyết tương ở người chuyển hóa nhanh cao hơn khoảng 23 lần ở người chuyển hóa kém. <!-- NEED_REVIEW: Mâu thuẫn về dược động học, ở người chuyển hóa kém (poor metabolizer) nồng độ thuốc dạng không đổi phải cao hơn người chuyển hóa nhanh -->"
+  },
+  {
+    "line": 255,
+    "corrected": "Nồng độ đỉnh trong huyết tương (ở trạng thái đói) đạt được trong vòng 24 giờ đối với nebivolol và một vài ngày đối với các chất chuyển hóa hydroxy. <!-- NEED_REVIEW: Thời gian đạt nồng độ đỉnh Tmax trong 24 giờ là bất thường đối với nebivolol (thường là 1 - 4 giờ) -->"
+  },
+  {
+    "line": 266,
+    "corrected": "Hộp 10 vỉ x 10 viên; vỉ PVC/nhôm"
+  },
+  {
+    "line": 273,
+    "corrected": "### 17. HẠN DÙNG CỦA THUỐC:"
+  }
+]

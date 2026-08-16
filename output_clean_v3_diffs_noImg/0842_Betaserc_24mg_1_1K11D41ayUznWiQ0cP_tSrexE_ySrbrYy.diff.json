@@ -1,0 +1,14 @@
+[
+  {
+    "line": 25,
+    "corrected": "*In vitro*: betahistine tạo điều kiện cho việc dẫn truyền histamine do tác dụng đồng vận một phần trên thụ thể H, và tác dụng đối vận trên thụ thể H₃. <!-- NEED_REVIEW: Ký hiệu thụ thể histamine bị thiếu số (thụ thể H gì? H1 hay H2?) -->"
+  },
+  {
+    "line": 59,
+    "corrected": "- U tuyến thượng thận <!-- NEED_REVIEW: Chống chỉ định u tuyến thượng thận (u tủy thượng thận/pheochromocytoma) đối với betahistine cần kiểm tra lại độ chính xác y khoa -->"
+  },
+  {
+    "line": 88,
+    "corrected": "- Giảm tiểu cầu, nóng độ transaminase tăng <!-- NEED_REVIEW: Từ 'nóng độ' có khả năng là lỗi OCR của 'nồng độ' -->"
+  }
+]

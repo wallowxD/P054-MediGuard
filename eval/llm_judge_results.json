@@ -1,0 +1,166 @@
+{
+  "judge_model": "gpt-5",
+  "total_judged_cases": 20,
+  "results": [
+    {
+      "tc_id": "TC-OCR-001",
+      "filename": "0204_Telorssa_100mg_5mg_film-coated_tablets_1_1HfSpKeb2mbb9YxCYOPF829Zc8jDYNZbC.md",
+      "qwen_score": 6,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Bản Gemini 3.6 Flash có độ chính xác cao với liều lượng và không có lỗi lặp từ. Ngoài ra, cấu trúc và tiêu đề markdown đều rõ ràng và chính xác. Bản Qwen 3 VL Flash có một số lỗi về cấu trúc và chứa văn bản lặp không cần thiết, làm giảm điểm số."
+    },
+    {
+      "tc_id": "TC-OCR-002",
+      "filename": "0084_RIOSART_HCT_80_12_5MG_1_1YV24A0Imoxs340eKJ0WKsvrHA4AGQT9I.md",
+      "qwen_score": 6,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Kết quả OCR từ Gemini 3.6 Flash duy trì độ chính xác tốt hơn với liều lượng thuốc và tên thuốc được ghi chính xác và đầy đủ. Bên cạnh đó, cấu trúc bảng Markdown và tiêu đề phần được bảo toàn hoàn hảo. Đoạn văn từ Qwen 3 VL Flash có tình trạng lặp từ lộn xộn và thiếu cấu trúc rõ ràng."
+    },
+    {
+      "tc_id": "TC-OCR-003",
+      "filename": "0046_NDP-Saxa_5_1_1_DrzBl3ylSwNrSHg0nvmN0E4kfoiigVe.md",
+      "qwen_score": 6,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash có độ chính xác cao hơn về cấu trúc và thông tin liều lượng. Kết quả của Qwen 3 VL Flash chứa lỗi định dạng và lặp từ, làm giảm tính chính xác. Thuật ngữ và thông tin liều lượng của Gemini 3.6 Flash được giữ nguyên và dễ hiểu hơn."
+    },
+    {
+      "tc_id": "TC-OCR-004",
+      "filename": "0626_Imipenem_Cilastatin_Kabi_500mg_500mg_1_1McScr6VLpEpsn_qdoOZ8rkhzsTJ8GD_w.md",
+      "qwen_score": 8,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Đoạn B của Gemini 3.6 Flash mang lại độ chính xác cao hơn trong việc nêu rõ các chỉ định và liều dùng cụ thể hơn cho từng nhóm bệnh nhân. Đoạn A của Qwen 3 VL Flash có xu hướng thiếu chi tiết về liều lượng và không đầy đủ phần chỉ định. Cả hai đều duy trì được cấu trúc văn bản và không có lỗi lặp từ hay ký tự rác."
+    },
+    {
+      "tc_id": "TC-OCR-005",
+      "filename": "0043_Tardyferon_B9_1_1wVj7mWO_MIA_HdfmkmrzsubjmznDv81w.md",
+      "qwen_score": 9,
+      "gemini_score": 8,
+      "winner": "Qwen 3 VL Flash",
+      "judgment_note": "Cả hai đoạn đều duy trì thông tin về liều lượng và tên thuốc chính xác, tuy nhiên Qwen 3 VL Flash duy trì cấu trúc bảng markdown và tiêu đề rõ ràng hơn. Đoạn B từ Gemini có sự lặp lại không cần thiết và một sự chỉnh sửa không đúng định dạng bảng rõ ràng."
+    },
+    {
+      "tc_id": "TC-OCR-006",
+      "filename": "0352_Bifitacine_1_1KXpaVteEr4WdT6RhztfMztp14zIqMWQx.md",
+      "qwen_score": 4,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Đoạn văn bản từ Gemini 3.6 Flash có độ chính xác cao hơn về cả thuật ngữ tên thuốc và liều lượng, đồng thời giữ nguyên cấu trúc bảng Markdown và tiêu đề section. Kết quả từ Qwen 3 VL Flash gặp vấn đề lặp từ và thông tin liều lượng không chính xác."
+    },
+    {
+      "tc_id": "TC-OCR-007",
+      "filename": "0089_Mydrin-P_1_1VEBEDGsQxMP8Zr3Dqy_tjFFN8gnvNdFV.md",
+      "qwen_score": 8,
+      "gemini_score": 7,
+      "winner": "Qwen 3 VL Flash",
+      "judgment_note": "Kết quả OCR của Qwen 3 VL Flash có độ chính xác cao về liều lượng và thuật ngữ tên thuốc. Cả hai đoạn OCR giữ nguyên cấu trúc nhưng Gemini 3.6 Flash đã gặp vấn đề với việc vỡ dòng và không đầy đủ nội dung. Phần nội dung của Gemini cũng bị cắt ngắn ở cuối đoạn văn. Qwen không có vấn đề ký tự rác hoặc lặp từ."
+    },
+    {
+      "tc_id": "TC-OCR-008",
+      "filename": "0319_Dopegyt_1_1WwV0ErMnz5j2Ma9g6FVSs-I2lwA1liy-.md",
+      "qwen_score": 8,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash có độ chính xác cao hơn trong việc giữ nguyên cấu trúc bảng và tiêu đề section, không có lỗi lặp từ vô hạn, cũng như ít lỗi ký tự rác. Qwen 3 VL Flash có một vài lỗi nhỏ về cấu trúc và nội dung không hoàn thiện như Bảng Markdown có lỗi gạch ngang và thiếu định dạng tiêu đề. Tổng thể, Gemini 3.6 Flash vượt trội hơn ở độ tin cậy và chính xác."
+    },
+    {
+      "tc_id": "TC-OCR-009",
+      "filename": "0851_Augmentin_625mg_1_1PrNI-MN0y_Yj7kddQnV-U5jam2cABEZt.md",
+      "qwen_score": 8,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Cả hai đoạn OCR đều có độ chính xác cao với thông tin về liều lượng và thành phần thuốc. Tuy nhiên, Gemini 3.6 Flash giữ nguyên cấu trúc markdown tốt hơn và không bị lỗi chính tả như 'celulose' thành 'cellulose'. Không có lỗi lặp từ hay ký tự rác trong cả hai bản OCR."
+    },
+    {
+      "tc_id": "TC-OCR-010",
+      "filename": "0216_Kamelox_ODT_7_5_1_1keyd09ax8ezOFu1tmj031ABHEUybixEP.md",
+      "qwen_score": 5,
+      "gemini_score": 8,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Qwen 3 VL Flash bị lỗi lặp thông tin không cần thiết liên tục, làm giảm khả năng truyền tải thông tin quan trọng. Gemini 3.6 Flash giữ cấu trúc thông tin tốt hơn, không có lỗi lặp và cung cấp thông tin y tế chi tiết mà không có ký tự rác."
+    },
+    {
+      "tc_id": "TC-OCR-011",
+      "filename": "0293_Bivitanpo_100_1_1tX6DqjicwMcJxXiL7FOoBeDONfx_8hUm.md",
+      "qwen_score": 5,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash có độ chính xác cao hơn về các con số liều lượng và cấu trúc tài liệu y tế. Ngoài ra, văn bản không có sự trùng lặp từ và duy trì cấu trúc một cách rõ ràng. Qwen 3 VL Flash gặp vấn đề với sự lặp lại nội dung và thừa một số phần thông tin không cần thiết."
+    },
+    {
+      "tc_id": "TC-OCR-012",
+      "filename": "0923_AUROPENNZ_1_5_1_1OPwsVaxJ-ViGI9YJrM1JOhy_Q2vxwGF2.md",
+      "qwen_score": 7,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash cung cấp thông tin y tế chi tiết và chính xác hơn, đặc biệt với liều lượng và hướng dẫn sử dụng. Cấu trúc bảng và các tiêu đề section được duy trì tốt ở Gemini. Qwen có cấu trúc văn bản kém và lặp lại nhiều thông tin không cần thiết."
+    },
+    {
+      "tc_id": "TC-OCR-013",
+      "filename": "0371_Decebal_50_1_1QE-mwWLVn3CUhW8DbqQp7F1ZFL54pN6X.md",
+      "qwen_score": 7,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash thể hiện độ chính xác cao hơn về con số liều lượng và cấu trúc thông tin, với tỷ lệ giữ nguyên cấu trúc bảng và bố cục văn bản tốt hơn. Qwen 3 VL Flash có một số lỗi về cú pháp và cấu trúc, ảnh hưởng đến độ chính xác tổng thể."
+    },
+    {
+      "tc_id": "TC-OCR-014",
+      "filename": "0794_NovoMix_30_FlexPen_1_1NKyJbCIOcpiiWyh9jyVxjVFcP_R7LPvm.md",
+      "qwen_score": 7,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash vượt trội hơn với độ chính xác cao hơn về thuật ngữ tên thuốc và số liệu liều lượng, đặc biệt không bị lỗ layout hoặc lặp từ. Trong khi đó, Qwen 3 VL Flash có sự nhầm lẫn trong chính tả và định dạng không duy trì được tốt như Gemini 3.6 Flash."
+    },
+    {
+      "tc_id": "TC-OCR-015",
+      "filename": "0136_Metsav_750_XR_1_1ByOZQVHSufJcGLEmiq8R22_IHnGzKlRm.md",
+      "qwen_score": 7,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Phiên bản Gemini cho kết quả tốt hơn về độ chính xác và chi tiết của liều lượng thuốc và cấu trúc markdown. Qwen có một số lỗi chính tả trong tên thuốc và cấu trúc bảng không đồng đều. Tuy nhiên, cả hai đoạn đều không có lỗi lặp từ hoặc ký tự rác."
+    },
+    {
+      "tc_id": "TC-OCR-016",
+      "filename": "0276_Amitriptylin_25mg_1_1SYKP_SOj4o3lTtGSpwx6x15IUSfF1pZl.md",
+      "qwen_score": 7,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash có độ chính xác cao hơn về con số liều lượng và cấu trúc tài liệu, đặc biệt trong phần liều lượng và thành phần thuốc. Qwen 3 VL Flash gặp vấn đề lặp từ và định dạng không nhất quán. Cả hai phiên bản không có lỗi về ký tự rác Unicode hay vỡ layout, nhưng Gemini duy trì cấu trúc và ngữ nghĩa tốt hơn."
+    },
+    {
+      "tc_id": "TC-OCR-017",
+      "filename": "0582_Glucophage_850_Mg_Metformin_1_1dS4-t1pM8ukIyC9TgfhQkTNWP2AvkKQM.md",
+      "qwen_score": 8,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Cả hai đoạn đều thể hiện thông tin liều lượng và tên thuốc chính xác. Gemini 3.6 Flash giữ nguyên cấu trúc Markdown và tiêu đề section rõ ràng hơn, không có lỗi lặp từ hoặc ký tự rác. Qwen 3 VL Flash có một số lỗi cấu trúc và không đầy đủ thông tin như Gemini 3.6 Flash."
+    },
+    {
+      "tc_id": "TC-OCR-018",
+      "filename": "0899_Amlessa_4mg_5mg_-_hạ_huyết_áp_và_bệnh_mạch_vành_1_147UJyr2TsxSrjAuKONGKxQIx3m1lyvnd.md",
+      "qwen_score": 8,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Cả hai văn bản đều thể hiện tốt về độ chính xác con số liều lượng và thuật ngữ thuốc. Gemini duy trì cấu trúc bảng và tiêu đề section rõ ràng, trong khi Qwen có vài lỗi nhỏ về định dạng. Gemini không có lỗi ngữ pháp hoặc bị ký tự rác."
+    },
+    {
+      "tc_id": "TC-OCR-019",
+      "filename": "0097_Moxilen_500mg_1_1ODf_6ddXtQNpmdAjal82RndIb3dlxu-u.md",
+      "qwen_score": 4,
+      "gemini_score": 7,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Qwen 3 VL Flash gặp vấn đề nghiêm trọng về lặp từ và không giữ nguyên cấu trúc tiêu đề, ảnh hưởng lớn đến tính an toàn thông điệp. Gemini 3.6 Flash tuy thiếu một số thông tin, nhưng có cấu trúc bảng rõ ràng và không gặp lỗi repetition loop."
+    },
+    {
+      "tc_id": "TC-OCR-020",
+      "filename": "0629_Seretide_Accuhaler_50_500mcg_1_1sWFyJ-6UtxQk-LbglbaK_hK9uESQ4Tb9.md",
+      "qwen_score": 7,
+      "gemini_score": 9,
+      "winner": "Gemini 3.6 Flash",
+      "judgment_note": "Gemini 3.6 Flash vượt trội về độ chính xác của con số liều lượng thuốc như 50/250 mcg và 50/500 mcg, cũng như cấu trúc trình bày nội dung rõ ràng, bao gồm tiêu đề và các phần chỉ định. Qwen 3 VL Flash giữ nguyên cấu trúc bảng Markdown nhưng thiếu thông tin chi tiết về liều lượng và không có tiêu đề rõ ràng."
+    }
+  ]
+}

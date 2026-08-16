@@ -1,0 +1,34 @@
+[
+  {
+    "line": 57,
+    "corrected": "| 1-5 tuổi (9kg-18kg) | 5.0ml / lần | <!-- NEED_REVIEW: Trọng lượng 9kg bị lặp lại ở cả nhóm dưới 1 tuổi và nhóm 1-5 tuổi, có thể do lỗi OCR hoặc dữ liệu gốc -->"
+  },
+  {
+    "line": 70,
+    "corrected": "Ở các bệnh nhân bị tiêu chảy do dùng cefaclor, có khả năng bị viêm kết tràng giả mạc. Việc ngừng dùng thuốc"
+  },
+  {
+    "line": 71,
+    "corrected": ""
+  },
+  {
+    "line": 72,
+    "corrected": "MEDOCHEMIE LTD"
+  },
+  {
+    "line": 73,
+    "corrected": "1-10 Constantinoupoleos str."
+  },
+  {
+    "line": 74,
+    "corrected": "CY - 3011 Limassol"
+  },
+  {
+    "line": 75,
+    "corrected": ""
+  },
+  {
+    "line": 76,
+    "corrected": "có thể là thích hợp trong các trường hợp bệnh nhẹ. Các trường hợp nặng hơn cần áp dụng thêm các biện pháp điều trị khác, do viêm kết tràng giả mạc có thể đe dọa tính mạng. <!-- NEED_REVIEW: Ngắt đoạn văn bản giữa chừng do chèn thông tin nhà sản xuất (dòng 72-74), làm gián đoạn mạch đọc -->"
+  }
+]

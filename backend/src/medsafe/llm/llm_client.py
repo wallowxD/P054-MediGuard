@@ -42,13 +42,36 @@ def _translate_provider_error(error: Exception) -> NoReturn:
 
 
 def repair_truncated_json(raw_json: str) -> dict[str, Any]:
-    """Giữ tương thích ingestion cũ; request path không dùng cơ chế sửa output này."""
-    cleaned = raw_json.strip().removeprefix("```json").removesuffix("```").strip()
+    """Tự động vá lỗi JSON bị cắt ngang do max_tokens."""
+    cleaned = raw_json.strip()
+    if "```json" in cleaned:
+        parts = cleaned.split("```json")
+        cleaned = parts[1]
+        if "```" in cleaned:
+            cleaned = cleaned.split("```")[0]
+        cleaned = cleaned.strip()
+    elif "```" in cleaned:
+        parts = cleaned.split("```")
+        cleaned = parts[1] if len(parts) > 1 else parts[0]
+        cleaned = cleaned.strip()
+
+    # Thử load trực tiếp trước
     try:
         value = json.loads(cleaned)
         return value if isinstance(value, dict) else {}
     except json.JSONDecodeError:
         return {}
+
+    # Vá chuỗi string bị cắt dở
+    pos = max(cleaned.rfind("}"), cleaned.rfind("]"))
+    if pos != -1:
+        truncated_candidate = cleaned[: pos + 1]
+        if not truncated_candidate.endswith("}"):
+            truncated_candidate += "}"
+        try:
+            return json.loads(truncated_candidate)
+        except json.JSONDecodeError:
+            pass
 
 
 class LLMClient:

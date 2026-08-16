@@ -17,9 +17,8 @@ from pathlib import Path
 # Add backend/src to sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
-from tqdm import tqdm
 from medsafe.ocr.line_proofreader import LineDiffProofreader
-
+from tqdm import tqdm
 
 logging.basicConfig(
     level=logging.INFO,
@@ -28,27 +27,19 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+import json
+import random
 import time
+
 
 def process_single_file(
     md_path: Path,
     proofreader: LineDiffProofreader,
     out_dir: Path,
+    diff_dir: Path | None = None,
     skip_existing: bool = True,
     delay: float = 0.0,
 ) -> tuple[str, bool, str]:
-    """Proofread a single Markdown file using Gemini LineDiffProofreader.
-
-    Args:
-        md_path: Path to input Markdown file.
-        proofreader: LineDiffProofreader instance.
-        out_dir: Destination directory.
-        skip_existing: Skip processing if output file already exists.
-        delay: Delay in seconds to sleep after request.
-
-    Returns:
-        Tuple of (filename, status_success, message).
-    """
     out_path = out_dir / md_path.name
 
     if skip_existing and out_path.exists() and out_path.stat().st_size > 0:
@@ -61,12 +52,22 @@ def process_single_file(
             out_path.write_text("", encoding="utf-8")
             return (md_path.name, True, "Empty file skipped")
 
-        proofread_content = proofreader.proofread_markdown(raw_content)
+        proofread_content, diffs = proofreader.proofread_markdown_with_diff(raw_content)
+
         if delay > 0:
-            time.sleep(delay)
+            jitter = random.uniform(0.5, 2.0)
+            actual_delay = delay + jitter
+            time.sleep(actual_delay)
+
         out_dir.mkdir(parents=True, exist_ok=True)
         out_path.write_text(proofread_content, encoding="utf-8")
-        return (md_path.name, True, f"Saved to {out_path.name}")
+
+        if diff_dir is not None:
+            diff_dir.mkdir(parents=True, exist_ok=True)
+            diff_file = diff_dir / f"{md_path.stem}.diff.json"
+            diff_file.write_text(json.dumps(diffs, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        return (md_path.name, True, f"Saved ({len(diffs)} diffs)")
 
     except Exception as e:
         logger.error(f"Failed to proofread {md_path.name}: {e}")
@@ -80,26 +81,38 @@ def main():
     parser.add_argument(
         "--dir",
         type=str,
-        default="output",
-        help="Directory containing Markdown files to proofread (default: output/).",
+        default="output_clean_v3",
+        help="Directory containing Markdown files to proofread (default: output_clean_v3).",
     )
     parser.add_argument(
         "--out-dir",
         type=str,
-        default="output_clean",
-        help="Custom output directory for proofread Markdown files (default: output_clean/).",
+        default="output_clean_v3_proofread_noImg",
+        help="Custom output directory for proofread Markdown files (default: output_clean_v3_proofread_noImg).",
+    )
+    parser.add_argument(
+        "--diff-dir",
+        type=str,
+        default="output_clean_v3_diffs_noImg",
+        help="Custom output directory for diff JSON audit files (default: output_clean_v3_diffs_noImg).",
+    )
+    parser.add_argument(
+        "--api-key",
+        type=str,
+        default=None,
+        help="Google Gemini API Key override.",
     )
     parser.add_argument(
         "--workers",
         type=int,
-        default=4,
-        help="Number of concurrent worker threads (default: 4).",
+        default=2,
+        help="Number of concurrent worker threads (default: 2 to respect 15 RPM Free Tier).",
     )
     parser.add_argument(
         "--model",
         type=str,
-        default=None,
-        help="Gemini model name override (default: gemini-2.5-flash-lite).",
+        default="gemini-3.5-flash-lite",
+        help="Gemini model name override (default: gemini-3.5-flash-lite).",
     )
     parser.add_argument(
         "--limit",
@@ -110,8 +123,8 @@ def main():
     parser.add_argument(
         "--delay",
         type=float,
-        default=0.0,
-        help="Delay in seconds between requests per worker to respect Rate Limits (e.g., --delay 4).",
+        default=4.5,
+        help="Delay in seconds between requests per worker to respect Rate Limits (default: 4.5s for Free Tier 15 RPM).",
     )
     parser.add_argument(
         "--force",
@@ -127,6 +140,7 @@ def main():
         sys.exit(1)
 
     out_dir = Path(args.out_dir) if args.out_dir else in_dir
+    diff_dir = Path(args.diff_dir) if args.diff_dir else None
     md_files = [
         f for f in sorted(in_dir.glob("*.md"))
         if not f.name.startswith("sample_") and not f.name.endswith("_proofread_test.md")
@@ -142,14 +156,14 @@ def main():
     logger.info(f"Found {len(md_files)} Markdown file(s) to process in {in_dir}")
     logger.info(f"Using Gemini Line-Diff Proofreader ({args.model or 'default'}) with {args.workers} worker threads (delay: {args.delay}s)...")
 
-    proofreader = LineDiffProofreader(model=args.model)
+    proofreader = LineDiffProofreader(api_key=args.api_key, model=args.model)
     skip_existing = not args.force
     success_count = 0
 
     with ThreadPoolExecutor(max_workers=args.workers) as executor:
         futures = {
             executor.submit(
-                process_single_file, md_file, proofreader, out_dir, skip_existing, args.delay
+                process_single_file, md_file, proofreader, out_dir, diff_dir, skip_existing, args.delay
             ): md_file
             for md_file in md_files
         }

@@ -127,9 +127,7 @@ async def test_empty_context_object_falls_back_to_general_scope():
     mock_llm = AsyncMock()
     service = ChatService(llm_client=mock_llm)
 
-    res: ChatResponse = await service.handle_message(
-        ChatRequest(action="initial", context=ChatContextSummary())
-    )
+    res: ChatResponse = await service.handle_message(ChatRequest(action="initial", context=ChatContextSummary()))
 
     assert "Tra cứu thông tin thuốc" in res.reply.content
     mock_llm.async_complete.assert_not_awaited()
@@ -158,7 +156,7 @@ async def test_drug_greeting_fallback_names_the_drug():
 @pytest.mark.asyncio
 async def test_drug_query_prompt_carries_verbatim_leaflet_sections():
     mock_llm = AsyncMock()
-    mock_llm.async_complete.return_value = "Tờ HDSD ghi ở mục Chống chỉ định: \"Quá mẫn với thành phần\"."
+    mock_llm.async_complete.return_value = 'Tờ HDSD ghi ở mục Chống chỉ định: "Quá mẫn với thành phần".'
 
     service = ChatService(llm_client=mock_llm)
     req = ChatRequest(

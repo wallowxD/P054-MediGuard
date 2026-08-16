@@ -1,0 +1,18 @@
+[
+  {
+    "line": 76,
+    "corrected": "Pantoprazol, cũng như các thuốc ức chế tiết acid khác có thể làm giảm sự hấp thu vitamin B12 (cyanocobalamin) do giảm hoặc thiếu acid chlorhydric dịch vị. Điều này nên được xem xét ở những bệnh nhân bị giảm dự trữ của cơ thể hoặc có các yếu tố nguy cơ làm giảm sự hấp thu vitamin B12 khi điều trị dài hạn hoặc nếu thấy các triệu chứng tương ứng trên lâm sàng."
+  },
+  {
+    "line": 102,
+    "corrected": "Tăng nồng độ Chromogranin A (CgA) có thể gây trở ngại cho việc điều tra các khối u thần kinh. Để tránh sự ảnh hưởng này, nên ngưng điều trị bằng pantoprazol ít nhất 5 ngày trước khi đo CgA. Nếu <!-- NEED_REVIEW: Câu bị đứt dở dang ở cuối dòng -->"
+  },
+  {
+    "line": 169,
+    "corrected": "| | tính) | Trướng bụng và đầy hơi; Táo bón; Khô miệng; Đau bụng và khó chịu | | | <!-- NEED_REVIEW: Bảng bị lỗi định dạng và có chữ lửng lơ \"tính)\" -->"
+  },
+  {
+    "line": 207,
+    "corrected": "Trong quá trình điều trị bằng các thuốc kháng tiết, gastrin huyết thanh tăng để đáp ứng với việc giảm tiết acid. CgA cũng tăng do giảm độ acid dạ dày. Mức CgA tăng có thể gây trở ngại cho việc điều nghiên các khối u thần kinh. <!-- NEED_REVIEW: Từ \"điều nghiên\" không tự nhiên trong ngữ cảnh y khoa (nghi là lỗi dịch/OCR của \"điều tra\" hoặc \"thăm dò\") -->"
+  }
+]

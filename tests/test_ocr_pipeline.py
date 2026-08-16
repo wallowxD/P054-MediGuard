@@ -1,17 +1,12 @@
 """Unit tests for Qwen3-VL Flash OCR Pipeline and Dataset Link Verification."""
 
-import os
-import tempfile
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import fitz  # PyMuPDF
 import pytest
-
-from src.config import Settings, get_settings
-from src.models.ocr import DocumentOCRResult, PageOCRResult
-from src.prompts.ocr_prompts import QWEN_OCR_SYSTEM_PROMPT
-from src.services.dataset_service import check_url_active, update_dataset_link_notes
+from src.models.ocr import DocumentOCRResult
+from src.services.dataset_service import update_dataset_link_notes
 from src.services.ocr.pdf_renderer import PDFRenderer
 from src.services.ocr.pipeline import OCRPipeline
 from src.services.ocr.qwen_client import QwenVLClient

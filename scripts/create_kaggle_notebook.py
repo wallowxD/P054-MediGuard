@@ -1,8 +1,8 @@
 """Script sinh ra file Jupyter Notebook `notebooks/embed_to_qdrant_bge_m3.ipynb` để chạy trên Kaggle GPU T4 kèm cơ chế Resume (Idempotent UUID) an toàn 100%."""
 
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 

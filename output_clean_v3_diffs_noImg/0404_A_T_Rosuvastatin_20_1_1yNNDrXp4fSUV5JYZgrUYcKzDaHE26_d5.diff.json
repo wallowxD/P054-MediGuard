@@ -1,0 +1,38 @@
+[
+  {
+    "line": 72,
+    "corrected": "  + Tiền sử bị bệnh cơ do sử dụng statin hay fibrat trước đó. <!-- NEED_REVIEW: Sai chính tả 'firat' thành 'fibrat' đã sửa, nhưng cần xem lại cấu trúc gạch đầu dòng -->"
+  },
+  {
+    "line": 102,
+    "corrected": "Cyclosporin dùng đồng thời với rosuvastatin các giá trị AUC của rosuvastatin cao hơn trung bình gấp 7 lần, nhưng không ảnh hưởng đến nồng độ rosuvastatin trong huyết tương. Dùng đồng thời rosuvastatin với các chất đối kháng vitamin K có thể làm tăng chỉ số INR. Dùng đồng thời rosuvastatin với hỗn dịch kháng acid chứa nhôm và magnesi hydroxyd làm giảm khoảng 50% nồng độ rosuvastatin trong huyết tương. <!-- NEED_REVIEW: 'magnesi hydroxy' đổi thành 'magnesi hydroxyd' và câu văn 'không ảnh hưởng đến nồng độ rosuvastatin' mâu thuẫn với vế trước 'AUC cao hơn gấp 7 lần' -->"
+  },
+  {
+    "line": 105,
+    "corrected": "Thuốc viên uống ngừa thai/liệu pháp thay thế hormon dùng đồng thời rosuvastatin với thuốc viên uống ngừa thai làm tăng 26% AUC ethinyl estradiol và 34% AUC của norgestrel. Nên lưu ý đến mức tăng nồng độ này trong huyết tương khi chọn uống thuốc ngừa thai. Chưa có dữ liệu dược động học trên những bệnh nhân dùng đồng thời rosuvastatin và HRT, vì vậy không thể loại trừ khả năng có tác động tương tự. <!-- NEED_REVIEW: Sửa lỗi chính tả 'cuar' thành 'của' -->"
+  },
+  {
+    "line": 106,
+    "corrected": "Tương tác với ezetimibe làm tăng giảm đáng kể mật độ L – LDL ở gần 70% bệnh nhân có nồng độ cholesterol cao, cao hơn so với khi dùng rosuvastatin một mình. Ngoài ra sự phối hợp này còn làm giảm các thành phần lipid khác như cholesterol tổng số, triglycerid, apolipoprotein B <!-- NEED_REVIEW: 'ezetimid' sửa thành 'ezetimibe', 'tăng giảm đáng kể' bất thường về mặt dược lý, 'truglycerid' sửa thành 'triglycerid' -->"
+  },
+  {
+    "line": 108,
+    "corrected": "Phối hợp với các tác nhân ức chế protease (PI-protease inhibitor như atazanavir, ritonavir, lopinavir). Thận trọng khi dùng đồng thời, do các tác nhân này có thể làm tăng nồng độ của rosuvastatin trong máu do đó có thể điều chỉnh giảm liều rosuvastatin nếu cần thiết. <!-- NEED_REVIEW: Sửa lỗi OCR 'P1-protease' thành 'PI-protease', 'atvng' thành 'tăng', lặp từ 'liều liều' -->"
+  },
+  {
+    "line": 123,
+    "corrected": "+ Hệ huyết học: tăng đường huyết, tăng HbA1c. <!-- NEED_REVIEW: HbAlc (chữ l) sửa thành HbA1c (số 1), xếp tăng đường huyết và HbA1c vào 'Hệ huyết học' là chưa chính xác về mặt y khoa (thường thuộc chuyển hóa/nội tiết) -->"
+  },
+  {
+    "line": 126,
+    "corrected": "+ Rối loạn da và các mô dưới da: ngứa, phát ban, mày đay. <!-- NEED_REVIEW: Sửa lỗi OCR 'máy đay' thành 'mày đay' -->"
+  },
+  {
+    "line": 133,
+    "corrected": "Tác động trên thận: protein niệu, được phát hiện bằng que thử và có nguồn gốc chính từ ống thận. Đã được ghi nhận ở những bệnh nhân điều trị bằng rosuvastatin. Trong hầu hết các trường hợp, protein niệu giảm hoặc tự biến mất khi tiếp tục điều trị và không phải là dấu hiệu báo trước của bệnh thận cấp tính hay tiến triển. <!-- NEED_REVIEW: Sửa lỗi OCR 'protein thận' thành 'protein niệu' cho đồng nhất với ngữ cảnh y khoa -->"
+  },
+  {
+    "line": 135,
+    "corrected": "Tác động trên gan: Giống như các chất ức chế enzym HMG – CoA reductase khác, tăng transaminase theo liều đã được ghi nhận ở một số ít bệnh nhân dùng rosuvastatin, phần lớn các trường hợp đều nhẹ không có triệu chứng thoáng qua. <!-- NEED_REVIEW: Sửa lỗi OCR 'transeminase' thành 'transaminase' -->"
+  }
+]

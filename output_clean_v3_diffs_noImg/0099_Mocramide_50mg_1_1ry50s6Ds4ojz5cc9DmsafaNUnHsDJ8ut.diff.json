@@ -1,0 +1,14 @@
+[
+  {
+    "line": 81,
+    "corrected": "với mức độ nhẹ đến 12 với mức độ nặng) so với bệnh nhân có chức năng gan bình thường. <!-- NEED_REVIEW: Thiếu vế đầu của khoảng Child-Pugh (thường là từ 5 hoặc 6) -->"
+  },
+  {
+    "line": 404,
+    "corrected": "| Rối loạn da và mô dưới da | Thường gặp | Buồn nôn | <!-- NEED_REVIEW: Biểu hiện 'Buồn nôn' được xếp vào nhóm 'Rối loạn da và mô dưới da' là bất hợp lý theo y khoa -->"
+  },
+  {
+    "line": 405,
+    "corrected": "| | Thường gặp | Bệnh trào ngược dạ dày - thực quản | <!-- NEED_REVIEW: Bệnh trào ngược dạ dày thực quản được đặt dưới nhóm Rối loạn da và mô dưới da là bất hợp lý -->"
+  }
+]

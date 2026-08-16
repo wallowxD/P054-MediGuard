@@ -28,15 +28,13 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import List, Tuple
 
 # Add backend/src to sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
 
-from tqdm import tqdm
-
 from medsafe.config import get_settings
 from medsafe.prompts.ocr_prompts import GEMINI_MEDICAL_OCR_SYSTEM_PROMPT
+from tqdm import tqdm
 
 logging.basicConfig(
     level=logging.INFO,
@@ -48,11 +46,11 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8")
 
 
-def natural_sort_key(s: str) -> List:
+def natural_sort_key(s: str) -> list:
     return [int(text) if text.isdigit() else text.lower() for text in re.split(r"(\d+)", str(s))]
 
 
-def find_drug_image_folders(input_dir: Path) -> List[Tuple[Path, List[Path]]]:
+def find_drug_image_folders(input_dir: Path) -> list[tuple[Path, list[Path]]]:
     """Recursively discover all drug leaf directories containing image files."""
     results = []
     if not input_dir.exists():
@@ -324,7 +322,7 @@ def main():
         print("📌 BẠN HOÀN TOÀN CÓ THỂ TẮT MÁY TÍNH HÔM NAY!")
         print("Google đang tự động chạy OCR cho toàn bộ ảnh trên Cloud.")
         print("Bất cứ khi nào bật máy lại (sau vài chục phút hoặc 24h), chạy lệnh sau để nhận file:")
-        print(f"   python scripts/download_batch_ocr.py")
+        print("   python scripts/download_batch_ocr.py")
         print("=" * 80 + "\n")
 
     except Exception as err:

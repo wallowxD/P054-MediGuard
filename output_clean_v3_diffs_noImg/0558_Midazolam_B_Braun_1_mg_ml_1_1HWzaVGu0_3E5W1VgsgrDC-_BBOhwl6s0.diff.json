@@ -1,0 +1,26 @@
+[
+  {
+    "line": 47,
+    "corrected": "| Chỉ định | Người lớn <60 tuổi | Người >_ suy nhược hoặc mắc bệnh mạn tính | Bệnh nhân nhi | <!-- NEED_REVIEW: Ký hiệu '>_' có thể là lỗi OCR của '>= 60 tuổi' hoặc 'trên 60 tuổi' -->"
+  },
+  {
+    "line": 150,
+    "corrected": "tục, bắt đầu ở 0,03 mg/kg/giờ (0,5 microgram/kg/phút) ở trẻ sơ sinh có độ tuổi < 32 tuần thai hoặc 0,06 mg/kg/giờ (1 microgram/kg/ phút) ở trẻ sơ sinh > 32 tuần thai và trẻ đến 6 tháng tuổi. <!-- NEED_REVIEW: Dòng văn bản bị cụt phần đầu câu, cần đối chiếu với tài liệu gốc -->"
+  },
+  {
+    "line": 346,
+    "corrected": "Rất phổ biến (21/10) <!-- NEED_REVIEW: Tỷ lệ '21/10' bất thường, thường là '>= 1/10' hoặc tương tự -->"
+  },
+  {
+    "line": 348,
+    "corrected": "Phổ biến (21/100 đến (<1/10) <!-- NEED_REVIEW: Tỷ lệ '21/100' bất thường, thường là '>= 1/100 đến < 1/10' -->"
+  },
+  {
+    "line": 350,
+    "corrected": "Không phổ biến (21/1 000 đến (<1/100) <!-- NEED_REVIEW: Tỷ lệ '21/1 000' bất thường, thường là '>= 1/1 000 đến < 1/100' -->"
+  },
+  {
+    "line": 352,
+    "corrected": "Hiếm (21/10 000 dên (<1/1000) <!-- NEED_REVIEW: Tỷ lệ '21/10 000' bất thường và từ 'dên' là lỗi OCR của 'đến' -->"
+  }
+]

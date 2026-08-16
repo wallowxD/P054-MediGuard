@@ -1,0 +1,22 @@
+[
+  {
+    "line": 15,
+    "corrected": "Viên nén dài màu trắng, một mặt có dập logo đp, một mặt có dập gạch ngang. <!-- NEED_REVIEW: Logo 'đp' có thể là lỗi OCR hoặc viết tắt không rõ nghĩa, cần kiểm tra lại nhà sản xuất. -->"
+  },
+  {
+    "line": 25,
+    "corrected": "SILVASTEN được sử dụng theo chỉ định của bác sỹ trong một số trường hợp cụ thể để giảm nồng độ cholesterol <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  },
+  {
+    "line": 27,
+    "corrected": "bé gái. Tuy nhiên ảnh hưởng của ezetimibe trên sự phát triển và trưởng thành khi sử dụng trên 1 năm chưa được nghiên cứu. <!-- NEED_REVIEW: Dòng này bị đứt đoạn ngữ cảnh so với các chỉ định ở trên, có thể thiếu nội dung về đối tượng trẻ em. -->"
+  },
+  {
+    "line": 37,
+    "corrected": "Các dùng statin cho phụ nữ ở độ tuổi sinh đẻ khi họ chắc chắn không mang thai và chỉ trong trường hợp tăng cholesterol huyết rất cao mà không đáp ứng với các thuốc khác. <!-- NEED_REVIEW: Từ 'Các dùng' có thể là lỗi OCR của 'Cách dùng' hoặc 'Việc dùng'. -->"
+  },
+  {
+    "line": 38,
+    "corrected": "SILVASTEN có chứa lactose, bệnh nhân không dung nạp galactose, thiếu Lapp lactase hoặc rối loạn hấp thu glucose-galactose <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "line": 126,
+    "corrected": "- Nhóm dược lý: Kháng sinh cephalosporin thế hệ 3. <!-- NEED_REVIEW: Cefotiam thực chất là kháng sinh cephalosporin thế hệ 2, không phải thế hệ 3. Cần kiểm tra lại phân loại. -->"
+  },
+  {
+    "line": 128,
+    "corrected": "- Cefotiam là một kháng sinh bán tổng hợp thuộc họ beta-lactam trong nhóm cephalosporin thế hệ 3. Thuốc có phổ tác dụng rộng đối với vi khuẩn Gram dương và Gram âm. <!-- NEED_REVIEW: Cefotiam thường được phân loại là cephalosporin thế hệ 2, việc ghi thế hệ 3 ở đây có thể gây nhầm lẫn. -->"
+  }
+]

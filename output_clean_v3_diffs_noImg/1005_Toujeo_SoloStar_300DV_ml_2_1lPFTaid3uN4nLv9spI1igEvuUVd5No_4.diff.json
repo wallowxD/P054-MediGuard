@@ -1,0 +1,14 @@
+[
+  {
+    "line": 14,
+    "corrected": "- Thành phần hoạt chất : insulin glargine 450 đơn vị/ 1,5 ml <!-- NEED_REVIEW: Hàm lượng insulin glargine trong bút 1.5ml là 450 đơn vị (tương đương 300 đơn vị/ml), cần xác định rõ cách ghi hàm lượng theo đúng nhãn được duyệt -->"
+  },
+  {
+    "line": 239,
+    "corrected": "Hạ đường huyết nặng có thể gây tổn thương não và đe dọa tính mạng. <!-- NEED_REVIEW: Lỗi OCR ký tự 'não' thành ký tự lạ -->"
+  },
+  {
+    "line": 589,
+    "corrected": "Đừng để bút tiêm SoloStar bị bẩn và lắm bụi. <!-- NEED_REVIEW: Từ 'lắm' có thể là lỗi OCR của 'lắm' hoặc 'bám' bụi -->"
+  }
+]

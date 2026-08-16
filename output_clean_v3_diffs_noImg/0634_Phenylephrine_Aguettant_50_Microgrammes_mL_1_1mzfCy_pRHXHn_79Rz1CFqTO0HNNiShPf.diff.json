@@ -1,0 +1,6 @@
+[
+  {
+    "line": 189,
+    "corrected": "Thường gặp : không rõ (chưa thể đánh giá dựa trên dữ liệu hiện có) <!-- NEED_REVIEW: Phân loại tần suất 'Thường gặp' nhưng lại chú thích là 'không rõ' là bất thường về phân loại ADR -->"
+  }
+]

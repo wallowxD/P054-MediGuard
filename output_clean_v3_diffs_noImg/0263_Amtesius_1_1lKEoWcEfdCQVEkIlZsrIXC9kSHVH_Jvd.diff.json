@@ -1,0 +1,14 @@
+[
+  {
+    "line": 20,
+    "corrected": "| Tá dược | vđ 1 viên <!-- NEED_REVIEW: Dạng bào chế ở dòng 16 là thuốc cốm (gói 3g) nhưng tá dược lại ghi 'vđ 1 viên' là bất thường --> |"
+  },
+  {
+    "line": 54,
+    "corrected": "+ Tiêu hóa: đau thượng vị, buồn nôn, nôn, ia2chảy. <!-- NEED_REVIEW: Lỗi OCR 'ia2chảy' -> 'ỉa chảy' hoặc 'tiêu chảy' -->"
+  },
+  {
+    "line": 104,
+    "corrected": "*15.2. Các khuyến cáo dùng thuốc cho phụ3nữ có thai và cho con bú <!-- NEED_REVIEW: Lỗi OCR 'phụ3nữ' -> 'phụ nữ' -->"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "line": 40,
+    "corrected": "Có sự kháng chéo giữa *Streptococcus pneumoniae*, *Streptococcus* tấn huyết nhóm A, *Enterococcus faecalis* và *Staphylococcus aureus*, bao gồm cả *S. aureus* kháng methicillin với erythromycin, azithromycin, các macrolid và lincosamid khác. <!-- NEED_REVIEW: Từ 'tấn huyết' có thể là lỗi OCR của 'tan huyết' -->"
+  },
+  {
+    "line": 60,
+    "corrected": "Vi khuẩn hiếu khí Gram âm: *Haemophilus influenzae**, *Moraxella catarrhalis**. <!-- NEED_REVIEW: Dấu sao kép thừa ở tên vi khuẩn -->"
+  },
+  {
+    "line": 64,
+    "corrected": "Vi khuẩn hiếu khí Gram dương: *Staphylococcus aureus**, *Streptococcus agalactiae*, *Streptococcus pneumoniae**, *Streptococcus pyogenes**. <!-- NEED_REVIEW: Dấu sao kép thừa ở tên vi khuẩn -->"
+  },
+  {
+    "line": 80,
+    "corrected": "Ở liều khuyến cáo không thấy có hiện tượng tích lũy trong huyết thanh. Tích lũy xuất hiện trong các mô, nơi có nồng độ cao hơn nhiều so với trong huyết thanh. Ba ngày sau khi uống liều duy nhất 500 mg hoặc các liều nhỏ, nồng độ độ được tại phổi là 1,3-4,8 µg/g, tại tuyến tiền liệt là 0,6-2,3 <!-- NEED_REVIEW: Cụm từ 'nồng độ độ được' có vẻ là lỗi gõ máy hoặc OCR -->"
+  },
+  {
+    "line": 134,
+    "corrected": "+ Dự phòng tiên phát nhiễm MAC lan tỏa ở người lớn và thiếu niên nhiễm HIV giai đoạn muộn: Liều uống azithromycin 1,2 mg/1 lần/ tuần. Thường dùng đơn độc nhưng có thể phối hợp với rifabutin 300mg/ngày. <!-- NEED_REVIEW: Liều 1,2 mg/1 lần/tuần có vẻ quá thấp đối với azithromycin (thường là 1,2 g) -->"
+  },
+  {
+    "line": 138,
+    "corrected": "– Nhiễm *Nesseria meningitidis*: Người lành mang mầm bệnh: 500 mg /1 liều <!-- NEED_REVIEW: Tên chi vi khuẩn 'Nesseria' chính tả chuẩn là 'Neisseria' -->"
+  },
+  {
+    "line": 209,
+    "corrected": "Trong trường hợp các bệnh lây truyền qua đường tình dục, cần loại trừ có nhiễm khuẩn đồng thời *T. palladium*. <!-- NEED_REVIEW: Tên xoắn khuẩn giang mai chuẩn là 'Treponema pallidum' (viết tắt là T. pallidum) -->"
+  },
+  {
+    "line": 280,
+    "corrected": "- *Trimethoprim/ sulfamethoxazol:* D <!-- INCOMPLETE_DOCUMENT: Tài liệu bị ngắt lửng lơ giữa chừng -->"
+  }
+]

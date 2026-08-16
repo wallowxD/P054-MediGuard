@@ -15,7 +15,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src
 
 from medsafe.services.dataset_service import update_dataset_link_notes
 
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
@@ -59,7 +58,7 @@ def main():
             output_path=args.output,
             max_workers=args.workers,
         )
-        print(f"\nDataset link verification completed!")
+        print("\nDataset link verification completed!")
         print(f"Updated dataset saved to: {saved_path}")
 
     except Exception as e:

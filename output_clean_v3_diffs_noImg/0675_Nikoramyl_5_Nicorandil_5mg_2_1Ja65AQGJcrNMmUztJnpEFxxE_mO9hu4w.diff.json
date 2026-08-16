@@ -1,0 +1,10 @@
+[
+  {
+    "line": 66,
+    "corrected": "Phải ngừng điều trị nếu thấy xuất hiện áp tơ hoặc loét hậu môn dai dẳng. <!-- NEED_REVIEW: Loét miệng/áp tơ là ADR kinh điển của nicorandil, văn bản gốc ghi 'loét hậu môn dai dẳng' có thể là lỗi đánh máy từ 'loét miệng' hoặc 'loét niêm mạc', cần dược sĩ kiểm tra lại -->"
+  },
+  {
+    "line": 124,
+    "corrected": "Phải ngừng điều trị nếu thấy xuất hiện áp tơ hoặc loét hậu môn dai dẳng. <!-- NEED_REVIEW: Loét miệng/áp tơ là ADR kinh điển của nicorandil, văn bản gốc ghi 'loét hậu môn dai dẳng' có thể là lỗi đánh máy từ 'loét miệng' hoặc 'loét niêm mạc', cần dược sĩ kiểm tra lại -->"
+  }
+]

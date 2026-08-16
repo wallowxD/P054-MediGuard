@@ -1,0 +1,10 @@
+[
+  {
+    "line": 223,
+    "corrected": "| Cl<sub>CR</sub> < 15 | 2,5mg vào ngày thẩm tích máu <!-- NEED_REVIEW: Bảng thiếu dòng dữ liệu cho khoảng 15 < ClCR hoặc dòng trống gây lệch cấu trúc -->"
+  },
+  {
+    "line": 294,
+    "corrected": "Điều trị với 8mg perindopril tert-butylamine (tương đương với 10mg perindopril arginine) /ngày dẫn đến sự giảm tuyệt đối có ý nghĩa trong các kết cục lâm sàng chủ yếu là 1,9% (giảm nguy cơ tương đối 20% 95%CI [9,4;28,6] - p (0,001). <!-- NEED_REVIEW: Ký hiệu p (0,001 bất thường, đúng ra phải là p < 0,001 -->"
+  }
+]

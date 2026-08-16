@@ -1,0 +1,22 @@
+[
+  {
+    "line": 85,
+    "corrected": "- Đang điều trị bằng các thuốc xanthin, các thuốc corticosteroid, hoặc các thuốc lợi tiểu <!-- NEED_REVIEW: Dòng này bị lặp lại ý nghĩa từ đoạn trước và diễn đạt cụt lủn, cần xem lại sự liền mạch văn bản -->"
+  },
+  {
+    "line": 116,
+    "corrected": "+ **Các thuốc chống trầm cảm ba vòng (ví dụ imipramin):** tăng huyết áp kịch phát với khả năng loạn nhịp tim (ức chế adrenalin hoặc noradrenalin đi vào các sợi giao cảm)."
+  },
+  {
+    "line": 117,
+    "corrected": "+ **Các thuốc chống trầm cảm noradrenergic-serotoninergic (minalcipran, venlafaxin):** tăng huyết áp kịch phát với khả năng loạn nhịp tim (ức chế adrenalin hoặc noradrenalin đi vào các sợi giao cảm)."
+  },
+  {
+    "line": 199,
+    "corrected": "*Chưa biết:* đau thắt ngực, nhịp tim chậm phản xạ, ngừng tim, hạ huyết áp"
+  },
+  {
+    "line": 238,
+    "corrected": "cường giao cảm, ephedrin kích thích hệ thần kinh trung ương, hệ tim mạch, hệ hô hấp, và cơ trơn đường tiêu hóa và đường tiểu. Ephedrin cũng là một chất ức chế monoamin oxidase (IMAO). <!-- NEED_REVIEW: Ephedrin là cơ chất/chất giải phóng catecholamine, không phải là chất ức chế MAO (IMAO), cần xem lại bản gốc dịch -->"
+  }
+]
