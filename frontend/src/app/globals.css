@@ -825,8 +825,30 @@ body {
 }
 
 /* ==========================================================================
+   Infinite Marquee
+   ========================================================================== */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+.animate-marquee-infinite:hover {
+  animation-play-state: paused;
+}
+
+/* ==========================================================================
    Reduced motion
-   ==========================================================================
+   ========================================================================== */
    Người bật "giảm chuyển động" ở hệ điều hành không được nhận vật thể động vĩnh
    viễn. Reveal khi cuộn vẫn hiện nội dung (opacity/transform về trạng thái cuối),
    chỉ bỏ phần chuyển động.
@@ -842,7 +864,8 @@ body {
   .vinmec-medical-cross,
   .ambient-blob-1,
   .ambient-blob-2,
-  .ambient-blob-3 {
+  .ambient-blob-3,
+  .animate-marquee-infinite {
     animation: none;
   }
 

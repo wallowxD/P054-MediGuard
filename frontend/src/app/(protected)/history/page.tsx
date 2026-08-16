@@ -1,6 +1,6 @@
 "use client";
 
-import { History, Sparkles, Trash2 } from "lucide-react";
+import { History, Trash2 } from "lucide-react";
 import { HistoryLoadError, SearchHistoryList } from "@/components/history";
 import EmptyState from "@/components/EmptyState";
 import { TextSkeleton } from "@/components/ui/Skeleton";

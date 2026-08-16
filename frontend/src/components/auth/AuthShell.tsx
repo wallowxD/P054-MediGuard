@@ -1,4 +1,4 @@
-import { FileCheck2, ShieldCheck, Sparkles, UserRoundCheck } from "lucide-react";
+import { FileCheck2, ShieldCheck, UserRoundCheck } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import Logo from "@/components/ui/Logo";

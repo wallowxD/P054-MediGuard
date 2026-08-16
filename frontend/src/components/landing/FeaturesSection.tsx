@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BookOpen, Layers, PillBottle, ShieldAlert, Sparkles, Utensils } from "lucide-react";
+import { ArrowRight, BookOpen, PillBottle, ShieldAlert, Sparkles } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { LANDING_SECTIONS, ROUTES } from "@/constants/routes";
 import Reveal from "./Reveal";

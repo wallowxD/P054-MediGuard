@@ -18,20 +18,22 @@ export default function VinmecCareValues() {
           {VINMEC_CARE_VALUES.map((value) => (
             <li
               key={value.letter}
-              className="group relative flex flex-col rounded-3xl liquid-glass p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+              className="group relative flex flex-col justify-between rounded-3xl liquid-glass p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary/40"
             >
-              <span
-                aria-hidden="true"
-                className="mb-3 font-heading text-5xl font-black text-primary/40 transition-colors group-hover:text-primary"
-              >
-                {value.letter}
-              </span>
-              <h3 className="mb-2 font-heading text-base font-bold text-foreground">
-                {value.title}
-              </h3>
-              <p className="text-xs leading-relaxed text-foreground-secondary">
-                {value.desc}
-              </p>
+              <div>
+                <span
+                  aria-hidden="true"
+                  className="mb-4 inline-block font-heading text-5xl font-black text-primary/30 transition-colors group-hover:text-primary"
+                >
+                  {value.letter}
+                </span>
+                <h3 className="mb-2 font-heading text-base font-bold text-foreground">
+                  {value.title}
+                </h3>
+                <p className="text-xs leading-relaxed text-foreground-secondary">
+                  {value.desc}
+                </p>
+              </div>
             </li>
           ))}
         </ul>

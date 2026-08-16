@@ -41,7 +41,7 @@ export default function FeaturePage() {
         <HowItWorksSection />
         <CtaBand />
       </main>
-      <VinmecFooter medicalDisclaimer />
+      <VinmecFooter />
     </div>
   );
 }
