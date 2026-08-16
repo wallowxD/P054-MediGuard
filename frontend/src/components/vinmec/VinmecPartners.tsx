@@ -2,31 +2,34 @@ import Image from "next/image";
 import { VINMEC_PARTNERS } from "./vinmec-content";
 
 export default function VinmecPartners() {
+  // Nhân đôi mảng để animation marquee chạy vòng lặp vô tận liền mạch (0% -> -50%)
+  const marqueeItems = [...VINMEC_PARTNERS, ...VINMEC_PARTNERS];
+
   return (
-    <section className="py-12 sm:py-16" aria-label="Đối tác y tế toàn cầu">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="rounded-3xl liquid-glass-subtle p-6 sm:p-8">
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-foreground-muted mb-6">
-            Hợp tác chuyên môn với các đại học & tổ chức y tế hàng đầu thế giới
-          </p>
-          <div className="flex flex-wrap items-center justify-around gap-8">
-            {VINMEC_PARTNERS.map((partner) => (
-              <div
-                key={partner.src}
-                // `logo-plate`: logo đối tác là ảnh nền trong suốt mực sẫm, trên nền tối
-                // sẽ biến mất hẳn. Class này trả lại nền sáng cho riêng chế độ tối.
-                className="logo-plate rounded-2xl border border-transparent px-3 py-2 grayscale opacity-75 transition-all duration-300 hover:grayscale-0 hover:opacity-100 hover:scale-105"
-              >
-                <Image
-                  src={partner.src}
-                  alt={partner.alt}
-                  width={180}
-                  height={60}
-                  className="h-10 w-auto object-contain sm:h-12"
-                />
-              </div>
-            ))}
-          </div>
+    <section className="w-full overflow-hidden py-10 sm:py-14" aria-label="Đối tác y tế toàn cầu">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 mb-6 sm:mb-8 text-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-foreground-muted">
+          Hợp tác chuyên môn với các đại học & tổ chức y tế hàng đầu thế giới
+        </p>
+      </div>
+
+      {/* Marquee full-màn hình với lớp mặt nạ fade mờ ở 2 mép biên */}
+      <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <div className="animate-marquee-infinite flex items-center gap-8 sm:gap-12 py-3">
+          {marqueeItems.map((partner, idx) => (
+            <div
+              key={`${partner.src}-${idx}`}
+              className="flex shrink-0 items-center justify-center px-4 sm:px-6 transition-transform duration-300 hover:scale-110"
+            >
+              <Image
+                src={partner.src}
+                alt={partner.alt}
+                width={180}
+                height={60}
+                className="h-8 sm:h-10 w-auto object-contain dark:brightness-0 dark:invert"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

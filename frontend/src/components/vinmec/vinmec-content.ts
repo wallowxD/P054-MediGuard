@@ -39,8 +39,8 @@ export type VinmecNavItem = {
  */
 export const VINMEC_NAV: readonly VinmecNavItem[] = [
   { label: "Trang chủ", href: ROUTES.HOME },
-  { label: "Về Vinmec", href: ROUTES.ABOUT },
   { label: "Tính năng", href: ROUTES.FEATURE },
+  { label: "Về Vinmec", href: ROUTES.ABOUT },
 ];
 
 export const VINMEC_TOPBAR_LINKS = ["Tìm bác sĩ", "Chăm sóc khách hàng"] as const;
@@ -136,27 +136,30 @@ export const VINMEC_FACILITIES = [
 ] as const;
 
 export const VINMEC_PARTNERS = [
+  { src: "/images/vinmec/partner-cleveland.webp", alt: "Cleveland Clinic" },
   { src: "/images/vinmec/partner-macquarie.webp", alt: "Macquarie University" },
+  { src: "/images/vinmec/partner-sydney.webp", alt: "University of Sydney" },
+  { src: "/images/vinmec/partner-penn-state.png", alt: "Penn State University" },
+  { src: "/images/vinmec/partner-paris-descartes.png", alt: "Paris Descartes University" },
+  { src: "/images/vinmec/partner-montreal.png", alt: "Université de Montréal" },
+  { src: "/images/vinmec/partner-metropolitan.webp", alt: "Metropolitan" },
   { src: "/images/vinmec/partner-astrazeneca.webp", alt: "AstraZeneca" },
+  { src: "/images/vinmec/partner-roche.webp", alt: "Roche" },
   { src: "/images/vinmec/partner-ge.webp", alt: "GE HealthCare" },
 ] as const;
 
-export const VINMEC_FOOTER_COLUMNS = [
-  {
-    title: "Hệ thống Vinmec",
-    links: ["Tầm nhìn sứ mệnh", "Hệ thống cơ sở y tế", "Tìm bác sĩ", "Làm việc tại Vinmec"],
-  },
-  {
-    title: "Dịch vụ",
-    links: ["Chuyên khoa", "Gói dịch vụ", "Bảo hiểm", "Đặt lịch hẹn"],
-  },
+export const VINMEC_FOOTER_NAV = [
+  { label: "Trang chủ", href: ROUTES.HOME },
+  { label: "Về Vinmec", href: ROUTES.ABOUT },
+  { label: "Tính năng AI", href: ROUTES.FEATURE },
+  { label: "Chính sách bảo mật", href: "/privacy-policy" },
+  { label: "Điều khoản sử dụng", href: "/terms-of-service" },
 ] as const;
 
 export const VINMEC_LEGAL_LINKS = [
-  "Chính sách bảo vệ dữ liệu cá nhân của Vinmec",
-  "GR Privacy",
-  "GR Terms",
+  "Chính sách bảo vệ dữ liệu cá nhân Vinmec",
+  "Điều khoản dịch vụ y tế",
 ] as const;
 
 export const VINMEC_COPYRIGHT =
-  "Bản quyền © 2026 thuộc về Công ty Cổ phần Bệnh viện Đa khoa Quốc tế Vinmec";
+  "Bản quyền © 2026 thuộc về Công ty Cổ phần Bệnh viện Đa khoa Quốc tế Vinmec · Cuvée Tech (P-054)";
